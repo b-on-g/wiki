@@ -1,13 +1,15 @@
-FROM node:20-alpine
+FROM node:24-alpine
 
 RUN apk add --no-cache git
 
 WORKDIR /code
-RUN mkdir -p /code/bog/wiki
-COPY . /code/bog/wiki
+RUN git clone https://github.com/hyoo-ru/mam.git && cd mam && npm install
 
-RUN npm exec mam bog/wiki/app
+RUN mkdir -p mam/bog/wiki
+COPY . mam/bog/wiki
 
-EXPOSE 9080
+RUN cd mam && npm start bog/wiki/app
+
+WORKDIR /code/mam
 
 # http://localhost:9081/bog/wiki/app/-/test.html
