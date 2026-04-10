@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9081:9080"
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    command: "npm start"
+
+    # http://localhost:9081/bog/wiki/app/-/test.html

@@ -1,3 +1,35 @@
+# wiki
+
+## Dev
+
+```bash
+cd /path/to/mam && npm start
+# Open http://localhost:9080/bog/wiki/app/-/test.html
+```
+
+## Build
+
+```bash
+npx mam bog/wiki
+```
+
+## Docker
+
+```bash
+docker compose up --build
+# Open http://localhost:8080
+```
+
+## Deploy
+
+Push to `master` → GitHub Actions → GitHub Pages: https://bog.github.io/wiki/
+
+Feature branches deploy to: https://bog.github.io/wiki/{branch-name}/
+
+## Desktop (Tauri)
+
+Tag `v*` triggers Tauri build via GitHub Actions.
+
 # template
 
 Template for task: Репозиторий для работы
