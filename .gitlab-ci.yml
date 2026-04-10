@@ -1,0 +1,23 @@
+image: node:24-alpine
+
+before_script:
+  - apk add --no-cache git
+  - git clone --depth 1 https://github.com/hyoo-ru/mam.git /mam
+  - cd /mam && npm install
+  - mkdir -p bog/wiki
+  - cp -r $CI_PROJECT_DIR/. bog/wiki/
+
+stages:
+  - deploy
+
+pages:
+  stage: deploy
+  script:
+    - cd /mam && npx mam bog/wiki/app
+    - mkdir -p $CI_PROJECT_DIR/public
+    - cp -r bog/wiki/app/-/* $CI_PROJECT_DIR/public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev" || $CI_COMMIT_BRANCH == "main"
