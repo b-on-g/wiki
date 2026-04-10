@@ -1,3 +1,35 @@
+# wiki
+
+## Dev
+
+```bash
+cd /path/to/mam && npm start
+# Open http://localhost:9080/bog/wiki/app/-/test.html
+```
+
+## Build
+
+```bash
+npx mam bog/wiki
+```
+
+## Docker
+
+```bash
+docker compose up --build
+# Open http://localhost:8080
+```
+
+## Deploy
+
+Push to `master` → GitHub Actions → GitHub Pages: https://bog.github.io/wiki/
+
+Feature branches deploy to: https://bog.github.io/wiki/{branch-name}/
+
+## Desktop (Tauri)
+
+Tag `v*` triggers Tauri build via GitHub Actions.
+
 # template
 
 Template for task: Репозиторий для работы
@@ -88,6 +120,7 @@ Show your appreciation to those who have contributed to the project.
 
 ## License
 For open source projects, say how it is licensed.
+
 
 ## Project status
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
