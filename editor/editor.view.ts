@@ -1,3 +1,4 @@
+/// <reference path="../model/gen/gen.ts" />
 namespace $.$$ {
 	const wiki_table_ids = ['dstBumsSV6ng3k0nHd', 'viwklpg2YdqyQ'] as const
 

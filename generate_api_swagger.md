@@ -131,7 +131,24 @@ data_table(next?: $bog_wiki_model_gen_components['schemas']['GetRecordsData']) {
 
 ---
 
-## 7. Повторная генерация
+## 7. IDE: `Cannot find name '$…_gen_components'` (ts2304)
+
+Типы объявлены в **`gen/gen.ts`** внутри **`namespace $`**. TypeScript **склеивает** несколько файлов с одним `namespace $`, но языковой сервис в IDE не всегда подгружает **`gen.ts`** до анализа **`model.ts`** / **`editor.view.ts`**, поэтому имя **`$bog_wiki_model_gen_components`** может подсвечиваться как неизвестное.
+
+**Что сделать:** в начале файлов, которые ссылаются на типы из `gen`, добавить **явную ссылку на файл**:
+
+| Файл | Директива |
+|------|-----------|
+| `bog/wiki/model/model.ts` | `/// <reference path="./gen/gen.ts" />` |
+| `bog/wiki/editor/editor.view.ts` | `/// <reference path="../model/gen/gen.ts" />` |
+
+Строка **`/// <reference … />`** должна быть **первой** (до `namespace`).
+
+Дополнительно проверьте: **корень workspace в Cursor/VS Code** — папка **`mam`** (где лежит `tsconfig.json`), а не только `bog/wiki`, иначе `include` может не совпасть с ожиданиями IDE.
+
+---
+
+## 8. Повторная генерация
 
 1. Обновить YAML.
 2. Выполнить команду **`openapi-typescript`** (в сырой или временный файл).
@@ -141,13 +158,13 @@ data_table(next?: $bog_wiki_model_gen_components['schemas']['GetRecordsData']) {
 
 ---
 
-## 8. Другой модуль / другой префикс
+## 9. Другой модуль / другой префикс
 
 Если генерация лежит, например, в **`my/app/api/gen/`**, префикс FQN будет **`$my_app_api_gen_`**, а модель — **`my/app/api/model.ts`** → класс **`$my_app_api_model`** (по соглашению путей в вашем проекте). Логика шагов та же: **путь папок → префикс `$`**, **`gen.ts` в `namespace $`**, наружу только **`export type $…`**.
 
 ---
 
-## 9. Краткий чеклист
+## 10. Краткий чеклист
 
 - [ ] YAML OpenAPI в репозитории, путь известен.
 - [ ] `npx openapi-typescript … -o …gen.raw.ts` (или сразу в промежуточный файл).
@@ -155,3 +172,4 @@ data_table(next?: $bog_wiki_model_gen_components['schemas']['GetRecordsData']) {
 - [ ] Добавлены **`export type $…_paths`**, **`…_components`**, **`…_operations`**, **`…_webhooks`**, **`…_defs`** (по факту вывода).
 - [ ] **`model.ts`**: **`request<T>`**, методы с типами из **`$…_gen_components['schemas'][…]`**.
 - [ ] View: **`namespace $.$$`**, параметры без **`any`**, при необходимости инлайн **`$…_gen_components['schemas'][…]`**.
+- [ ] При ошибке IDE **ts2304**: **`/// <reference path="…/gen/gen.ts" />`** в `model.ts` и во view (см. §7).

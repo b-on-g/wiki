@@ -1,3 +1,4 @@
+/// <reference path="./gen/gen.ts" />
 namespace $ {
 
 	export class $bog_wiki_model extends $mol_object {
