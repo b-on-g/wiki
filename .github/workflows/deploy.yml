@@ -23,7 +23,7 @@ jobs:
                   modules: 'app'
 
             - uses: b-on-g/mol-prerender-action@main
-              if: github.ref == 'refs/heads/master'
+              if: github.ref == 'refs/heads/dev'
               with:
                   folder: "bog/wiki/app/-"
                   base-url: "https://bog.github.io/wiki/"
@@ -31,7 +31,7 @@ jobs:
                       home
 
             - uses: hyoo-ru/gh-deploy@v4.4.1
-              if: github.ref == 'refs/heads/master'
+              if: github.ref == 'refs/heads/dev'
               with:
                   folder: "bog/wiki/app/-"
 
