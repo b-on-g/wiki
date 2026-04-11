@@ -8,15 +8,15 @@
 
 | Файл | Назначение |
 |------|------------|
-| [`docs/WikiLive фичи.md`](docs/WikiLive%20фичи.md) | Чек-лист фич и фокус по баллам |
+| [`docs/WikiLive_features.md`](docs/WikiLive_features.md) | Чек-лист фич и фокус по баллам |
 | [`PRD.md`](PRD.md) | ТЗ трека, критерии жюри |
 | [`docs/FUSION-API.yaml`](docs/FUSION-API.yaml) | **OpenAPI 3.0** — API Fusion (MWS Tables), пути `/fusion/v1/...` |
-| `docs/API Документация MWS GPT.md` | MWS GPT, если нужны ИИ-допы |
+| [`docs/API_MWS_GPT.md`](docs/API_MWS_GPT.md) | MWS GPT, если нужны ИИ-допы |
 | [Design Kit (Figma)](https://www.figma.com/design/iUKNWUxfZYSyRhADjDEHYs/%D0%A1%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%8B?node-id=0-1&p=f&t=0XIWXIt3tVWf8JdO-0) | Макеты (доп. фича «Design Kit») |
 
 ## Горячие клавиши
 
-По [`docs/WikiLive фичи.md`](docs/WikiLive%20фичи.md) (обязательная фича 6) здесь должен быть **перечень** горячих клавиш slash-menu и ключевых команд редактора. Заполните после выбора редактора и фиксации биндингов.
+По [`docs/WikiLive_features.md`](docs/WikiLive_features.md) (обязательная фича 6) здесь должен быть **перечень** горячих клавиш slash-menu и ключевых команд редактора. Заполните после выбора редактора и фиксации биндингов.
 
 | Действие | Сочетание |
 |----------|-----------|
@@ -49,4 +49,10 @@ npx mam bog/wiki/app
 
 ```bash
 cd src-tauri && cargo tauri dev
+```
+
+
+## Запуск локальной гипербазы. После npm run start
+```bash
++ giper/baza/app/run port=9090
 ```

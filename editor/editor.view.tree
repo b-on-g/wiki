@@ -1,0 +1,14 @@
+$bog_wiki_editor $mol_page
+	title \Редактор страницы
+	Head null
+	body /
+		<= Actions_row $mol_row sub /
+			<= Action_bold $mol_button_minor title \B
+			<= Action_cursive $mol_button_minor title \T
+			<= Action_underline $mol_button_minor title \U
+			<= Action_add_table $mol_button_minor title \+ Таблица
+		<= Editor_textarea $mol_textarea
+			value? <=> editor_text? \
+			hint \Начните вводить содержимое или нажмите / чтобы использовать команды
+		<= Simple_view_iframe $mol_frame
+			uri \https://tables.mws.ru/share/shryGpX8Fs1XD2wcN6XJU
