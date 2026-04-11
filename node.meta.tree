@@ -81,6 +81,12 @@
 	deploy \/giper/baza/diagram/crus-jepsen.png
 	deploy \/giper/baza/docker/deploy.sh
 	deploy \/giper/baza/docker/autopull_and_restart.sh
+\/bog/ui
+	namespace \bog\ui
+\/milis
+	pack snake git \https://github.com/Lyumih/milis.snake.git
+	pack log git \https://github.com/Lyumih/milis_log.git
+	pack ideag git \https://github.com/Lyumih/milis_ideag.git
 \/bog/wiki/app
 	include \/mol/offline/install
 	deploy \/bog/wiki/assets

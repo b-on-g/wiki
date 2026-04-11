@@ -20144,6 +20144,50 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
+		theme(){
+			return "$mol_theme_base";
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$bog_ui_divider) = class $bog_ui_divider extends ($.$mol_view) {};
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_ui_divider, {
+        margin: {
+            bottom: $mol_gap.block,
+            top: $mol_gap.block,
+        },
+        width: '100%',
+        border: {
+            bottom: {
+                width: '2px',
+                style: 'solid',
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
 	($.$bog_wiki_editor) = class $bog_wiki_editor extends ($.$mol_page) {
 		Action_bold(){
 			const obj = new this.$.$mol_button_minor();
@@ -20185,9 +20229,43 @@ var $;
 			(obj.hint) = () => ("Начните вводить содержимое или нажмите / чтобы использовать команды");
 			return obj;
 		}
+		fetch_table(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Fetch_tables(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ("Fetch Tables");
+			(obj.click) = (next) => ((this.fetch_table()));
+			return obj;
+		}
+		Divider(){
+			const obj = new this.$.$bog_ui_divider();
+			return obj;
+		}
+		get_data_spaces_stringify(){
+			return "";
+		}
+		Simple_view_spaces(){
+			const obj = new this.$.$mol_text_code();
+			(obj.text) = () => ((this.get_data_spaces_stringify()));
+			return obj;
+		}
+		get_data_table_stringify(){
+			return "";
+		}
+		Simple_view_table(){
+			const obj = new this.$.$mol_text_code();
+			(obj.text) = () => ((this.get_data_table_stringify()));
+			return obj;
+		}
+		Divider2(){
+			const obj = new this.$.$bog_ui_divider();
+			return obj;
+		}
 		Simple_view_iframe(){
 			const obj = new this.$.$mol_frame();
-			(obj.uri) = () => ("https://tables.mws.ru/share/shryGpX8Fs1XD2wcN6XJU");
+			(obj.uri) = () => ("https://tables.mws.ru/share/shrKdFiLLioJw8JBF2sUD");
 			return obj;
 		}
 		title(){
@@ -20200,6 +20278,11 @@ var $;
 			return [
 				(this.Actions_row()), 
 				(this.Editor_textarea()), 
+				(this.Fetch_tables()), 
+				(this.Divider()), 
+				(this.Simple_view_spaces()), 
+				(this.Simple_view_table()), 
+				(this.Divider2()), 
 				(this.Simple_view_iframe())
 			];
 		}
@@ -20211,11 +20294,150 @@ var $;
 	($mol_mem(($.$bog_wiki_editor.prototype), "Actions_row"));
 	($mol_mem(($.$bog_wiki_editor.prototype), "editor_text"));
 	($mol_mem(($.$bog_wiki_editor.prototype), "Editor_textarea"));
+	($mol_mem(($.$bog_wiki_editor.prototype), "fetch_table"));
+	($mol_mem(($.$bog_wiki_editor.prototype), "Fetch_tables"));
+	($mol_mem(($.$bog_wiki_editor.prototype), "Divider"));
+	($mol_mem(($.$bog_wiki_editor.prototype), "Simple_view_spaces"));
+	($mol_mem(($.$bog_wiki_editor.prototype), "Simple_view_table"));
+	($mol_mem(($.$bog_wiki_editor.prototype), "Divider2"));
 	($mol_mem(($.$bog_wiki_editor.prototype), "Simple_view_iframe"));
 
 
 ;
 "use strict";
+var $;
+(function ($) {
+    function $milis_log(target, key, descriptor) {
+        const originalMethod = descriptor.value;
+        descriptor.value = function (...args) {
+            const result = originalMethod.apply(this, args);
+            console.debug(`%c\t${key}\n>>>`, 'color: lightyellow', args, '\t', JSON.stringify(args), '\n<<<', result, '\t', JSON.stringify(result));
+            return result;
+        };
+        return descriptor;
+    }
+    $.$milis_log = $milis_log;
+    function $milis_log_in(target, key, descriptor) {
+        const originalMethod = descriptor.value;
+        descriptor.value = function (...args) {
+            const result = originalMethod.apply(this, args);
+            console.debug(`%c\t${key}\n>>>`, 'color: lightyellow', args, '\t', JSON.stringify(args));
+            return result;
+        };
+        return descriptor;
+    }
+    $.$milis_log_in = $milis_log_in;
+    function $milis_log_out(target, key, descriptor) {
+        const originalMethod = descriptor.value;
+        descriptor.value = function (...args) {
+            const result = originalMethod.apply(this, args);
+            console.debug(`%c\t${key}\n<<<`, 'color: lightyellow', result, '\t', JSON.stringify(result));
+            return result;
+        };
+        return descriptor;
+    }
+    $.$milis_log_out = $milis_log_out;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_wiki_model extends $mol_object {
+        base_url() {
+            const cors = 'https://cors-anywhere.herokuapp.com/';
+            return cors + 'https://tables.mws.ru/fusion/v1';
+        }
+        bearer_token() {
+            return 'uskurJvFb5GHRVAWGi1jMCP';
+        }
+        request(url) {
+            return $mol_fetch.json(this.base_url() + url, {
+                headers: {
+                    Authorization: 'Bearer ' + this.bearer_token(),
+                    'Content-Type': 'application/json',
+                },
+            });
+        }
+        data_revision(next) {
+            return next ?? 0;
+        }
+        get_spaces() {
+            void this.data_revision();
+            return this.request('/spaces');
+        }
+        get_table(ids) {
+            void this.data_revision();
+            const [dstId, viewId] = ids;
+            return this.request(`/datasheets/${dstId}/records?viewId=${viewId}`);
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_wiki_model.prototype, "data_revision", null);
+    __decorate([
+        $milis_log,
+        $mol_mem
+    ], $bog_wiki_model.prototype, "get_spaces", null);
+    __decorate([
+        $milis_log,
+        $mol_mem_key
+    ], $bog_wiki_model.prototype, "get_table", null);
+    $.$bog_wiki_model = $bog_wiki_model;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const wiki_table_ids = ['dstBumsSV6ng3k0nHd', 'viwklpg2YdqyQ'];
+        class $bog_wiki_editor extends $.$bog_wiki_editor {
+            model() {
+                return new this.$.$bog_wiki_model();
+            }
+            fetch_table() {
+                const m = this.model();
+                m.data_revision(m.data_revision() + 1);
+            }
+            data_spaces(next) {
+                return next === undefined ? this.model().get_spaces() : next;
+            }
+            data_table(next) {
+                return next === undefined ? this.model().get_table(wiki_table_ids) : next;
+            }
+            get_data_spaces_stringify() {
+                return 'Spaces: \n' + JSON.stringify(this.data_spaces(), null, 2);
+            }
+            get_data_table_stringify() {
+                return 'Table: \n' + JSON.stringify(this.data_table(), null, 2);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "model", null);
+        __decorate([
+            $mol_action
+        ], $bog_wiki_editor.prototype, "fetch_table", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "data_spaces", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "data_table", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "get_data_spaces_stringify", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "get_data_table_stringify", null);
+        $$.$bog_wiki_editor = $bog_wiki_editor;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
 
 ;
 	($.$mol_check_list) = class $mol_check_list extends ($.$mol_view) {
@@ -23544,24 +23766,6 @@ var $;
 (function ($) {
     $mol_style_attach("mol/form/field/field.view.css", "[mol_form_field] {\n\talign-items: stretch;\n}\n\n[mol_form_field_bid] {\n\tcolor: var(--mol_theme_focus);\n\tdisplay: inline-block;\n\ttext-shadow: 0 0;\n}\n\n[mol_form_field_content] {\n\tborder-radius: var(--mol_gap_round);\n}\n");
 })($ || ($ = {}));
-
-;
-	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
-		theme(){
-			return "$mol_theme_base";
-		}
-	};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/major/major.view.css", "[mol_button_major] {\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 	($.$mol_status) = class $mol_status extends ($.$mol_view) {

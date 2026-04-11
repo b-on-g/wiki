@@ -59,6 +59,12 @@
 	pack web git \https://github.com/giper-dev/web.git
 \/giper/baza/glob
 	deploy \giper/baza/glob/glob.baza
+\/bog/ui
+	namespace \bog\ui
+\/milis
+	pack snake git \https://github.com/Lyumih/milis.snake.git
+	pack log git \https://github.com/Lyumih/milis_log.git
+	pack ideag git \https://github.com/Lyumih/milis_ideag.git
 \/giper/baza/app
 	deploy \/giper/baza/logo/logo.svg
 	deploy \/giper/baza/logo/logo-512.png

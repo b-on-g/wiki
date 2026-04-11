@@ -8893,6 +8893,96 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+
+	export class $mol_button_major extends $mol_button_minor {
+		theme( ): string
+	}
+	
+}
+
+//# sourceMappingURL=major.view.tree.d.ts.map
+declare namespace $ {
+
+	export class $bog_ui_divider extends $mol_view {
+	}
+	
+}
+
+//# sourceMappingURL=divider.view.tree.d.ts.map
+declare namespace $ {
+}
+
+declare namespace $ {
+    function $mol_error_fence<Data>(task: () => Data, fallback: (parent: Error) => Error | Data | PromiseLike<Data>, loading?: (parent: PromiseLike<Data>) => Error | Data | PromiseLike<Data>): Data;
+}
+
+declare namespace $ {
+    function $mol_error_enriched<V>(cause: {}, cb: () => V): V;
+}
+
+declare namespace $ {
+    class $mol_fetch_response extends $mol_object {
+        readonly native: Response;
+        readonly request: $mol_fetch_request;
+        status(): "success" | "unknown" | "inform" | "redirect" | "wrong" | "failed";
+        code(): number;
+        ok(): boolean;
+        message(): string;
+        headers(): Headers;
+        mime(): string | null;
+        stream(): ReadableStream<Uint8Array<ArrayBuffer>> | null;
+        text(): string;
+        json(): unknown;
+        blob(): Blob;
+        buffer(): ArrayBuffer;
+        xml(): Document;
+        xhtml(): Document;
+        html(): Document;
+    }
+    class $mol_fetch_request extends $mol_object {
+        readonly native: Request;
+        response_async(): Promise<Response> & {
+            destructor: () => void;
+        };
+        response(): $mol_fetch_response;
+        success(): $mol_fetch_response;
+    }
+    class $mol_fetch extends $mol_object {
+        static request(input: RequestInfo, init?: RequestInit): $mol_fetch_request;
+        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array<ArrayBuffer>> | null;
+        static text(input: RequestInfo, init?: RequestInit): string;
+        static json(input: RequestInfo, init?: RequestInit): unknown;
+        static blob(input: RequestInfo, init?: RequestInit): Blob;
+        static buffer(input: RequestInfo, init?: RequestInit): ArrayBuffer;
+        static xml(input: RequestInfo, init?: RequestInit): Document;
+        static xhtml(input: RequestInfo, init?: RequestInit): Document;
+        static html(input: RequestInfo, init?: RequestInit): Document;
+    }
+}
+
+declare namespace $ {
+    function $milis_log(target: any, key: string, descriptor: PropertyDescriptor): PropertyDescriptor;
+    function $milis_log_in(target: any, key: string, descriptor: PropertyDescriptor): PropertyDescriptor;
+    function $milis_log_out(target: any, key: string, descriptor: PropertyDescriptor): PropertyDescriptor;
+}
+
+declare namespace $ {
+    class $bog_wiki_model extends $mol_object {
+        base_url(): string;
+        bearer_token(): string;
+        request(url: string): unknown;
+        data_revision(next?: number): number;
+        get_spaces(): unknown;
+        get_table(ids: readonly [string, string]): unknown;
+    }
+}
+
+declare namespace $ {
 
 	type $mol_button_minor__title_bog_wiki_editor_1 = $mol_type_enforce<
 		string
@@ -8929,7 +9019,27 @@ declare namespace $ {
 		,
 		ReturnType< $mol_textarea['hint'] >
 	>
-	type $mol_frame__uri_bog_wiki_editor_8 = $mol_type_enforce<
+	type $mol_button_major__title_bog_wiki_editor_8 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_button_major['title'] >
+	>
+	type $mol_button_major__click_bog_wiki_editor_9 = $mol_type_enforce<
+		ReturnType< $bog_wiki_editor['fetch_table'] >
+		,
+		ReturnType< $mol_button_major['click'] >
+	>
+	type $mol_text_code__text_bog_wiki_editor_10 = $mol_type_enforce<
+		ReturnType< $bog_wiki_editor['get_data_spaces_stringify'] >
+		,
+		ReturnType< $mol_text_code['text'] >
+	>
+	type $mol_text_code__text_bog_wiki_editor_11 = $mol_type_enforce<
+		ReturnType< $bog_wiki_editor['get_data_table_stringify'] >
+		,
+		ReturnType< $mol_text_code['text'] >
+	>
+	type $mol_frame__uri_bog_wiki_editor_12 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_frame['uri'] >
@@ -8942,6 +9052,14 @@ declare namespace $ {
 		Actions_row( ): $mol_row
 		editor_text( next?: string ): string
 		Editor_textarea( ): $mol_textarea
+		fetch_table( next?: any ): any
+		Fetch_tables( ): $mol_button_major
+		Divider( ): $bog_ui_divider
+		get_data_spaces_stringify( ): string
+		Simple_view_spaces( ): $mol_text_code
+		get_data_table_stringify( ): string
+		Simple_view_table( ): $mol_text_code
+		Divider2( ): $bog_ui_divider
 		Simple_view_iframe( ): $mol_frame
 		title( ): string
 		Head( ): any
@@ -8951,6 +9069,17 @@ declare namespace $ {
 }
 
 //# sourceMappingURL=editor.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $bog_wiki_editor extends $.$bog_wiki_editor {
+        model(): $bog_wiki_model;
+        fetch_table(): void;
+        data_spaces(next?: any): any;
+        data_table(next?: any): any;
+        get_data_spaces_stringify(): string;
+        get_data_table_stringify(): string;
+    }
+}
+
 declare namespace $ {
 
 	type $mol_check__checked_mol_check_list_1 = $mol_type_enforce<
