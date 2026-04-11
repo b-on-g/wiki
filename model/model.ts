@@ -24,13 +24,14 @@ namespace $ {
             return 'uskurJvFb5GHRVAWGi1jMCP'
         }
 
-        request(url: string) {
+        /** Ответы Fusion описаны в {@link $bog_wiki_model_gen_components} (ген. `gen/gen.ts`). */
+        request<T>(url: string) {
             return $mol_fetch.json(this.base_url() + url, {
                 headers: {
                     Authorization: 'Bearer ' + this.bearer_token(),
                     'Content-Type': 'application/json',
                 },
-            })
+            }) as T
         }
 
 		@$mol_mem
@@ -40,17 +41,21 @@ namespace $ {
 
 		@$milis_log
 		@$mol_mem
-		get_spaces() {
+		get_spaces(): $bog_wiki_model_gen_components['schemas']['ResponseGetSpaces'] {
 			void this.data_revision()
 			return this.request('/spaces')
 		}
 
 		@$milis_log
 		@$mol_mem_key
-		get_table(ids: readonly [string, string]) {
+		get_table(
+			ids: readonly [string, string],
+		): $bog_wiki_model_gen_components['schemas']['GetRecordsData'] {
 			void this.data_revision()
 			const [dstId, viewId] = ids
-			return this.request(`/datasheets/${dstId}/records?viewId=${viewId}`)
+			return this.request(
+				`/datasheets/${dstId}/records?viewId=${viewId}`,
+			)
 		}
     }
 
