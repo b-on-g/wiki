@@ -54,13 +54,13 @@
 - Локально в репозитории: **[`docs/MWS_Tables_docs.md`](docs/MWS_Tables_docs.md)** — конспект официальной документации MWS Tables: пространства, таблицы, представления, виджеты, шаринг, роли, шаблоны, страницы, API; ссылки на видеоуроки (memory.mts.ru) и памятки (PDF). Удобно для контекста продукта рядом с Fusion API.
 - Локально в репозитории: **[`docs/FUSION-API.yaml`](docs/FUSION-API.yaml)** — спецификация **OpenAPI 3.0** для HTTP API **Fusion** (работа с данными MWS Tables: `/fusion/v1/...`, datasheets, records и др.). Использовать как машиночитаемый контракт при разработке интеграции.
 - [Design Kit (Figma) — «Страницы»](https://www.figma.com/design/iUKNWUxfZYSyRhADjDEHYs/%D0%A1%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%8B?node-id=0-1&p=f&t=0XIWXIt3tVWf8JdO-0)
-- Документация MWS GPT для ИИ-функциональности: `docs/API Документация MWS GPT.md`, `docs/API Документация MWS GPT.pdf`, полная документация в PDF в той же папке.
+- Документация MWS GPT для ИИ-функциональности: [`docs/API_MWS_GPT.md`](docs/API_MWS_GPT.md), `docs/API Документация MWS GPT.pdf`, полная документация в PDF в той же папке.
 - Ключ доступа к MWS GPT: храните в переменных окружения / секретах CI, **не коммитьте** в репозиторий.
-- Шаблон обязательных и дополнительных фич: [WikiLive фичи.md](docs/WikiLive фичи.md) (исходный Excel-шаблон при необходимости — отдельный файл в `docs/`).
+- Шаблон обязательных и дополнительных фич: [WikiLive_features.md](docs/WikiLive_features.md) (исходный Excel-шаблон при необходимости — отдельный файл в `docs/`).
 
 #### Шаблон фич (кратко)
 
-Полная таблица в [WikiLive фичи.md](docs/WikiLive фичи.md). Ниже — то же содержание для быстрого просмотра в PRD.
+Полная таблица в [WikiLive_features.md](docs/WikiLive_features.md). Ниже — то же содержание для быстрого просмотра в PRD.
 
 **Обязательные**
 
