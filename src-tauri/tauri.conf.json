@@ -1,6 +1,6 @@
 {
 	"build": {
-		"frontendDist": "../-",
+		"frontendDist": "../app/-",
 		"devUrl": "http://localhost:9080/bog/wiki/app/-/test.html"
 	},
 	"app": {
