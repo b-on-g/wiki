@@ -14,13 +14,12 @@ namespace $.$$ {
 		}
 
 		@$mol_mem
-		data_spaces(next?: any) {
+		data_spaces(next?: $bog_wiki_model_gen_components['schemas']['ResponseGetSpaces']) {
 			return next === undefined ? this.model().get_spaces() : next
 		}
 
-
 		@$mol_mem
-		data_table(next?: any) {
+		data_table(next?: $bog_wiki_model_gen_components['schemas']['GetRecordsData']) {
 			return next === undefined ? this.model().get_table(wiki_table_ids) : next
 		}
 
