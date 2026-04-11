@@ -6,7 +6,7 @@
 	"app": {
 		"windows": [
 			{
-				"title": "WikiLive",
+				"title": "Вики",
 				"width": 1200,
 				"height": 800
 			}
