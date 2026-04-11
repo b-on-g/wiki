@@ -26,6 +26,7 @@ $bog_wiki_app $mol_page
 		<= Tools
 	plugins /
 		<= Theme $bog_theme_auto
+			mode \light
 			theme_light \$mol_theme_calm_light
 			theme_dark \$mol_theme_calm_dark
 			themes /
