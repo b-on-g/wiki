@@ -31,4 +31,4 @@ $bog_wiki_editor $mol_page
 			expanded true
 			value <= data_table null $bog_wiki_model_gen_components['schemas']['GetRecordsData']
 		<= Divider2 $bog_ui_divider
-		- <= Simple_view_iframe $mol_frame uri \https://tables.mws.ru/share/shrKdFiLLioJw8JBF2sUD
+		<= Simple_view_iframe $mol_frame uri \https://tables.mws.ru/share/shrKdFiLLioJw8JBF2sUD
