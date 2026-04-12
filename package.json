@@ -361,6 +361,7 @@
     "$bog_ui_divider",
     "$bog_ui",
     "$bog_wiki_model",
+    "$bog_wiki_model_gen",
     "$mol_fetch",
     "$mol_error_enriched",
     "$mol_error_fence",

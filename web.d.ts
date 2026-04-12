@@ -8848,6 +8848,1948 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    interface paths {
+        '/fusion/v1/spaces/{spaceId}/datasheets': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            post: {
+                parameters: {
+                    query?: never;
+                    header?: never;
+                    path: {
+                        spaceId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody: {
+                    content: {
+                        'application/json': components['schemas']['CreateDatasheetRequest'];
+                    };
+                };
+                responses: {
+                    201: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['CreateDatasheetResponse'];
+                        };
+                    };
+                };
+            };
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces/{spaceId}/datasheet/{dstId}': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            post?: never;
+            delete: operations['DeleteDatasheet'];
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/datasheets/{dstId}/records': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get: {
+                parameters: {
+                    query?: {
+                        viewId?: string;
+                        pageSize?: number;
+                        maxRecords?: number;
+                        pageNum?: number;
+                        sort?: {
+                            order?: 'asc' | 'desc';
+                            field?: string;
+                        }[];
+                        recordIds?: string[];
+                        fields?: string[];
+                        filterByFormula?: string;
+                        cellFormat?: 'string' | 'json';
+                        fieldKey?: 'name' | 'id';
+                    };
+                    header?: never;
+                    path: {
+                        dstId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody?: never;
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['GetRecordsData'];
+                        };
+                    };
+                };
+            };
+            put?: never;
+            post: {
+                parameters: {
+                    query?: {
+                        viewId?: string;
+                    };
+                    header?: never;
+                    path: {
+                        dstId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody: {
+                    content: {
+                        'application/json': components['schemas']['CreateRecordsRequest'];
+                    };
+                };
+                responses: {
+                    201: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['CreateRecordsResponse'];
+                        };
+                    };
+                };
+            };
+            delete: {
+                parameters: {
+                    query: {
+                        recordIds: string[];
+                    };
+                    header?: never;
+                    path: {
+                        dstId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody?: never;
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['DeleteRecordsResponse'];
+                        };
+                    };
+                };
+            };
+            options?: never;
+            head?: never;
+            patch: {
+                parameters: {
+                    query?: {
+                        viewId?: string;
+                    };
+                    header?: never;
+                    path: {
+                        dstId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody: {
+                    content: {
+                        'application/json': components['schemas']['UpdateRecordsRequest'];
+                    };
+                };
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['UpdateRecordsResponse'];
+                        };
+                    };
+                };
+            };
+            trace?: never;
+        };
+        '/fusion/v1/timemachine/{dstId}': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get: {
+                parameters: {
+                    query?: never;
+                    header?: never;
+                    path: {
+                        dstId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody?: never;
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['GetTimeMachineResponse'];
+                        };
+                    };
+                };
+            };
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/datasheets/{dstId}/fields': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get: {
+                parameters: {
+                    query?: {
+                        viewId?: string;
+                    };
+                    header?: never;
+                    path: {
+                        dstId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody?: never;
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['GetFieldsResponse'];
+                        };
+                    };
+                };
+            };
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces/{spaceId}/datasheets/{dstId}/fields': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            post: {
+                parameters: {
+                    query?: never;
+                    header?: never;
+                    path: {
+                        spaceId: string;
+                        dstId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody: {
+                    content: {
+                        'application/json': components['schemas']['CreateFieldRequest'];
+                    };
+                };
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['CreateFieldResponse'];
+                        };
+                    };
+                };
+            };
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces/{spaceId}/datasheets/{dstId}/fields/{fieldId}': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            post?: never;
+            delete: {
+                parameters: {
+                    query?: never;
+                    header?: never;
+                    path: {
+                        spaceId: string;
+                        dstId: string;
+                        fieldId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody?: never;
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['DeleteFieldResponse'];
+                        };
+                    };
+                };
+            };
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/datasheets/{dstId}/views/{viewId}/fields/{fieldId}': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch: {
+                parameters: {
+                    query?: never;
+                    header?: never;
+                    path: {
+                        dstId: string;
+                        viewId: string;
+                        fieldId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody: {
+                    content: {
+                        'application/json': {
+                            index?: number;
+                        };
+                    };
+                };
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    400: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    401: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    404: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    500: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                };
+            };
+            trace?: never;
+        };
+        '/fusion/v1/datasheets/{dstId}/views': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get: {
+                parameters: {
+                    query?: never;
+                    header?: never;
+                    path: {
+                        dstId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody?: never;
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['GetViewsResponse'];
+                        };
+                    };
+                };
+            };
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces/{spaceId}/datasheets/{dstId}/views': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            post: operations['CreateView'];
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces/{spaceId}/datasheets/{dstId}/views/{viewId}': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put: operations['UpdateViewName'];
+            post?: never;
+            delete: operations['DeleteView'];
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces/{spaceId}/datasheets/{dstId}/views/{viewId}/sort': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            post: {
+                parameters: {
+                    query?: never;
+                    header: {
+                        Authorization: string;
+                    };
+                    path: {
+                        spaceId: string;
+                        dstId: string;
+                        viewId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody: {
+                    content: {
+                        'application/json': components['schemas']['SortInfoRequest'];
+                    };
+                };
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['SortInfoResponse'];
+                        };
+                    };
+                    400: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['InvalidSortViewResponse'];
+                        };
+                    };
+                    401: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    403: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    404: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    500: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                };
+            };
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces/{spaceId}/datasheets/{dstId}/views/{viewId}/group': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            post: {
+                parameters: {
+                    query?: never;
+                    header: {
+                        Authorization: string;
+                    };
+                    path: {
+                        spaceId: string;
+                        dstId: string;
+                        viewId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody: {
+                    content: {
+                        'application/json': components['schemas']['GroupRequest'];
+                    };
+                };
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['GroupResponse'];
+                        };
+                    };
+                    400: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['InvalidGroupViewResponse'];
+                        };
+                    };
+                    401: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    403: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    404: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    500: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                };
+            };
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces/{spaceId}/datasheets/{dstId}/views/{viewId}/hidden': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            post: {
+                parameters: {
+                    query?: never;
+                    header: {
+                        Authorization: string;
+                    };
+                    path: {
+                        spaceId: string;
+                        dstId: string;
+                        viewId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody: {
+                    content: {
+                        'application/json': components['schemas']['HideFieldsRequest'];
+                    };
+                };
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['HideFieldsResponse'];
+                        };
+                    };
+                    400: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['InvalidHideFieldsResponse'];
+                        };
+                    };
+                    401: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    403: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    404: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    500: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                };
+            };
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces/{spaceId}/datasheets/{dstId}/views/{viewId}/move': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            post: {
+                parameters: {
+                    query?: never;
+                    header: {
+                        Authorization: string;
+                    };
+                    path: {
+                        spaceId: string;
+                        dstId: string;
+                        viewId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody: {
+                    content: {
+                        'application/json': components['schemas']['MoveViewRequest'];
+                    };
+                };
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['MoveViewResponse'];
+                        };
+                    };
+                    400: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['InvalidMoveViewResponse'];
+                        };
+                    };
+                    401: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    403: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    404: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    500: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                };
+            };
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/datasheets/{dstId}/attachments': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get: {
+                parameters: {
+                    query: {
+                        token: string;
+                    };
+                    header?: never;
+                    path: {
+                        dstId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody?: never;
+                responses: {
+                    200: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/pdf': string;
+                        };
+                    };
+                    400: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    401: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    404: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    503: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                };
+            };
+            put?: never;
+            post: {
+                parameters: {
+                    query?: {
+                        recordId?: string;
+                        fieldId?: string;
+                    };
+                    header?: never;
+                    path: {
+                        dstId: string;
+                    };
+                    cookie?: never;
+                };
+                requestBody: {
+                    content: {
+                        'multipart/form-data': components['schemas']['UploadAttachmentRequestBody'];
+                    };
+                };
+                responses: {
+                    201: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['UploadAttachmentSuccessResponse'];
+                        };
+                    };
+                    400: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    401: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    404: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                    503: {
+                        headers: {
+                            [name: string]: unknown;
+                        };
+                        content: {
+                            'application/json': components['schemas']['BaseResponse'];
+                        };
+                    };
+                };
+            };
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get: operations['getSpaces'];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces/{spaceId}/nodes': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get: operations['getNodes'];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/nodes/{nodeId}': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get: operations['getNodeDetails'];
+            put?: never;
+            post?: never;
+            delete?: never;
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+        '/fusion/v1/spaces/{spaceId}/node/{nodeId}': {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            get?: never;
+            put?: never;
+            post?: never;
+            delete: operations['DeleteNode'];
+            options?: never;
+            head?: never;
+            patch?: never;
+            trace?: never;
+        };
+    }
+    export type $bog_wiki_model_gen_paths = paths;
+    type webhooks = Record<string, never>;
+    export type $bog_wiki_model_gen_webhooks = webhooks;
+    interface components {
+        schemas: {
+            BaseResponse: {
+                success?: boolean;
+                code?: number;
+                message?: string;
+                data?: Record<string, never>;
+            };
+            BackendResponse: {
+                success?: boolean;
+                code?: number;
+                message?: string;
+            };
+            GetRecordsData: components['schemas']['BackendResponse'] & {
+                data?: {
+                    pageNum?: number;
+                    records?: components['schemas']['Record'][];
+                    pageSize?: number;
+                    total?: number;
+                };
+            };
+            Record: {
+                recordId?: string;
+                fields?: Record<string, never>;
+                createdAt?: number;
+                updatedAt?: number;
+            };
+            CreateRecordsRequest: {
+                records: {
+                    fields?: Record<string, never>;
+                }[];
+                fieldKey: string;
+            };
+            CreateRecordsResponse: components['schemas']['BackendResponse'] & {
+                data?: components['schemas']['RecordsData'];
+            };
+            UpdateRecordsRequest: {
+                records: {
+                    recordId?: string;
+                    fields?: components['schemas']['ExampleFieldToUpdate'];
+                }[];
+                fieldKey: string;
+            };
+            ExampleFieldToUpdate: {
+                currency?: number;
+                singleChoice?: string;
+            };
+            UpdateRecordsResponse: components['schemas']['BackendResponse'] & {
+                data?: components['schemas']['RecordsData'];
+            };
+            DeleteRecordsResponse: components['schemas']['BackendResponse'] & {
+                data?: boolean;
+            };
+            RecordsData: {
+                records?: components['schemas']['Record'][];
+            };
+            GetFieldsResponse: components['schemas']['BackendResponse'] & {
+                data?: components['schemas']['Fields'];
+            };
+            FieldsObject: {
+                fields?: Record<string, never>;
+                fieldKey: 'name' | 'id';
+            };
+            Fields: {
+                fields?: components['schemas']['FieldsArray'];
+            };
+            FieldsArray: components['schemas']['Field'][];
+            Field: {
+                id?: string;
+                name?: string;
+                type?: components['schemas']['FieldTypeEnum'];
+                desc?: string;
+                property?: Record<string, never>;
+            };
+            FieldProperty: {
+                defaultValue?: string;
+            };
+            CreateFieldRequest: {
+                type?: components['schemas']['FieldTypeEnum'];
+                name?: string;
+                property?: components['schemas']['FieldCreateProperty'];
+            };
+            CreateFieldResponse: components['schemas']['BackendResponse'] & {
+                data?: {
+                    id?: string;
+                    name?: string;
+                };
+            };
+            DeleteFieldResponse: components['schemas']['BackendResponse'] & {
+                data?: Record<string, never>;
+            };
+            UploadAttachmentResponse: components['schemas']['BackendResponse'] & {
+                data?: {
+                    token: string;
+                    name: string;
+                    size: number;
+                    width: number;
+                    height: number;
+                    mimeType: string;
+                    preview?: string;
+                    url?: string;
+                };
+            };
+            FieldTypeEnum: 'SingleText' | 'Text' | 'SingleSelect' | 'MultiSelect' | 'Number' | 'Currency' | 'Percent' | 'DateTime' | 'Attachment' | 'Member' | 'Checkbox' | 'Rating' | 'URL' | 'Phone' | 'Email' | 'WorkDoc' | 'OneWayLink' | 'TwoWayLink' | 'MagicLookUp' | 'Formula' | 'AutoNumber' | 'CreatedTime' | 'LastModifiedTime' | 'CreatedBy' | 'LastModifiedBy';
+            FieldCreateProperty: components['schemas']['SingleTextProperty'] | components['schemas']['TextProperty'] | components['schemas']['SingleSelectProperty'] | components['schemas']['MultiSelectProperty'] | components['schemas']['NumberProperty'] | components['schemas']['CurrencyProperty'] | components['schemas']['PercentProperty'] | components['schemas']['DateTimeProperty'] | components['schemas']['AttachmentProperty'] | components['schemas']['MemberProperty'] | components['schemas']['CheckboxProperty'] | components['schemas']['RatingProperty'] | components['schemas']['OneWayLinkProperty'] | components['schemas']['MagicLinkProperty'] | components['schemas']['MagicLookUpProperty'] | components['schemas']['FormulaProperty'] | components['schemas']['CreatedTimeProperty'] | components['schemas']['LastModifiedTimeProperty'] | components['schemas']['LastModifiedByProperty'] | components['schemas']['ButtonProperty'];
+            SingleTextProperty: {
+                defaultValue?: string;
+                mask?: components['schemas']['MaskProperty'];
+            };
+            TextProperty: {
+                mask?: components['schemas']['MaskProperty'];
+            };
+            SingleSelectProperty: {
+                options?: {
+                    name?: string;
+                    color?: string;
+                }[];
+                defaultValue?: string;
+            };
+            MultiSelectProperty: {
+                options?: {
+                    name?: string;
+                    color?: string;
+                }[];
+                defaultValue?: string;
+            };
+            NumberProperty: {
+                defaultValue?: string;
+                symbol?: string;
+                precision?: number;
+            };
+            CurrencyProperty: {
+                defaultValue?: string;
+                symbol?: string;
+                precision?: number;
+                symbolAlign?: string;
+            };
+            PercentProperty: {
+                defaultValue?: string;
+                precision?: number;
+            };
+            DateTimeProperty: {
+                dateFormat?: 'YYYY/MM/DD' | 'YYYY-MM-DD' | 'DD/MM/YYYY' | 'YYYY-MM' | 'MM-DD' | 'YYYY' | 'MM' | 'DD';
+                timeFormat?: 'HH:mm' | 'hh:mm';
+                autoFill?: boolean;
+                includeTime?: boolean;
+            };
+            AttachmentProperty: Record<string, never>;
+            MemberProperty: {
+                isMulti?: boolean;
+                shouldSendMsg?: boolean;
+            };
+            CheckboxProperty: {
+                icon?: string;
+            };
+            RatingProperty: {
+                icon?: string;
+                max?: number;
+            };
+            OneWayLinkProperty: {
+                foreignDatasheetId?: string;
+                limitToViewId?: string;
+                limitSingleRecord?: boolean;
+            };
+            MagicLinkProperty: {
+                foreignDatasheetId?: string;
+                limitToViewId?: string;
+                limitSingleRecord?: boolean;
+            };
+            MagicLookUpProperty: {
+                relatedLinkFieldId?: string;
+                targetFieldId?: string;
+            };
+            FormulaProperty: {
+                expression?: string;
+            };
+            CreatedTimeProperty: {
+                dateFormat?: 'YYYY/MM/DD' | 'YYYY-MM-DD' | 'DD/MM/YYYY' | 'YYYY-MM' | 'MM-DD' | 'YYYY' | 'MM' | 'DD';
+                timeFormat?: 'HH:mm' | 'hh:mm';
+                autoFill?: boolean;
+                includeTime?: boolean;
+            };
+            LastModifiedTimeProperty: {
+                collectType?: 0 | 1;
+                fieldIdCollection?: string[];
+            };
+            LastModifiedByProperty: {
+                collectType?: 0 | 1;
+                fieldIdCollection?: string[];
+            };
+            ButtonProperty: {
+                text?: string;
+                style?: {
+                    type?: 'Background' | 'OnlyText';
+                    color?: {
+                        value?: string;
+                    };
+                };
+                action?: {
+                    type?: 'Link' | 'RecordOperation' | 'SendEmail' | 'AddRecord';
+                    config?: Record<string, never>;
+                };
+            };
+            CreateDatasheetRequest: {
+                name?: string;
+                description?: string;
+                folderId?: string;
+                preNodeId?: string;
+                fields?: components['schemas']['CreateFieldRequest'][];
+            };
+            MaskProperty: {
+                condition?: {
+                    operator?: string;
+                    value?: string;
+                };
+            };
+            GetViewsResponse: components['schemas']['BackendResponse'] & {
+                data?: {
+                    views?: components['schemas']['View'][];
+                };
+            };
+            View: {
+                id?: string;
+                name?: string;
+                type?: string;
+            };
+            CreateDatasheetResponse: components['schemas']['BackendResponse'] & {
+                data?: {
+                    id?: string;
+                    createdAt?: number;
+                    fields?: {
+                        id?: string;
+                        name?: string;
+                    }[];
+                };
+            };
+            GetTimeMachineResponse: components['schemas']['BackendResponse'] & {
+                data?: string[];
+            };
+            ResponseGetNodes: components['schemas']['BaseResponse'] & {
+                data?: {
+                    nodes?: components['schemas']['Nodes'];
+                };
+            };
+            ResponseGetSpaces: components['schemas']['BaseResponse'] & {
+                data?: {
+                    spaces?: {
+                        id?: string;
+                        name?: string;
+                        isAdmin?: boolean;
+                    }[];
+                };
+            };
+            ResponseGetNodeDetails: components['schemas']['BaseResponse'] & {
+                data?: components['schemas']['Node'];
+            };
+            Nodes: components['schemas']['Node'][];
+            Node: {
+                id?: string;
+                name?: string;
+                type?: string;
+                icon?: string;
+                isFav?: boolean;
+                permission?: number;
+                children?: components['schemas']['Node'][];
+            };
+            MessageIncorrectType: string;
+            MessageIncorrectParameter: string;
+            InvalidResponseGetNodes: components['schemas']['BaseResponse'] & {
+                message?: components['schemas']['MessageIncorrectType'] | components['schemas']['MessageIncorrectParameter'];
+            };
+            ResponseDataDeleteNode: components['schemas']['BaseResponse'] & {
+                data?: {
+                    nodeId?: string;
+                };
+            };
+            InvalidDeleteNodeResponse: components['schemas']['BaseResponse'] & {
+                message?: components['schemas']['MessageIncorrectType'] | components['schemas']['MessageIncorrectParameter'];
+            };
+            CreateViewRequestBody: {
+                name: string;
+                properties: {
+                    type: 'Kanban';
+                    settings: {
+                        groupFieldId: string;
+                    };
+                } | {
+                    type: 'Grid';
+                } | {
+                    type: 'Gantt';
+                    settings: {
+                        startFieldId: string;
+                        endFieldId?: string;
+                        linkFieldId?: string;
+                    };
+                } | {
+                    type: 'Architecture';
+                    settings: {
+                        linkFieldId: string;
+                    };
+                } | {
+                    type: 'Gallery';
+                } | {
+                    type: 'Calendar';
+                    settings: {
+                        startFieldId: string;
+                        endFieldId?: string;
+                    };
+                };
+            };
+            ViewDetails: {
+                id?: string;
+                name?: string;
+                type?: number;
+                rowHeightLevel?: number;
+                columns?: {
+                    fieldId?: string;
+                    statType?: number;
+                }[];
+                rows?: {
+                    recordId?: string;
+                }[];
+                frozenColumnCount?: number;
+                displayHiddenColumnWithinMirror?: boolean;
+            };
+            ResponseDataCreateView: components['schemas']['BaseResponse'] & {
+                data?: components['schemas']['ViewDetails'];
+            };
+            InvalidCreateViewResponse: components['schemas']['BaseResponse'] & {
+                message?: components['schemas']['MessageIncorrectType'] | components['schemas']['MessageIncorrectParameter'];
+            };
+            ResponseDataDeleteView: components['schemas']['BaseResponse'] & {
+                data?: {
+                    viewId?: string;
+                };
+            };
+            InvalidDeleteViewResponse: components['schemas']['BaseResponse'] & {
+                message?: components['schemas']['MessageIncorrectType'] | components['schemas']['MessageIncorrectParameter'];
+            };
+            InvalidUpdateViewNameResponse: components['schemas']['BaseResponse'] & {
+                message?: components['schemas']['MessageIncorrectType'] | components['schemas']['MessageIncorrectParameter'];
+            };
+            InvalidSortViewResponse: components['schemas']['BaseResponse'] & {
+                message?: components['schemas']['MessageIncorrectType'] | components['schemas']['MessageIncorrectParameter'];
+            };
+            InvalidGroupViewResponse: components['schemas']['BaseResponse'] & {
+                message?: components['schemas']['MessageIncorrectType'] | components['schemas']['MessageIncorrectParameter'];
+            };
+            InvalidHideFieldsResponse: components['schemas']['BaseResponse'] & {
+                message?: components['schemas']['MessageIncorrectType'] | components['schemas']['MessageIncorrectParameter'];
+            };
+            InvalidMoveViewResponse: components['schemas']['BaseResponse'] & {
+                message?: components['schemas']['MessageIncorrectType'] | components['schemas']['MessageIncorrectParameter'];
+            };
+            UpdateViewNameRequestBody: {
+                name: string;
+                description?: string;
+            };
+            ResponseDataUpdateViewName: components['schemas']['BaseResponse'] & {
+                data?: components['schemas']['ViewShortInfo'];
+            };
+            SortInfoRequest: {
+                data: {
+                    keepSort?: boolean;
+                    rules: {
+                        fieldId: string;
+                        desc?: boolean;
+                    }[];
+                };
+                applySort?: boolean;
+            };
+            GroupRequest: {
+                data: {
+                    fieldId: string;
+                    desc?: boolean;
+                }[];
+            };
+            ViewShortInfo: {
+                viewId?: string;
+                name?: string;
+                type?: string;
+            };
+            SortInfoResponse: components['schemas']['BaseResponse'] & {
+                data?: components['schemas']['ViewShortInfo'];
+            };
+            GroupResponse: components['schemas']['BaseResponse'] & {
+                data?: components['schemas']['ViewShortInfo'];
+            };
+            HideFieldsResponse: components['schemas']['BaseResponse'] & {
+                data?: components['schemas']['ViewShortInfo'];
+            };
+            MoveViewResponse: components['schemas']['BaseResponse'] & {
+                data?: components['schemas']['ViewShortInfo'];
+            };
+            HideFieldsRequest: {
+                data: {
+                    fieldId: string;
+                    hidden?: boolean;
+                }[];
+            };
+            MoveViewRequest: {
+                data: {
+                    newIndex: number;
+                };
+            };
+            UploadAttachmentRequestBody: {
+                file?: string;
+            };
+            UploadAttachmentSuccessResponse: components['schemas']['BaseResponse'] & components['schemas']['AttachmentData'];
+            AttachmentData: {
+                data?: {
+                    token?: string;
+                    mimeType?: string;
+                    size?: number;
+                    name?: string;
+                    bucket?: string;
+                    url?: string;
+                };
+            };
+        };
+        responses: never;
+        parameters: never;
+        requestBodies: never;
+        headers: never;
+        pathItems: never;
+    }
+    export type $bog_wiki_model_gen_components = components;
+    type defs = Record<string, never>;
+    export type $bog_wiki_model_gen_defs = defs;
+    interface operations {
+        DeleteDatasheet: {
+            parameters: {
+                query?: never;
+                header: {
+                    Authorization: string;
+                };
+                path: {
+                    spaceId: string;
+                    dstId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['ResponseDataDeleteNode'];
+                    };
+                };
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['InvalidDeleteNodeResponse'];
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+            };
+        };
+        CreateView: {
+            parameters: {
+                query?: never;
+                header: {
+                    Authorization: string;
+                };
+                path: {
+                    spaceId: string;
+                    dstId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    'application/json': components['schemas']['CreateViewRequestBody'];
+                };
+            };
+            responses: {
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['ResponseDataCreateView'];
+                    };
+                };
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['InvalidCreateViewResponse'];
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+            };
+        };
+        UpdateViewName: {
+            parameters: {
+                query?: never;
+                header: {
+                    Authorization: string;
+                };
+                path: {
+                    spaceId: string;
+                    dstId: string;
+                    viewId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    'application/json': components['schemas']['UpdateViewNameRequestBody'];
+                };
+            };
+            responses: {
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['ResponseDataUpdateViewName'];
+                    };
+                };
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['InvalidUpdateViewNameResponse'];
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+            };
+        };
+        DeleteView: {
+            parameters: {
+                query?: never;
+                header: {
+                    Authorization: string;
+                };
+                path: {
+                    spaceId: string;
+                    dstId: string;
+                    viewId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['ResponseDataDeleteView'];
+                    };
+                };
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['InvalidDeleteViewResponse'];
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+            };
+        };
+        getSpaces: {
+            parameters: {
+                query?: never;
+                header: {
+                    Authorization: string;
+                };
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['ResponseGetSpaces'];
+                    };
+                };
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+            };
+        };
+        getNodes: {
+            parameters: {
+                query?: {
+                    type?: number;
+                };
+                header: {
+                    Authorization: string;
+                };
+                path: {
+                    spaceId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['ResponseGetNodes'];
+                    };
+                };
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['InvalidResponseGetNodes'];
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+            };
+        };
+        getNodeDetails: {
+            parameters: {
+                query?: never;
+                header: {
+                    Authorization: string;
+                };
+                path: {
+                    nodeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['ResponseGetNodeDetails'];
+                    };
+                };
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+            };
+        };
+        DeleteNode: {
+            parameters: {
+                query?: never;
+                header: {
+                    Authorization: string;
+                };
+                path: {
+                    spaceId: string;
+                    nodeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['ResponseDataDeleteNode'];
+                    };
+                };
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['InvalidDeleteNodeResponse'];
+                    };
+                };
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        'application/json': components['schemas']['BaseResponse'];
+                    };
+                };
+            };
+        };
+    }
+    export type $bog_wiki_model_gen_operations = operations;
+    export {};
+}
+
+declare namespace $ {
     function $milis_log(target: any, key: string, descriptor: PropertyDescriptor): PropertyDescriptor;
     function $milis_log_in(target: any, key: string, descriptor: PropertyDescriptor): PropertyDescriptor;
     function $milis_log_out(target: any, key: string, descriptor: PropertyDescriptor): PropertyDescriptor;
@@ -8857,10 +10799,10 @@ declare namespace $ {
     class $bog_wiki_model extends $mol_object {
         base_url(): string;
         bearer_token(): string;
-        request(url: string): unknown;
+        request<T>(url: string): T;
         data_revision(next?: number): number;
-        get_spaces(): unknown;
-        get_table(ids: readonly [string, string]): unknown;
+        get_spaces(): $bog_wiki_model_gen_components['schemas']['ResponseGetSpaces'];
+        get_table(ids: readonly [string, string]): $bog_wiki_model_gen_components['schemas']['GetRecordsData'];
     }
 }
 
@@ -8955,8 +10897,37 @@ declare namespace $.$$ {
     class $bog_wiki_editor extends $.$bog_wiki_editor {
         model(): $bog_wiki_model;
         fetch_table(): void;
-        data_spaces(next?: any): any;
-        data_table(next?: any): any;
+        data_spaces(next?: $bog_wiki_model_gen_components['schemas']['ResponseGetSpaces']): {
+            success?: boolean;
+            code?: number;
+            message?: string;
+            data?: Record<string, never>;
+        } & {
+            data?: {
+                spaces?: {
+                    id?: string;
+                    name?: string;
+                    isAdmin?: boolean;
+                }[];
+            };
+        };
+        data_table(next?: $bog_wiki_model_gen_components['schemas']['GetRecordsData']): {
+            success?: boolean;
+            code?: number;
+            message?: string;
+        } & {
+            data?: {
+                pageNum?: number;
+                records?: {
+                    recordId?: string;
+                    fields?: Record<string, never>;
+                    createdAt?: number;
+                    updatedAt?: number;
+                }[];
+                pageSize?: number;
+                total?: number;
+            };
+        };
         get_data_spaces_stringify(): string;
         get_data_table_stringify(): string;
     }
