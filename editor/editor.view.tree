@@ -10,19 +10,25 @@ $bog_wiki_editor $mol_page
 		<= Editor_textarea $mol_textarea
 			value? <=> editor_text? \
 			hint \Начните вводить содержимое или нажмите / чтобы использовать команды
+		<= Space $bog_wiki_mws_space
+		<= Table $bog_wiki_mws_table
+			table_data <= data_table null $bog_wiki_model_gen_components['schemas']['GetRecordsData']
+			fields_data <= data_fields null $bog_wiki_model_gen_components['schemas']['GetFieldsResponse']
 		<= Fetch_tables $mol_button_major 
 			title \Fetch Tables
 			click? <= fetch_table? null
 		<= Divider $bog_ui_divider
-		<= Simple_view_spaces $mol_text_code
+		- <= Simple_view_spaces $mol_text_code
 			text <= get_data_spaces_stringify \
-		<= Simple_view_table $mol_text_code
+		- <= Simple_view_table $mol_text_code
 			text <= get_data_table_stringify \
+		- <= Simple_view_fields $mol_text_code
+			text <= get_data_fields_stringify \
 		- <= Dumb_spaces $mol_dump_value
 			expanded true
 			value <= data_spaces null
 		- <= Dumb_table $mol_dump_value
 			expanded true
-			value <= data_table null
+			value <= data_table null $bog_wiki_model_gen_components['schemas']['GetRecordsData']
 		<= Divider2 $bog_ui_divider
-		<= Simple_view_iframe $mol_frame uri \https://tables.mws.ru/share/shrKdFiLLioJw8JBF2sUD
+		- <= Simple_view_iframe $mol_frame uri \https://tables.mws.ru/share/shrKdFiLLioJw8JBF2sUD

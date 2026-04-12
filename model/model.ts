@@ -1,7 +1,6 @@
 /// <reference path="./gen/gen.ts" />
 namespace $ {
-
-	export class $bog_wiki_model extends $mol_object {
+    export class $bog_wiki_model extends $mol_object {
         // request(model: string, key: string) {
         //     return Resp(
         //         this.$.$mol_fetch.json(`https://models.github.ai/inference/chat/completions`, {
@@ -18,6 +17,7 @@ namespace $ {
         base_url() {
             // const cors = 'http://cors.hyoo.ru/'
             const cors = 'https://cors-anywhere.herokuapp.com/'
+            // const cors = 'https://proxy.kinsle.ru/proxy'
             return cors + 'https://tables.mws.ru/fusion/v1'
         }
 
@@ -35,29 +35,29 @@ namespace $ {
             }) as T
         }
 
-		@$mol_mem
-		data_revision(next?: number) {
-			return next ?? 0
-		}
+        @$mol_mem
+        data_revision(next?: number) {
+            return next ?? 0
+        }
 
-		@$milis_log
-		@$mol_mem
-		get_spaces(): $bog_wiki_model_gen_components['schemas']['ResponseGetSpaces'] {
-			void this.data_revision()
-			return this.request('/spaces')
-		}
+        @$mol_mem
+        get_spaces(): $bog_wiki_model_gen_components['schemas']['ResponseGetSpaces'] {
+            void this.data_revision()
+            return this.request('/spaces')
+        }
 
-		@$milis_log
-		@$mol_mem_key
-		get_table(
-			ids: readonly [string, string],
-		): $bog_wiki_model_gen_components['schemas']['GetRecordsData'] {
-			void this.data_revision()
-			const [dstId, viewId] = ids
-			return this.request(
-				`/datasheets/${dstId}/records?viewId=${viewId}`,
-			)
-		}
+        @$mol_mem_key
+        get_table(ids: readonly [string, string]): $bog_wiki_model_gen_components['schemas']['GetRecordsData'] {
+            void this.data_revision()
+            const [dstId, viewId] = ids
+            return this.request(`/datasheets/${dstId}/records?viewId=${viewId}`)
+        }
+
+        @$mol_mem_key
+        get_fields(ids: readonly [string, string]): $bog_wiki_model_gen_components['schemas']['GetFieldsResponse'] {
+            void this.data_revision()
+            const [dstId, viewId] = ids
+            return this.request(`/datasheets/${dstId}/fields?viewId=${viewId}`)
+        }
     }
-
 }
