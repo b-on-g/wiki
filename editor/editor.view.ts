@@ -25,6 +25,11 @@ namespace $.$$ {
 		}
 
 		@$mol_mem
+		data_fields(next?: $bog_wiki_model_gen_components['schemas']['GetFieldsResponse']) {
+			return next === undefined ? this.model().get_fields(wiki_table_ids) : next
+		}
+
+		@$mol_mem
 		get_data_spaces_stringify() {
 			return 'Spaces: \n' + JSON.stringify(this.data_spaces(), null, 2)
 		}
@@ -32,6 +37,11 @@ namespace $.$$ {
 		@$mol_mem
 		get_data_table_stringify() {
 			return 'Table: \n' + JSON.stringify(this.data_table(), null, 2)
+		}
+
+		@$mol_mem
+		get_data_fields_stringify() {
+			return 'Fields: \n' + JSON.stringify(this.data_fields(), null, 2)
 		}
 	}
 }

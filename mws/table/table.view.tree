@@ -1,0 +1,7 @@
+$bog_wiki_mws_table $mol_view
+	table_data null $bog_wiki_model_gen_components['schemas']['GetRecordsData']
+	fields_data null $bog_wiki_model_gen_components['schemas']['GetFieldsResponse']
+	sub /
+		<= Table_ui_table $bog_ui_table
+			columns <= columns /
+			data <= data /
