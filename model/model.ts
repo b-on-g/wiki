@@ -27,7 +27,6 @@ namespace $ {
             return $mol_fetch.json( this.base_url() + url, {
                 headers: {
                     Authorization: 'Bearer ' + this.bearer_token(),
-                    'Content-Type': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest',
                 },
             } ) as T

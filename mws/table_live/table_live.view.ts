@@ -49,18 +49,25 @@ namespace $.$$ {
 			return this.records_raw().map( ( r: any ) => r.fields ?? {} )
 		}
 
+		private save_timers = new Map< string, $mol_after_timeout >()
+
 		@ $mol_mem_key
 		override cell_value( id: { row: string[], col: string }, next?: string ) {
 			if( next !== undefined ) {
-				const idx = Number( id.row[ id.row.length - 1 ] )
-				const record = this.records_raw()[ idx ] as any
-				if( record?.recordId ) {
-					this.model().update_records(
-						this.dst_id(),
-						[{ recordId: record.recordId, fields: { [ id.col ]: next } }],
-					)
-					setTimeout( () => this.bump_revision(), 500 )
-				}
+				const key = id.row.join( '/' ) + '\t' + id.col
+				this.save_timers.get( key )?.destructor()
+				this.save_timers.set( key, new this.$.$mol_after_timeout( 1000, () => {
+					this.save_timers.delete( key )
+					const idx = Number( id.row[ id.row.length - 1 ] )
+					const record = this.records_raw()[ idx ] as any
+					if( record?.recordId ) {
+						this.model().update_records(
+							this.dst_id(),
+							[{ recordId: record.recordId, fields: { [ id.col ]: next } }],
+						)
+						this.bump_revision()
+					}
+				} ) )
 				return next
 			}
 			const idx = Number( id.row[ id.row.length - 1 ] )

@@ -14,7 +14,6 @@ namespace $ {
 				'dstBumsSV6ng3k0nHd',
 			)
 			if( !dstId ) {
-				editor.focus_block( block_id )
 				return
 			}
 

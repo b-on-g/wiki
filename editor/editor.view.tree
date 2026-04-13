@@ -2,12 +2,12 @@ $bog_wiki_editor $bog_wysiwyg_app
 	main_content /
 		<= Editor
 		<= Space $bog_wiki_mws_space
-		<= Table $bog_wiki_mws_table
+		- <= Table $bog_wiki_mws_table
 			table_data <= data_table null $bog_wiki_model_gen_components['schemas']['GetRecordsData']
 			fields_data <= data_fields null $bog_wiki_model_gen_components['schemas']['GetFieldsResponse']
-		<= Fetch_tables $mol_button_major
+		- <= Fetch_tables $mol_button_major
 			title \Fetch Tables
 			click? <= fetch_table? null
-		<= Divider $bog_ui_divider
-		<= Simple_view_iframe $mol_frame
+		- <= Divider $bog_ui_divider
+		- <= Simple_view_iframe $mol_framproxy
 			uri \https://tables.mws.ru/share/shrKdFiLLioJw8JBF2sUD
