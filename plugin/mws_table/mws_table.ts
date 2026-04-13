@@ -31,16 +31,19 @@ namespace $ {
 			if( table ) return table
 
 			try {
-				const config = JSON.parse( block.html() || '{}' )
-				if( !config.dstId ) return null
+				const html = block.html()
+				const config = JSON.parse( html || '{}' )
+				const dstId = config.dstId || 'dstBumsSV6ng3k0nHd'
+				const viewId = config.viewId || 'viwklpg2YdqyQ'
 
 				table = new block.$.$bog_wiki_mws_table_live()
-				table.dst_id = () => config.dstId
-				table.view_id = () => config.viewId || ''
+				table.dst_id = () => dstId
+				table.view_id = () => viewId
 
 				render_cache.set( block, table )
 				return table
-			} catch {
+			} catch( error ) {
+				if( error instanceof Promise ) throw error
 				return null
 			}
 		},
