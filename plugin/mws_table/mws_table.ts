@@ -9,13 +9,19 @@ namespace $ {
 
 		on_select: ( editor, block_id ) => {
 
-			const dstId = editor.$.$mol_dom_context.prompt( 'Datasheet ID (dstXXX):' )
+			const dstId = editor.$.$mol_dom_context.prompt(
+				'Datasheet ID (dstXXX):',
+				'dstBumsSV6ng3k0nHd',
+			)
 			if( !dstId ) {
 				editor.focus_block( block_id )
 				return
 			}
 
-			const viewId = editor.$.$mol_dom_context.prompt( 'View ID (viwXXX, or leave empty):' ) ?? ''
+			const viewId = editor.$.$mol_dom_context.prompt(
+				'View ID (viwXXX, пусто = все):',
+				'viwklpg2YdqyQ',
+			) ?? ''
 
 			editor.block_type( block_id, 'mws_table' )
 			editor.block_html( block_id, JSON.stringify({ dstId, viewId }) )

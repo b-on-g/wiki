@@ -1,3 +1,4 @@
 include \/mol/offline/install
+include \/bog/wiki/mws/table_live
 include \/bog/wiki/plugin/mws_table
 deploy \/bog/wiki/assets

@@ -15,10 +15,7 @@ namespace $ {
         // }
 
         base_url() {
-            // const cors = 'http://cors.hyoo.ru/'
-            const cors = 'https://cors-anywhere.herokuapp.com/'
-            // const cors = 'https://proxy.kinsle.ru/proxy'
-            return cors + 'https://tables.mws.ru/fusion/v1'
+            return 'http://87.120.36.150:39281/https://tables.mws.ru/fusion/v1'
         }
 
         bearer_token() {
@@ -31,6 +28,7 @@ namespace $ {
                 headers: {
                     Authorization: 'Bearer ' + this.bearer_token(),
                     'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
                 },
             } ) as T
         }
@@ -42,6 +40,7 @@ namespace $ {
                 headers: {
                     Authorization: 'Bearer ' + this.bearer_token(),
                     'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
                 },
                 body: body ? JSON.stringify( body ) : undefined,
             } ) as T
