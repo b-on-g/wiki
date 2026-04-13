@@ -5905,17 +5905,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_data_string = (val) => {
-        if (typeof val === 'string')
-            return val;
-        return $mol_fail(new $mol_data_error(`${val} is not a string`));
-    };
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
     $mol_test({
         'Is string'() {
             $mol_data_string('');
@@ -6151,6 +6140,2337 @@ var $;
             $mol_assert_equal($mol_state_session.value(key), null);
         },
     });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const locale_en = {
+            '$bog_wysiwyg_menu_command_paragraph': 'Text',
+            '$bog_wysiwyg_menu_command_heading1': 'Heading 1',
+            '$bog_wysiwyg_menu_command_heading2': 'Heading 2',
+            '$bog_wysiwyg_menu_command_heading3': 'Heading 3',
+            '$bog_wysiwyg_menu_command_code': 'Code',
+            '$bog_wysiwyg_menu_command_quote': 'Quote',
+            '$bog_wysiwyg_menu_command_list': 'List',
+            '$bog_wysiwyg_menu_command_divider': 'Divider',
+            '$bog_wysiwyg_menu_command_image': 'Image',
+        };
+        function menu_make() {
+            $mol_locale.texts('en', locale_en);
+            return new $bog_wysiwyg_menu();
+        }
+        $mol_test({
+            'Menu commands returns builtin commands'() {
+                const menu = menu_make();
+                const cmds = menu.commands();
+                $mol_assert_ok(cmds.length >= 9);
+                $mol_assert_equal(cmds[0].id, 'paragraph');
+                $mol_assert_equal(cmds[1].id, 'heading1');
+                $mol_assert_equal(cmds[2].id, 'heading2');
+                $mol_assert_equal(cmds[3].id, 'heading3');
+                $mol_assert_equal(cmds[4].id, 'code');
+                $mol_assert_equal(cmds[5].id, 'quote');
+                $mol_assert_equal(cmds[6].id, 'list');
+                $mol_assert_equal(cmds[7].id, 'divider');
+                $mol_assert_equal(cmds[8].id, 'image');
+            },
+            'Menu option_rows returns views matching commands length'() {
+                const menu = menu_make();
+                const rows = menu.option_rows();
+                $mol_assert_equal(rows.length, menu.commands().length);
+            },
+            'Menu option_title returns title for known command id'() {
+                const menu = menu_make();
+                const title = menu.option_title('paragraph');
+                $mol_assert_ok(title.length > 0);
+            },
+            'Menu option_title returns empty string for unknown id'() {
+                const menu = menu_make();
+                const title = menu.option_title('nonexistent');
+                $mol_assert_equal(title, '');
+            },
+            'Menu option_active returns true when index matches'() {
+                const menu = menu_make();
+                menu.index(0);
+                const first_id = menu.commands()[0].id;
+                $mol_assert_equal(menu.option_active(first_id), true);
+            },
+            'Menu option_active returns false for non-matching id'() {
+                const menu = menu_make();
+                menu.index(0);
+                $mol_assert_equal(menu.option_active('nonexistent'), false);
+            },
+            'Menu option_active tracks index changes'() {
+                const menu = menu_make();
+                menu.index(2);
+                const cmd = menu.commands()[2];
+                $mol_assert_equal(menu.option_active(cmd.id), true);
+                $mol_assert_equal(menu.option_active(menu.commands()[0].id), false);
+            },
+            'Menu option_click calls picked and hides menu'() {
+                const menu = menu_make();
+                menu.showed(true);
+                let picked_val = '';
+                menu.picked = (next) => {
+                    if (next !== undefined)
+                        picked_val = next;
+                    return picked_val;
+                };
+                const event = { type: 'click' };
+                menu.option_click('heading1', event);
+                $mol_assert_equal(picked_val, 'heading1');
+                $mol_assert_equal(menu.showed(), false);
+            },
+            'Menu option_click without event returns null'() {
+                const menu = menu_make();
+                $mol_assert_equal(menu.option_click('paragraph'), null);
+            },
+            'Menu pos_y_str returns pixel string'() {
+                const menu = menu_make();
+                menu.pos_y(200);
+                $mol_assert_equal(menu.pos_y_str(), '200px');
+            },
+            'Menu pos_x_str returns pixel string'() {
+                const menu = menu_make();
+                menu.pos_x(350);
+                $mol_assert_equal(menu.pos_x_str(), '350px');
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        function apply_markdown(input) {
+            const doc = $mol_dom_context.document;
+            const div = doc.createElement('div');
+            div.contentEditable = 'true';
+            doc.body.appendChild(div);
+            try {
+                div.textContent = input;
+                const text_node = div.firstChild;
+                const sel = doc.defaultView.getSelection();
+                const range = doc.createRange();
+                range.setStart(text_node, input.length);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+                const block = new $bog_wysiwyg_block();
+                block.try_markdown(div);
+                return div.innerHTML;
+            }
+            finally {
+                doc.body.removeChild(div);
+            }
+        }
+        function make_block_with_selection(html, select_text) {
+            const doc = $mol_dom_context.document;
+            const div = doc.createElement('div');
+            div.contentEditable = 'true';
+            div.innerHTML = html;
+            doc.body.appendChild(div);
+            div.focus();
+            if (select_text) {
+                const walker = doc.createTreeWalker(div, 4);
+                let node;
+                while (node = walker.nextNode()) {
+                    const idx = (node.textContent ?? '').indexOf(select_text);
+                    if (idx >= 0) {
+                        const range = doc.createRange();
+                        range.setStart(node, idx);
+                        range.setEnd(node, idx + select_text.length);
+                        const sel = doc.defaultView.getSelection();
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                        break;
+                    }
+                }
+            }
+            return div;
+        }
+        $mol_test({
+            'bold markdown converts to HTML'() {
+                $mol_assert_equal(apply_markdown('hello **world** end'), 'hello <b>world</b> end');
+            },
+            'italic markdown converts to HTML'() {
+                $mol_assert_equal(apply_markdown('hello *world* end'), 'hello <i>world</i> end');
+            },
+            'inline code markdown converts to HTML'() {
+                $mol_assert_equal(apply_markdown('hello `code` end'), 'hello <code>code</code> end');
+            },
+            'strikethrough markdown converts to HTML'() {
+                $mol_assert_equal(apply_markdown('hello ~~strike~~ end'), 'hello <s>strike</s> end');
+            },
+            'link markdown converts to HTML'() {
+                const result = apply_markdown('click [here](https://example.com) now');
+                $mol_assert_equal(result, 'click <a href="https://example.com">here</a> now');
+            },
+            'wiki link [[page_id]] converts to anchor'() {
+                const result = apply_markdown('see [[my_page]] for info');
+                $mol_assert_ok(result.includes('<a '));
+                $mol_assert_ok(result.includes('data-wiki-link="my_page"'));
+                $mol_assert_ok(result.includes('href="#my_page"'));
+                $mol_assert_ok(result.includes('>my_page</a>'));
+            },
+            'wiki link with empty content does not convert'() {
+                $mol_assert_equal(apply_markdown('hello [[]] end'), 'hello [[]] end');
+            },
+            'partially typed wiki link does not convert'() {
+                $mol_assert_equal(apply_markdown('[[not closed'), '[[not closed');
+            },
+            'empty bold content does not convert'() {
+                $mol_assert_equal(apply_markdown('hello **** end'), 'hello **** end');
+            },
+            'single star inside double stars does not break bold'() {
+                const result = apply_markdown('**bold text** end');
+                $mol_assert_equal(result, '<b>bold text</b> end');
+            },
+            'multiple patterns in one block: only first converts per pass'() {
+                const first = apply_markdown('**bold** and *italic*');
+                $mol_assert_equal(first, '<b>bold</b> and *italic*');
+            },
+            'partially typed bold does not convert'() {
+                $mol_assert_equal(apply_markdown('**not closed'), '**not closed');
+            },
+            'partially typed italic does not convert'() {
+                $mol_assert_equal(apply_markdown('*not closed'), '*not closed');
+            },
+            'partially typed strikethrough does not convert'() {
+                $mol_assert_equal(apply_markdown('~~not closed'), '~~not closed');
+            },
+            'partially typed link does not convert'() {
+                $mol_assert_equal(apply_markdown('[text](no-close'), '[text](no-close');
+            },
+            'link with empty url does not convert'() {
+                $mol_assert_equal(apply_markdown('[text]() end'), '[text]() end');
+            },
+            'link with empty text does not convert'() {
+                $mol_assert_equal(apply_markdown('[](https://example.com) end'), '[](https://example.com) end');
+            },
+            'bold at start of text'() {
+                $mol_assert_equal(apply_markdown('**start** rest'), '<b>start</b> rest');
+            },
+            'bold at end of text'() {
+                $mol_assert_equal(apply_markdown('rest **end**'), 'rest <b>end</b>');
+            },
+            'code with special characters inside'() {
+                $mol_assert_equal(apply_markdown('run `npm install` now'), 'run <code>npm install</code> now');
+            },
+            'strike_exec without event returns null'() {
+                const block = new $bog_wysiwyg_block();
+                $mol_assert_equal(block.strike_exec(), null);
+            },
+            'strike_exec wraps selection in strikethrough'() {
+                if (typeof document === 'undefined')
+                    return;
+                const div = make_block_with_selection('hello world end', 'world');
+                try {
+                    const block = new $bog_wysiwyg_block();
+                    block.dom_node = () => div;
+                    block.html = (val) => val ?? div.innerHTML;
+                    const event = new KeyboardEvent('keydown', { key: 's', ctrlKey: true, shiftKey: true });
+                    const result = block.strike_exec(event);
+                    $mol_assert_ok(result);
+                    $mol_assert_ok(div.innerHTML.includes('<strike>') || div.innerHTML.includes('<s>'));
+                    $mol_assert_ok(div.innerHTML.includes('world'));
+                }
+                finally {
+                    div.remove();
+                }
+            },
+            'link_exec without event returns null'() {
+                const block = new $bog_wysiwyg_block();
+                $mol_assert_equal(block.link_exec(), null);
+            },
+            'link_exec with cancelled prompt does nothing'() {
+                if (typeof document === 'undefined')
+                    return;
+                const div = make_block_with_selection('hello world end', 'world');
+                try {
+                    const original_prompt = globalThis.prompt;
+                    globalThis.prompt = () => null;
+                    const block = new $bog_wysiwyg_block();
+                    block.dom_node = () => div;
+                    block.html = (val) => val ?? div.innerHTML;
+                    const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true });
+                    const result = block.link_exec(event);
+                    $mol_assert_ok(result);
+                    $mol_assert_equal(div.innerHTML, 'hello world end');
+                    globalThis.prompt = original_prompt;
+                }
+                finally {
+                    div.remove();
+                }
+            },
+            'link_exec creates link from selected text'() {
+                if (typeof document === 'undefined')
+                    return;
+                const div = make_block_with_selection('click here now', 'here');
+                try {
+                    const original_prompt = globalThis.prompt;
+                    globalThis.prompt = () => 'https://example.com';
+                    const block = new $bog_wysiwyg_block();
+                    block.dom_node = () => div;
+                    block.html = (val) => val ?? div.innerHTML;
+                    const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true });
+                    block.link_exec(event);
+                    $mol_assert_ok(div.innerHTML.includes('<a '));
+                    $mol_assert_ok(div.innerHTML.includes('https://example.com'));
+                    $mol_assert_ok(div.innerHTML.includes('here'));
+                    globalThis.prompt = original_prompt;
+                }
+                finally {
+                    div.remove();
+                }
+            },
+            'link_exec inserts url as text when no selection'() {
+                if (typeof document === 'undefined')
+                    return;
+                const div = make_block_with_selection('hello world');
+                try {
+                    div.focus();
+                    const sel = $mol_dom_context.document.defaultView.getSelection();
+                    const range = $mol_dom_context.document.createRange();
+                    range.selectNodeContents(div);
+                    range.collapse(false);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                    const original_prompt = globalThis.prompt;
+                    globalThis.prompt = () => 'https://example.com';
+                    const block = new $bog_wysiwyg_block();
+                    block.dom_node = () => div;
+                    block.html = (val) => val ?? div.innerHTML;
+                    const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true });
+                    block.link_exec(event);
+                    $mol_assert_ok(div.innerHTML.includes('<a '));
+                    $mol_assert_ok(div.innerHTML.includes('https://example.com'));
+                    globalThis.prompt = original_prompt;
+                }
+                finally {
+                    div.remove();
+                }
+            },
+            'paste_event without event returns null'() {
+                const block = new $bog_wysiwyg_block();
+                $mol_assert_equal(block.paste_event(), null);
+            },
+            'paste_event with image prevents default'() {
+                if (typeof document === 'undefined')
+                    return;
+                let prevented = false;
+                const block = new $bog_wysiwyg_block();
+                let image_src = '';
+                block.on_image = (src) => {
+                    if (src)
+                        image_src = src;
+                    return image_src || null;
+                };
+                const blob = new Blob([''], { type: 'image/png' });
+                const file = new File([blob], 'test.png', { type: 'image/png' });
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                const event = new ClipboardEvent('paste', { clipboardData: dt });
+                Object.defineProperty(event, 'preventDefault', { value: () => { prevented = true; } });
+                const result = block.paste_event(event);
+                $mol_assert_ok(result);
+                $mol_assert_ok(prevented);
+            },
+            'paste_event without image does not prevent default'() {
+                if (typeof document === 'undefined')
+                    return;
+                const block = new $bog_wysiwyg_block();
+                const dt = new DataTransfer();
+                dt.items.add('hello', 'text/plain');
+                const event = new ClipboardEvent('paste', { clipboardData: dt });
+                let prevented = false;
+                Object.defineProperty(event, 'preventDefault', { value: () => { prevented = true; } });
+                const result = block.paste_event(event);
+                $mol_assert_ok(result);
+                $mol_assert_equal(prevented, false);
+            },
+            'drop_event without event returns null'() {
+                const block = new $bog_wysiwyg_block();
+                $mol_assert_equal(block.drop_event(), null);
+            },
+            'is_image returns true for image type'() {
+                const block = new $bog_wysiwyg_block();
+                block.type = () => 'image';
+                $mol_assert_equal(block.is_image(), true);
+            },
+            'is_image returns false for paragraph type'() {
+                const block = new $bog_wysiwyg_block();
+                block.type = () => 'paragraph';
+                $mol_assert_equal(block.is_image(), false);
+            },
+            'parse_markdown: single paragraph'() {
+                const blocks = $bog_wysiwyg_parse_markdown('hello world');
+                $mol_assert_equal(blocks.length, 1);
+                $mol_assert_equal(blocks[0].type, 'paragraph');
+                $mol_assert_equal(blocks[0].content, 'hello world');
+            },
+            'parse_markdown: two paragraphs separated by empty line'() {
+                const blocks = $bog_wysiwyg_parse_markdown('first\n\nsecond');
+                $mol_assert_equal(blocks.length, 2);
+                $mol_assert_equal(blocks[0].content, 'first');
+                $mol_assert_equal(blocks[1].content, 'second');
+            },
+            'parse_markdown: heading levels 1-3'() {
+                const blocks = $bog_wysiwyg_parse_markdown('# H1\n\n## H2\n\n### H3');
+                $mol_assert_equal(blocks.length, 3);
+                $mol_assert_equal(blocks[0].type, 'heading');
+                $mol_assert_equal(blocks[0].level, 1);
+                $mol_assert_equal(blocks[0].content, 'H1');
+                $mol_assert_equal(blocks[1].level, 2);
+                $mol_assert_equal(blocks[2].level, 3);
+            },
+            'parse_markdown: code block'() {
+                const blocks = $bog_wysiwyg_parse_markdown('```\nconst x = 1\nconst y = 2\n```');
+                $mol_assert_equal(blocks.length, 1);
+                $mol_assert_equal(blocks[0].type, 'code');
+                $mol_assert_equal(blocks[0].content, 'const x = 1\nconst y = 2');
+            },
+            'parse_markdown: code block escapes HTML'() {
+                const blocks = $bog_wysiwyg_parse_markdown('```\n<div>&</div>\n```');
+                $mol_assert_equal(blocks[0].content, '&lt;div&gt;&amp;&lt;/div&gt;');
+            },
+            'parse_markdown: blockquote'() {
+                const blocks = $bog_wysiwyg_parse_markdown('> line one\n> line two');
+                $mol_assert_equal(blocks.length, 1);
+                $mol_assert_equal(blocks[0].type, 'quote');
+                $mol_assert_equal(blocks[0].content, 'line one<br>line two');
+            },
+            'parse_markdown: divider ---'() {
+                const blocks = $bog_wysiwyg_parse_markdown('above\n\n---\n\nbelow');
+                $mol_assert_equal(blocks.length, 3);
+                $mol_assert_equal(blocks[1].type, 'divider');
+                $mol_assert_equal(blocks[1].content, '');
+            },
+            'parse_markdown: divider ***'() {
+                const blocks = $bog_wysiwyg_parse_markdown('***');
+                $mol_assert_equal(blocks[0].type, 'divider');
+            },
+            'parse_markdown: inline bold'() {
+                const blocks = $bog_wysiwyg_parse_markdown('hello **world**');
+                $mol_assert_equal(blocks[0].content, 'hello <b>world</b>');
+            },
+            'parse_markdown: inline italic'() {
+                const blocks = $bog_wysiwyg_parse_markdown('hello *world*');
+                $mol_assert_equal(blocks[0].content, 'hello <i>world</i>');
+            },
+            'parse_markdown: inline code'() {
+                const blocks = $bog_wysiwyg_parse_markdown('run `npm install`');
+                $mol_assert_equal(blocks[0].content, 'run <code>npm install</code>');
+            },
+            'parse_markdown: inline strike'() {
+                const blocks = $bog_wysiwyg_parse_markdown('hello ~~world~~');
+                $mol_assert_equal(blocks[0].content, 'hello <s>world</s>');
+            },
+            'parse_markdown: inline link'() {
+                const blocks = $bog_wysiwyg_parse_markdown('click [here](https://example.com)');
+                $mol_assert_equal(blocks[0].content, 'click <a href="https://example.com">here</a>');
+            },
+            'parse_markdown: multi-line paragraph joins with br'() {
+                const blocks = $bog_wysiwyg_parse_markdown('line one\nline two\nline three');
+                $mol_assert_equal(blocks.length, 1);
+                $mol_assert_equal(blocks[0].content, 'line one<br>line two<br>line three');
+            },
+            'parse_markdown: mixed content article'() {
+                const md = '# Title\n\nSome text **bold**.\n\n```\ncode here\n```\n\n> quote\n\n---\n\nEnd.';
+                const blocks = $bog_wysiwyg_parse_markdown(md);
+                $mol_assert_equal(blocks.length, 6);
+                $mol_assert_equal(blocks[0].type, 'heading');
+                $mol_assert_equal(blocks[1].type, 'paragraph');
+                $mol_assert_equal(blocks[2].type, 'code');
+                $mol_assert_equal(blocks[3].type, 'quote');
+                $mol_assert_equal(blocks[4].type, 'divider');
+                $mol_assert_equal(blocks[5].type, 'paragraph');
+            },
+            'parse_markdown: empty input returns empty array'() {
+                $mol_assert_equal($bog_wysiwyg_parse_markdown('').length, 0);
+            },
+            'parse_markdown: only empty lines returns empty array'() {
+                $mol_assert_equal($bog_wysiwyg_parse_markdown('\n\n\n').length, 0);
+            },
+            'parse_markdown: unclosed code block collects to end'() {
+                const blocks = $bog_wysiwyg_parse_markdown('```\ncode without closing');
+                $mol_assert_equal(blocks.length, 1);
+                $mol_assert_equal(blocks[0].type, 'code');
+                $mol_assert_equal(blocks[0].content, 'code without closing');
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function check(str, query) {
+        $mol_assert_like(str, $hyoo_harp_to_string(query));
+        $mol_assert_like(query, $hyoo_harp_from_string(str));
+    }
+    $mol_test({
+        'root'() {
+            check('', {});
+        },
+        'only field'() {
+            check('user%3D777', {
+                'user=777': {},
+            });
+        },
+        'primary key'() {
+            check('user=jin%2C777!=', {
+                user: {
+                    '=': [['jin,777!']],
+                },
+            });
+        },
+        'single fetch'() {
+            check('friend(age%24)', {
+                friend: {
+                    age$: {},
+                },
+            });
+        },
+        'fetch and primary key'() {
+            check('user=jin()=(friend)', {
+                'user': {
+                    '=': [['jin()']],
+                    friend: {},
+                },
+            });
+        },
+        'multiple fetch'() {
+            check('age;friend', {
+                age: {},
+                friend: {},
+            });
+        },
+        'common query string back compatible'() {
+            $mol_assert_like($hyoo_harp_from_string('user=jin&age=100500'), {
+                user: {
+                    '=': [['jin']],
+                },
+                age: {
+                    '=': [['100500']],
+                },
+            });
+        },
+        'common pathname back compatible'() {
+            $mol_assert_like($hyoo_harp_from_string('users/jin/comments'), {
+                users: {},
+                jin: {},
+                comments: {},
+            });
+        },
+        'deep fetch'() {
+            check('my(friend(age);name);stat', {
+                my: {
+                    friend: {
+                        age: {},
+                    },
+                    name: {},
+                },
+                stat: {},
+            });
+        },
+        'orders'() {
+            check('+age;-name', {
+                age: {
+                    '+': true
+                },
+                name: {
+                    '+': false
+                },
+            });
+        },
+        'filter types'() {
+            check('sex=female=;status!=married=', {
+                sex: {
+                    '=': [['female']],
+                },
+                status: {
+                    '!=': [['married']],
+                },
+            });
+        },
+        'filter ranges'() {
+            check('sex=female=;age=18@25=;weight=@50=;height=150@=;hobby=paint=singing=', {
+                sex: {
+                    '=': [['female']],
+                },
+                age: {
+                    '=': [['18', '25']],
+                },
+                weight: {
+                    '=': [['', '50']],
+                },
+                height: {
+                    '=': [['150', '']],
+                },
+                hobby: {
+                    '=': [['paint'], ['singing']],
+                },
+            });
+        },
+        'unescaped values'() {
+            $mol_assert_like($hyoo_harp_from_string('foo=jin=777=;bar=jin!=666='), {
+                foo: {
+                    '=': [['jin'], ['777']],
+                },
+                bar: {
+                    '=': [['jin!'], ['666']],
+                },
+            });
+        },
+        'slicing'() {
+            check('friend(_num=0@100=)', {
+                friend: {
+                    _num: { '=': [['0', '100']] },
+                },
+            });
+        },
+        'complex'() {
+            check('pullRequest(state=closed=merged=;+repository(name;private);-updateTime;_num=0@100=)', {
+                pullRequest: {
+                    state: {
+                        '=': [
+                            ['closed'],
+                            ['merged'],
+                        ]
+                    },
+                    repository: {
+                        '+': true,
+                        name: {},
+                        private: {},
+                    },
+                    updateTime: {
+                        '+': false,
+                    },
+                    _num: {
+                        '=': [['0', '100']],
+                    },
+                },
+            });
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is first'() {
+            $mol_data_variant($mol_data_number, $mol_data_string)(0);
+        },
+        'Is second'() {
+            $mol_data_variant($mol_data_number, $mol_data_string)('');
+        },
+        'Is false'() {
+            $mol_assert_fail(() => {
+                $mol_data_variant($mol_data_number, $mol_data_string)(false);
+            }, 'false is not any of variants');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const Age = $mol_data_optional($mol_data_number);
+    const Age_or_zero = $mol_data_optional($mol_data_number, () => 0);
+    $mol_test({
+        'Is not present'() {
+            $mol_assert_equal(Age(undefined), undefined);
+        },
+        'Is present'() {
+            $mol_assert_equal(Age(0), 0);
+        },
+        'Fallbacked'() {
+            $mol_assert_equal(Age_or_zero(undefined), 0);
+        },
+        'Is null'() {
+            $mol_assert_fail(() => Age(null), 'null is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Fit to record'() {
+            const User = $mol_data_record({ age: $mol_data_number });
+            User({ age: 0 });
+        },
+        'Extends record'() {
+            const User = $mol_data_record({ age: $mol_data_number });
+            User({ age: 0, name: 'Jin' });
+        },
+        'Shrinks record'() {
+            $mol_assert_fail(() => {
+                const User = $mol_data_record({ age: $mol_data_number, name: $mol_data_string });
+                User({ age: 0 });
+            }, '["name"] undefined is not a string');
+        },
+        'Shrinks deep record'() {
+            $mol_assert_fail(() => {
+                const User = $mol_data_record({ wife: $mol_data_record({ age: $mol_data_number }) });
+                User({ wife: {} });
+            }, '["wife"] ["age"] undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is empty array'() {
+            $mol_data_array($mol_data_number)([]);
+        },
+        'Is array'() {
+            $mol_data_array($mol_data_number)([1, 2]);
+        },
+        'Is not array'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_number)({ [0]: 1, length: 1, map: () => { } });
+            }, '[object Object] is not an array');
+        },
+        'Has wrong item'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_number)([1, '1']);
+            }, '[1] 1 is not a number');
+        },
+        'Has wrong deep item'() {
+            $mol_assert_fail(() => {
+                $mol_data_array($mol_data_array($mol_data_number))([[], [0, 0, false]]);
+            }, '[1] [2] false is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is boolean - true'() {
+            $mol_data_boolean(true);
+        },
+        'Is boolean - false'() {
+            $mol_data_boolean(false);
+        },
+        'Is not boolean'() {
+            $mol_assert_fail(() => {
+                $mol_data_boolean('x');
+            }, 'x is not a boolean');
+        },
+        'Is object boolean'() {
+            $mol_assert_fail(() => {
+                $mol_data_boolean(new Boolean(''));
+            }, 'false is not a boolean');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_enum(name, dict) {
+        const index = {};
+        for (let key in dict) {
+            if (Number.isNaN(Number(key))) {
+                index[dict[key]] = key;
+            }
+        }
+        return $mol_data_setup((value) => {
+            if (typeof index[value] !== 'string') {
+                return $mol_fail(new $mol_data_error(`${value} is not value of ${name} enum`));
+            }
+            return value;
+        }, { name, dict });
+    }
+    $.$mol_data_enum = $mol_data_enum;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    let sex;
+    (function (sex) {
+        sex[sex["male"] = 0] = "male";
+        sex[sex["female"] = 1] = "female";
+    })(sex || (sex = {}));
+    let gender;
+    (function (gender) {
+        gender["bisexual"] = "bisexual";
+        gender["trans"] = "transgender";
+    })(gender || (gender = {}));
+    $mol_test({
+        'config of enum'() {
+            const Sex = $mol_data_enum('sex', sex);
+            $mol_assert_like(Sex.config, {
+                name: 'sex',
+                dict: sex,
+            });
+        },
+        'name of enum'() {
+            const Sex = $mol_data_enum('sex', sex);
+            $mol_assert_equal(Sex.config.name, 'sex');
+        },
+        'Is right value of enum'() {
+            const Sex = $mol_data_enum('sex', sex);
+            $mol_assert_equal(Sex(0), sex.male);
+        },
+        'Is wrong value of enum'() {
+            const Sex = $mol_data_enum('sex', sex);
+            $mol_assert_fail(() => Sex(2), `2 is not value of sex enum`);
+        },
+        'Is name instead of value'() {
+            const Sex = $mol_data_enum('sex', sex);
+            $mol_assert_fail(() => Sex('male'), `male is not value of sex enum`);
+        },
+        'Is common object field'() {
+            const Sex = $mol_data_enum('sex', sex);
+            $mol_assert_fail(() => Sex('__proto__'), `__proto__ is not value of sex enum`);
+        },
+    });
+    $mol_test({
+        'config of enum'() {
+            const Gender = $mol_data_enum('gender', gender);
+            $mol_assert_like(Gender.config, {
+                name: 'gender',
+                dict: gender,
+            });
+        },
+        'Is right value of enum'() {
+            const Gender = $mol_data_enum('gender', gender);
+            $mol_assert_equal(Gender('transgender'), gender.trans);
+        },
+        'Is wrong value of enum'() {
+            const Gender = $mol_data_enum('gender', gender);
+            $mol_assert_fail(() => Gender('xxx'), `xxx is not value of gender enum`);
+        },
+        'Is name instead of value'() {
+            const Gender = $mol_data_enum('gender', gender);
+            $mol_assert_fail(() => Gender('trans'), `trans is not value of gender enum`);
+        },
+        'Is common object field'() {
+            const Gender = $mol_data_enum('gender', gender);
+            $mol_assert_fail(() => Gender('__proto__'), `__proto__ is not value of gender enum`);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'type safe build & parse'() {
+            let States;
+            (function (States) {
+                States["opened"] = "opened";
+                States["closed"] = "closed";
+            })(States || (States = {}));
+            const State = $hyoo_harp_scheme({}, $mol_data_enum('States', States));
+            const Str = $hyoo_harp_scheme({}, $mol_data_string);
+            const Bool = $hyoo_harp_scheme({}, $mol_data_boolean);
+            const Repository = $hyoo_harp_scheme({
+                name: $mol_data_optional(Str),
+                isPrivate: $mol_data_optional(Bool),
+            });
+            const PullRequest = $hyoo_harp_scheme({
+                state: $mol_data_optional(State),
+                updated_at: $mol_data_optional(Str),
+                repository: $mol_data_optional(Repository),
+            });
+            const Request = $hyoo_harp_scheme({
+                pullRequest: $mol_data_optional(PullRequest),
+            });
+            const uri = 'pullRequest(state=closed=;-updated_at;repository(name;isPrivate);_num=0@100=)';
+            let query = Request({
+                pullRequest: {
+                    state: { '=': [[States.closed]] },
+                    updated_at: { '+': false },
+                    repository: {
+                        name: {},
+                        isPrivate: {},
+                    },
+                    _num: { '=': [[0, 100]] },
+                }
+            });
+            $mol_assert_like(uri, Request.build(query));
+            $mol_assert_like(query, Request.parse(uri));
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'save and load buffers'($) {
+            const land = $giper_baza_land.make({ $ });
+            const file = land.Data($giper_baza_file);
+            const source = new Uint8Array(2 ** 15 + 1);
+            source[2 ** 15] = 255;
+            file.buffer(source);
+            $mol_assert_equal(file.chunks().length, 2);
+            $mol_assert_equal(file.buffer(), source);
+        },
+        async 'save and load blobs'($) {
+            const land = $giper_baza_land.make({ $ });
+            const file = land.Data($giper_baza_file);
+            const source = new Uint8Array(2 ** 16 + 1);
+            source[2 ** 16 + 1] = 255;
+            await $mol_wire_async(file).blob(new $mol_blob([source], { type: 'test/test' }));
+            $mol_assert_equal('test/test', file.blob().type);
+            $mol_assert_equal(source, new Uint8Array(await file.blob().arrayBuffer()));
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'is same number'() {
+            const Nan = $mol_data_const(Number.NaN);
+            Nan(Number.NaN);
+        },
+        'is equal object'() {
+            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
+            Tags({ tags: ['deep', 'equals'] });
+        },
+        'is different number'() {
+            const Five = $mol_data_const(5);
+            $mol_assert_fail(() => Five(6), '6 is not 5');
+        },
+        'is different object'() {
+            const Tags = $mol_data_const({ tags: ['deep', 'equals'] });
+            $mol_assert_fail(() => Tags({ tags: ['shallow', 'equals'] }), `{"tags":["shallow","equals"]} is not {"tags":["deep","equals"]}`);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Is null'() {
+            $mol_data_nullable($mol_data_number)(null);
+        },
+        'Is not null'() {
+            $mol_data_nullable($mol_data_number)(0);
+        },
+        'Is undefined'() {
+            $mol_assert_fail(() => {
+                const Type = $mol_data_nullable($mol_data_number);
+                Type(undefined);
+            }, 'undefined is not a number');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        const Players_dict = $giper_baza_dict_to($bog_blitz_player);
+        $mol_test({
+            async 'Quiz entity stores title and settings'($) {
+                const land = $giper_baza_land.make({ $ });
+                const quiz = land.Data($bog_blitz_quiz);
+                quiz.Title(null).val('Test Quiz');
+                quiz.Points_base(null).val(100);
+                quiz.Time_multiplier(null).val(1.5);
+                quiz.Time_answer(null).val(10);
+                quiz.Time_read(null).val(5);
+                $mol_assert_equal(quiz.Title().val(), 'Test Quiz');
+                $mol_assert_equal(quiz.Points_base().val(), 100);
+                $mol_assert_equal(quiz.Time_multiplier().val(), 1.5);
+                $mol_assert_equal(quiz.Time_answer().val(), 10);
+            },
+            async 'Session stores game state and quiz link'($) {
+                const session_land = $giper_baza_land.make({ $ });
+                const quiz_land = $giper_baza_land.make({ $ });
+                const session = session_land.Data($bog_blitz_session);
+                session.Quiz_link(null).val(quiz_land.link().str);
+                session.Game_state(null).val('reading');
+                session.Current_question(null).val(0);
+                session.Round_start(null).val(12345);
+                $mol_assert_equal(session.Game_state().val(), 'reading');
+                $mol_assert_equal(session.Current_question().val(), 0);
+                $mol_assert_equal(session.Quiz_link().val(), quiz_land.link().str);
+                $mol_assert_equal(session.Round_start().val(), 12345);
+            },
+            async 'Session fields filter separates session keys from player keys'($) {
+                const land = $giper_baza_land.make({ $ });
+                const session = land.Data($bog_blitz_session);
+                session.Game_state(null).val('reading');
+                session.Quiz_link(null).val('some_link');
+                const dict = land.Data(Players_dict);
+                dict.key('player_lord_1', null).Name(null).val('Alice');
+                const all_keys = Array.from(dict.keys() ?? []).map(k => String(k));
+                const player_keys = all_keys.filter(k => !$bog_blitz_session_fields.has(k));
+                $mol_assert_equal(player_keys.includes('player_lord_1'), true);
+                for (const key of player_keys) {
+                    $mol_assert_equal($bog_blitz_session_fields.has(key), false);
+                }
+            },
+            async 'Player entity has Answer_land field'($) {
+                const land = $giper_baza_land.make({ $ });
+                const dict = land.Data(Players_dict);
+                const player = dict.key('lord_1', null);
+                player.Name(null).val('Bob');
+                player.Score(null).val(150);
+                player.IsHost(null).val(false);
+                player.Answer_land(null).val('answer_land_link');
+                $mol_assert_equal(player.Name().val(), 'Bob');
+                $mol_assert_equal(player.Score().val(), 150);
+                $mol_assert_equal(player.IsHost().val(), false);
+                $mol_assert_equal(player.Answer_land().val(), 'answer_land_link');
+            },
+            async 'Player answers entity stores answers and reactions'($) {
+                const land = $giper_baza_land.make({ $ });
+                const answers = land.Data($bog_blitz_player_answers);
+                answers.Answer(null).val('1,3');
+                answers.Answer_time(null).val(1000);
+                answers.React_heart(null).val(5);
+                answers.React_fire(null).val(3);
+                answers.React_smile(null).val(0);
+                $mol_assert_equal(answers.Answer().val(), '1,3');
+                $mol_assert_equal(answers.Answer_time().val(), 1000);
+                $mol_assert_equal(answers.React_heart().val(), 5);
+                $mol_assert_equal(answers.React_fire().val(), 3);
+                $mol_assert_equal(answers.React_smile().val(), 0);
+            },
+            async 'Answers key stores and parses correct answers JSON'($) {
+                const land = $giper_baza_land.make({ $ });
+                const key_entity = land.Data($bog_blitz_answers_key);
+                const data = [
+                    { type: 'choice', correct: '1,3' },
+                    { type: 'text_input', correct: 'Paris, paris, Париж' },
+                    { type: 'choice', correct: '0' },
+                ];
+                key_entity.Data(null).val(JSON.stringify(data));
+                const parsed = JSON.parse(key_entity.Data().val());
+                $mol_assert_equal(parsed.length, 3);
+                $mol_assert_equal(parsed[0].type, 'choice');
+                $mol_assert_equal(parsed[0].correct, '1,3');
+                $mol_assert_equal(parsed[1].type, 'text_input');
+                $mol_assert_equal(parsed[1].correct, 'Paris, paris, Париж');
+                $mol_assert_equal(parsed[2].correct, '0');
+            },
+            async 'Score: correct fast answer scores more than correct slow answer'($) {
+                const points_base = 100;
+                const time_multiplier = 1.5;
+                const answer_duration = 10;
+                const fast_elapsed = 1;
+                const slow_elapsed = 9;
+                const fast_ratio = Math.max(0, 1 - fast_elapsed / answer_duration);
+                const slow_ratio = Math.max(0, 1 - slow_elapsed / answer_duration);
+                const fast_score = points_base * (1 + fast_ratio * time_multiplier);
+                const slow_score = points_base * (1 + slow_ratio * time_multiplier);
+                $mol_assert_equal(fast_score > slow_score, true);
+                $mol_assert_equal(fast_score > points_base, true);
+                $mol_assert_equal(slow_score > points_base, true);
+            },
+            async 'Score: wrong answer is negative'($) {
+                const points_base = 100;
+                const time_multiplier = 1.5;
+                const answer_duration = 10;
+                const elapsed = 5;
+                const time_ratio = Math.max(0, 1 - elapsed / answer_duration);
+                const base = points_base * (1 + time_ratio * time_multiplier);
+                const correct_points = base;
+                const wrong_points = -base;
+                $mol_assert_equal(correct_points > 0, true);
+                $mol_assert_equal(wrong_points < 0, true);
+                $mol_assert_equal(correct_points, -wrong_points);
+            },
+            async 'Choice answer: order does not matter'($) {
+                const correct = '0,2';
+                const correct_set = new Set(correct.split(',').filter(Boolean));
+                function check(answer) {
+                    const answer_set = new Set(answer.split(',').filter(Boolean));
+                    return correct_set.size === answer_set.size &&
+                        [...correct_set].every(k => answer_set.has(k));
+                }
+                $mol_assert_equal(check('0,2'), true);
+                $mol_assert_equal(check('2,0'), true);
+                $mol_assert_equal(check('0'), false);
+                $mol_assert_equal(check('0,1'), false);
+                $mol_assert_equal(check('0,1,2'), false);
+                $mol_assert_equal(check(''), false);
+            },
+            async 'Text answer: case insensitive with variants'($) {
+                const correct_text = 'Paris, paris, Париж';
+                const variants = correct_text.split(',').map(v => v.trim().toLowerCase());
+                function check(answer) {
+                    return variants.includes(answer.trim().toLowerCase());
+                }
+                $mol_assert_equal(check('Paris'), true);
+                $mol_assert_equal(check('paris'), true);
+                $mol_assert_equal(check('PARIS'), true);
+                $mol_assert_equal(check('Париж'), true);
+                $mol_assert_equal(check(' paris '), true);
+                $mol_assert_equal(check('London'), false);
+                $mol_assert_equal(check(''), false);
+            },
+            async 'Multi_correct flag from answer key'($) {
+                const keys = [
+                    { type: 'choice', correct: '1,3' },
+                    { type: 'choice', correct: '0' },
+                    { type: 'text_input', correct: 'Paris' },
+                ];
+                function is_multi(key) {
+                    return key.type !== 'text_input' && key.correct.split(',').length >= 2;
+                }
+                $mol_assert_equal(is_multi(keys[0]), true);
+                $mol_assert_equal(is_multi(keys[1]), false);
+                $mol_assert_equal(is_multi(keys[2]), false);
+            },
+            async 'Game state transitions stored in session'($) {
+                const land = $giper_baza_land.make({ $ });
+                const session = land.Data($bog_blitz_session);
+                session.Game_state(null).val('reading');
+                session.Current_question(null).val(0);
+                $mol_assert_equal(session.Game_state().val(), 'reading');
+                session.Game_state(null).val('answering');
+                session.Round_start(null).val(1000);
+                $mol_assert_equal(session.Game_state().val(), 'answering');
+                session.Game_state(null).val('reveal');
+                $mol_assert_equal(session.Game_state().val(), 'reveal');
+                session.Game_state(null).val('leaderboard');
+                $mol_assert_equal(session.Game_state().val(), 'leaderboard');
+                session.Current_question(null).val(1);
+                session.Game_state(null).val('reading');
+                $mol_assert_equal(session.Current_question().val(), 1);
+                $mol_assert_equal(session.Game_state().val(), 'reading');
+                session.Game_state(null).val('final');
+                $mol_assert_equal(session.Game_state().val(), 'final');
+            },
+            async 'Pause stores timestamp, resume clears it'($) {
+                const land = $giper_baza_land.make({ $ });
+                const session = land.Data($bog_blitz_session);
+                session.Round_start(null).val(1000);
+                session.Paused_at(null).val(0);
+                $mol_assert_equal(session.Paused_at().val(), 0);
+                session.Paused_at(null).val(1500);
+                $mol_assert_equal(session.Paused_at().val() > 0, true);
+                const pause_duration = 500;
+                session.Round_start(null).val(1000 + pause_duration);
+                session.Paused_at(null).val(0);
+                $mol_assert_equal(session.Paused_at().val(), 0);
+                $mol_assert_equal(session.Round_start().val(), 1500);
+            },
+            async 'Reveal_correct published to session'($) {
+                const land = $giper_baza_land.make({ $ });
+                const session = land.Data($bog_blitz_session);
+                session.Reveal_correct(null).val('');
+                $mol_assert_equal(session.Reveal_correct().val(), '');
+                session.Reveal_correct(null).val('0,2');
+                $mol_assert_equal(session.Reveal_correct().val(), '0,2');
+                session.Reveal_correct(null).val('');
+                $mol_assert_equal(session.Reveal_correct().val(), '');
+            },
+            async 'Home ref stores quizzes land link'($) {
+                const land = $giper_baza_land.make({ $ });
+                const ref = land.Data($bog_blitz_home_ref);
+                $mol_assert_equal(ref.Quizzes_land()?.val() ?? null, null);
+                ref.Quizzes_land(null).val('quizzes_land_link');
+                $mol_assert_equal(ref.Quizzes_land().val(), 'quizzes_land_link');
+            },
+            async 'Multiple players in session land'($) {
+                const land = $giper_baza_land.make({ $ });
+                const dict = land.Data(Players_dict);
+                const host = dict.key('host_lord', null);
+                host.Name(null).val('Host');
+                host.IsHost(null).val(true);
+                const p1 = dict.key('player_1', null);
+                p1.Name(null).val('Alice');
+                p1.Score(null).val(200);
+                const p2 = dict.key('player_2', null);
+                p2.Name(null).val('Bob');
+                p2.Score(null).val(150);
+                const all_keys = Array.from(dict.keys() ?? []).map(k => String(k));
+                $mol_assert_equal(all_keys.includes('host_lord'), true);
+                $mol_assert_equal(all_keys.includes('player_1'), true);
+                $mol_assert_equal(all_keys.includes('player_2'), true);
+                $mol_assert_equal(host.IsHost().val(), true);
+                $mol_assert_equal(p1.Name().val(), 'Alice');
+                $mol_assert_equal(p1.Score().val(), 200);
+                $mol_assert_equal(p2.Name().val(), 'Bob');
+                $mol_assert_equal(p2.Score().val(), 150);
+            },
+            async 'Player name writable without profile dependency'($) {
+                const land = $giper_baza_land.make({ $ });
+                const dict = land.Data(Players_dict);
+                const player = dict.key('new_player', null);
+                const join_name = 'TestUser';
+                player.Name(null).val(join_name);
+                $mol_assert_equal(player.Name().val(), 'TestUser');
+                player.Answer_land(null).val('some_answer_land');
+                $mol_assert_equal(player.Answer_land().val(), 'some_answer_land');
+            },
+            async 'Player answers live in separate land from session'($) {
+                const session_land = $giper_baza_land.make({ $ });
+                const answer_land = $giper_baza_land.make({ $ });
+                const dict = session_land.Data(Players_dict);
+                const player = dict.key('player_lord', null);
+                player.Name(null).val('Alice');
+                player.Answer_land(null).val(answer_land.link().str);
+                const answers = answer_land.Data($bog_blitz_player_answers);
+                answers.Answer(null).val('1,3');
+                answers.Answer_time(null).val(5000);
+                answers.React_fire(null).val(2);
+                $mol_assert_equal(player.Name().val(), 'Alice');
+                $mol_assert_equal(player.Answer_land().val(), answer_land.link().str);
+                $mol_assert_equal(answers.Answer().val(), '1,3');
+                $mol_assert_equal(answers.React_fire().val(), 2);
+            },
+            async 'Multi_correct published to session, not read from encrypted land'($) {
+                const session_land = $giper_baza_land.make({ $ });
+                const key_land = $giper_baza_land.make({ $ });
+                const keys_data = [
+                    { type: 'choice', correct: '0,2' },
+                    { type: 'choice', correct: '1' },
+                ];
+                key_land.Data($bog_blitz_answers_key).Data(null).val(JSON.stringify(keys_data));
+                const session = session_land.Data($bog_blitz_session);
+                session.Answers_key_land(null).val(key_land.link().str);
+                const q0 = keys_data[0];
+                const multi0 = q0.type !== 'text_input' && q0.correct.split(',').length >= 2;
+                session.Multi_correct(null).val(multi0);
+                $mol_assert_equal(session.Multi_correct().val(), true);
+                const q1 = keys_data[1];
+                const multi1 = q1.type !== 'text_input' && q1.correct.split(',').length >= 2;
+                session.Multi_correct(null).val(multi1);
+                $mol_assert_equal(session.Multi_correct().val(), false);
+            },
+            async 'Reveal correct published to session from encrypted key'($) {
+                const session_land = $giper_baza_land.make({ $ });
+                const key_land = $giper_baza_land.make({ $ });
+                const keys_data = [
+                    { type: 'choice', correct: '1,3' },
+                    { type: 'text_input', correct: 'Paris, paris' },
+                ];
+                key_land.Data($bog_blitz_answers_key).Data(null).val(JSON.stringify(keys_data));
+                const session = session_land.Data($bog_blitz_session);
+                const parsed = JSON.parse(key_land.Data($bog_blitz_answers_key).Data().val());
+                session.Reveal_correct(null).val(parsed[0].correct);
+                $mol_assert_equal(session.Reveal_correct().val(), '1,3');
+                const my_answer = '1,3';
+                const correct_set = new Set(session.Reveal_correct().val().split(','));
+                const answer_set = new Set(my_answer.split(','));
+                const is_correct = correct_set.size === answer_set.size &&
+                    [...correct_set].every(k => answer_set.has(k));
+                $mol_assert_equal(is_correct, true);
+                session.Reveal_correct(null).val(parsed[1].correct);
+                $mol_assert_equal(session.Reveal_correct().val(), 'Paris, paris');
+            },
+            async 'Score written by host to session land player'($) {
+                const session_land = $giper_baza_land.make({ $ });
+                const answer_land = $giper_baza_land.make({ $ });
+                const dict = session_land.Data(Players_dict);
+                const player = dict.key('player_1', null);
+                player.Name(null).val('Alice');
+                player.Score(null).val(0);
+                player.Answer_land(null).val(answer_land.link().str);
+                const answers = answer_land.Data($bog_blitz_player_answers);
+                answers.Answer(null).val('0,2');
+                answers.Answer_time(null).val(3000);
+                const answer = answers.Answer().val();
+                const correct = '0,2';
+                const correct_set = new Set(correct.split(','));
+                const answer_set = new Set(answer.split(','));
+                const is_correct = correct_set.size === answer_set.size &&
+                    [...correct_set].every(k => answer_set.has(k));
+                const points = is_correct ? 175 : -175;
+                const prev_score = player.Score().val();
+                player.Score(null).val(prev_score + points);
+                $mol_assert_equal(player.Score().val(), 175);
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            'comment panel toggles open and closed'() {
+                const comment = new $bog_wysiwyg_comment();
+                $mol_assert_equal(comment.panel_open(), false);
+                const event = new Event('click');
+                comment.toggle(event);
+                $mol_assert_equal(comment.panel_open(), true);
+                comment.toggle(event);
+                $mol_assert_equal(comment.panel_open(), false);
+            },
+            'close button closes panel'() {
+                const comment = new $bog_wysiwyg_comment();
+                comment.panel_open(true);
+                $mol_assert_equal(comment.panel_open(), true);
+                const event = new Event('click');
+                comment.close(event);
+                $mol_assert_equal(comment.panel_open(), false);
+            },
+            'toggle without event returns null'() {
+                const comment = new $bog_wysiwyg_comment();
+                $mol_assert_equal(comment.toggle(), null);
+            },
+            'close without event returns null'() {
+                const comment = new $bog_wysiwyg_comment();
+                $mol_assert_equal(comment.close(), null);
+            },
+            'comment count text is empty when no comments'() {
+                const comment = new $bog_wysiwyg_comment();
+                $mol_assert_equal(comment.comment_count_text(), '');
+            },
+            'thread draft stores text'() {
+                const thread = new $bog_wysiwyg_comment_thread();
+                $mol_assert_equal(thread.draft(), '');
+                thread.draft('hello');
+                $mol_assert_equal(thread.draft(), 'hello');
+            },
+            'thread comment_count is 0 without baza'() {
+                const thread = new $bog_wysiwyg_comment_thread();
+                $mol_assert_equal(thread.comment_count(), 0);
+            },
+            'block_comment_open defaults to false'() {
+                const editor = new $bog_wysiwyg();
+                $mol_assert_equal(editor.block_comment_open('b1'), false);
+            },
+            'block_comment_open can be toggled'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_comment_open('b1', true);
+                $mol_assert_equal(editor.block_comment_open('b1'), true);
+                editor.block_comment_open('b1', false);
+                $mol_assert_equal(editor.block_comment_open('b1'), false);
+            },
+            'block_comment_land_link returns empty without baza'() {
+                const editor = new $bog_wysiwyg();
+                $mol_assert_equal(editor.block_comment_land_link('b1'), '');
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            'backlink_pages finds pages that reference target'() {
+                const links = new $bog_wysiwyg_links();
+                links.page_id = () => 'page_abc';
+                links.all_pages = () => [
+                    { id: 'page_1', title: 'First', blocks_html: ['see [[page_abc]] for details'] },
+                    { id: 'page_2', title: 'Second', blocks_html: ['no links here'] },
+                    { id: 'page_3', title: 'Third', blocks_html: ['also [[page_abc]]'] },
+                ];
+                const result = links.backlink_pages();
+                $mol_assert_equal(result.length, 2);
+                $mol_assert_equal(result[0].id, 'page_1');
+                $mol_assert_equal(result[1].id, 'page_3');
+            },
+            'backlink_pages excludes self-reference'() {
+                const links = new $bog_wysiwyg_links();
+                links.page_id = () => 'page_abc';
+                links.all_pages = () => [
+                    { id: 'page_abc', title: 'Self', blocks_html: ['ref [[page_abc]]'] },
+                    { id: 'page_2', title: 'Other', blocks_html: ['link to [[page_abc]]'] },
+                ];
+                const result = links.backlink_pages();
+                $mol_assert_equal(result.length, 1);
+                $mol_assert_equal(result[0].id, 'page_2');
+            },
+            'backlink_pages returns empty when no references'() {
+                const links = new $bog_wysiwyg_links();
+                links.page_id = () => 'page_abc';
+                links.all_pages = () => [
+                    { id: 'page_1', title: 'First', blocks_html: ['nothing here'] },
+                ];
+                const result = links.backlink_pages();
+                $mol_assert_equal(result.length, 0);
+            },
+            'backlink_pages returns empty when page_id is empty'() {
+                const links = new $bog_wysiwyg_links();
+                links.page_id = () => '';
+                links.all_pages = () => [
+                    { id: 'page_1', title: 'First', blocks_html: ['[[page_abc]]'] },
+                ];
+                const result = links.backlink_pages();
+                $mol_assert_equal(result.length, 0);
+            },
+            'link_title returns page title'() {
+                const links = new $bog_wysiwyg_links();
+                links.page_id = () => 'target';
+                links.all_pages = () => [
+                    { id: 'page_1', title: 'My Page', blocks_html: ['[[target]]'] },
+                ];
+                $mol_assert_equal(links.link_title('page_1'), 'My Page');
+            },
+            'link_title falls back to id when not found'() {
+                const links = new $bog_wysiwyg_links();
+                links.page_id = () => 'target';
+                links.all_pages = () => [];
+                $mol_assert_equal(links.link_title('unknown'), 'unknown');
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            'AI commands returns array of commands'() {
+                const ai = new $bog_wysiwyg_ai();
+                const cmds = ai.commands();
+                $mol_assert_ok(cmds.length >= 4);
+                $mol_assert_equal(cmds[0].id, 'continue');
+                $mol_assert_ok(cmds[0].prompt.length > 0);
+                $mol_assert_ok(cmds[0].title.length > 0);
+            },
+            'AI option_rows returns buttons for each command'() {
+                const ai = new $bog_wysiwyg_ai();
+                ai.loading(false);
+                const rows = ai.option_rows();
+                $mol_assert_equal(rows.length, ai.commands().length);
+            },
+            'AI option_rows shows loading when loading is true'() {
+                const ai = new $bog_wysiwyg_ai();
+                ai.loading(true);
+                const rows = ai.option_rows();
+                $mol_assert_equal(rows.length, 1);
+            },
+            'AI option_active returns true for current index'() {
+                const ai = new $bog_wysiwyg_ai();
+                ai.index(0);
+                const first_id = ai.commands()[0].id;
+                $mol_assert_equal(ai.option_active(first_id), true);
+                $mol_assert_equal(ai.option_active('nonexistent'), false);
+            },
+            'AI option_active tracks index changes'() {
+                const ai = new $bog_wysiwyg_ai();
+                ai.index(2);
+                const cmd = ai.commands()[2];
+                $mol_assert_equal(ai.option_active(cmd.id), true);
+                $mol_assert_equal(ai.option_active(ai.commands()[0].id), false);
+            },
+            'AI option_click without event returns null'() {
+                const ai = new $bog_wysiwyg_ai();
+                $mol_assert_equal(ai.option_click('continue'), null);
+            },
+            'AI pos_y_str returns pixel string'() {
+                const ai = new $bog_wysiwyg_ai();
+                ai.pos_y(123);
+                $mol_assert_equal(ai.pos_y_str(), '123px');
+            },
+            'AI pos_x_str returns pixel string'() {
+                const ai = new $bog_wysiwyg_ai();
+                ai.pos_x(456);
+                $mol_assert_equal(ai.pos_x_str(), '456px');
+            },
+            'block_ai opens AI menu and sets context'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['b1']);
+                editor.ai_showed(false);
+                const fake_rect = { bottom: 100, left: 50, top: 0 };
+                editor.Block = (id) => {
+                    const block = new $bog_wysiwyg_block();
+                    block.dom_node = () => {
+                        const el = { getBoundingClientRect: () => fake_rect, textContent: 'hello world' };
+                        return el;
+                    };
+                    return block;
+                };
+                editor.dom_node = () => ({ getBoundingClientRect: () => ({ top: 0, left: 0 }) });
+                const event = new KeyboardEvent('keydown', { key: 'j', ctrlKey: true });
+                editor.block_ai('b1', event);
+                $mol_assert_equal(editor.ai_showed(), true);
+                $mol_assert_equal(editor.ai_context(), 'hello world');
+                $mol_assert_equal(editor.ai_index(), 0);
+                $mol_assert_equal(editor.active_block_id(), 'b1');
+            },
+            'block_ai without event returns null'() {
+                const editor = new $bog_wysiwyg();
+                $mol_assert_equal(editor.block_ai('b1'), null);
+            },
+            'block_ai_key Escape closes AI menu'() {
+                const editor = new $bog_wysiwyg();
+                editor.ai_showed(true);
+                const event = new KeyboardEvent('keydown', { key: 'Escape' });
+                editor.block_ai_key('test', event);
+                $mol_assert_equal(editor.ai_showed(), false);
+            },
+            'block_ai_key ArrowDown increments ai_index'() {
+                const editor = new $bog_wysiwyg();
+                editor.ai_index(0);
+                const event = new KeyboardEvent('keydown', { key: 'ArrowDown' });
+                editor.block_ai_key('test', event);
+                $mol_assert_equal(editor.ai_index(), 1);
+            },
+            'block_ai_key ArrowUp decrements ai_index'() {
+                const editor = new $bog_wysiwyg();
+                editor.ai_index(2);
+                const event = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+                editor.block_ai_key('test', event);
+                $mol_assert_equal(editor.ai_index(), 1);
+            },
+            'block_ai_key ArrowUp does not go below zero'() {
+                const editor = new $bog_wysiwyg();
+                editor.ai_index(0);
+                const event = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+                editor.block_ai_key('test', event);
+                $mol_assert_equal(editor.ai_index(), 0);
+            },
+            'block_ai_key Enter triggers ai_picked and run_command'() {
+                const editor = new $bog_wysiwyg();
+                editor.ai_index(1);
+                let picked_val = '';
+                editor.ai_picked = (next) => {
+                    if (next !== undefined)
+                        picked_val = next;
+                    return picked_val;
+                };
+                let run_id = '';
+                const ai = editor.Ai();
+                ai.run_command = (id) => { run_id = id; };
+                const event = new KeyboardEvent('keydown', { key: 'Enter' });
+                editor.block_ai_key('test', event);
+                const expected_id = ai.commands()[1].id;
+                $mol_assert_equal(picked_val, expected_id);
+                $mol_assert_equal(run_id, expected_id);
+            },
+            'block_ai_key without event returns null'() {
+                const editor = new $bog_wysiwyg();
+                $mol_assert_equal(editor.block_ai_key('test'), null);
+            },
+            'ai_result with continue appends text'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.block_html('b1', 'Hello');
+                editor.ai_picked('continue');
+                editor.focus_block = () => { };
+                editor.ai_result('world');
+                $mol_assert_equal(editor.block_html('b1'), 'Hello world');
+            },
+            'ai_result with rewrite replaces text'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.block_html('b1', 'Old text');
+                editor.ai_picked('rewrite');
+                editor.focus_block = () => { };
+                editor.ai_result('New text');
+                $mol_assert_equal(editor.block_html('b1'), 'New text');
+            },
+            'ai_result without text returns null'() {
+                const editor = new $bog_wysiwyg();
+                $mol_assert_equal(editor.ai_result(), null);
+            },
+            'ai_result without active block still returns text'() {
+                const editor = new $bog_wysiwyg();
+                editor.focus_block = () => { };
+                const result = editor.ai_result('some text');
+                $mol_assert_equal(result, 'some text');
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            'page_land returns null when page_land_link is empty'() {
+                const history = new $bog_wysiwyg_history();
+                history.page_land_link = () => '';
+                $mol_assert_equal(history.page_land(), null);
+            },
+            'page_data returns null when page_land is null'() {
+                const history = new $bog_wysiwyg_history();
+                history.page_land_link = () => '';
+                $mol_assert_equal(history.page_data(), null);
+            },
+            'version_links returns empty array when no baza'() {
+                const history = new $bog_wysiwyg_history();
+                history.page_land_link = () => '';
+                $mol_assert_like(history.version_links(), []);
+            },
+            'version_rows returns empty array when no baza'() {
+                const history = new $bog_wysiwyg_history();
+                history.page_land_link = () => '';
+                $mol_assert_like(history.version_rows(), []);
+            },
+            'version_active always returns false'() {
+                const history = new $bog_wysiwyg_history();
+                $mol_assert_equal(history.version_active('some_link'), false);
+                $mol_assert_equal(history.version_active(''), false);
+            },
+            'save_version without event returns null'() {
+                const history = new $bog_wysiwyg_history();
+                $mol_assert_equal(history.save_version(), null);
+            },
+            'version_click without event returns null'() {
+                const history = new $bog_wysiwyg_history();
+                $mol_assert_equal(history.version_click('some_link'), null);
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            'ArrowDown increments menu_index within bounds'() {
+                const editor = new $bog_wysiwyg();
+                editor.menu_index(0);
+                const event = new KeyboardEvent('keydown', { key: 'ArrowDown' });
+                editor.block_menu_key('test', event);
+                $mol_assert_equal(editor.menu_index(), 1);
+            },
+            'ArrowDown does not exceed max index'() {
+                const editor = new $bog_wysiwyg();
+                const max = editor.Menu().commands().length - 1;
+                editor.menu_index(max);
+                const event = new KeyboardEvent('keydown', { key: 'ArrowDown' });
+                editor.block_menu_key('test', event);
+                $mol_assert_equal(editor.menu_index(), max);
+            },
+            'ArrowUp decrements menu_index within bounds'() {
+                const editor = new $bog_wysiwyg();
+                editor.menu_index(3);
+                const event = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+                editor.block_menu_key('test', event);
+                $mol_assert_equal(editor.menu_index(), 2);
+            },
+            'ArrowUp does not go below zero'() {
+                const editor = new $bog_wysiwyg();
+                editor.menu_index(0);
+                const event = new KeyboardEvent('keydown', { key: 'ArrowUp' });
+                editor.block_menu_key('test', event);
+                $mol_assert_equal(editor.menu_index(), 0);
+            },
+            'Enter triggers menu_picked'() {
+                const editor = new $bog_wysiwyg();
+                editor.menu_index(2);
+                let picked_val = '';
+                editor.menu_picked = (next) => {
+                    if (next !== undefined)
+                        picked_val = next;
+                    return picked_val;
+                };
+                const event = new KeyboardEvent('keydown', { key: 'Enter' });
+                editor.block_menu_key('test', event);
+                const expected_id = editor.Menu().commands()[2].id;
+                $mol_assert_equal(picked_val, expected_id);
+            },
+            'Escape closes menu'() {
+                const editor = new $bog_wysiwyg();
+                editor.menu_showed(true);
+                const event = new KeyboardEvent('keydown', { key: 'Escape' });
+                editor.block_menu_key('test', event);
+                $mol_assert_equal(editor.menu_showed(), false);
+            },
+            'Printable char closes menu'() {
+                const editor = new $bog_wysiwyg();
+                editor.menu_showed(true);
+                const event = new KeyboardEvent('keydown', { key: 'a' });
+                editor.block_menu_key('test', event);
+                $mol_assert_equal(editor.menu_showed(), false);
+            },
+            'option_active returns true for current index'() {
+                const menu = new $bog_wysiwyg_menu();
+                menu.index(0);
+                const first_id = menu.commands()[0].id;
+                $mol_assert_equal(menu.option_active(first_id), true);
+                $mol_assert_equal(menu.option_active('nonexistent'), false);
+            },
+            'option_active tracks index changes'() {
+                const menu = new $bog_wysiwyg_menu();
+                menu.index(2);
+                const cmd = menu.commands()[2];
+                $mol_assert_equal(menu.option_active(cmd.id), true);
+                $mol_assert_equal(menu.option_active(menu.commands()[0].id), false);
+            },
+            'option_click calls picked and closes menu'() {
+                const menu = new $bog_wysiwyg_menu();
+                menu.showed(true);
+                let picked_val = '';
+                menu.picked = (next) => {
+                    if (next !== undefined)
+                        picked_val = next;
+                    return picked_val;
+                };
+                const event = new Event('click');
+                menu.option_click('heading1', event);
+                $mol_assert_equal(picked_val, 'heading1');
+                $mol_assert_equal(menu.showed(), false);
+            },
+            'option_click without event returns null'() {
+                const menu = new $bog_wysiwyg_menu();
+                $mol_assert_equal(menu.option_click('heading1'), null);
+            },
+            'menu_picked applies heading type with level'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                editor.menu_picked('heading2');
+                $mol_assert_equal(editor.block_type('b1'), 'heading');
+                $mol_assert_equal(editor.block_level('b1'), 2);
+                $mol_assert_equal(editor.menu_showed(), false);
+            },
+            'menu_picked applies non-heading type'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                editor.menu_picked('code');
+                $mol_assert_equal(editor.block_type('b1'), 'code');
+                $mol_assert_equal(editor.menu_showed(), false);
+            },
+            'block_slash opens menu and resets index'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['b1']);
+                editor.menu_index(5);
+                editor.menu_showed(false);
+                const fake_rect = { bottom: 100, left: 50, top: 0 };
+                editor.Block = (id) => {
+                    const block = new $bog_wysiwyg_block();
+                    block.dom_node = () => ({ getBoundingClientRect: () => fake_rect });
+                    return block;
+                };
+                editor.dom_node = () => ({ getBoundingClientRect: () => ({ top: 0, left: 0 }) });
+                const event = new KeyboardEvent('keydown', { key: '/' });
+                editor.block_slash('b1', event);
+                $mol_assert_equal(editor.menu_index(), 0);
+                $mol_assert_equal(editor.menu_showed(), true);
+            },
+            'block_enter creates new block after current'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b']);
+                editor.focus_block = () => { };
+                const event = new Event('test');
+                editor.block_enter('a', event);
+                const ids = editor.block_ids();
+                $mol_assert_equal(ids.length, 3);
+                $mol_assert_equal(ids[0], 'a');
+                $mol_assert_equal(ids[2], 'b');
+            },
+            'block_enter preserves all existing blocks'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['x', 'y', 'z']);
+                editor.focus_block = () => { };
+                const event = new Event('test');
+                editor.block_enter('y', event);
+                const ids = editor.block_ids();
+                $mol_assert_equal(ids.length, 4);
+                $mol_assert_equal(ids[0], 'x');
+                $mol_assert_equal(ids[1], 'y');
+                $mol_assert_equal(ids[3], 'z');
+            },
+            'block_enter without event returns null'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a']);
+                $mol_assert_equal(editor.block_enter('a'), null);
+                $mol_assert_equal(editor.block_ids().length, 1);
+            },
+            'block_enter on nonexistent id inserts at end'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b']);
+                editor.focus_block = () => { };
+                const event = new Event('test');
+                editor.block_enter('nonexistent', event);
+                const ids = editor.block_ids();
+                $mol_assert_equal(ids.length, 3);
+            },
+            'block_remove removes block'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b', 'c']);
+                editor.focus_block = () => { };
+                const event = new Event('test');
+                editor.block_remove('b', event);
+                const ids = editor.block_ids();
+                $mol_assert_equal(ids.length, 2);
+                $mol_assert_equal(ids[0], 'a');
+                $mol_assert_equal(ids[1], 'c');
+            },
+            'block_remove does not remove last block'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['only']);
+                const event = new Event('test');
+                const result = editor.block_remove('only', event);
+                $mol_assert_equal(result, null);
+                $mol_assert_equal(editor.block_ids().length, 1);
+                $mol_assert_equal(editor.block_ids()[0], 'only');
+            },
+            'block_remove without event returns null'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b']);
+                $mol_assert_equal(editor.block_remove('a'), null);
+                $mol_assert_equal(editor.block_ids().length, 2);
+            },
+            'menu_picked with paragraph sets type paragraph'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                editor.menu_picked('paragraph');
+                $mol_assert_equal(editor.block_type('b1'), 'paragraph');
+                $mol_assert_equal(editor.menu_showed(), false);
+            },
+            'menu_picked with code sets type code'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                editor.menu_picked('code');
+                $mol_assert_equal(editor.block_type('b1'), 'code');
+                $mol_assert_equal(editor.menu_showed(), false);
+            },
+            'menu_picked with quote sets type quote'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                editor.menu_picked('quote');
+                $mol_assert_equal(editor.block_type('b1'), 'quote');
+                $mol_assert_equal(editor.menu_showed(), false);
+            },
+            'menu_picked with list sets type list'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                editor.menu_picked('list');
+                $mol_assert_equal(editor.block_type('b1'), 'list');
+                $mol_assert_equal(editor.menu_showed(), false);
+            },
+            'menu_picked with divider sets type divider'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                editor.menu_picked('divider');
+                $mol_assert_equal(editor.block_type('b1'), 'divider');
+                $mol_assert_equal(editor.menu_showed(), false);
+            },
+            'menu_picked with heading1 sets type heading and level 1'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                editor.menu_picked('heading1');
+                $mol_assert_equal(editor.block_type('b1'), 'heading');
+                $mol_assert_equal(editor.block_level('b1'), 1);
+                $mol_assert_equal(editor.menu_showed(), false);
+            },
+            'menu_picked with heading3 sets type heading and level 3'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                editor.menu_picked('heading3');
+                $mol_assert_equal(editor.block_type('b1'), 'heading');
+                $mol_assert_equal(editor.block_level('b1'), 3);
+                $mol_assert_equal(editor.menu_showed(), false);
+            },
+            'block_html stores and returns HTML'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['b1']);
+                editor.block_html('b1', '<b>hello</b>');
+                $mol_assert_equal(editor.block_html('b1'), '<b>hello</b>');
+            },
+            'block_type defaults to paragraph'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['b1']);
+                $mol_assert_equal(editor.block_type('b1'), 'paragraph');
+            },
+            'block_level defaults to 1'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['b1']);
+                $mol_assert_equal(editor.block_level('b1'), 1);
+            },
+            'each block has independent html/type/level'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['b1', 'b2']);
+                editor.block_html('b1', 'first');
+                editor.block_html('b2', 'second');
+                editor.block_type('b1', 'code');
+                editor.block_type('b2', 'quote');
+                editor.block_level('b1', 2);
+                editor.block_level('b2', 3);
+                $mol_assert_equal(editor.block_html('b1'), 'first');
+                $mol_assert_equal(editor.block_html('b2'), 'second');
+                $mol_assert_equal(editor.block_type('b1'), 'code');
+                $mol_assert_equal(editor.block_type('b2'), 'quote');
+                $mol_assert_equal(editor.block_level('b1'), 2);
+                $mol_assert_equal(editor.block_level('b2'), 3);
+            },
+            'active_block_id defaults to empty string'() {
+                const editor = new $bog_wysiwyg();
+                $mol_assert_equal(editor.active_block_id(), '');
+            },
+            'generate_id returns non-empty strings'() {
+                const editor = new $bog_wysiwyg();
+                const id1 = editor.generate_id();
+                const id2 = editor.generate_id();
+                $mol_assert_ok(id1.length > 0);
+                $mol_assert_ok(id2.length > 0);
+            },
+            'block_views returns array of blocks matching block_ids'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b', 'c']);
+                const views = editor.block_views();
+                $mol_assert_equal(views.length, 3);
+            },
+            'menu_picked clears block html'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.block_html('b1', 'some text');
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                editor.menu_picked('code');
+                $mol_assert_equal(editor.block_html('b1'), '');
+            },
+            'menu_picked with no active_block_id does nothing'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['b1']);
+                editor.block_type('b1', 'paragraph');
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                editor.menu_picked('code');
+                $mol_assert_equal(editor.block_type('b1'), 'paragraph');
+            },
+            'block_remove calls focus_block with previous id'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b', 'c']);
+                let focused_id = '';
+                editor.focus_block = (id) => { focused_id = id; };
+                const event = new Event('test');
+                editor.block_remove('b', event);
+                $mol_assert_equal(focused_id, 'a');
+            },
+            'block_remove of first block focuses new first block'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b', 'c']);
+                let focused_id = '';
+                editor.focus_block = (id) => { focused_id = id; };
+                const event = new Event('test');
+                editor.block_remove('a', event);
+                $mol_assert_equal(focused_id, 'b');
+            },
+            'block_enter while menu is open still creates block'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                const event = new Event('test');
+                editor.block_enter('a', event);
+                $mol_assert_equal(editor.block_ids().length, 3);
+            },
+            'block_remove while menu is open still removes block'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b', 'c']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                const event = new Event('test');
+                editor.block_remove('b', event);
+                $mol_assert_equal(editor.block_ids().length, 2);
+            },
+            'multiple block_enter calls create multiple blocks'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a']);
+                editor.focus_block = () => { };
+                const event = new Event('test');
+                editor.block_enter('a', event);
+                editor.block_enter('a', event);
+                editor.block_enter('a', event);
+                $mol_assert_equal(editor.block_ids().length, 4);
+                $mol_assert_equal(editor.block_ids()[0], 'a');
+            },
+            'block_enter then block_remove restores original count'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b']);
+                editor.focus_block = () => { };
+                const event = new Event('test');
+                editor.block_enter('a', event);
+                const new_id = editor.block_ids()[1];
+                editor.block_remove(new_id, event);
+                $mol_assert_equal(editor.block_ids().length, 2);
+                $mol_assert_equal(editor.block_ids()[0], 'a');
+                $mol_assert_equal(editor.block_ids()[1], 'b');
+            },
+            'menu_picked with heading2 then menu_picked with code overwrites type'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.focus_block = () => { };
+                editor.menu_showed(true);
+                editor.menu_picked('heading2');
+                $mol_assert_equal(editor.block_type('b1'), 'heading');
+                $mol_assert_equal(editor.block_level('b1'), 2);
+                editor.menu_showed(true);
+                editor.menu_picked('code');
+                $mol_assert_equal(editor.block_type('b1'), 'code');
+            },
+            'image command exists in slash menu'() {
+                const menu = new $bog_wysiwyg_menu();
+                const cmds = menu.commands();
+                const image_cmd = cmds.find(c => c.id === 'image');
+                $mol_assert_ok(image_cmd);
+            },
+            'block_image sets type to image and stores img html'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['b1']);
+                editor.block_image('b1', 'https://example.com/photo.jpg');
+                $mol_assert_equal(editor.block_type('b1'), 'image');
+                $mol_assert_ok(editor.block_html('b1').includes('<img'));
+                $mol_assert_ok(editor.block_html('b1').includes('https://example.com/photo.jpg'));
+            },
+            'block_image without src returns null'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['b1']);
+                $mol_assert_equal(editor.block_image('b1'), null);
+                $mol_assert_equal(editor.block_type('b1'), 'paragraph');
+            },
+            'menu_picked with image prompts for URL'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                const ctx = editor.$.$mol_dom_context;
+                const original_prompt = ctx.prompt;
+                ctx.prompt = () => 'https://example.com/img.png';
+                editor.menu_picked('image');
+                $mol_assert_equal(editor.block_type('b1'), 'image');
+                $mol_assert_ok(editor.block_html('b1').includes('https://example.com/img.png'));
+                $mol_assert_equal(editor.menu_showed(), false);
+                ctx.prompt = original_prompt;
+            },
+            'menu_picked with image cancelled prompt keeps paragraph'() {
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.menu_showed(true);
+                editor.focus_block = () => { };
+                const ctx = editor.$.$mol_dom_context;
+                const original_prompt = ctx.prompt;
+                ctx.prompt = () => null;
+                editor.menu_picked('image');
+                $mol_assert_equal(editor.block_type('b1'), 'paragraph');
+                $mol_assert_equal(editor.menu_showed(), false);
+                ctx.prompt = original_prompt;
+            },
+            'move_block moves block down (after)'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b', 'c']);
+                editor.move_block('a', 'c', 'after');
+                const ids = editor.block_ids();
+                $mol_assert_equal(ids[0], 'b');
+                $mol_assert_equal(ids[1], 'c');
+                $mol_assert_equal(ids[2], 'a');
+            },
+            'move_block moves block up (before)'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b', 'c']);
+                editor.move_block('c', 'a', 'before');
+                const ids = editor.block_ids();
+                $mol_assert_equal(ids[0], 'c');
+                $mol_assert_equal(ids[1], 'a');
+                $mol_assert_equal(ids[2], 'b');
+            },
+            'move_block to same position does not change order'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b', 'c']);
+                editor.move_block('b', 'a', 'after');
+                const ids = editor.block_ids();
+                $mol_assert_equal(ids[0], 'a');
+                $mol_assert_equal(ids[1], 'b');
+                $mol_assert_equal(ids[2], 'c');
+            },
+            'move_block with invalid from_id does nothing'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b', 'c']);
+                editor.move_block('nonexistent', 'b', 'after');
+                const ids = editor.block_ids();
+                $mol_assert_equal(ids.length, 3);
+                $mol_assert_equal(ids[0], 'a');
+            },
+            'drag_source_id stores and clears'() {
+                const editor = new $bog_wysiwyg();
+                $mol_assert_equal(editor.drag_source_id(), '');
+                editor.drag_source_id('block1');
+                $mol_assert_equal(editor.drag_source_id(), 'block1');
+                editor.drag_source_id('');
+                $mol_assert_equal(editor.drag_source_id(), '');
+            },
+            'drag_over_id stores and clears'() {
+                const editor = new $bog_wysiwyg();
+                $mol_assert_equal(editor.drag_over_id(), '');
+                editor.drag_over_id('block2');
+                $mol_assert_equal(editor.drag_over_id(), 'block2');
+            },
+            'clear_drag_state resets all drag state'() {
+                const editor = new $bog_wysiwyg();
+                editor.drag_source_id('src');
+                editor.drag_over_id('over');
+                editor.drag_over_position('before');
+                editor.clear_drag_state();
+                $mol_assert_equal(editor.drag_source_id(), '');
+                $mol_assert_equal(editor.drag_over_id(), '');
+                $mol_assert_equal(editor.drag_over_position(), 'after');
+            },
+            'row_is_drag_over returns true for target, false for source'() {
+                const editor = new $bog_wysiwyg();
+                editor.drag_source_id('a');
+                editor.drag_over_id('b');
+                $mol_assert_equal(editor.row_is_drag_over('b'), true);
+                $mol_assert_equal(editor.row_is_drag_over('a'), false);
+                $mol_assert_equal(editor.row_is_drag_over('c'), false);
+            },
+            'row_is_dragging returns true for source block'() {
+                const editor = new $bog_wysiwyg();
+                editor.drag_source_id('a');
+                $mol_assert_equal(editor.row_is_dragging('a'), true);
+                $mol_assert_equal(editor.row_is_dragging('b'), false);
+            },
+            'block_row_views returns rows matching block_ids'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b', 'c']);
+                const rows = editor.block_row_views();
+                $mol_assert_equal(rows.length, 3);
+            },
+            'html_to_md: bold to markdown'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('<b>hello</b>'), '**hello**');
+            },
+            'html_to_md: strong to markdown'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('<strong>hello</strong>'), '**hello**');
+            },
+            'html_to_md: italic to markdown'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('<i>hello</i>'), '*hello*');
+            },
+            'html_to_md: em to markdown'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('<em>hello</em>'), '*hello*');
+            },
+            'html_to_md: code to markdown'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('<code>x</code>'), '`x`');
+            },
+            'html_to_md: strike to markdown'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('<s>old</s>'), '~~old~~');
+            },
+            'html_to_md: del to markdown'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('<del>old</del>'), '~~old~~');
+            },
+            'html_to_md: link to markdown'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('<a href="https://example.com">click</a>'), '[click](https://example.com)');
+            },
+            'html_to_md: br to newline'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('line1<br>line2'), 'line1\nline2');
+            },
+            'html_to_md: strips unknown tags'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('<div>hello</div>'), 'hello');
+            },
+            'html_to_md: decodes HTML entities'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('&amp; &lt; &gt; &quot;'), '& < > "');
+            },
+            'html_to_md: mixed inline formatting'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('hello <b>bold</b> and <i>italic</i>'), 'hello **bold** and *italic*');
+            },
+            'html_to_md: plain text unchanged'() {
+                $mol_assert_equal($bog_wysiwyg_html_to_md('just text'), 'just text');
+            },
+            'block_paste_blocks replaces current and inserts new blocks'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b']);
+                editor.focus_block = () => { };
+                editor.block_paste_blocks('a', [
+                    { type: 'heading', content: 'Title', level: 1 },
+                    { type: 'paragraph', content: 'text' },
+                    { type: 'code', content: 'x = 1' },
+                ]);
+                const ids = editor.block_ids();
+                $mol_assert_equal(ids.length, 4);
+                $mol_assert_equal(ids[0], 'a');
+                $mol_assert_equal(ids[3], 'b');
+                $mol_assert_equal(editor.block_type('a'), 'heading');
+                $mol_assert_equal(editor.block_html('a'), 'Title');
+                $mol_assert_equal(editor.block_level('a'), 1);
+                $mol_assert_equal(editor.block_type(ids[1]), 'paragraph');
+                $mol_assert_equal(editor.block_html(ids[1]), 'text');
+                $mol_assert_equal(editor.block_type(ids[2]), 'code');
+                $mol_assert_equal(editor.block_html(ids[2]), 'x = 1');
+            },
+            'block_paste_blocks with single block replaces current only'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a', 'b']);
+                editor.focus_block = () => { };
+                editor.block_paste_blocks('a', [
+                    { type: 'quote', content: 'quoted' },
+                ]);
+                $mol_assert_equal(editor.block_ids().length, 2);
+                $mol_assert_equal(editor.block_type('a'), 'quote');
+                $mol_assert_equal(editor.block_html('a'), 'quoted');
+            },
+            'block_paste_blocks with empty array returns null'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a']);
+                $mol_assert_equal(editor.block_paste_blocks('a', []), null);
+                $mol_assert_equal(editor.block_ids().length, 1);
+            },
+            'block_paste_blocks without val returns null'() {
+                const editor = new $bog_wysiwyg();
+                editor.block_ids(['a']);
+                $mol_assert_equal(editor.block_paste_blocks('a'), null);
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            'register adds plugin to registry'() {
+                const registry = $bog_wysiwyg_plugin_registry;
+                const before = registry.all().length;
+                registry.register({
+                    id: '_test_plugin_1',
+                    title: 'Test Plugin',
+                });
+                $mol_assert_equal(registry.all().length, before + 1);
+                registry.plugins.delete('_test_plugin_1');
+            },
+            'all() returns all registered plugins'() {
+                const registry = $bog_wysiwyg_plugin_registry;
+                registry.register({ id: '_test_a', title: 'A' });
+                registry.register({ id: '_test_b', title: 'B' });
+                const all = registry.all();
+                const ids = all.map(p => p.id);
+                $mol_assert_ok(ids.includes('_test_a'));
+                $mol_assert_ok(ids.includes('_test_b'));
+                registry.plugins.delete('_test_a');
+                registry.plugins.delete('_test_b');
+            },
+            'get() returns plugin by id'() {
+                const registry = $bog_wysiwyg_plugin_registry;
+                registry.register({ id: '_test_get', title: 'Get Test' });
+                const plugin = registry.get('_test_get');
+                $mol_assert_ok(plugin !== null);
+                $mol_assert_equal(plugin.id, '_test_get');
+                $mol_assert_equal(plugin.title, 'Get Test');
+                registry.plugins.delete('_test_get');
+            },
+            'get() returns null for non-existent plugin'() {
+                const registry = $bog_wysiwyg_plugin_registry;
+                $mol_assert_equal(registry.get('_nonexistent_xyz'), null);
+            },
+            'commands() includes plugins from registry'() {
+                const registry = $bog_wysiwyg_plugin_registry;
+                registry.register({ id: '_test_menu', title: 'Menu Test' });
+                const menu = new $bog_wysiwyg_menu();
+                const cmds = menu.commands();
+                const ids = cmds.map(c => c.id);
+                $mol_assert_ok(ids.includes('_test_menu'));
+                registry.plugins.delete('_test_menu');
+            },
+            'apply_menu_command calls plugin on_select'() {
+                const registry = $bog_wysiwyg_plugin_registry;
+                let called_with_id = '';
+                registry.register({
+                    id: '_test_select',
+                    title: 'Select Test',
+                    on_select: (editor, block_id) => {
+                        called_with_id = block_id;
+                    },
+                });
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.focus_block = () => { };
+                editor.apply_menu_command('_test_select');
+                $mol_assert_equal(called_with_id, 'b1');
+                registry.plugins.delete('_test_select');
+            },
+            'apply_menu_command for plugin without on_select sets type'() {
+                const registry = $bog_wysiwyg_plugin_registry;
+                registry.register({
+                    id: '_test_noop',
+                    title: 'Noop Test',
+                });
+                const editor = new $bog_wysiwyg();
+                editor.active_block_id('b1');
+                editor.block_ids(['b1']);
+                editor.focus_block = () => { };
+                editor.apply_menu_command('_test_noop');
+                $mol_assert_equal(editor.block_type('b1'), '_test_noop');
+                registry.plugins.delete('_test_noop');
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;

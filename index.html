@@ -1832,22 +1832,6 @@ h6[mol_text_header] {
 [mol_text_type="quote"] {
 	font-style: italic;
 }
-</style><style id="$mol_style_attach:mol/row/row.view.css">[mol_row] {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: flex-start;
-	align-content: flex-start;
-	justify-content: flex-start;
-	padding: var(--mol_gap_block);
-	gap: var(--mol_gap_block);
-	flex: 0 0 auto;
-	box-sizing: border-box;
-	max-width: 100%;
-}
-
-[mol_row] > * {
-	max-width: 100%;
-}
 </style><style id="$mol_style_attach:mol/textarea/textarea.view.css">[mol_textarea] {
 	flex: 1 0 auto;
 	flex-direction: column;
@@ -1910,36 +1894,591 @@ h6[mol_text_header] {
 [mol_textarea_edit]:focus + [mol_textarea_view] {
 	z-index: var(--mol_layer_focus);
 }
+</style><style id="$mol_style_attach:mol/button/open/open.view.css">[mol_button_open_native] {
+	position: absolute;
+	left: 0;
+	top: -100%;
+	width: 100%;
+	height: 200%;
+	cursor: pointer;
+	opacity: 0;
+}
+</style><style id="$mol_style_attach:mol/row/row.view.css">[mol_row] {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	align-content: flex-start;
+	justify-content: flex-start;
+	padding: var(--mol_gap_block);
+	gap: var(--mol_gap_block);
+	flex: 0 0 auto;
+	box-sizing: border-box;
+	max-width: 100%;
+}
+
+[mol_row] > * {
+	max-width: 100%;
+}
+</style><style id="$mol_style_attach:mol/string/button/button.view.css">[mol_string_button]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled) {
+	color: var(--mol_theme_control);
+	background: transparent;
+	box-shadow: none;
+}
+</style><style id="$mol_style_attach:$bog_blitz_lobby_players">[bog_blitz_lobby_players_player_name_input]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled) {
+	color: var(--mol_theme_text);
+}
+[bog_blitz_lobby_players_player] {
+	align-items: center;
+	background-color: var(--mol_theme_card);
+	border-radius: 0.75rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	margin-bottom: 0.25rem;
+	margin-top: 0.25rem;
+}
+[bog_blitz_lobby_players_player]:where([bog_blitz_mine="true"]) {
+	background-color: var(--mol_theme_card);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	border-radius: 0.5rem;
+}
+[bog_blitz_lobby_players_player_icon] {
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 50%;
+	overflow: hidden;
+	flex-shrink: 0;
+}
+[bog_blitz_lobby_players_player_image] {
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 50%;
+	overflow: hidden;
+	object-fit: cover;
+	flex-shrink: 0;
+}
 </style><style id="$mol_style_attach:mol/button/major/major.view.css">[mol_button_major] {
 	background-color: var(--mol_theme_back);
 	color: var(--mol_theme_text);
 }
-</style><style id="$mol_style_attach:$bog_ui_divider">[bog_ui_divider] {
-	margin-bottom: var(--mol_gap_block);
-	margin-top: var(--mol_gap_block);
-	width: 100%;
-	border-bottom-width: 2px;
-	border-bottom-style: solid;
+</style><style id="$mol_style_attach:$bog_qr">[bog_qr] {
+	width: 300px;
+	height: 300px;
 }
-</style><style id="$mol_style_attach:mol/check/list/list.view.css">[mol_check_list] {
-	display: flex;
-	flex-wrap: wrap;
-	flex: 1 1 auto;
+[bog_qr_center_body] {
+	width: 80%;
+	height: 80%;
+	position: absolute;
+	top: 10%;
+	left: 10%;
+}
+</style><style id="$mol_style_attach:$bog_blitz_lobby_host">[bog_blitz_lobby_host_qr] {
 	border-radius: var(--mol_gap_round);
-	gap: 1px;
+	align-self: center;
+	max-width: 22rem;
+}
+[bog_blitz_lobby_host_quiz_title] {
+	align-self: center;
+	font-size: 1.75rem;
+	font-weight: 700;
+	margin-top: 1rem;
+	text-align: center;
+}
+[bog_blitz_lobby_host_land_id] {
+	align-self: center;
+	font-size: 0.85rem;
+	opacity: 0.45;
+	text-align: center;
+}
+[bog_blitz_lobby_host_start] {
+	align-self: center;
+	max-width: 20rem;
+	text-align: center;
+	margin-top: 1.5rem;
+}
+[bog_blitz_lobby_host_counter] {
+	align-self: center;
+	font-size: 1.25rem;
+	font-weight: 500;
+	opacity: 0.7;
+	margin-top: 1.5rem;
+	margin-bottom: 1.5rem;
+}
+</style><style id="$mol_style_attach:$bog_blitz_lobby_join">[bog_blitz_lobby_join_body] {
+	flex-direction: column;
+	align-items: center;
+	align-self: center;
+	gap: 1.5rem;
+	padding-top: 3rem;
+	padding-bottom: 2rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+	max-width: 400px;
+}
+[bog_blitz_lobby_join_avatar_circle] {
+	border-radius: 50%;
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+	min-width: 100px;
+	min-height: 100px;
+	max-width: 100px;
+	max-height: 100px;
+	flex-shrink: 0;
+	flex-grow: 0;
+	margin-bottom: 0.5rem;
+}
+[bog_blitz_lobby_join_avatar_image] {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+[bog_blitz_lobby_join_avatar_icon] {
+	width: 100%;
+	height: 100%;
+	font-size: 3rem;
+}
+[bog_blitz_lobby_join_avatar] {
+	font-size: 0.75rem;
+	opacity: 0.5;
+}
+[bog_blitz_lobby_join_player_name_input] {
+	font-size: 1.5rem;
+	font-weight: 600;
+	text-align: center;
+	width: 100%;
+}
+[bog_blitz_lobby_join_join] {
+	width: 100%;
+	margin-top: 0.5rem;
+}
+</style><style id="$mol_style_attach:$bog_blitz_lobby_waiting">[bog_blitz_lobby_waiting_quiz_title] {
+	align-self: center;
+	font-size: 1.75rem;
+	font-weight: 700;
+	margin-top: 1rem;
+	text-align: center;
+}
+[bog_blitz_lobby_waiting_waiting_message] {
+	align-self: center;
+	font-size: 1.5rem;
+	font-weight: 500;
+	opacity: 0.6;
+	padding-bottom: 0.5rem;
+	padding-top: 1rem;
+}
+[bog_blitz_lobby_waiting_counter] {
+	align-self: center;
+	font-size: 1.25rem;
+	font-weight: 500;
+	opacity: 0.7;
+	padding-bottom: 1.5rem;
+	padding-top: 1rem;
+}
+</style><style id="$mol_style_attach:bog/blitz/lobby/game/timer/timer.view.css">@keyframes bog_blitz_timer_shrink {
+	from { width: 100%; }
+	to { width: 0%; }
+}
+</style><style id="$mol_style_attach:$bog_blitz_lobby_game_timer">[bog_blitz_lobby_game_timer] {
+	width: 100%;
+	height: 0.35rem;
+	margin-bottom: 1.5rem;
+}
+[bog_blitz_lobby_game_timer_bar] {
+	height: 100%;
+	background-color: var(--mol_theme_special);
+}
+</style><style id="$mol_style_attach:$bog_blitz_lobby_game_leaderboard_row">[bog_blitz_lobby_game_leaderboard_row] {
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	background-color: var(--mol_theme_card);
+	border-radius: 0.75rem;
+	margin-bottom: 0.25rem;
+}
+[bog_blitz_lobby_game_leaderboard_row_rank] {
+	min-width: 2.5rem;
+	font-weight: 700;
+	opacity: 0.4;
+}
+[bog_blitz_lobby_game_leaderboard_row_name] {
+	flex-grow: 1;
+}
+[bog_blitz_lobby_game_leaderboard_row_score] {
+	font-weight: 600;
+	opacity: 0.7;
+}
+[bog_blitz_lobby_game_leaderboard_row]:where([data-mine="true"]) :where([bog_blitz_lobby_game_leaderboard_row_rank]) {
+	opacity: 1;
+	color: var(--mol_theme_special);
+}
+[bog_blitz_lobby_game_leaderboard_row]:where([data-mine="true"]) :where([bog_blitz_lobby_game_leaderboard_row_score]) {
+	opacity: 1;
+}
+[bog_blitz_lobby_game_leaderboard_row]:where([data-medal="3"]) {
+	box-shadow: 0 0 0 2px #CD7F32 inset;
+}
+[bog_blitz_lobby_game_leaderboard_row]:where([data-medal="3"]) :where([bog_blitz_lobby_game_leaderboard_row_rank]) {
+	opacity: 1;
+	font-size: 1.25rem;
+}
+[bog_blitz_lobby_game_leaderboard_row]:where([data-medal="2"]) {
+	box-shadow: 0 0 0 2px #C0C0C0 inset;
+}
+[bog_blitz_lobby_game_leaderboard_row]:where([data-medal="2"]) :where([bog_blitz_lobby_game_leaderboard_row_rank]) {
+	opacity: 1;
+	font-size: 1.25rem;
+}
+[bog_blitz_lobby_game_leaderboard_row]:where([data-medal="1"]) {
+	box-shadow: 0 0 0 2px #FFD700 inset;
+}
+[bog_blitz_lobby_game_leaderboard_row]:where([data-medal="1"]) :where([bog_blitz_lobby_game_leaderboard_row_rank]) {
+	opacity: 1;
+	font-size: 1.25rem;
+}
+</style><style id="$mol_style_attach:$bog_blitz_lobby_game_leaderboard">[bog_blitz_lobby_game_leaderboard] {
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 1.5rem;
+	padding-top: 0.5rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	width: 100%;
+}
+[bog_blitz_lobby_game_leaderboard_my_row] {
+	width: 100%;
+	background-color: var(--mol_theme_card);
+	border-radius: 0.75rem;
+	box-shadow: 0 0 0 2px var(--mol_theme_special);
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+}
+[bog_blitz_lobby_game_leaderboard_top] {
+	flex-grow: 1;
+	flex-basis: 0;
+	flex-direction: column;
+	min-width: 15rem;
+}
+[bog_blitz_lobby_game_leaderboard_bottom] {
+	flex-grow: 1;
+	flex-basis: 0;
+	flex-direction: column;
+	min-width: 15rem;
+}
+[bog_blitz_lobby_game_leaderboard_top_title] {
+	font-size: 1rem;
+	font-weight: 700;
+	opacity: 0.5;
+	padding-bottom: 0.25rem;
+	padding-left: 0.75rem;
+}
+[bog_blitz_lobby_game_leaderboard_bottom_title] {
+	font-size: 1rem;
+	font-weight: 700;
+	opacity: 0.5;
+	padding-bottom: 0.25rem;
+	padding-left: 0.75rem;
+}
+</style><style id="$mol_style_attach:$bog_blitz_lobby_game_reactboard">[bog_blitz_lobby_game_reactboard] {
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	padding-top: 1.5rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	width: 100%;
+}
+[bog_blitz_lobby_game_reactboard_table_heart] {
+	flex-direction: column;
+	flex-grow: 1;
+	flex-basis: 0;
+	align-items: center;
+	min-width: 5rem;
+}
+[bog_blitz_lobby_game_reactboard_table_smile] {
+	flex-direction: column;
+	flex-grow: 1;
+	flex-basis: 0;
+	align-items: center;
+	min-width: 5rem;
+}
+[bog_blitz_lobby_game_reactboard_table_fire] {
+	flex-direction: column;
+	flex-grow: 1;
+	flex-basis: 0;
+	align-items: center;
+	min-width: 5rem;
+}
+[bog_blitz_lobby_game_reactboard_table_clap] {
+	flex-direction: column;
+	flex-grow: 1;
+	flex-basis: 0;
+	align-items: center;
+	min-width: 5rem;
+}
+[bog_blitz_lobby_game_reactboard_table_poop] {
+	flex-direction: column;
+	flex-grow: 1;
+	flex-basis: 0;
+	align-items: center;
+	min-width: 5rem;
+}
+[bog_blitz_lobby_game_reactboard_title_heart] {
+	font-size: 2rem;
+	padding-bottom: 0.25rem;
+}
+[bog_blitz_lobby_game_reactboard_title_smile] {
+	font-size: 2rem;
+	padding-bottom: 0.25rem;
+}
+[bog_blitz_lobby_game_reactboard_title_fire] {
+	font-size: 2rem;
+	padding-bottom: 0.25rem;
+}
+[bog_blitz_lobby_game_reactboard_title_clap] {
+	font-size: 2rem;
+	padding-bottom: 0.25rem;
+}
+[bog_blitz_lobby_game_reactboard_title_poop] {
+	font-size: 2rem;
+	padding-bottom: 0.25rem;
+}
+[bog_blitz_lobby_game_reactboard_row] {
+	gap: 0.5rem;
+	justify-content: center;
+}
+[bog_blitz_lobby_game_reactboard_row_name] {
+	font-size: 0.875rem;
+}
+[bog_blitz_lobby_game_reactboard_row_count] {
+	font-size: 0.875rem;
+	font-weight: 700;
+}
+</style><style id="$mol_style_attach:$bog_blitz_lobby_game_option">[bog_blitz_lobby_game_option_option_image] {
+	max-width: 8rem;
+	max-height: 6rem;
+	object-fit: contain;
+	border-radius: 0.5rem;
+}
+[bog_blitz_lobby_game_option]:where([data-selected="false"]) {
+	opacity: 0.4;
+}
+[bog_blitz_lobby_game_option]:where([data-selected="true"]) {
+	box-shadow: 0 0 0 3px var(--mol_theme_special);
+	opacity: 1;
+}
+[bog_blitz_lobby_game_option]:where([data-correct="false"]) {
+	box-shadow: 0 0 0 3px #ef4444;
+	background-color: #ef444433;
+	opacity: 0.6;
+}
+[bog_blitz_lobby_game_option]:where([data-correct="true"]) {
+	box-shadow: 0 0 0 3px #22c55e;
+	background-color: #22c55e33;
+	opacity: 1;
+}
+</style><style id="$mol_style_attach:$bog_blitz_lobby_game">[bog_blitz_lobby_game] {
+	flex-direction: column;
+	align-items: center;
+	padding-top: 0px;
+}
+[bog_blitz_lobby_game_host_controls] {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+[bog_blitz_lobby_game_state] {
+	font-size: 1.5rem;
+	font-weight: 600;
+	opacity: 0.5;
+}
+[bog_blitz_lobby_game_question_image] {
+	max-width: 20rem;
+	max-height: 15rem;
+	object-fit: contain;
+	border-radius: 0.75rem;
+	margin-top: 1rem;
+}
+[bog_blitz_lobby_game_question] {
+	font-size: 1.75rem;
+	font-weight: 700;
+	text-align: center;
+	padding-top: 1rem;
+	padding-bottom: 1.5rem;
+}
+[bog_blitz_lobby_game_answer_area] {
+	flex-direction: column;
+	gap: 0.75rem;
+	width: 100%;
+	max-width: 30rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+[bog_blitz_lobby_game_answer_input] {
+	width: 100%;
+}
+[bog_blitz_lobby_game_countdown] {
+	position: fixed;
+	top: 20%;
+	left: 0;
+	right: 0;
+	height: 60%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+}
+[bog_blitz_lobby_game_countdown_number] {
+	font-size: 15rem;
+	font-weight: 900;
+	opacity: 0.15;
+}
+</style><style id="$mol_style_attach:bog/blitz/lobby/reactions/reactions.view.css">[bog_blitz_lobby_reactions] {
+	position: fixed !important;
+	bottom: 1rem !important;
+	right: 1rem !important;
+	z-index: 100;
 }
 
-[mol_check_list_option] {
-	flex: 0 1 auto;
+[bog_blitz_lobby_reactions_fly] {
+	animation: bog_blitz_fly_up 1.5s ease-out forwards;
+	transform: translateX(-50%);
 }
 
-[mol_check_list_option]:where([mol_check_checked="true"]) {
-	text-shadow: 0 0;
-	color: var(--mol_theme_current);
+@keyframes bog_blitz_fly_up {
+	0% {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(-50%) translateY(-200px);
+	}
 }
-
-[mol_check_list_option]:where([mol_check_checked="true"][disabled]) {
-	color: var(--mol_theme_text);
+</style><style id="$mol_style_attach:$bog_blitz_lobby_reactions">[bog_blitz_lobby_reactions] {
+	flex-direction: row;
+	gap: 0.25rem;
+	align-items: flex-end;
+	align-self: stretch;
+	width: 95%;
+}
+[bog_blitz_lobby_reactions_spacer] {
+	flex-grow: 1;
+}
+[bog_blitz_lobby_reactions_group_heart] {
+	flex-direction: column;
+	align-items: center;
+}
+[bog_blitz_lobby_reactions_group_smile] {
+	flex-direction: column;
+	align-items: center;
+}
+[bog_blitz_lobby_reactions_group_fire] {
+	flex-direction: column;
+	align-items: center;
+}
+[bog_blitz_lobby_reactions_group_clap] {
+	flex-direction: column;
+	align-items: center;
+}
+[bog_blitz_lobby_reactions_group_poop] {
+	flex-direction: column;
+	align-items: center;
+}
+[bog_blitz_lobby_reactions_btn_heart] {
+	font-size: 2rem;
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	min-width: 2.5rem;
+	min-height: 2.5rem;
+}
+[bog_blitz_lobby_reactions_btn_smile] {
+	font-size: 2rem;
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	min-width: 2.5rem;
+	min-height: 2.5rem;
+}
+[bog_blitz_lobby_reactions_btn_fire] {
+	font-size: 2rem;
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	min-width: 2.5rem;
+	min-height: 2.5rem;
+}
+[bog_blitz_lobby_reactions_btn_clap] {
+	font-size: 2rem;
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	min-width: 2.5rem;
+	min-height: 2.5rem;
+}
+[bog_blitz_lobby_reactions_btn_poop] {
+	font-size: 2rem;
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	min-width: 2.5rem;
+	min-height: 2.5rem;
+}
+[bog_blitz_lobby_reactions_count_heart] {
+	font-size: 0.75rem;
+	text-align: center;
+	min-width: 1rem;
+}
+[bog_blitz_lobby_reactions_count_smile] {
+	font-size: 0.75rem;
+	text-align: center;
+	min-width: 1rem;
+}
+[bog_blitz_lobby_reactions_count_fire] {
+	font-size: 0.75rem;
+	text-align: center;
+	min-width: 1rem;
+}
+[bog_blitz_lobby_reactions_count_clap] {
+	font-size: 0.75rem;
+	text-align: center;
+	min-width: 1rem;
+}
+[bog_blitz_lobby_reactions_count_poop] {
+	font-size: 0.75rem;
+	text-align: center;
+	min-width: 1rem;
+}
+[bog_blitz_lobby_reactions_fly] {
+	position: absolute;
+	font-size: 2rem;
+	pointer-events: none;
+}
+</style><style id="$mol_style_attach:$bog_blitz_lobby">[bog_blitz_lobby_no_game] {
+	flex-direction: column;
+	flex-grow: 1;
+	align-items: center;
+	align-self: center;
+	justify-content: center;
+	gap: 1.5rem;
+}
+[bog_blitz_lobby_no_game_text] {
+	font-size: 1.5rem;
+	font-weight: 600;
+	opacity: 0.6;
+	text-align: center;
 }
 </style><style id="$mol_style_attach:mol/book2/book2.view.css">[mol_book2] {
 	display: flex;
@@ -2033,6 +2572,1234 @@ h6[mol_text_header] {
 [mol_book2_gap]::after {
 	display: none;
 }
+</style><style id="$mol_style_attach:giper/web/frame/frame.view.css">/* @keyframes giper_web_frame_show {
+	from {
+		opacity: 0;
+	}
+}
+
+[giper_web_frame] {
+	animation: 5s -1s ease-in giper_web_frame_show;
+} */
+</style><style id="$mol_style_attach:$giper_web_frame">[giper_web_frame] {
+	flex-basis: 4rem;
+	flex-shrink: 0;
+	flex-grow: 0;
+}
+</style><style id="$mol_style_attach:mol/check/icon/icon.view.css">[mol_check_icon]:where([mol_check_checked]) {
+	color: var(--mol_theme_current);
+}
+</style><style id="$mol_style_attach:mol/status/status.view.css">[mol_status] {
+	padding: var(--mol_gap_text);
+	border-radius: var(--mol_gap_round);
+	display: block;
+	flex-shrink: 1;
+	word-wrap: break-word;
+}
+
+[mol_status]:not([mol_view_error="Promise"]) {
+	color: var(--mol_theme_focus);
+}
+
+[mol_status]:not([mol_view_error="Promise"]):empty {
+	display: none;
+}
+</style><style id="$mol_style_attach:mol/attach/attach.view.css">[mol_attach] {
+	flex-wrap: wrap;
+}
+
+[mol_attach_item] {
+	aspect-ratio: 1;
+	height: 5rem;
+	border-radius: var(--mol_gap_round);
+	padding: 0;
+}
+[mol_attach_item]:hover {
+	opacity: .5;
+}
+
+[mol_attach_image] {
+	background: var(--mol_theme_card);
+	width: 100%;
+	height: 100%;
+}
+
+[mol_attach_add] {
+	background: var(--mol_theme_card);
+	aspect-ratio: 1;
+	height: 5rem;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+</style><style id="$mol_style_attach:mol/bar/bar.view.css">[mol_bar] {
+	display: flex;
+	/* box-shadow: inset 0 0 0 1px var(--mol_theme_line); */
+	border-radius: var(--mol_gap_round);
+}
+</style><style id="$mol_style_attach:mol/paginator/paginator.view.css">[mol_paginator] {
+	align-items: flex-start;
+}
+
+[mol_paginator_value] {
+	padding: .5rem 0;
+}
+</style><style id="$mol_style_attach:$giper_bot">[giper_bot] {
+	background-size: cover;
+	background-position: center;
+	background-image: linear-gradient(var(--mol_theme_spirit)),url("giper/bot/logo/back.jpg");
+}
+[giper_bot_dialog] {
+	margin-left: auto;
+	margin-right: auto;
+	flex-basis: 30rem;
+	flex-grow: 1;
+}
+[giper_bot_dialog_body] {
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: stretch;
+	padding: var(--mol_gap_block);
+}
+[giper_bot_result_page] {
+	flex-basis: 50rem;
+	flex-grow: 1;
+	margin-right: auto;
+}
+[giper_bot_attach_item] {
+	height: 2.5rem;
+}
+[giper_bot_attach_add] {
+	height: 2.5rem;
+}
+[giper_bot_prompt_text] {
+	flex-shrink: 1;
+}
+[giper_bot_context] {
+	flex-basis: 30rem;
+}
+[giper_bot_context_body_content] {
+	gap: var(--mol_gap_block);
+}
+</style><style id="$mol_style_attach:$bog_blitz_admin_quiz">[bog_blitz_admin_quiz] {
+	background-color: var(--mol_theme_card);
+	border-radius: 0.5rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	padding-left: 0.75rem;
+	padding-right: 0.25rem;
+	align-items: center;
+	gap: 0.25rem;
+}
+[bog_blitz_admin_quiz_title_input] {
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+[bog_blitz_admin_quiz_shared_badge] {
+	color: var(--mol_theme_focus);
+}
+[bog_blitz_admin_quiz_delete] {
+	color: #cc3333;
+}
+</style><style id="$mol_style_attach:mol/check/box/box.view.css">[mol_check_box_icon] {
+	border-radius: var(--mol_gap_round);
+	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
+	color: var(--mol_theme_shade);
+	height: 1rem;
+	align-self: center;
+}
+
+[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {
+	fill: transparent;
+}
+
+[mol_check]:not([disabled]) > [mol_check_box_icon] {
+	background: var(--mol_theme_field);
+	color: var(--mol_theme_text);
+}
+</style><style id="$mol_style_attach:mol/labeler/labeler.view.css">[mol_labeler] {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	cursor: inherit;
+}
+
+[mol_labeler_label] {
+	min-height: 2rem;
+	color: var(--mol_theme_shade);
+	padding: .5rem .75rem 0;
+	gap: 0 var(--mol_gap_block);
+	flex-wrap: wrap;
+}
+
+[mol_labeler_content] {
+	display: flex;
+	padding: var(--mol_gap_text);
+	min-height: 2.5rem;
+}
+</style><style id="$mol_style_attach:mol/number/number.css">[mol_number] {
+	display: flex;
+	flex: 0 1 auto;
+	position: relative;
+	align-items: stretch;
+	max-width: 100%;
+}
+
+[mol_number_string] {
+	appearance: textfield;
+	flex: 1 1 7rem;
+	width: 7rem;
+}
+
+[mol_number_string]::-webkit-inner-spin-button {
+	display: none;
+}
+</style><style id="$mol_style_attach:$bog_blitz_admin_question">[bog_blitz_admin_question] {
+	background-color: var(--mol_theme_card);
+	border-radius: 0.5rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+}
+[bog_blitz_admin_question_header] {
+	gap: 0.25rem;
+}
+[bog_blitz_admin_question_delete] {
+	color: #cc3333;
+}
+[bog_blitz_admin_question_options_section] {
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 1rem;
+	padding-right: 0;
+	gap: 0.5rem;
+}
+[bog_blitz_admin_question_add_option] {
+	align-self: flex-start;
+}
+[bog_blitz_admin_question_image_section] {
+	align-items: center;
+	gap: 0.5rem;
+}
+[bog_blitz_admin_question_image_upload_native] {
+	top: 0;
+	height: 100%;
+}
+[bog_blitz_admin_question_image_preview] {
+	max-height: 8rem;
+	max-width: 12rem;
+	border-radius: 0.25rem;
+	overflow: hidden;
+}
+</style><style id="$mol_style_attach:$bog_blitz_admin_option">[bog_blitz_admin_option] {
+	background-color: var(--mol_theme_hover);
+	border-radius: 0.25rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	padding-left: 0.5rem;
+	padding-right: 0.25rem;
+}
+[bog_blitz_admin_option_controls] {
+	gap: 0.25rem;
+}
+[bog_blitz_admin_option_text] {
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+[bog_blitz_admin_option_delete] {
+	color: #cc3333;
+}
+[bog_blitz_admin_option_image_section] {
+	align-items: center;
+	gap: 0.5rem;
+}
+[bog_blitz_admin_option_image_upload_native] {
+	top: 0;
+	height: 100%;
+}
+[bog_blitz_admin_option_image_preview] {
+	max-height: 6rem;
+	max-width: 10rem;
+	border-radius: 0.25rem;
+	overflow: hidden;
+}
+</style><style id="$mol_style_attach:$bog_blitz_admin_editor">[bog_blitz_admin_editor] {
+	max-width: 50rem;
+	align-self: center;
+	width: 100%;
+	gap: 1rem;
+	padding-top: 0.5rem;
+	padding-bottom: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+[bog_blitz_admin_editor_title_input] {
+	background-color: var(--mol_theme_card);
+	border-radius: 0.5rem;
+}
+[bog_blitz_admin_editor_settings] {
+	background-color: var(--mol_theme_card);
+	border-radius: 0.5rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+[bog_blitz_admin_editor_add_question] {
+	align-self: flex-start;
+	border-radius: 0.5rem;
+}
+</style><style id="$mol_style_attach:$bog_blitz_admin">[bog_blitz_admin_body] {
+	max-width: 50rem;
+	align-self: center;
+	flex-grow: 1;
+	width: 100%;
+}
+[bog_blitz_admin_create_button] {
+	align-self: flex-start;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	margin-left: 1rem;
+	margin-right: 1rem;
+}
+[bog_blitz_admin_bot_expander] {
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: 1rem;
+	margin-right: 1rem;
+}
+[bog_blitz_admin_bot] {
+	height: 25rem;
+	border-radius: 0.5rem;
+	overflow: auto;
+}
+[bog_blitz_admin_import_expander] {
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left: 1rem;
+	margin-right: 1rem;
+}
+[bog_blitz_admin_import_area] {
+	height: 19rem;
+	background-color: var(--mol_theme_card);
+	border-radius: 0.5rem;
+}
+[bog_blitz_admin_import_button] {
+	align-self: flex-start;
+	border-radius: 0.5rem;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	margin-left: 0;
+	margin-right: 0;
+}
+[bog_blitz_admin_quizzes_list] {
+	gap: 0.5rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+</style><style id="$mol_style_attach:mol/section/section.view.css">[mol_section_head] {
+	justify-content: space-between;
+	align-items: flex-end;
+	flex-wrap: wrap;
+}
+
+[mol_section_title] {
+	margin: 0;
+	padding: var(--mol_gap_text);
+	text-shadow: 0 0;
+	font-weight: normal;
+}
+
+[mol_section_title]:where(h1) {
+	font-size: 1.5rem;
+}
+
+[mol_section_title]:where(h2) {
+	font-size: 1.5rem;
+	font-style: italic;
+}
+
+[mol_section_title]:where(h3) {
+	font-size: 1.25rem;
+}
+
+[mol_section_title]:where(h4) {
+	font-size: 1.25rem;
+	font-style: italic;
+}
+
+[mol_section_title]:where(h5) {
+	font-size: 1rem;
+}
+
+[mol_section_title]:where(h6) {
+	font-size: 1rem;
+	font-style: italic;
+}
+</style><style id="$mol_style_attach:bog/feedback2/form/form.view.css">@keyframes bog_feedback2_form_pulse {
+	0%, 100% { opacity: 0.3; }
+	50% { opacity: 0.8; }
+}
+</style><style id="$mol_style_attach:$bog_feedback2_form">[bog_feedback2_form] {
+	color: var(--mol_theme_text);
+	flex-basis: 40rem;
+	margin: 0 auto;
+}
+[bog_feedback2_form_waiting] {
+	padding: var(--mol_gap_block);
+	text-align: center;
+	opacity: 0.5;
+	animation-name: bog_feedback2_form_pulse;
+	animation-duration: 1.5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+[bog_feedback2_form_prompt] {
+	padding: var(--mol_gap_block);
+}
+[bog_feedback2_form_contact_field] {
+	margin-top: var(--mol_gap_space);
+}
+[bog_feedback2_form_submit] {
+	margin-top: var(--mol_gap_block);
+}
+[bog_feedback2_form_entries] {
+	margin-top: var(--mol_gap_block);
+}
+[bog_feedback2_form_entries_content] {
+	gap: var(--mol_gap_block);
+}
+[bog_feedback2_form_entry_row] {
+	background-color: var(--mol_theme_card);
+	border-radius: var(--mol_gap_round);
+	padding: var(--mol_gap_block);
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+}
+[bog_feedback2_form_entry_row_head] {
+	font-size: 1rem;
+}
+</style><style id="$mol_style_attach:$bog_blitz_radio">[bog_blitz_radio_menu] {
+	flex-direction: column;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	gap: 0.25rem;
+	min-width: 12rem;
+}
+[bog_blitz_radio_volume_row] {
+	justify-content: center;
+	align-items: center;
+	gap: 0.25rem;
+}
+[bog_blitz_radio_volume_label] {
+	font-size: 0.875rem;
+	min-width: 4rem;
+	text-align: center;
+}
+[bog_blitz_radio_stop_button] {
+	justify-content: center;
+}
+[bog_blitz_radio_station] {
+	justify-content: flex-start;
+}
+</style><style id="$mol_style_attach:mol/check/list/list.view.css">[mol_check_list] {
+	display: flex;
+	flex-wrap: wrap;
+	flex: 1 1 auto;
+	border-radius: var(--mol_gap_round);
+	gap: 1px;
+}
+
+[mol_check_list_option] {
+	flex: 0 1 auto;
+}
+
+[mol_check_list_option]:where([mol_check_checked="true"]) {
+	text-shadow: 0 0;
+	color: var(--mol_theme_current);
+}
+
+[mol_check_list_option]:where([mol_check_checked="true"][disabled]) {
+	color: var(--mol_theme_text);
+}
+</style><style id="$mol_style_attach:$bog_blitz">[bog_blitz_title] {
+	flex-grow: 1;
+	flex-basis: 0;
+	align-items: center;
+}
+[bog_blitz_navbar] {
+	flex-grow: 0;
+}
+[bog_blitz_tools] {
+	flex-grow: 1;
+	flex-basis: 0;
+	justify-content: flex-end;
+	align-items: center;
+}
+[bog_blitz_mobile_menu] {
+	display: none;
+}
+@media (width < 600px) {
+[bog_blitz_mobile_menu] {
+	display: flex;
+}
+[bog_blitz_navbar] {
+	display: none;
+}
+}
+</style><style id="$mol_style_attach:$bog_blitz_profile_page">[bog_blitz_profile_page_card] {
+	flex-direction: column;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	gap: 1.5rem;
+	max-width: 480px;
+	align-self: center;
+	align-items: center;
+}
+[bog_blitz_profile_page_avatar_circle] {
+	border-radius: 50%;
+	overflow: hidden;
+	width: 80px;
+	height: 80px;
+	min-width: 80px;
+	min-height: 80px;
+	max-width: 80px;
+	max-height: 80px;
+	flex-shrink: 0;
+	flex-grow: 0;
+}
+[bog_blitz_profile_page_avatar] {
+	font-size: 0.75rem;
+	opacity: 0.5;
+}
+[bog_blitz_profile_page_avatar_image] {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+[bog_blitz_profile_page_avatar_icon] {
+	width: 100%;
+	height: 100%;
+	font-size: 2.5rem;
+}
+[bog_blitz_profile_page_name_row] {
+	justify-content: center;
+}
+[bog_blitz_profile_page_name_input] {
+	font-size: 1.5rem;
+	font-weight: 600;
+	text-align: center;
+}
+[bog_blitz_profile_page_stats] {
+	flex-direction: column;
+	gap: 0.5rem;
+	width: 100%;
+}
+[bog_blitz_profile_page_stat_row] {
+	justify-content: space-between;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	border-radius: 8px;
+	background-color: var(--mol_theme_card);
+}
+[bog_blitz_profile_page_stat_label] {
+	font-size: 0.95rem;
+}
+[bog_blitz_profile_page_stat_value] {
+	font-size: 0.95rem;
+	font-weight: 700;
+}
+[bog_blitz_profile_page_games_section] {
+	flex-direction: column;
+	width: 100%;
+	gap: 0.75rem;
+}
+[bog_blitz_profile_page_games_title] {
+	font-size: 1.1rem;
+	font-weight: 600;
+}
+[bog_blitz_profile_page_games_list] {
+	gap: 0.5rem;
+}
+[bog_blitz_profile_page_games_empty] {
+	text-align: center;
+	opacity: 0.5;
+	font-size: 0.875rem;
+}
+[bog_blitz_profile_page_game_row] {
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	border-radius: 8px;
+	background-color: var(--mol_theme_card);
+}
+[bog_blitz_profile_page_game_info] {
+	flex-direction: column;
+	gap: 0.125rem;
+}
+[bog_blitz_profile_page_game_title] {
+	font-size: 0.95rem;
+	font-weight: 600;
+}
+[bog_blitz_profile_page_game_details] {
+	font-size: 0.8rem;
+	opacity: 0.6;
+}
+[bog_blitz_profile_page_game_score] {
+	font-size: 1.1rem;
+	font-weight: 700;
+	flex-shrink: 0;
+}
+[bog_blitz_profile_page_fun_card] {
+	flex-direction: column;
+	align-items: center;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	border-radius: 12px;
+	background-color: var(--mol_theme_card);
+	width: 100%;
+	margin-top: 0.5rem;
+}
+[bog_blitz_profile_page_fun_title] {
+	font-size: 1rem;
+	font-weight: 600;
+	margin-bottom: 0.25rem;
+}
+[bog_blitz_profile_page_fun_text] {
+	text-align: center;
+	opacity: 0.7;
+	font-size: 0.875rem;
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_comment_thread">[bog_wysiwyg_comment_thread] {
+	flex-direction: column;
+	flex-grow: 1;
+	gap: 0.5rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+[bog_wysiwyg_comment_thread_comments] {
+	flex-direction: column;
+	flex-grow: 1;
+	gap: 0.5rem;
+	overflow: auto;
+}
+[bog_wysiwyg_comment_thread_comment_row] {
+	flex-direction: column;
+	padding-top: 0.375rem;
+	padding-bottom: 0.375rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	background-color: var(--mol_theme_hover);
+	border-radius: var(--mol_gap_round);
+	gap: 0.25rem;
+}
+[bog_wysiwyg_comment_thread_comment_head] {
+	flex-direction: row;
+	align-items: center;
+	gap: 0.375rem;
+}
+[bog_wysiwyg_comment_thread_comment_avatar] {
+	width: 1.25rem;
+	height: 1.25rem;
+	flex-shrink: 0;
+	flex-grow: 0;
+}
+[bog_wysiwyg_comment_thread_comment_author] {
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--mol_theme_shade);
+}
+[bog_wysiwyg_comment_thread_comment_text] {
+	font-size: 0.875rem;
+}
+[bog_wysiwyg_comment_thread_input_row] {
+	flex-direction: row;
+	gap: 0.25rem;
+	align-items: flex-end;
+}
+[bog_wysiwyg_comment_thread_input] {
+	flex-grow: 1;
+}
+[bog_wysiwyg_comment_thread_send] {
+	flex-shrink: 0;
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_comment">[bog_wysiwyg_comment_comment_button] {
+	opacity: 0.4;
+	transition: opacity 0.15s;
+	cursor: pointer;
+	min-width: 1.5rem;
+	min-height: 1.5rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+}
+[bog_wysiwyg_comment_comment_count] {
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--mol_theme_focus);
+}
+[bog_wysiwyg_comment_panel] {
+	flex-direction: column;
+	width: 18rem;
+	max-width: 90vw;
+	max-height: 24rem;
+	background-color: var(--mol_theme_card);
+	border-radius: var(--mol_gap_round);
+	box-shadow: 0 4px 16px 0 var(--mol_theme_shade);
+}
+[bog_wysiwyg_comment_panel_head] {
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 0.5rem;
+	padding-bottom: 0.25rem;
+	padding-left: 0.75rem;
+	padding-right: 0.25rem;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: var(--mol_theme_line);
+}
+[bog_wysiwyg_comment_panel_title] {
+	font-weight: 600;
+}
+[bog_wysiwyg_comment_thread] {
+	flex-grow: 1;
+	overflow: auto;
+}
+[bog_wysiwyg_comment]:where([bog_wysiwyg_comment_has_comments="true"]) :where([bog_wysiwyg_comment_comment_button]) {
+	opacity: 1;
+	color: var(--mol_theme_focus);
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_links">[bog_wysiwyg_links] {
+	padding-top: var(--mol_gap_block);
+	padding-bottom: var(--mol_gap_block);
+	padding-left: 0;
+	padding-right: 0;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: var(--mol_theme_line);
+	margin-top: var(--mol_gap_block);
+	gap: var(--mol_gap_text);
+}
+[bog_wysiwyg_links_header] {
+	font-weight: bold;
+	font-size: 0.875rem;
+	color: var(--mol_theme_shade);
+	padding-left: var(--mol_gap_text);
+	padding-right: var(--mol_gap_text);
+}
+[bog_wysiwyg_links_link] {
+	padding-top: var(--mol_gap_text);
+	padding-bottom: var(--mol_gap_text);
+	padding-left: var(--mol_gap_text);
+	padding-right: var(--mol_gap_text);
+	color: var(--mol_theme_focus);
+	cursor: pointer;
+	border-radius: var(--mol_gap_round);
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_menu">[bog_wysiwyg_menu] {
+	position: fixed;
+	z-index: 100;
+	background-color: var(--mol_theme_back);
+	border-radius: 0.5rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	min-width: 12rem;
+	flex-direction: column;
+	box-shadow: 0 0.25rem 1rem 0 #00000026;
+}
+[bog_wysiwyg_menu]:not([bog_wysiwyg_menu_showed]) {
+	display: none;
+}
+[bog_wysiwyg_menu_option]:where([bog_wysiwyg_menu_option_active="true"]) {
+	background-color: var(--mol_theme_hover);
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_ai">[bog_wysiwyg_ai] {
+	position: fixed;
+	z-index: 100;
+	background-color: var(--mol_theme_back);
+	border-radius: 0.5rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	min-width: 14rem;
+	flex-direction: column;
+	box-shadow: 0 0.25rem 1rem 0 #00000026;
+}
+[bog_wysiwyg_ai]:not([bog_wysiwyg_ai_showed]) {
+	display: none;
+}
+[bog_wysiwyg_ai_option]:where([bog_wysiwyg_ai_option_active="true"]) {
+	background-color: var(--mol_theme_hover);
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_history">[bog_wysiwyg_history] {
+	flex-direction: column;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	gap: 0.5rem;
+}
+[bog_wysiwyg_history]:not([bog_wysiwyg_history_showed]) {
+	display: none;
+}
+[bog_wysiwyg_history_save_button] {
+	justify-content: center;
+	font-weight: bold;
+	background-color: var(--mol_theme_control);
+	color: var(--mol_theme_back);
+	border-radius: var(--mol_gap_round);
+}
+[bog_wysiwyg_history_version_list] {
+	flex-direction: column;
+	gap: 0.125rem;
+}
+[bog_wysiwyg_history_version] {
+	border-radius: var(--mol_gap_round);
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_history_version">[bog_wysiwyg_history_version]:where([bog_wysiwyg_history_version_active="true"]) {
+	background-color: var(--mol_theme_hover);
+	font-weight: bold;
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg">[bog_wysiwyg] {
+	position: relative;
+	flex-direction: column;
+	flex-grow: 1;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+	padding-left: 3rem;
+	padding-right: 3rem;
+	max-width: 50rem;
+	align-self: center;
+	width: 100%;
+}
+[bog_wysiwyg_block_row] {
+	position: relative;
+	flex-direction: row;
+	align-items: flex-start;
+}
+[bog_wysiwyg_block_row]:where([bog_wysiwyg_dragging="true"]) {
+	opacity: 0.5;
+}
+[bog_wysiwyg_block_row]:where([bog_wysiwyg_drag_over="true"]):where([bog_wysiwyg_drag_pos="after"]) {
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: var(--mol_theme_focus);
+}
+[bog_wysiwyg_block_row]:where([bog_wysiwyg_drag_over="true"]):where([bog_wysiwyg_drag_pos="before"]) {
+	border-top-width: 2px;
+	border-top-style: solid;
+	border-top-color: var(--mol_theme_focus);
+}
+[bog_wysiwyg_drag_handle] {
+	flex-shrink: 0;
+	width: 1.5rem;
+	cursor: grab;
+	opacity: 0.4;
+	transition: opacity 0.15s;
+	align-self: center;
+	text-align: center;
+	color: var(--mol_theme_shade);
+	user-select: none;
+	font-size: 1rem;
+	line-height: 1.6;
+}
+[bog_wysiwyg_drag_handle]:active {
+	cursor: grabbing;
+}
+[bog_wysiwyg_block] {
+	flex-grow: 1;
+	min-width: 0;
+	width: 0px;
+}
+[bog_wysiwyg_block_comment] {
+	flex-shrink: 0;
+	align-self: center;
+}
+</style><style id="$mol_style_attach:bog_wysiwyg_hover">
+		.bog_wysiwyg_block_row:hover > .bog_wysiwyg_drag_handle,
+		.bog_wysiwyg_block_row:hover > .bog_wysiwyg_comment .bog_wysiwyg_comment_comment_button {
+			opacity: 1;
+		}
+	</style><style id="$mol_style_attach:bog/ui/sidebar/item/item.view.css">[bog_ui_sidebar_item]:not([bog_ui_sidebar_item_active="true"]):hover {
+	background: var(--mol_theme_card);
+}
+
+[bog_ui_sidebar_item_label] {
+	transition: width 0.2s ease, opacity 0.15s ease;
+}
+
+[bog_ui_sidebar_item_collapsed="true"] [bog_ui_sidebar_item_label] {
+	width: 0;
+	overflow: hidden;
+	opacity: 0;
+}
+</style><style id="$mol_style_attach:$bog_ui_sidebar_item">[bog_ui_sidebar_item] {
+	display: flex;
+	flex-shrink: 1;
+	align-items: center;
+	gap: .75rem;
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	padding-left: .75rem;
+	padding-right: .75rem;
+	border-radius: var(--mol_gap_round);
+	color: var(--mol_theme_text);
+	overflow: hidden;
+}
+[bog_ui_sidebar_item_icon] {
+	flex-shrink: 0;
+}
+[bog_ui_sidebar_item_label] {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex-shrink: 1;
+}
+[bog_ui_sidebar_item]:where([bog_ui_sidebar_item_active="true"]) {
+	background-color: var(--mol_theme_current);
+}
+</style><style id="$mol_style_attach:bog/ui/sidebar/sidebar.view.css">[bog_ui_sidebar] {
+	transition: width 0.2s ease, min-width 0.2s ease;
+}
+
+[bog_ui_sidebar_mode="dock"] {
+	width: clamp(180px, 20%, 280px);
+	min-width: clamp(180px, 20%, 280px);
+}
+
+[bog_ui_sidebar_mode="rail"] {
+	width: 56px;
+	min-width: 56px;
+}
+
+[bog_ui_sidebar_mode="hidden"] {
+	width: 0;
+	min-width: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+[bog_ui_sidebar_mode="hidden"] > * {
+	opacity: 0;
+	pointer-events: none;
+}
+
+[bog_ui_sidebar_mode] > * {
+	transition: opacity 0.15s ease;
+}
+</style><style id="$mol_style_attach:$bog_ui_sidebar">[bog_ui_sidebar] {
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	overflow: hidden;
+	background-color: var(--mol_theme_back);
+	border-radius: 0;
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	padding-left: .5rem;
+	padding-right: .5rem;
+}
+[bog_ui_sidebar_header] {
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	padding-left: .75rem;
+	padding-right: .75rem;
+}
+[bog_ui_sidebar_items] {
+	flex-grow: 1;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+[bog_ui_sidebar_footer] {
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	padding-left: .75rem;
+	padding-right: .75rem;
+}
+[bog_ui_sidebar_toggle] {
+	flex-shrink: 0;
+	align-self: flex-start;
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	padding-left: .75rem;
+	padding-right: .75rem;
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_graph">[bog_wysiwyg_graph] {
+	flex-direction: column;
+	flex-grow: 1;
+	position: relative;
+	min-width: 0;
+	height: 30rem;
+	overflow: hidden;
+	border-radius: var(--mol_gap_round);
+	background-color: var(--mol_theme_card);
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_profile">[bog_wysiwyg_profile_id_row] {
+	flex-direction: row;
+	justify-content: center;
+	gap: 0.25rem;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0;
+	padding-right: 0;
+}
+[bog_wysiwyg_profile_id_label] {
+	font-size: 0.75rem;
+	color: var(--mol_theme_shade);
+}
+[bog_wysiwyg_profile_id_value] {
+	font-size: 0.75rem;
+	font-family: monospace;
+	color: var(--mol_theme_shade);
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_block">[bog_wysiwyg_block] {
+	display: block;
+	outline: none;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	min-height: 1.5em;
+	line-height: 1.6;
+	border-radius: 0.25rem;
+	cursor: text;
+	position: relative;
+	overflow-wrap: break-word;
+}
+[bog_wysiwyg_block]:hover {
+	background-color: var(--mol_theme_hover);
+}
+[bog_wysiwyg_block]:focus {
+	outline: none;
+	background-color: var(--mol_theme_hover);
+}
+[bog_wysiwyg_block]:where([bog_wysiwyg_block_empty="true"])::before {
+	content: attr(bog_wysiwyg_block_placeholder);
+	color: var(--mol_theme_shade);
+	pointer-events: none;
+	position: absolute;
+}
+[bog_wysiwyg_block]:where([bog_wysiwyg_block_type="heading"]):where([bog_wysiwyg_block_level="1"]) {
+	font-size: 2rem;
+	font-weight: 700;
+	line-height: 1.2;
+	margin-top: 1rem;
+}
+[bog_wysiwyg_block]:where([bog_wysiwyg_block_type="heading"]):where([bog_wysiwyg_block_level="2"]) {
+	font-size: 1.5rem;
+	font-weight: 700;
+	line-height: 1.3;
+	margin-top: 0.75rem;
+}
+[bog_wysiwyg_block]:where([bog_wysiwyg_block_type="heading"]):where([bog_wysiwyg_block_level="3"]) {
+	font-size: 1.25rem;
+	font-weight: 600;
+	line-height: 1.4;
+	margin-top: 0.5rem;
+}
+[bog_wysiwyg_block]:where([bog_wysiwyg_block_type="code"]) {
+	font-family: monospace;
+	background-color: var(--mol_theme_card);
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	border-radius: 0.5rem;
+	white-space: pre-wrap;
+}
+[bog_wysiwyg_block]:where([bog_wysiwyg_block_type="quote"]) {
+	border-left-width: 3px;
+	border-left-style: solid;
+	border-left-color: var(--mol_theme_focus);
+	padding-left: 1rem;
+	color: var(--mol_theme_shade);
+	font-style: italic;
+}
+[bog_wysiwyg_block]:where([bog_wysiwyg_block_type="divider"]) {
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: var(--mol_theme_line);
+	min-height: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 0;
+	padding-right: 0;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	pointer-events: none;
+}
+[bog_wysiwyg_block]:where([bog_wysiwyg_block_type="image"]) {
+	cursor: default;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 0;
+	padding-right: 0;
+	text-align: center;
+}
+</style><style id="$mol_style_attach:bog_wysiwyg_block_inner">
+		[bog_wysiwyg_block_type="image"] img {
+			max-width: 100%;
+			height: auto;
+			border-radius: 0.5rem;
+			display: block;
+			margin: 0 auto;
+		}
+
+		[bog_wysiwyg_block_type="image"][bog_wysiwyg_block_empty="true"] {
+			border: 2px dashed var(--mol_theme_line);
+			border-radius: 0.5rem;
+			min-height: 6rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+		}
+
+		[bog_wysiwyg_block_type="image"][bog_wysiwyg_block_empty="true"]::before {
+			content: "\1F5BC  \0414\043E\0431\0430\0432\044C\0442\0435 \043A\0430\0440\0442\0438\043D\043A\0443";
+		}
+
+		.bog_wysiwyg_wiki_link {
+			color: var(--mol_theme_focus);
+			text-decoration: none;
+			border-bottom: 1px dashed var(--mol_theme_focus);
+			cursor: pointer;
+		}
+
+		.bog_wysiwyg_wiki_link:hover {
+			border-bottom-style: solid;
+		}
+	</style><style id="$mol_style_attach:bog_wysiwyg_block_callout">
+		[bog_wysiwyg_block_type="callout"] {
+			background: var(--mol_theme_card);
+			padding: 0.75rem 1rem;
+			border-radius: 0.5rem;
+			border-left: 4px solid var(--mol_theme_focus);
+		}
+	</style><style id="$mol_style_attach:bog_wysiwyg_block_embed">
+		[bog_wysiwyg_block_type="embed"] {
+			background: var(--mol_theme_card);
+			padding: 0.75rem 1rem;
+			border-radius: 0.5rem;
+			cursor: default;
+		}
+
+		[bog_wysiwyg_block_type="embed"] a {
+			color: var(--mol_theme_focus);
+			text-decoration: none;
+			font-weight: 500;
+			word-break: break-all;
+		}
+
+		[bog_wysiwyg_block_type="embed"] a:hover {
+			text-decoration: underline;
+		}
+
+		[bog_wysiwyg_block_type="embed"] a::before {
+			content: "\1F517 ";
+		}
+	</style><style id="$mol_style_attach:$bog_wysiwyg_app">[bog_wysiwyg_app_editor] {
+	margin-top: 3rem;
+}
+[bog_wysiwyg_app_layout] {
+	flex-direction: row;
+	flex-grow: 1;
+}
+[bog_wysiwyg_app_registry_panel] {
+	flex-direction: column;
+	flex-shrink: 0;
+	overflow-y: auto;
+	min-width: 12rem;
+	max-width: 16rem;
+}
+[bog_wysiwyg_app_registry_head] {
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+[bog_wysiwyg_app_registry_title] {
+	font-weight: bold;
+}
+[bog_wysiwyg_app_registry_item] {
+	text-align: left;
+}
+[bog_wysiwyg_app_sidebar_head] {
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+[bog_wysiwyg_app_sidebar_title] {
+	font-weight: bold;
+}
+[bog_wysiwyg_app_page_item] {
+	text-align: left;
+}
+[bog_wysiwyg_app_main] {
+	flex-direction: column;
+	flex-grow: 1;
+	min-width: 0;
+	width: 0px;
+	overflow-y: auto;
+}
+[bog_wysiwyg_app_graph_panel] {
+	flex-grow: 1;
+	min-width: 0;
+	overflow: hidden;
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_app_registry">[bog_wysiwyg_app_registry] {
+	flex-direction: row;
+	align-items: center;
+}
+[bog_wysiwyg_app_registry_title_nav] {
+	flex-grow: 1;
+	text-align: left;
+}
+[bog_wysiwyg_app_registry]:where([bog_wysiwyg_app_registry_active="true"]) {
+	background-color: var(--mol_theme_hover);
+	font-weight: bold;
+}
+</style><style id="$mol_style_attach:$bog_wysiwyg_app_page">[bog_wysiwyg_app_page] {
+	flex-direction: row;
+	align-items: center;
+}
+[bog_wysiwyg_app_page_title_nav] {
+	flex-grow: 1;
+	text-align: left;
+}
+[bog_wysiwyg_app_page_rename_trigger] {
+	opacity: 0;
+	transition: opacity 0.15s;
+	flex-shrink: 0;
+}
+[bog_wysiwyg_app_page_title_input] {
+	flex-grow: 1;
+}
+[bog_wysiwyg_app_page]:hover :where([bog_wysiwyg_app_page_rename_trigger]) {
+	opacity: 1;
+}
+[bog_wysiwyg_app_page]:where([bog_wysiwyg_app_page_active="true"]) {
+	background-color: var(--mol_theme_hover);
+	font-weight: bold;
+}
 </style><style id="$mol_style_attach:$mol_book2_catalog">[mol_book2_catalog_menu_filter] {
 	flex-shrink: 0;
 	flex-grow: 0;
@@ -2083,44 +3850,6 @@ h6[mol_text_header] {
 }
 </style><style id="$mol_style_attach:$giper_baza_unit_sand_dump">[giper_baza_unit_sand_dump_other] {
 	padding: var(--mol_gap_text);
-}
-</style><style id="$mol_style_attach:mol/check/box/box.view.css">[mol_check_box_icon] {
-	border-radius: var(--mol_gap_round);
-	box-shadow: inset 0 0 0 1px var(--mol_theme_line);
-	color: var(--mol_theme_shade);
-	height: 1rem;
-	align-self: center;
-}
-
-[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {
-	fill: transparent;
-}
-
-[mol_check]:not([disabled]) > [mol_check_box_icon] {
-	background: var(--mol_theme_field);
-	color: var(--mol_theme_text);
-}
-</style><style id="$mol_style_attach:mol/number/number.css">[mol_number] {
-	display: flex;
-	flex: 0 1 auto;
-	position: relative;
-	align-items: stretch;
-	max-width: 100%;
-}
-
-[mol_number_string] {
-	appearance: textfield;
-	flex: 1 1 7rem;
-	width: 7rem;
-}
-
-[mol_number_string]::-webkit-inner-spin-button {
-	display: none;
-}
-</style><style id="$mol_style_attach:mol/bar/bar.view.css">[mol_bar] {
-	display: flex;
-	/* box-shadow: inset 0 0 0 1px var(--mol_theme_line); */
-	border-radius: var(--mol_gap_round);
 }
 </style><style id="$mol_style_attach:mol/format/format.view.css">[mol_format] {
 	font-family: monospace;
@@ -2235,26 +3964,6 @@ h6[mol_text_header] {
 [giper_baza_flex_field_list_item_add] {
 	justify-content: center;
 }
-</style><style id="$mol_style_attach:mol/labeler/labeler.view.css">[mol_labeler] {
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-	cursor: inherit;
-}
-
-[mol_labeler_label] {
-	min-height: 2rem;
-	color: var(--mol_theme_shade);
-	padding: .5rem .75rem 0;
-	gap: 0 var(--mol_gap_block);
-	flex-wrap: wrap;
-}
-
-[mol_labeler_content] {
-	display: flex;
-	padding: var(--mol_gap_text);
-	min-height: 2.5rem;
-}
 </style><style id="$mol_style_attach:mol/form/field/field.view.css">[mol_form_field] {
 	align-items: stretch;
 }
@@ -2267,21 +3976,6 @@ h6[mol_text_header] {
 
 [mol_form_field_content] {
 	border-radius: var(--mol_gap_round);
-}
-</style><style id="$mol_style_attach:mol/status/status.view.css">[mol_status] {
-	padding: var(--mol_gap_text);
-	border-radius: var(--mol_gap_round);
-	display: block;
-	flex-shrink: 1;
-	word-wrap: break-word;
-}
-
-[mol_status]:not([mol_view_error="Promise"]) {
-	color: var(--mol_theme_focus);
-}
-
-[mol_status]:not([mol_view_error="Promise"]):empty {
-	display: none;
 }
 </style><style id="$mol_style_attach:mol/form/form.view.css">[mol_form] {
 	gap: var(--mol_gap_block);
@@ -2344,15 +4038,6 @@ h6[mol_text_header] {
 }
 [giper_baza_land_page_size] {
 	padding: var(--mol_gap_text);
-}
-</style><style id="$mol_style_attach:mol/button/open/open.view.css">[mol_button_open_native] {
-	position: absolute;
-	left: 0;
-	top: -100%;
-	width: 100%;
-	height: 200%;
-	cursor: pointer;
-	opacity: 0;
 }
 </style><style id="$mol_style_attach:$giper_baza_land_rights">[giper_baza_land_rights] {
 	gap: var(--mol_gap_block);
@@ -2533,9 +4218,6 @@ h6[mol_text_header] {
 	flex-basis: 25rem;
 	flex-shrink: 0;
 }
-</style><style id="$mol_style_attach:mol/check/icon/icon.view.css">[mol_check_icon]:where([mol_check_checked]) {
-	color: var(--mol_theme_current);
-}
 </style><style id="$mol_style_attach:$giper_baza_auth_slot">[giper_baza_auth_slot] {
 	flex-basis: 25rem;
 }
@@ -2576,9 +4258,83 @@ h6[mol_text_header] {
 [mol_text_list_type="*"] > [mol_text_list_item]::before {
 	content: "•";
 }
-</style><style id="$mol_style_attach:$bog_wiki_app"></style><title>WikiLive: живые таблицы</title></head>
+</style><style id="$mol_style_attach:bog/ui/table/table.view.css">[bog_ui_table_row_even="false"] {
+	background: var(--mol_theme_card);
+}
+
+[bog_ui_table_row_selected="true"] {
+	background: var(--mol_theme_current);
+}
+
+[bog_ui_table] [mol_grid_row]:hover {
+	background: var(--mol_theme_current);
+}
+
+[bog_ui_table] [mol_grid_col_id="__select"] {
+	width: 3rem;
+	min-width: 3rem;
+	max-width: 3rem;
+	flex-shrink: 0;
+}
+</style><style id="$mol_style_attach:$bog_ui_table">[bog_ui_table] {
+	overflow-x: auto;
+	width: 100%;
+}
+[bog_ui_table_head] {
+	background-color: var(--mol_theme_back);
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+[bog_ui_table_head_button] {
+	justify-content: flex-start;
+	flex-grow: 1;
+	font-weight: bold;
+	white-space: nowrap;
+}
+[bog_ui_table_col_head] {
+	border-style: solid;
+	border-width: 0;
+	border-color: var(--mol_theme_line);
+	min-width: 100px;
+}
+[bog_ui_table_row] {
+	border-style: solid;
+	border-width: 0;
+	border-color: var(--mol_theme_line);
+}
+[bog_ui_table_cell_input] {
+	flex-grow: 1;
+	min-width: 100px;
+}
+[bog_ui_table_select_all] {
+	flex-shrink: 0;
+	flex-grow: 0;
+	width: 3rem;
+}
+[bog_ui_table_select_row] {
+	flex-shrink: 0;
+	flex-grow: 0;
+	width: 3rem;
+}
+</style><style id="$mol_style_attach:$bog_wiki_mws_table_live">[bog_wiki_mws_table_live] {
+	flex-direction: column;
+	flex-grow: 1;
+	gap: 0.5rem;
+}
+</style><style id="$mol_style_attach:bog_wiki_mws_table_block">
+
+		[bog_wysiwyg_block_type="mws_table"] {
+			background: var(--mol_theme_card);
+			padding: 0.5rem;
+			border-radius: 0.5rem;
+			border: 1px solid var(--mol_theme_line);
+			cursor: default;
+		}
+
+	</style><style id="$mol_style_attach:$bog_wiki_app"></style><title>WikiLive: живые таблицы</title></head>
 	<body mol_view_root="">
-		<div mol_view_root="$bog_wiki_app" id="$bog_wiki_app.Root(0)" bog_wiki_app="" mol_page="" mol_view="" tabindex="-1" bog_wiki_app_theme="" bog_theme_auto="" mol_plugin="" mol_theme="$mol_theme_calm_light"><header id="$bog_wiki_app.Root(0).Head()" bog_wiki_app_head="" mol_page_head="" mol_view=""><h1 id="$bog_wiki_app.Root(0).Title()" bog_wiki_app_title="" mol_page_title="" mol_view="">WikiLive: живые таблицы</h1><mol_switch id="$bog_wiki_app.Root(0).Navbar()" bog_wiki_app_navbar="" mol_switch="" mol_check_list="" mol_view=""><mol_check id="$bog_wiki_app.Root(0).Navbar().Option('home')" mol_switch_option="" mol_check_list_option="" bog_wiki_app_navbar_option="" mol_check="" mol_button_minor="" mol_button_typed="" mol_button="" mol_view="" role="checkbox" tabindex="0" title="" mol_check_checked="true" aria-checked="true">Главная</mol_check><mol_check id="$bog_wiki_app.Root(0).Navbar().Option('editor')" mol_switch_option="" mol_check_list_option="" bog_wiki_app_navbar_option="" mol_check="" mol_button_minor="" mol_button_typed="" mol_button="" mol_view="" role="checkbox" tabindex="0" title="" aria-checked="false">Редактор</mol_check></mol_switch><mol_view id="$bog_wiki_app.Root(0).Tools()" bog_wiki_app_tools="" mol_page_tools="" mol_view=""><a id="$bog_wiki_app.Root(0).Sources()" bog_wiki_app_sources="" mol_link_source="" mol_link="" mol_view="" href="https://github.com/bog/wiki" title="Source code" target="_blank" rel=""><svg id="$bog_wiki_app.Root(0).Sources().Icon()" mol_link_source_icon="" bog_wiki_app_sources_icon="" mol_icon_script_text="" mol_icon="" mol_svg_root="" mol_svg="" mol_view="" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid"><path id="$bog_wiki_app.Root(0).Sources().Icon().Path()" mol_icon_script_text_path="" mol_icon_path="" mol_link_source_icon_path="" bog_wiki_app_sources_icon_path="" mol_svg_path="" mol_svg="" mol_view="" d="M17.8,20C17.4,21.2 16.3,22 15,22H5C3.3,22 2,20.7 2,19V18H5L14.2,18C14.6,19.2 15.7,20 17,20H17.8M19,2C20.7,2 22,3.3 22,5V6H20V5C20,4.4 19.6,4 19,4C18.4,4 18,4.4 18,5V18H17C16.4,18 16,17.6 16,17V16H5V5C5,3.3 6.3,2 8,2H19M8,6V8H15V6H8M8,10V12H14V10H8Z"></path></svg></a><giper_baza_status id="$bog_wiki_app.Root(0).Status()" bog_wiki_app_status="" giper_baza_status="" mol_select="" mol_pick="" mol_pop="" mol_view="" giper_baza_status_nav="" mol_select_nav="" bog_wiki_app_status_nav="" mol_nav="" mol_plugin=""><mol_check id="$bog_wiki_app.Root(0).Status().Trigger()" giper_baza_status_trigger="" mol_select_trigger="" mol_pick_trigger="" bog_wiki_app_status_trigger="" mol_check="" mol_button_minor="" mol_button_typed="" mol_button="" mol_view="" role="checkbox" tabindex="0" title="Sync status" aria-checked="false"><a id="$bog_wiki_app.Root(0).Status().Link()" giper_baza_status_link="" bog_wiki_app_status_link="" mol_link="" mol_view="" href="https://baza.91.219.148.98.ip.giper.dev/" title="" target="_blank" rel="" mol_view_error="Promise"><svg id="$bog_wiki_app.Root(0).Status().Fail()" giper_baza_status_fail="" bog_wiki_app_status_fail="" mol_icon_sync_off="" mol_icon="" mol_svg_root="" mol_svg="" mol_view="" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid"><path id="$bog_wiki_app.Root(0).Status().Fail().Path()" mol_icon_sync_off_path="" mol_icon_path="" giper_baza_status_fail_path="" bog_wiki_app_status_fail_path="" mol_svg_path="" mol_svg="" mol_view="" d="M20,4H14V10L16.24,7.76C17.32,8.85 18,10.34 18,12C18,13 17.75,13.94 17.32,14.77L18.78,16.23C19.55,15 20,13.56 20,12C20,9.79 19.09,7.8 17.64,6.36L20,4M2.86,5.41L5.22,7.77C4.45,9 4,10.44 4,12C4,14.21 4.91,16.2 6.36,17.64L4,20H10V14L7.76,16.24C6.68,15.15 6,13.66 6,12C6,11 6.25,10.06 6.68,9.23L14.76,17.31C14.5,17.44 14.26,17.56 14,17.65V19.74C14.79,19.53 15.54,19.2 16.22,18.78L18.58,21.14L19.85,19.87L4.14,4.14L2.86,5.41M10,6.35V4.26C9.2,4.47 8.45,4.8 7.77,5.22L9.23,6.68C9.5,6.56 9.73,6.44 10,6.35Z"></path></svg></a></mol_check></giper_baza_status><bog_theme_toggle id="$bog_wiki_app.Root(0).Theme_toggle()" bog_wiki_app_theme_toggle="" bog_theme_toggle="" mol_pop="" mol_view=""><mol_button_minor id="$bog_wiki_app.Root(0).Theme_toggle().Anchor()" bog_theme_toggle_anchor="" mol_pop_anchor="" bog_wiki_app_theme_toggle_anchor="" mol_button_minor="" mol_button_typed="" mol_button="" mol_view="" role="button" tabindex="0" title="Светлая тема"><svg id="$bog_wiki_app.Root(0).Theme_toggle().Icon_light()" bog_theme_toggle_icon_light="" bog_wiki_app_theme_toggle_icon_light="" mol_icon_white_balance_sunny="" mol_icon="" mol_svg_root="" mol_svg="" mol_view="" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid"><path id="$bog_wiki_app.Root(0).Theme_toggle().Icon_light().Path()" mol_icon_white_balance_sunny_path="" mol_icon_path="" bog_theme_toggle_icon_light_path="" bog_wiki_app_theme_toggle_icon_light_path="" mol_svg_path="" mol_svg="" mol_view="" d="M3.55 19.09L4.96 20.5L6.76 18.71L5.34 17.29M12 6C8.69 6 6 8.69 6 12S8.69 18 12 18 18 15.31 18 12C18 8.68 15.31 6 12 6M20 13H23V11H20M17.24 18.71L19.04 20.5L20.45 19.09L18.66 17.29M20.45 5L19.04 3.6L17.24 5.39L18.66 6.81M13 1H11V4H13M6.76 5.39L4.96 3.6L3.55 5L5.34 6.81L6.76 5.39M1 13H4V11H1M13 20H11V23H13"></path></svg></mol_button_minor></bog_theme_toggle></mol_view></header><mol_scroll id="$bog_wiki_app.Root(0).Body()" bog_wiki_app_body="" mol_page_body="" mol_scroll="" mol_view="" tabindex="-1"><mol_view id="$bog_wiki_app.Root(0).Body_content()" bog_wiki_app_body_content="" mol_page_body_content="" mol_view=""><article id="$bog_wiki_app.Root(0).Home()" bog_wiki_app_home="" mol_page="" mol_view="" tabindex="-1"><mol_scroll id="$bog_wiki_app.Root(0).Home().Body()" mol_page_body="" bog_wiki_app_home_body="" mol_scroll="" mol_view="" tabindex="-1"><mol_view id="$bog_wiki_app.Root(0).Home().Body_content()" mol_page_body_content="" bog_wiki_app_home_body_content="" mol_view=""><mol_text id="$bog_wiki_app.Root(0).Welcome()" bog_wiki_app_welcome="" mol_text="" mol_list="" mol_view=""><h1 id="$bog_wiki_app.Root(0).Welcome().Header(0)" mol_text_header="" bog_wiki_app_welcome_header="" mol_paragraph="" mol_view=""><a id="$bog_wiki_app.Root(0).Welcome().Header(0).Link()" mol_text_header_link="" bog_wiki_app_welcome_header_link="" mol_link="" mol_view="" href="http://localhost:9222/#!Welcome=WikiLive%3A%20%D0%B6%D0%B8%D0%B2%D1%8B%D0%B5%20%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D1%8B" title="Permalink to this section" target="_self" rel=""><span id="$bog_wiki_app.Root(0).Welcome().String([0,0])" mol_text_string="" bog_wiki_app_welcome_string="" mol_dimmer="" mol_paragraph="" mol_view="">WikiLive: живые таблицы</span></a></h1><mol_paragraph id="$bog_wiki_app.Root(0).Welcome().Paragraph(1)" mol_text_paragraph="" bog_wiki_app_welcome_paragraph="" mol_paragraph="" mol_view=""><span id="$bog_wiki_app.Root(0).Welcome().String([1,0])" mol_text_string="" bog_wiki_app_welcome_string="" mol_dimmer="" mol_paragraph="" mol_view="">Начать создавать по шаблонам</span></mol_paragraph></mol_text></mol_view></mol_scroll><footer id="$bog_wiki_app.Root(0).Home().Foot()" mol_page_foot="" bog_wiki_app_home_foot="" mol_view=""></footer></article></mol_view></mol_scroll><footer id="$bog_wiki_app.Root(0).Foot()" bog_wiki_app_foot="" mol_page_foot="" mol_view=""></footer></div>
+		<div mol_view_root="$bog_wiki_app" id="$bog_wiki_app.Root(0)" bog_wiki_app="" mol_page="" mol_view="" tabindex="-1" bog_wiki_app_theme="" bog_theme_auto="" mol_plugin="" mol_theme="$mol_theme_calm_light"><header id="$bog_wiki_app.Root(0).Head()" bog_wiki_app_head="" mol_page_head="" mol_view=""><h1 id="$bog_wiki_app.Root(0).Title()" bog_wiki_app_title="" mol_page_title="" mol_view="">WikiLive: живые таблицы</h1><mol_switch id="$bog_wiki_app.Root(0).Navbar()" bog_wiki_app_navbar="" mol_switch="" mol_check_list="" mol_view=""><mol_check id="$bog_wiki_app.Root(0).Navbar().Option('home')" mol_switch_option="" mol_check_list_option="" bog_wiki_app_navbar_option="" mol_check="" mol_button_minor="" mol_button_typed="" mol_button="" mol_view="" role="checkbox" tabindex="0" title="" mol_check_checked="true" aria-checked="true">Главная</mol_check><mol_check id="$bog_wiki_app.Root(0).Navbar().Option('editor')" mol_switch_option="" mol_check_list_option="" bog_wiki_app_navbar_option="" mol_check="" mol_button_minor="" mol_button_typed="" mol_button="" mol_view="" role="checkbox" tabindex="0" title="" aria-checked="false">Редактор</mol_check></mol_switch><mol_view id="$bog_wiki_app.Root(0).Tools()" bog_wiki_app_tools="" mol_page_tools="" mol_view=""><a id="$bog_wiki_app.Root(0).Sources()" bog_wiki_app_sources="" mol_link_source="" mol_link="" mol_view="" href="https://github.com/bog/wiki" title="Source code" target="_blank" rel=""><svg id="$bog_wiki_app.Root(0).Sources().Icon()" mol_link_source_icon="" bog_wiki_app_sources_icon="" mol_icon_script_text="" mol_icon="" mol_svg_root="" mol_svg="" mol_view="" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid"><path id="$bog_wiki_app.Root(0).Sources().Icon().Path()" mol_icon_script_text_path="" mol_icon_path="" mol_link_source_icon_path="" bog_wiki_app_sources_icon_path="" mol_svg_path="" mol_svg="" mol_view="" d="M17.8,20C17.4,21.2 16.3,22 15,22H5C3.3,22 2,20.7 2,19V18H5L14.2,18C14.6,19.2 15.7,20 17,20H17.8M19,2C20.7,2 22,3.3 22,5V6H20V5C20,4.4 19.6,4 19,4C18.4,4 18,4.4 18,5V18H17C16.4,18 16,17.6 16,17V16H5V5C5,3.3 6.3,2 8,2H19M8,6V8H15V6H8M8,10V12H14V10H8Z"></path></svg></a><giper_baza_status id="$bog_wiki_app.Root(0).Status()" bog_wiki_app_status="" giper_baza_status="" mol_select="" mol_pick="" mol_pop="" mol_view="" giper_baza_status_nav="" mol_select_nav="" bog_wiki_app_status_nav="" mol_nav="" mol_plugin=""><mol_check id="$bog_wiki_app.Root(0).Status().Trigger()" giper_baza_status_trigger="" mol_select_trigger="" mol_pick_trigger="" bog_wiki_app_status_trigger="" mol_check="" mol_button_minor="" mol_button_typed="" mol_button="" mol_view="" role="checkbox" tabindex="0" title="Sync status" aria-checked="false"><a id="$bog_wiki_app.Root(0).Status().Link()" giper_baza_status_link="" bog_wiki_app_status_link="" mol_link="" mol_view="" href="https://baza.91.219.148.98.ip.giper.dev/" title="Sync status" target="_blank" rel=""><svg id="$bog_wiki_app.Root(0).Status().Well()" giper_baza_status_well="" bog_wiki_app_status_well="" mol_avatar="" mol_icon="" mol_svg_root="" mol_svg="" mol_view="" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid"><path id="$bog_wiki_app.Root(0).Status().Well().Path()" mol_avatar_path="" mol_icon_path="" giper_baza_status_well_path="" bog_wiki_app_status_well_path="" mol_svg_path="" mol_svg="" mol_view="" d="M 3 8 l 0 0 M 21 8 l 0 0 M 3 13 l 0 0 M 21 13 l 0 0 M 3 16 l 0 0 M 21 16 l 0 0 M 5 3 l 0 0 M 19 3 l 0 0 M 5 5 l 0 0 M 19 5 l 0 0 M 5 8 l 0 0 M 19 8 l 0 0 M 5 16 l 0 0 M 19 16 l 0 0 M 5 19 l 0 0 M 19 19 l 0 0 M 8 11 l 0 0 M 16 11 l 0 0 M 8 13 l 0 0 M 16 13 l 0 0 M 8 16 l 0 0 M 16 16 l 0 0 M 8 19 l 0 0 M 16 19 l 0 0 M 8 22 l 0 0 M 16 22 l 0 0 M 11 3 l 0 0 M 13 3 l 0 0 M 11 19 l 0 0 M 13 19 l 0 0 M 11 22 l 0 0 M 13 22 l 0 0 "></path></svg></a></mol_check></giper_baza_status><bog_theme_toggle id="$bog_wiki_app.Root(0).Theme_toggle()" bog_wiki_app_theme_toggle="" bog_theme_toggle="" mol_pop="" mol_view=""><mol_button_minor id="$bog_wiki_app.Root(0).Theme_toggle().Anchor()" bog_theme_toggle_anchor="" mol_pop_anchor="" bog_wiki_app_theme_toggle_anchor="" mol_button_minor="" mol_button_typed="" mol_button="" mol_view="" role="button" tabindex="0" title="Как в системе"><svg id="$bog_wiki_app.Root(0).Theme_toggle().Icon_system()" bog_theme_toggle_icon_system="" bog_wiki_app_theme_toggle_icon_system="" mol_icon_monitor="" mol_icon="" mol_svg_root="" mol_svg="" mol_view="" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid"><path id="$bog_wiki_app.Root(0).Theme_toggle().Icon_system().Path()" mol_icon_monitor_path="" mol_icon_path="" bog_theme_toggle_icon_system_path="" bog_wiki_app_theme_toggle_icon_system_path="" mol_svg_path="" mol_svg="" mol_view="" d="M21,16H3V4H21M21,2H3C1.89,2 1,2.89 1,4V16A2,2 0 0,0 3,18H10V20H8V22H16V20H14V18H21A2,2 0 0,0 23,16V4C23,2.89 22.1,2 21,2Z"></path></svg></mol_button_minor></bog_theme_toggle></mol_view></header><mol_scroll id="$bog_wiki_app.Root(0).Body()" bog_wiki_app_body="" mol_page_body="" mol_scroll="" mol_view="" tabindex="-1"><mol_view id="$bog_wiki_app.Root(0).Body_content()" bog_wiki_app_body_content="" mol_page_body_content="" mol_view=""><article id="$bog_wiki_app.Root(0).Home()" bog_wiki_app_home="" mol_page="" mol_view="" tabindex="-1"><mol_scroll id="$bog_wiki_app.Root(0).Home().Body()" mol_page_body="" bog_wiki_app_home_body="" mol_scroll="" mol_view="" tabindex="-1"><mol_view id="$bog_wiki_app.Root(0).Home().Body_content()" mol_page_body_content="" bog_wiki_app_home_body_content="" mol_view=""><mol_text id="$bog_wiki_app.Root(0).Welcome()" bog_wiki_app_welcome="" mol_text="" mol_list="" mol_view=""><h1 id="$bog_wiki_app.Root(0).Welcome().Header(0)" mol_text_header="" bog_wiki_app_welcome_header="" mol_paragraph="" mol_view=""><a id="$bog_wiki_app.Root(0).Welcome().Header(0).Link()" mol_text_header_link="" bog_wiki_app_welcome_header_link="" mol_link="" mol_view="" href="http://localhost:9222/#!Welcome=WikiLive%3A%20%D0%B6%D0%B8%D0%B2%D1%8B%D0%B5%20%D1%82%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D1%8B" title="Permalink to this section" target="_self" rel=""><span id="$bog_wiki_app.Root(0).Welcome().String([0,0])" mol_text_string="" bog_wiki_app_welcome_string="" mol_dimmer="" mol_paragraph="" mol_view="">WikiLive: живые таблицы</span></a></h1><mol_paragraph id="$bog_wiki_app.Root(0).Welcome().Paragraph(1)" mol_text_paragraph="" bog_wiki_app_welcome_paragraph="" mol_paragraph="" mol_view=""><span id="$bog_wiki_app.Root(0).Welcome().String([1,0])" mol_text_string="" bog_wiki_app_welcome_string="" mol_dimmer="" mol_paragraph="" mol_view="">Начать создавать по шаблонам</span></mol_paragraph></mol_text></mol_view></mol_scroll><footer id="$bog_wiki_app.Root(0).Home().Foot()" mol_page_foot="" bog_wiki_app_home_foot="" mol_view=""></footer></article></mol_view></mol_scroll><footer id="$bog_wiki_app.Root(0).Foot()" bog_wiki_app_foot="" mol_page_foot="" mol_view=""></footer></div>
 		<script src="web.js"></script>
 	
 

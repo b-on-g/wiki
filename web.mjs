@@ -16315,6 +16315,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -16380,9 +16383,6 @@ var $;
 (function ($) {
     $mol_style_attach("giper/baza/status/status.view.css", "[giper_baza_status_option_row] {\n\tpadding: var(--mol_gap_text);\n}\n\n[giper_baza_status_well] {\n\tcolor: var(--mol_theme_current);\n}\n\n[giper_baza_status_fail] {\n\tcolor: var(--mol_theme_focus);\n}\n\n[giper_baza_status][mol_view_error=\"Promise\"] {\n\tanimation: giper_baza_status_wait 1s linear infinite;\n}\n\n@keyframes giper_baza_status_wait {\n\tfrom {\n\t\topacity: 1;\n\t}\n\tto {\n\t\topacity: .5;\n\t}\n}\n");
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -16527,6 +16527,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -16626,9 +16629,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-"use strict";
-
-;
 	($.$bog_theme_picker_row) = class $bog_theme_picker_row extends ($.$mol_button_minor) {
 		focused_str(){
 			return "";
@@ -16655,6 +16655,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -16667,9 +16670,6 @@ var $;
         $$.$bog_theme_picker_row = $bog_theme_picker_row;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -16774,6 +16774,9 @@ var $;
 	($mol_mem(($.$bog_theme_picker.prototype), "focused_index"));
 	($mol_mem_key(($.$bog_theme_picker.prototype), "Theme_row"));
 
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -16902,9 +16905,6 @@ var $;
         $$.$bog_theme_picker = $bog_theme_picker;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -17074,6 +17074,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -17188,9 +17191,6 @@ var $;
         $$.$bog_theme_toggle = $bog_theme_toggle;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -19863,15 +19863,23 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_row) = class $mol_row extends ($.$mol_view) {};
+	($.$mol_icon_comment) = class $mol_icon_comment extends ($.$mol_icon) {
+		path(){
+			return "M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9Z";
+		}
+	};
 
 
 ;
 "use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
-})($ || ($ = {}));
+
+;
+	($.$mol_icon_comment_outline) = class $mol_icon_comment_outline extends ($.$mol_icon) {
+		path(){
+			return "M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9M10,16V19.08L13.08,16H20V4H4V16H10Z";
+		}
+	};
+
 
 ;
 "use strict";
@@ -20144,6 +20152,533 @@ var $;
 })($ || ($ = {}));
 
 ;
+	($.$bog_wysiwyg_comment_thread) = class $bog_wysiwyg_comment_thread extends ($.$mol_view) {
+		comment_views(){
+			return [];
+		}
+		Comments(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.comment_views()));
+			return obj;
+		}
+		draft(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Input(){
+			const obj = new this.$.$mol_textarea();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_comment_thread_Input_hint")));
+			(obj.value) = (next) => ((this.draft(next)));
+			return obj;
+		}
+		send(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Send(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_comment_thread_Send_title")));
+			(obj.click) = (next) => ((this.send(next)));
+			return obj;
+		}
+		Input_row(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Input()), (this.Send())]);
+			return obj;
+		}
+		comment_author_id(id){
+			return "";
+		}
+		Comment_avatar(id){
+			const obj = new this.$.$mol_avatar();
+			(obj.id) = () => ((this.comment_author_id(id)));
+			return obj;
+		}
+		comment_author(id){
+			return "";
+		}
+		Comment_author(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.comment_author(id)));
+			return obj;
+		}
+		Comment_head(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Comment_avatar(id)), (this.Comment_author(id))]);
+			return obj;
+		}
+		comment_text(id){
+			return "";
+		}
+		Comment_text(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.comment_text(id)));
+			return obj;
+		}
+		comment_land_link(){
+			return "";
+		}
+		comment_count(){
+			return 0;
+		}
+		sub(){
+			return [(this.Comments()), (this.Input_row())];
+		}
+		Comment_row(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Comment_head(id)), (this.Comment_text(id))]);
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_wysiwyg_comment_thread.prototype), "Comments"));
+	($mol_mem(($.$bog_wysiwyg_comment_thread.prototype), "draft"));
+	($mol_mem(($.$bog_wysiwyg_comment_thread.prototype), "Input"));
+	($mol_mem(($.$bog_wysiwyg_comment_thread.prototype), "send"));
+	($mol_mem(($.$bog_wysiwyg_comment_thread.prototype), "Send"));
+	($mol_mem(($.$bog_wysiwyg_comment_thread.prototype), "Input_row"));
+	($mol_mem_key(($.$bog_wysiwyg_comment_thread.prototype), "Comment_avatar"));
+	($mol_mem_key(($.$bog_wysiwyg_comment_thread.prototype), "Comment_author"));
+	($mol_mem_key(($.$bog_wysiwyg_comment_thread.prototype), "Comment_head"));
+	($mol_mem_key(($.$bog_wysiwyg_comment_thread.prototype), "Comment_text"));
+	($mol_mem_key(($.$bog_wysiwyg_comment_thread.prototype), "Comment_row"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg_model_comment extends $giper_baza_dict.with({
+            Text: $giper_baza_atom_text,
+            Author: $giper_baza_atom_text,
+            Time: $giper_baza_atom_real,
+        }) {
+        }
+        $$.$bog_wysiwyg_model_comment = $bog_wysiwyg_model_comment;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_upload) = class $mol_icon_upload extends ($.$mol_icon) {
+		path(){
+			return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_button_open) = class $mol_button_open extends ($.$mol_button_minor) {
+		Icon(){
+			const obj = new this.$.$mol_icon_upload();
+			return obj;
+		}
+		files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		files_handled(next){
+			return (this.files(next));
+		}
+		accept(){
+			return "";
+		}
+		multiple(){
+			return true;
+		}
+		Native(){
+			const obj = new this.$.$mol_button_open_native();
+			(obj.files) = (next) => ((this.files_handled(next)));
+			(obj.accept) = () => ((this.accept()));
+			(obj.multiple) = () => ((this.multiple()));
+			return obj;
+		}
+		sub(){
+			return [(this.Icon()), (this.Native())];
+		}
+	};
+	($mol_mem(($.$mol_button_open.prototype), "Icon"));
+	($mol_mem(($.$mol_button_open.prototype), "files"));
+	($mol_mem(($.$mol_button_open.prototype), "Native"));
+	($.$mol_button_open_native) = class $mol_button_open_native extends ($.$mol_view) {
+		accept(){
+			return "";
+		}
+		multiple(){
+			return true;
+		}
+		picked(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dom_name(){
+			return "input";
+		}
+		files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		attr(){
+			return {
+				"type": "file", 
+				"accept": (this.accept()), 
+				"multiple": (this.multiple())
+			};
+		}
+		event(){
+			return {"change": (next) => (this.picked(next))};
+		}
+	};
+	($mol_mem(($.$mol_button_open_native.prototype), "picked"));
+	($mol_mem(($.$mol_button_open_native.prototype), "files"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_button_open extends $.$mol_button_open {
+            files_handled(next) {
+                try {
+                    const files = this.files(next);
+                    this.status([null]);
+                    return files;
+                }
+                catch (error) {
+                    Promise.resolve().then(() => this.status([error]));
+                    $mol_fail_hidden(error);
+                }
+            }
+        }
+        $$.$mol_button_open = $mol_button_open;
+        class $mol_button_open_native extends $.$mol_button_open_native {
+            dom_node() {
+                return super.dom_node();
+            }
+            picked() {
+                const files = this.dom_node().files;
+                if (!files || !files.length)
+                    return;
+                this.files([...files]);
+            }
+        }
+        $$.$mol_button_open_native = $mol_button_open_native;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/button/open/open.view.css", "[mol_button_open_native] {\n\tposition: absolute;\n\tleft: 0;\n\ttop: -100%;\n\twidth: 100%;\n\theight: 200%;\n\tcursor: pointer;\n\topacity: 0;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_row) = class $mol_row extends ($.$mol_view) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: var(--mol_gap_block);\n\tgap: var(--mol_gap_block);\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmax-width: 100%;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$mol_string_button) = class $mol_string_button extends ($.$mol_string) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/string/button/button.view.css", "[mol_string_button]:not(:placeholder-shown):not(:focus):not(:hover):not(:disabled) {\n\tcolor: var(--mol_theme_control);\n\tbackground: transparent;\n\tbox-shadow: none;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$bog_blitz_lobby_players) = class $bog_blitz_lobby_players extends ($.$mol_list) {
+		player_views(){
+			return [];
+		}
+		is_mine(id){
+			return false;
+		}
+		player_avatar_content(id){
+			return null;
+		}
+		player_id(id){
+			return "";
+		}
+		Player_id(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.player_id(id)));
+			return obj;
+		}
+		player_name_content(id){
+			return null;
+		}
+		player_avatar_uri(id){
+			return "";
+		}
+		player_name(id){
+			return "";
+		}
+		player_avatar(id){
+			return null;
+		}
+		player_avatar_files(id, next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		Player_avatar_native(id){
+			const obj = new this.$.$mol_button_open_native();
+			(obj.files) = (next) => ((this.player_avatar_files(id, next)));
+			(obj.accept) = () => ("image/*");
+			(obj.multiple) = () => (false);
+			return obj;
+		}
+		players_dict(){
+			return null;
+		}
+		my_lord_str(){
+			return "";
+		}
+		rows(){
+			return (this.player_views());
+		}
+		Player(id){
+			const obj = new this.$.$mol_row();
+			(obj.attr) = () => ({"bog_blitz_mine": (this.is_mine(id))});
+			(obj.sub) = () => ([
+				(this.player_avatar_content(id)), 
+				(this.Player_id(id)), 
+				(this.player_name_content(id))
+			]);
+			return obj;
+		}
+		Player_icon(id){
+			const obj = new this.$.$mol_avatar();
+			(obj.id) = () => ((this.player_id(id)));
+			return obj;
+		}
+		Player_image(id){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.player_avatar_uri(id)));
+			return obj;
+		}
+		Player_name_input(id){
+			const obj = new this.$.$mol_string_button();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_blitz_lobby_players_Player_name_input_hint")));
+			(obj.value) = (next) => ((this.player_name(id, next)));
+			return obj;
+		}
+		Player_name_label(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.player_name(id)));
+			return obj;
+		}
+		Player_avatar_button(id){
+			const obj = new this.$.$mol_button_open();
+			(obj.sub) = () => ([(this.player_avatar(id)), (this.Player_avatar_native(id))]);
+			return obj;
+		}
+	};
+	($mol_mem_key(($.$bog_blitz_lobby_players.prototype), "Player_id"));
+	($mol_mem_key(($.$bog_blitz_lobby_players.prototype), "player_avatar_files"));
+	($mol_mem_key(($.$bog_blitz_lobby_players.prototype), "Player_avatar_native"));
+	($mol_mem_key(($.$bog_blitz_lobby_players.prototype), "Player"));
+	($mol_mem_key(($.$bog_blitz_lobby_players.prototype), "Player_icon"));
+	($mol_mem_key(($.$bog_blitz_lobby_players.prototype), "Player_image"));
+	($mol_mem_key(($.$bog_blitz_lobby_players.prototype), "Player_name_input"));
+	($mol_mem_key(($.$bog_blitz_lobby_players.prototype), "Player_name_label"));
+	($mol_mem_key(($.$bog_blitz_lobby_players.prototype), "Player_avatar_button"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_lobby_players extends $.$bog_blitz_lobby_players {
+            player_id(key) {
+                return key.slice(0, 8);
+            }
+            player_name_content(key) {
+                if (key === this.my_lord_str()) {
+                    return this.Player_name_input(key);
+                }
+                return this.Player_name_label(key);
+            }
+            is_player_host(key) {
+                const player = this.players_dict()?.key(key);
+                const val = player?.IsHost()?.val();
+                return val ?? false;
+            }
+            player_views() {
+                const views = [];
+                const my = this.my_lord_str();
+                const keys = this.player_keys();
+                for (const key of keys) {
+                    if (this.is_player_host(key))
+                        continue;
+                    if (key === my)
+                        views.unshift(this.Player(key));
+                    else
+                        views.push(this.Player(key));
+                }
+                return views;
+            }
+            player_name(key, next) {
+                const player = this.players_dict()?.key(key);
+                if (!player)
+                    return '';
+                if (next !== undefined) {
+                    player.Name('auto')?.val(next);
+                    return next;
+                }
+                return player.Name()?.val() ?? '';
+            }
+            player_keys() {
+                const raw = this.players_dict()?.keys() ?? [];
+                return Array.from(raw)
+                    .map(k => String(k))
+                    .filter(k => !$bog_blitz_session_fields.has(k));
+            }
+            player_avatar_uri(key) {
+                const player = this.players_dict()?.key(key);
+                const file = player?.Avatar()?.remote();
+                if (!file)
+                    return '';
+                return URL.createObjectURL(file.blob());
+            }
+            player_avatar(key) {
+                if (this.player_avatar_uri(key))
+                    return this.Player_image(key);
+                return this.Player_icon(key);
+            }
+            player_avatar_content(key) {
+                if (key === this.my_lord_str()) {
+                    return this.Player_avatar_button(key);
+                }
+                return this.player_avatar(key);
+            }
+            player_avatar_files(key, next) {
+                if (next?.length) {
+                    const player = this.players_dict()?.key(key);
+                    if (player) {
+                        const store = player.Avatar(null).ensure(null);
+                        if (store) {
+                            store.blob(next[0]);
+                            player.Avatar(null).remote(store);
+                        }
+                    }
+                }
+                return next ?? [];
+            }
+            is_mine(key) {
+                return key === this.my_lord_str();
+            }
+        }
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_players.prototype, "player_id", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_players.prototype, "player_name_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_players.prototype, "player_views", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_players.prototype, "player_name", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_players.prototype, "player_keys", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_players.prototype, "player_avatar_uri", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_players.prototype, "player_avatar", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_players.prototype, "player_avatar_content", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_players.prototype, "player_avatar_files", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_players.prototype, "is_mine", null);
+        $$.$bog_blitz_lobby_players = $bog_blitz_lobby_players;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_lobby_players, {
+            Player_name_input: {
+                ':not(:placeholder-shown):not(:focus):not(:hover):not(:disabled)': {
+                    color: $mol_theme.text,
+                },
+            },
+            Player: {
+                align: { items: 'center' },
+                background: { color: $mol_theme.card },
+                borderRadius: '0.75rem',
+                padding: { top: '0.5rem', bottom: '0.5rem', left: '0.75rem', right: '0.75rem' },
+                margin: { bottom: '0.25rem', top: '0.25rem' },
+                '@': {
+                    bog_blitz_mine: {
+                        true: {
+                            background: { color: $mol_theme.card },
+                            boxShadow: `0 0 0 1px ${$mol_theme.line}`,
+                            borderRadius: '0.5rem',
+                        },
+                    },
+                },
+            },
+            Player_icon: {
+                width: '2.5rem',
+                height: '2.5rem',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                flex: { shrink: 0 },
+            },
+            Player_image: {
+                width: '2.5rem',
+                height: '2.5rem',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                objectFit: 'cover',
+                flex: { shrink: 0 },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
 	($.$mol_button_major) = class $mol_button_major extends ($.$mol_button_minor) {
 		theme(){
 			return "$mol_theme_base";
@@ -20162,231 +20697,223 @@ var $;
 "use strict";
 
 ;
-	($.$bog_ui_divider) = class $bog_ui_divider extends ($.$mol_view) {};
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_define($bog_ui_divider, {
-        margin: {
-            bottom: $mol_gap.block,
-            top: $mol_gap.block,
-        },
-        width: '100%',
-        border: {
-            bottom: {
-                width: '2px',
-                style: 'solid',
-            },
-        },
-    });
-})($ || ($ = {}));
-
-;
-	($.$bog_wiki_editor) = class $bog_wiki_editor extends ($.$mol_page) {
-		Action_bold(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ("B");
-			return obj;
+	($.$bog_qr) = class $bog_qr extends ($.$mol_svg_root) {
+		stop_offset(id){
+			return "0%";
 		}
-		Action_cursive(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ("T");
-			return obj;
-		}
-		Action_underline(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ("U");
-			return obj;
-		}
-		Action_add_table(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.title) = () => ("+ Таблица");
-			return obj;
-		}
-		Actions_row(){
-			const obj = new this.$.$mol_row();
-			(obj.sub) = () => ([
-				(this.Action_bold()), 
-				(this.Action_cursive()), 
-				(this.Action_underline()), 
-				(this.Action_add_table())
-			]);
-			return obj;
-		}
-		editor_text(next){
-			if(next !== undefined) return next;
+		stop_color(id){
 			return "";
 		}
-		Editor_textarea(){
-			const obj = new this.$.$mol_textarea();
-			(obj.value) = (next) => ((this.editor_text(next)));
-			(obj.hint) = () => ("Начните вводить содержимое или нажмите / чтобы использовать команды");
+		qr_view_box(){
+			return "0 0 1 1";
+		}
+		grad_x1(){
+			return "0";
+		}
+		grad_y1(){
+			return "0";
+		}
+		grad_x2(){
+			return "1";
+		}
+		grad_y2(){
+			return "1";
+		}
+		gradient_stop_list(){
+			return [];
+		}
+		Gradient(){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("linearGradient");
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg.prototype.attr.call(obj)), 
+				"id": (this.gradient_id()), 
+				"x1": (this.grad_x1()), 
+				"y1": (this.grad_y1()), 
+				"x2": (this.grad_x2()), 
+				"y2": (this.grad_y2())
+			});
+			(obj.sub) = () => ((this.gradient_stop_list()));
 			return obj;
 		}
-		fetch_table(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Fetch_tables(){
-			const obj = new this.$.$mol_button_major();
-			(obj.title) = () => ("Fetch Tables");
-			(obj.click) = (next) => ((this.fetch_table()));
+		Defs(){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("defs");
+			(obj.sub) = () => ([(this.Gradient())]);
 			return obj;
 		}
-		Divider(){
-			const obj = new this.$.$bog_ui_divider();
-			return obj;
-		}
-		get_data_spaces_stringify(){
+		modules_d(){
 			return "";
 		}
-		Simple_view_spaces(){
-			const obj = new this.$.$mol_text_code();
-			(obj.text) = () => ((this.get_data_spaces_stringify()));
+		Modules(){
+			const obj = new this.$.$mol_svg_path();
+			(obj.geometry) = () => ((this.modules_d()));
+			(obj.attr) = () => ({...(this.$.$mol_svg_path.prototype.attr.call(obj)), "fill": (this.gradient_fill())});
 			return obj;
 		}
-		get_data_table_stringify(){
+		rings_d(){
 			return "";
 		}
-		Simple_view_table(){
-			const obj = new this.$.$mol_text_code();
-			(obj.text) = () => ((this.get_data_table_stringify()));
+		Rings(){
+			const obj = new this.$.$mol_svg_path();
+			(obj.geometry) = () => ((this.rings_d()));
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg_path.prototype.attr.call(obj)), 
+				"fill": (this.gradient_fill()), 
+				"fill-rule": "evenodd"
+			});
 			return obj;
 		}
-		Divider2(){
-			const obj = new this.$.$bog_ui_divider();
+		centers_d(){
+			return "";
+		}
+		Centers(){
+			const obj = new this.$.$mol_svg_path();
+			(obj.geometry) = () => ((this.centers_d()));
+			(obj.attr) = () => ({...(this.$.$mol_svg_path.prototype.attr.call(obj)), "fill": (this.gradient_fill())});
 			return obj;
 		}
-		Simple_view_iframe(){
-			const obj = new this.$.$mol_frame();
-			(obj.uri) = () => ("https://tables.mws.ru/share/shrKdFiLLioJw8JBF2sUD");
+		center_x(){
+			return "0";
+		}
+		center_y(){
+			return "0";
+		}
+		center_size(){
+			return "0";
+		}
+		Center_body(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.center()));
 			return obj;
 		}
-		title(){
-			return "Редактор страницы";
+		Center_wrap(){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("foreignObject");
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg.prototype.attr.call(obj)), 
+				"x": (this.center_x()), 
+				"y": (this.center_y()), 
+				"width": (this.center_size()), 
+				"height": (this.center_size())
+			});
+			(obj.sub) = () => ([(this.Center_body())]);
+			return obj;
 		}
-		Head(){
-			return null;
+		uri(){
+			return "";
 		}
-		body(){
+		module_radius(){
+			return 0.35;
+		}
+		finder_radius(){
+			return 1.2;
+		}
+		gradient_angle(){
+			return 45;
+		}
+		error_correction(){
+			return "M";
+		}
+		quiet_zone(){
+			return 2;
+		}
+		center(){
+			return [];
+		}
+		gradient_id(){
+			return "qr-grad";
+		}
+		gradient_fill(){
+			return "url(#qr-grad)";
+		}
+		gradient_stops(){
+			return ["var(--mol_theme_special)", "var(--mol_theme_focus)"];
+		}
+		Stop(id){
+			const obj = new this.$.$mol_svg();
+			(obj.dom_name) = () => ("stop");
+			(obj.attr) = () => ({
+				...(this.$.$mol_svg.prototype.attr.call(obj)), 
+				"offset": (this.stop_offset(id)), 
+				"stop-color": (this.stop_color(id))
+			});
+			return obj;
+		}
+		view_box(){
+			return (this.qr_view_box());
+		}
+		sub(){
 			return [
-				(this.Actions_row()), 
-				(this.Editor_textarea()), 
-				(this.Fetch_tables()), 
-				(this.Divider()), 
-				(this.Simple_view_spaces()), 
-				(this.Simple_view_table()), 
-				(this.Divider2()), 
-				(this.Simple_view_iframe())
+				(this.Defs()), 
+				(this.Modules()), 
+				(this.Rings()), 
+				(this.Centers()), 
+				(this.Center_wrap())
 			];
 		}
 	};
-	($mol_mem(($.$bog_wiki_editor.prototype), "Action_bold"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "Action_cursive"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "Action_underline"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "Action_add_table"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "Actions_row"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "editor_text"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "Editor_textarea"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "fetch_table"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "Fetch_tables"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "Divider"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "Simple_view_spaces"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "Simple_view_table"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "Divider2"));
-	($mol_mem(($.$bog_wiki_editor.prototype), "Simple_view_iframe"));
+	($mol_mem(($.$bog_qr.prototype), "Gradient"));
+	($mol_mem(($.$bog_qr.prototype), "Defs"));
+	($mol_mem(($.$bog_qr.prototype), "Modules"));
+	($mol_mem(($.$bog_qr.prototype), "Rings"));
+	($mol_mem(($.$bog_qr.prototype), "Centers"));
+	($mol_mem(($.$bog_qr.prototype), "Center_body"));
+	($mol_mem(($.$bog_qr.prototype), "Center_wrap"));
+	($mol_mem_key(($.$bog_qr.prototype), "Stop"));
 
-
-;
-"use strict";
 
 ;
 "use strict";
 var $;
 (function ($) {
-    function $milis_log(target, key, descriptor) {
-        const originalMethod = descriptor.value;
-        descriptor.value = function (...args) {
-            const result = originalMethod.apply(this, args);
-            console.debug(`%c\t${key}\n>>>`, 'color: lightyellow', args, '\t', JSON.stringify(args), '\n<<<', result, '\t', JSON.stringify(result));
-            return result;
-        };
-        return descriptor;
-    }
-    $.$milis_log = $milis_log;
-    function $milis_log_in(target, key, descriptor) {
-        const originalMethod = descriptor.value;
-        descriptor.value = function (...args) {
-            const result = originalMethod.apply(this, args);
-            console.debug(`%c\t${key}\n>>>`, 'color: lightyellow', args, '\t', JSON.stringify(args));
-            return result;
-        };
-        return descriptor;
-    }
-    $.$milis_log_in = $milis_log_in;
-    function $milis_log_out(target, key, descriptor) {
-        const originalMethod = descriptor.value;
-        descriptor.value = function (...args) {
-            const result = originalMethod.apply(this, args);
-            console.debug(`%c\t${key}\n<<<`, 'color: lightyellow', result, '\t', JSON.stringify(result));
-            return result;
-        };
-        return descriptor;
-    }
-    $.$milis_log_out = $milis_log_out;
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class $bog_wiki_model extends $mol_object {
-        base_url() {
-            const cors = 'https://cors-anywhere.herokuapp.com/';
-            return cors + 'https://tables.mws.ru/fusion/v1';
+    class $mol_import extends $mol_object2 {
+        static module(uri) {
+            $mol_wire_solid();
+            return $mol_wire_sync(this).module_async(uri);
         }
-        bearer_token() {
-            return 'uskurJvFb5GHRVAWGi1jMCP';
+        static module_async(uri) {
+            return import(uri);
         }
-        request(url) {
-            return $mol_fetch.json(this.base_url() + url, {
-                headers: {
-                    Authorization: 'Bearer ' + this.bearer_token(),
-                    'Content-Type': 'application/json',
-                },
+        static script(uri) {
+            $mol_wire_solid();
+            return $mol_wire_sync(this).script_async(uri);
+        }
+        static script_async(uri) {
+            const doc = $mol_dom_context.document;
+            const script = doc.createElement('script');
+            script.src = uri;
+            doc.head.appendChild(script);
+            return new Promise((done, fail) => {
+                script.onload = () => done($mol_dom_context);
+                script.onerror = () => fail(new Error(`Can not import ${uri}`));
             });
         }
-        data_revision(next) {
-            return next ?? 0;
+        static style(uri) {
+            return $mol_wire_sync(this).style_async(uri);
         }
-        get_spaces() {
-            void this.data_revision();
-            return this.request('/spaces');
-        }
-        get_table(ids) {
-            void this.data_revision();
-            const [dstId, viewId] = ids;
-            return this.request(`/datasheets/${dstId}/records?viewId=${viewId}`);
+        static style_async(uri) {
+            const doc = $mol_dom_context.document;
+            const style = doc.createElement('link');
+            style.rel = 'stylesheet';
+            style.href = uri;
+            doc.head.appendChild(style);
+            return new Promise((done, fail) => {
+                style.onload = () => done(style.sheet);
+                style.onerror = () => fail(new Error(`Can not import ${uri}`));
+            });
         }
     }
     __decorate([
-        $mol_mem
-    ], $bog_wiki_model.prototype, "data_revision", null);
-    __decorate([
-        $milis_log,
-        $mol_mem
-    ], $bog_wiki_model.prototype, "get_spaces", null);
-    __decorate([
-        $milis_log,
         $mol_mem_key
-    ], $bog_wiki_model.prototype, "get_table", null);
-    $.$bog_wiki_model = $bog_wiki_model;
+    ], $mol_import, "module", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_import, "script", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_import, "style", null);
+    $.$mol_import = $mol_import;
 })($ || ($ = {}));
 
 ;
@@ -20398,47 +20925,9128 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        const wiki_table_ids = ['dstBumsSV6ng3k0nHd', 'viwklpg2YdqyQ'];
-        class $bog_wiki_editor extends $.$bog_wiki_editor {
-            model() {
-                return new this.$.$bog_wiki_model();
+        let grad_counter = 0;
+        class $bog_qr extends $.$bog_qr {
+            gradient_id() {
+                return 'qr-grad-' + (++grad_counter);
             }
-            fetch_table() {
-                const m = this.model();
-                m.data_revision(m.data_revision() + 1);
+            gradient_fill() {
+                return `url(#${this.gradient_id()})`;
             }
-            data_spaces(next) {
-                return next === undefined ? this.model().get_spaces() : next;
+            grad_x1() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 - Math.cos(a) * 0.5);
             }
-            data_table(next) {
-                return next === undefined ? this.model().get_table(wiki_table_ids) : next;
+            grad_y1() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 - Math.sin(a) * 0.5);
             }
-            get_data_spaces_stringify() {
-                return 'Spaces: \n' + JSON.stringify(this.data_spaces(), null, 2);
+            grad_x2() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 + Math.cos(a) * 0.5);
             }
-            get_data_table_stringify() {
-                return 'Table: \n' + JSON.stringify(this.data_table(), null, 2);
+            grad_y2() {
+                const a = this.gradient_angle() * Math.PI / 180;
+                return String(0.5 + Math.sin(a) * 0.5);
+            }
+            gradient_stop_list() {
+                const colors = this.gradient_stops();
+                return colors.map((_, i) => this.Stop(i));
+            }
+            stop_offset(index) {
+                const colors = this.gradient_stops();
+                if (colors.length <= 1)
+                    return '0%';
+                return Math.round(index / (colors.length - 1) * 100) + '%';
+            }
+            stop_color(index) {
+                return this.gradient_stops()[index];
+            }
+            qr_lib() {
+                return $mol_import.script('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js');
+            }
+            qr_matrix() {
+                this.qr_lib();
+                const data = this.uri();
+                if (!data)
+                    return null;
+                const qr = qrcode(0, this.error_correction());
+                qr.addData(data);
+                qr.make();
+                const count = qr.getModuleCount();
+                const matrix = [];
+                for (let r = 0; r < count; r++) {
+                    matrix[r] = [];
+                    for (let c = 0; c < count; c++) {
+                        matrix[r][c] = qr.isDark(r, c);
+                    }
+                }
+                return matrix;
+            }
+            qr_view_box() {
+                const matrix = this.qr_matrix();
+                if (!matrix)
+                    return '0 0 1 1';
+                const total = matrix.length + this.quiet_zone() * 2;
+                return `0 0 ${total} ${total}`;
+            }
+            qr_paths() {
+                const matrix = this.qr_matrix();
+                if (!matrix)
+                    return { modules: '', rings: '', centers: '' };
+                const count = matrix.length;
+                const quiet = this.quiet_zone();
+                const r = this.module_radius();
+                const dark = (row, col) => row >= 0 && row < count && col >= 0 && col < count && matrix[row][col];
+                const isFinder = (row, col) => (row < 7 && col < 7) || (row < 7 && col >= count - 7) || (row >= count - 7 && col < 7);
+                const hasCenter = this.center().length > 0;
+                const centerRadius = hasCenter ? count * 0.15 : 0;
+                const centerMid = count / 2;
+                const isCenter = (row, col) => {
+                    if (!hasCenter)
+                        return false;
+                    const dx = col + 0.5 - centerMid;
+                    const dy = row + 0.5 - centerMid;
+                    return dx * dx + dy * dy < centerRadius * centerRadius;
+                };
+                let modules = '';
+                for (let row = 0; row < count; row++) {
+                    for (let col = 0; col < count; col++) {
+                        if (!matrix[row][col])
+                            continue;
+                        if (isFinder(row, col))
+                            continue;
+                        if (isCenter(row, col))
+                            continue;
+                        const x = col + quiet;
+                        const y = row + quiet;
+                        const top = dark(row - 1, col);
+                        const bottom = dark(row + 1, col);
+                        const left = dark(row, col - 1);
+                        const right = dark(row, col + 1);
+                        const alone = !top && !bottom && !left && !right;
+                        if (alone) {
+                            const cx = x + 0.5;
+                            const cy = y + 0.5;
+                            const cr = 0.5;
+                            modules += `M${cx - cr},${cy}A${cr},${cr},0,1,1,${cx + cr},${cy}A${cr},${cr},0,1,1,${cx - cr},${cy}Z`;
+                        }
+                        else {
+                            const tl = !top && !left ? r : 0;
+                            const tr = !top && !right ? r : 0;
+                            const br = !bottom && !right ? r : 0;
+                            const bl = !bottom && !left ? r : 0;
+                            modules += this.rect_path(x, y, 1, 1, tl, tr, br, bl);
+                        }
+                    }
+                }
+                const fr = this.finder_radius();
+                const finders = [
+                    [quiet, quiet],
+                    [count - 7 + quiet, quiet],
+                    [quiet, count - 7 + quiet],
+                ];
+                let rings = '';
+                let centers = '';
+                for (const [fx, fy] of finders) {
+                    rings += this.rect_path(fx, fy, 7, 7, fr, fr, fr, fr);
+                    rings += this.rect_path(fx + 1, fy + 1, 5, 5, fr * 0.7, fr * 0.7, fr * 0.7, fr * 0.7);
+                    centers += this.rect_path(fx + 2, fy + 2, 3, 3, fr * 0.5, fr * 0.5, fr * 0.5, fr * 0.5);
+                }
+                return { modules, rings, centers };
+            }
+            center_area() {
+                const matrix = this.qr_matrix();
+                if (!matrix || this.center().length === 0)
+                    return { x: 0, y: 0, size: 0 };
+                const count = matrix.length;
+                const quiet = this.quiet_zone();
+                const centerSize = count * 0.3;
+                const total = count + quiet * 2;
+                return {
+                    x: (total - centerSize) / 2,
+                    y: (total - centerSize) / 2,
+                    size: centerSize,
+                };
+            }
+            center_x() {
+                return String(this.center_area().x);
+            }
+            center_y() {
+                return String(this.center_area().y);
+            }
+            center_size() {
+                return String(this.center_area().size);
+            }
+            modules_d() {
+                return this.qr_paths().modules;
+            }
+            rings_d() {
+                return this.qr_paths().rings;
+            }
+            centers_d() {
+                return this.qr_paths().centers;
+            }
+            rect_path(x, y, w, h, tl, tr, br, bl) {
+                return [
+                    `M${x + tl},${y}`,
+                    `H${x + w - tr}`,
+                    tr ? `A${tr},${tr},0,0,1,${x + w},${y + tr}` : '',
+                    `V${y + h - br}`,
+                    br ? `A${br},${br},0,0,1,${x + w - br},${y + h}` : '',
+                    `H${x + bl}`,
+                    bl ? `A${bl},${bl},0,0,1,${x},${y + h - bl}` : '',
+                    `V${y + tl}`,
+                    tl ? `A${tl},${tl},0,0,1,${x + tl},${y}` : '',
+                    'Z',
+                ]
+                    .filter(Boolean)
+                    .join('');
             }
         }
         __decorate([
             $mol_mem
-        ], $bog_wiki_editor.prototype, "model", null);
+        ], $bog_qr.prototype, "gradient_id", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "gradient_fill", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_x1", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_y1", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_x2", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "grad_y2", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "gradient_stop_list", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_lib", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_matrix", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_view_box", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "qr_paths", null);
+        __decorate([
+            $mol_mem
+        ], $bog_qr.prototype, "center_area", null);
+        $$.$bog_qr = $bog_qr;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_qr, {
+            width: '300px',
+            height: '300px',
+            Center_body: {
+                width: '80%',
+                height: '80%',
+                position: 'absolute',
+                top: '10%',
+                left: '10%',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_lobby_host) = class $bog_blitz_lobby_host extends ($.$mol_page) {
+		qr_data(){
+			return "";
+		}
+		Logo(){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ("bog/blitz/assets/logo.svg");
+			return obj;
+		}
+		Qr(){
+			const obj = new this.$.$bog_qr();
+			(obj.uri) = () => ((this.qr_data()));
+			(obj.error_correction) = () => ("M");
+			(obj.center) = () => ([(this.Logo())]);
+			(obj.module_radius) = () => (0.35);
+			(obj.finder_radius) = () => (1.2);
+			(obj.gradient_angle) = () => (125);
+			(obj.gradient_stops) = () => (["var(--mol_theme_special)", "var(--mol_theme_current)"]);
+			return obj;
+		}
+		Quiz_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.quiz_title()));
+			return obj;
+		}
+		Land_id(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.land_id()));
+			return obj;
+		}
+		start(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Start(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_lobby_host_Start_title")));
+			(obj.click) = (next) => ((this.start(next)));
+			return obj;
+		}
+		Counter(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.counter_string()));
+			return obj;
+		}
+		Players(){
+			const obj = new this.$.$bog_blitz_lobby_players();
+			return obj;
+		}
+		Head(){
+			return null;
+		}
+		counter_string(){
+			return "";
+		}
+		land_id(){
+			return "";
+		}
+		quiz_title(){
+			return "";
+		}
+		session(){
+			return null;
+		}
+		quiz_data(){
+			return null;
+		}
+		body(){
+			return [
+				(this.Qr()), 
+				(this.Quiz_title()), 
+				(this.Land_id()), 
+				(this.Start()), 
+				(this.Counter()), 
+				(this.Players())
+			];
+		}
+		Foot(){
+			return null;
+		}
+		sub(){
+			return [...(super.sub())];
+		}
+	};
+	($mol_mem(($.$bog_blitz_lobby_host.prototype), "Logo"));
+	($mol_mem(($.$bog_blitz_lobby_host.prototype), "Qr"));
+	($mol_mem(($.$bog_blitz_lobby_host.prototype), "Quiz_title"));
+	($mol_mem(($.$bog_blitz_lobby_host.prototype), "Land_id"));
+	($mol_mem(($.$bog_blitz_lobby_host.prototype), "start"));
+	($mol_mem(($.$bog_blitz_lobby_host.prototype), "Start"));
+	($mol_mem(($.$bog_blitz_lobby_host.prototype), "Counter"));
+	($mol_mem(($.$bog_blitz_lobby_host.prototype), "Players"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_lobby_host extends $.$bog_blitz_lobby_host {
+            qr_data() {
+                return this.$.$mol_state_arg.make_link({
+                    screen: 'lobby',
+                    land: this.$.$mol_state_arg.value('land') ?? '',
+                });
+            }
+            start(e) {
+                if (e) {
+                    const session = this.session();
+                    if (!session)
+                        return;
+                    session.Current_question('auto')?.val(0);
+                    const key_link = session.Answers_key_land()?.val();
+                    if (key_link) {
+                        const key_land = this.$.$giper_baza_glob.Land(new $giper_baza_link(key_link));
+                        const raw = key_land.Data($bog_blitz_answers_key).Data()?.val();
+                        if (raw) {
+                            try {
+                                const keys = JSON.parse(raw);
+                                const first = keys[0];
+                                if (first) {
+                                    const multi = first.type !== 'text_input' && first.correct.split(',').length >= 2;
+                                    session.Multi_correct('auto')?.val(multi);
+                                }
+                            }
+                            catch { }
+                        }
+                    }
+                    session.Round_start('auto')?.val(Date.now());
+                    session.Game_state('auto')?.val('reading');
+                }
+                return null;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_host.prototype, "qr_data", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_host.prototype, "start", null);
+        $$.$bog_blitz_lobby_host = $bog_blitz_lobby_host;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_lobby_host, {
+            Qr: {
+                border: {
+                    radius: $mol_gap.round,
+                },
+                align: { self: 'center' },
+                maxWidth: '22rem',
+            },
+            Quiz_title: {
+                align: { self: 'center' },
+                font: { size: '1.75rem', weight: 700 },
+                margin: { top: '1rem' },
+                textAlign: 'center',
+            },
+            Land_id: {
+                align: { self: 'center' },
+                font: { size: '0.85rem' },
+                opacity: 0.45,
+                textAlign: 'center',
+            },
+            Start: {
+                align: { self: 'center' },
+                maxWidth: '20rem',
+                textAlign: 'center',
+                margin: { top: '1.5rem' },
+            },
+            Counter: {
+                align: { self: 'center' },
+                font: { size: '1.25rem', weight: 500 },
+                opacity: 0.7,
+                margin: { top: '1.5rem', bottom: '1.5rem' },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_lobby_join) = class $bog_blitz_lobby_join extends ($.$mol_page) {
+		player_id(){
+			return "";
+		}
+		avatar_uri(){
+			return "";
+		}
+		avatar_preview(){
+			return null;
+		}
+		Avatar_circle(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.avatar_preview())]);
+			return obj;
+		}
+		Avatar_label(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_lobby_join_Avatar_label_title")));
+			return obj;
+		}
+		avatar_files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		Avatar_native(){
+			const obj = new this.$.$mol_button_open_native();
+			(obj.files) = (next) => ((this.avatar_files(next)));
+			(obj.accept) = () => ("image/*");
+			(obj.multiple) = () => (false);
+			return obj;
+		}
+		Avatar(){
+			const obj = new this.$.$mol_button_open();
+			(obj.sub) = () => ([(this.Avatar_label()), (this.Avatar_native())]);
+			return obj;
+		}
+		player_name(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Player_name_input(){
+			const obj = new this.$.$mol_string_button();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_blitz_lobby_join_Player_name_input_hint")));
+			(obj.value) = (next) => ((this.player_name(next)));
+			return obj;
+		}
+		join(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Join(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.join_title()));
+			(obj.click) = (next) => ((this.join(next)));
+			return obj;
+		}
+		Head(){
+			return null;
+		}
+		is_synced(){
+			return false;
+		}
+		profile_avatar_uri(){
+			return "";
+		}
+		profile_name(){
+			return "";
+		}
+		syncing_title(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_join_syncing_title"));
+		}
+		join_title(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_join_join_title"));
+		}
+		enter_title(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_join_enter_title"));
+		}
+		Avatar_icon(){
+			const obj = new this.$.$mol_avatar();
+			(obj.id) = () => ((this.player_id()));
+			return obj;
+		}
+		Avatar_image(){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.avatar_uri()));
+			return obj;
+		}
+		body(){
+			return [
+				(this.Avatar_circle()), 
+				(this.Avatar()), 
+				(this.Player_name_input()), 
+				(this.Join())
+			];
+		}
+	};
+	($mol_mem(($.$bog_blitz_lobby_join.prototype), "Avatar_circle"));
+	($mol_mem(($.$bog_blitz_lobby_join.prototype), "Avatar_label"));
+	($mol_mem(($.$bog_blitz_lobby_join.prototype), "avatar_files"));
+	($mol_mem(($.$bog_blitz_lobby_join.prototype), "Avatar_native"));
+	($mol_mem(($.$bog_blitz_lobby_join.prototype), "Avatar"));
+	($mol_mem(($.$bog_blitz_lobby_join.prototype), "player_name"));
+	($mol_mem(($.$bog_blitz_lobby_join.prototype), "Player_name_input"));
+	($mol_mem(($.$bog_blitz_lobby_join.prototype), "join"));
+	($mol_mem(($.$bog_blitz_lobby_join.prototype), "Join"));
+	($mol_mem(($.$bog_blitz_lobby_join.prototype), "Avatar_icon"));
+	($mol_mem(($.$bog_blitz_lobby_join.prototype), "Avatar_image"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_lobby_join extends $.$bog_blitz_lobby_join {
+            avatar_preview() {
+                try {
+                    const uri = this.avatar_uri();
+                    if (uri)
+                        return this.Avatar_image();
+                }
+                catch { }
+                return this.Avatar_icon();
+            }
+            avatar_uri() {
+                const files = this.avatar_files();
+                if (files?.length)
+                    return URL.createObjectURL(files[0]);
+                return this.profile_avatar_uri();
+            }
+            join_title() {
+                try {
+                    this.is_synced();
+                }
+                catch (e) {
+                    return this.syncing_title();
+                }
+                return this.enter_title();
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_join.prototype, "avatar_preview", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_join.prototype, "avatar_uri", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_join.prototype, "join_title", null);
+        $$.$bog_blitz_lobby_join = $bog_blitz_lobby_join;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_lobby_join, {
+            Body: {
+                flex: {
+                    direction: 'column',
+                },
+                align: {
+                    items: 'center',
+                    self: 'center',
+                },
+                gap: '1.5rem',
+                padding: {
+                    top: '3rem',
+                    bottom: '2rem',
+                    left: '1.5rem',
+                    right: '1.5rem',
+                },
+                maxWidth: '400px',
+            },
+            Avatar_circle: {
+                borderRadius: '50%',
+                overflow: 'hidden',
+                width: '100px',
+                height: '100px',
+                minWidth: '100px',
+                minHeight: '100px',
+                maxWidth: '100px',
+                maxHeight: '100px',
+                flex: {
+                    shrink: 0,
+                    grow: 0,
+                },
+                margin: {
+                    bottom: '0.5rem',
+                },
+            },
+            Avatar_image: {
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+            },
+            Avatar_icon: {
+                width: '100%',
+                height: '100%',
+                font: {
+                    size: '3rem',
+                },
+            },
+            Avatar: {
+                font: {
+                    size: '0.75rem',
+                },
+                opacity: 0.5,
+            },
+            Player_name_input: {
+                font: {
+                    size: '1.5rem',
+                    weight: 600,
+                },
+                textAlign: 'center',
+                width: '100%',
+            },
+            Join: {
+                width: '100%',
+                margin: {
+                    top: '0.5rem',
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_lobby_waiting) = class $bog_blitz_lobby_waiting extends ($.$mol_page) {
+		Quiz_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.quiz_title()));
+			return obj;
+		}
+		Waiting_message(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_lobby_waiting_Waiting_message_title")));
+			return obj;
+		}
+		Counter(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.counter_string()));
+			return obj;
+		}
+		Players(){
+			const obj = new this.$.$bog_blitz_lobby_players();
+			return obj;
+		}
+		Head(){
+			return null;
+		}
+		counter_string(){
+			return "";
+		}
+		quiz_title(){
+			return "";
+		}
+		body(){
+			return [
+				(this.Quiz_title()), 
+				(this.Waiting_message()), 
+				(this.Counter()), 
+				(this.Players())
+			];
+		}
+	};
+	($mol_mem(($.$bog_blitz_lobby_waiting.prototype), "Quiz_title"));
+	($mol_mem(($.$bog_blitz_lobby_waiting.prototype), "Waiting_message"));
+	($mol_mem(($.$bog_blitz_lobby_waiting.prototype), "Counter"));
+	($mol_mem(($.$bog_blitz_lobby_waiting.prototype), "Players"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_lobby_waiting, {
+            Quiz_title: {
+                align: { self: 'center' },
+                font: { size: '1.75rem', weight: 700 },
+                margin: { top: '1rem' },
+                textAlign: 'center',
+            },
+            Waiting_message: {
+                align: { self: 'center' },
+                font: { size: '1.5rem', weight: 500 },
+                opacity: 0.6,
+                padding: { bottom: '0.5rem', top: '1rem' },
+            },
+            Counter: {
+                align: { self: 'center' },
+                font: { size: '1.25rem', weight: 500 },
+                opacity: 0.7,
+                padding: { bottom: '1.5rem', top: '1rem' },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_lobby_game_timer) = class $bog_blitz_lobby_game_timer extends ($.$mol_view) {
+		bar_width(){
+			return "100%";
+		}
+		Bar(){
+			const obj = new this.$.$mol_view();
+			(obj.style) = () => ({...(this.$.$mol_view.prototype.style.call(obj)), "width": (this.bar_width())});
+			return obj;
+		}
+		duration(){
+			return 0;
+		}
+		round_start(){
+			return 0;
+		}
+		paused_at(){
+			return 0;
+		}
+		sub(){
+			return [(this.Bar())];
+		}
+	};
+	($mol_mem(($.$bog_blitz_lobby_game_timer.prototype), "Bar"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_lobby_game_timer extends $.$bog_blitz_lobby_game_timer {
+            bar_width(next) {
+                const start = this.round_start();
+                const duration = this.duration();
+                if (!start || !duration)
+                    return '100%';
+                const paused = this.paused_at();
+                const now = paused > 0 ? paused : Date.now();
+                const elapsed = (now - start) / 1000;
+                const ratio = Math.max(0, 1 - elapsed / duration);
+                if (ratio > 0 && !paused) {
+                    new $mol_after_timeout(50, () => this.bar_width(null));
+                }
+                return `${ratio * 100}%`;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_timer.prototype, "bar_width", null);
+        $$.$bog_blitz_lobby_game_timer = $bog_blitz_lobby_game_timer;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/blitz/lobby/game/timer/timer.view.css", "@keyframes bog_blitz_timer_shrink {\n\tfrom { width: 100%; }\n\tto { width: 0%; }\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_lobby_game_timer, {
+            width: '100%',
+            height: '0.35rem',
+            margin: { bottom: '1.5rem' },
+            Bar: {
+                height: '100%',
+                background: {
+                    color: $mol_theme.special,
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_lobby_game_leaderboard_row) = class $bog_blitz_lobby_game_leaderboard_row extends ($.$mol_view) {
+		rank_text(){
+			return "";
+		}
+		Rank(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.rank_text()));
+			return obj;
+		}
+		Name(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.name()));
+			return obj;
+		}
+		score_text(){
+			return "";
+		}
+		Score(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.score_text()));
+			return obj;
+		}
+		rank(){
+			return 0;
+		}
+		name(){
+			return "";
+		}
+		score(){
+			return 0;
+		}
+		mine(){
+			return false;
+		}
+		rank_medal(){
+			return "";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"data-mine": (this.mine()), 
+				"data-medal": (this.rank_medal())
+			};
+		}
+		sub(){
+			return [
+				(this.Rank()), 
+				(this.Name()), 
+				(this.Score())
+			];
+		}
+	};
+	($mol_mem(($.$bog_blitz_lobby_game_leaderboard_row.prototype), "Rank"));
+	($mol_mem(($.$bog_blitz_lobby_game_leaderboard_row.prototype), "Name"));
+	($mol_mem(($.$bog_blitz_lobby_game_leaderboard_row.prototype), "Score"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_lobby_game_leaderboard_row extends $.$bog_blitz_lobby_game_leaderboard_row {
+            rank_text() {
+                const rank = this.rank();
+                if (rank === 1)
+                    return '\u{1F947}';
+                if (rank === 2)
+                    return '\u{1F948}';
+                if (rank === 3)
+                    return '\u{1F949}';
+                return `#${rank}`;
+            }
+            rank_medal() {
+                const rank = this.rank();
+                if (rank >= 1 && rank <= 3)
+                    return String(rank);
+                return '';
+            }
+            score_text() {
+                return String(Math.round(this.score()));
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_leaderboard_row.prototype, "rank_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_leaderboard_row.prototype, "rank_medal", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_leaderboard_row.prototype, "score_text", null);
+        $$.$bog_blitz_lobby_game_leaderboard_row = $bog_blitz_lobby_game_leaderboard_row;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_lobby_game_leaderboard_row, {
+            flex: { direction: 'row' },
+            align: { items: 'center' },
+            gap: '0.5rem',
+            padding: { top: '0.5rem', bottom: '0.5rem', left: '0.75rem', right: '0.75rem' },
+            background: { color: $mol_theme.card },
+            borderRadius: '0.75rem',
+            margin: { bottom: '0.25rem' },
+            Rank: {
+                minWidth: '2.5rem',
+                font: { weight: 700 },
+                opacity: 0.4,
+            },
+            Name: {
+                flex: { grow: 1 },
+            },
+            Score: {
+                font: { weight: 600 },
+                opacity: 0.7,
+            },
+            '@': {
+                'data-mine': {
+                    true: {
+                        Rank: {
+                            opacity: 1,
+                            color: $mol_theme.special,
+                        },
+                        Score: {
+                            opacity: 1,
+                        },
+                    },
+                },
+                'data-medal': {
+                    '1': {
+                        boxShadow: '0 0 0 2px #FFD700 inset',
+                        Rank: { opacity: 1, font: { size: '1.25rem' } },
+                    },
+                    '2': {
+                        boxShadow: '0 0 0 2px #C0C0C0 inset',
+                        Rank: { opacity: 1, font: { size: '1.25rem' } },
+                    },
+                    '3': {
+                        boxShadow: '0 0 0 2px #CD7F32 inset',
+                        Rank: { opacity: 1, font: { size: '1.25rem' } },
+                    },
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_lobby_game_leaderboard) = class $bog_blitz_lobby_game_leaderboard extends ($.$mol_view) {
+		board_content(){
+			return [];
+		}
+		my_row_content(){
+			return [];
+		}
+		Top_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_lobby_game_leaderboard_Top_title_title")));
+			return obj;
+		}
+		top_rows(){
+			return [];
+		}
+		Top_list(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.top_rows()));
+			return obj;
+		}
+		Bottom_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_lobby_game_leaderboard_Bottom_title_title")));
+			return obj;
+		}
+		bottom_rows(){
+			return [];
+		}
+		Bottom_list(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.bottom_rows()));
+			return obj;
+		}
+		row_rank(id){
+			return 0;
+		}
+		row_name(id){
+			return "";
+		}
+		row_score(id){
+			return 0;
+		}
+		row_mine(id){
+			return false;
+		}
+		players_dict(){
+			return null;
+		}
+		my_lord_str(){
+			return "";
+		}
+		is_host(){
+			return false;
+		}
+		sub(){
+			return (this.board_content());
+		}
+		My_row(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.my_row_content()));
+			return obj;
+		}
+		Top(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Top_title()), (this.Top_list())]);
+			return obj;
+		}
+		Bottom(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Bottom_title()), (this.Bottom_list())]);
+			return obj;
+		}
+		Row(id){
+			const obj = new this.$.$bog_blitz_lobby_game_leaderboard_row();
+			(obj.rank) = () => ((this.row_rank(id)));
+			(obj.name) = () => ((this.row_name(id)));
+			(obj.score) = () => ((this.row_score(id)));
+			(obj.mine) = () => ((this.row_mine(id)));
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_blitz_lobby_game_leaderboard.prototype), "Top_title"));
+	($mol_mem(($.$bog_blitz_lobby_game_leaderboard.prototype), "Top_list"));
+	($mol_mem(($.$bog_blitz_lobby_game_leaderboard.prototype), "Bottom_title"));
+	($mol_mem(($.$bog_blitz_lobby_game_leaderboard.prototype), "Bottom_list"));
+	($mol_mem(($.$bog_blitz_lobby_game_leaderboard.prototype), "My_row"));
+	($mol_mem(($.$bog_blitz_lobby_game_leaderboard.prototype), "Top"));
+	($mol_mem(($.$bog_blitz_lobby_game_leaderboard.prototype), "Bottom"));
+	($mol_mem_key(($.$bog_blitz_lobby_game_leaderboard.prototype), "Row"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $giper_baza_file extends $giper_baza_dict.with({
+        Name: $giper_baza_atom_text,
+        Type: $giper_baza_atom_text,
+        Chunks: $giper_baza_list_bin,
+    }) {
+        uri() {
+            return `?BAZA:file=${this.link()};name=${this.name()}`;
+        }
+        name(next) {
+            const ext = {
+                'text/plain': 'txt',
+                'application/json': 'json',
+            }[this.type()] ?? 'bin';
+            return this.Name(next)?.val(next) ?? `${this.link()}.${ext}`;
+        }
+        type(next) {
+            return this.Type(next)?.val(next) ?? 'application/octet-stream';
+        }
+        blob(next) {
+            if (!next)
+                return new $mol_blob(this.chunks(), { type: this.type() });
+            const buffer = new Uint8Array($mol_wire_sync(next).arrayBuffer());
+            this.buffer(buffer);
+            this.type(next.type);
+            if (next instanceof $mol_dom_context.File)
+                this.name(next.name);
+            return next;
+        }
+        buffer(next) {
+            if (next) {
+                const chunks = [];
+                for (let offset = 0; offset < next.byteLength;) {
+                    chunks.push(next.slice(offset, offset += 2 ** 15));
+                }
+                this.chunks(chunks);
+                return next;
+            }
+            else {
+                const chunks = this.chunks();
+                const size = chunks.reduce((sum, chunk) => sum + chunk.byteLength, 0);
+                const res = new Uint8Array(size);
+                let offset = 0;
+                for (const chunk of chunks) {
+                    res.set(chunk, offset);
+                    offset += chunk.byteLength;
+                }
+                return res;
+            }
+        }
+        chunks(next) {
+            return (this.Chunks(next)?.items(next)?.filter($mol_guard_defined) ?? []);
+        }
+        str(next, type = 'text/plain') {
+            if (next === undefined)
+                return $mol_charset_decode(this.buffer());
+            this.buffer($mol_charset_encode(next));
+            this.type(type);
+            return next;
+        }
+        json(next, type = 'application/json') {
+            if (next === undefined)
+                return JSON.parse(this.str());
+            this.str(JSON.stringify(next), type);
+            return next;
+        }
+    }
+    $.$giper_baza_file = $giper_baza_file;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_variant(...sub) {
+        return $mol_data_setup((val) => {
+            const errors = [];
+            for (const type of sub) {
+                let hidden = $.$mol_fail_hidden;
+                try {
+                    $.$mol_fail = $.$mol_fail_hidden;
+                    return type(val);
+                }
+                catch (error) {
+                    $.$mol_fail = hidden;
+                    if (error instanceof $mol_data_error) {
+                        errors.push(error);
+                    }
+                    else {
+                        return $mol_fail_hidden(error);
+                    }
+                }
+            }
+            return $mol_fail(new $mol_data_error(`${val} is not any of variants`, {}, ...errors));
+        }, sub);
+    }
+    $.$mol_data_variant = $mol_data_variant;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_data_string = (val) => {
+        if (typeof val === 'string')
+            return val;
+        return $mol_fail(new $mol_data_error(`${val} is not a string`));
+    };
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_optional(sub, fallback) {
+        return $mol_data_setup((val) => {
+            if (val === undefined) {
+                return fallback?.();
+            }
+            return sub(val);
+        }, { sub, fallback });
+    }
+    $.$mol_data_optional = $mol_data_optional;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_record(sub) {
+        return $mol_data_setup((val) => {
+            let res = {};
+            for (const field in sub) {
+                try {
+                    res[field] =
+                        sub[field](val[field]);
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        return $mol_fail_hidden(error);
+                    error.message = `[${JSON.stringify(field)}] ${error.message}`;
+                    return $mol_fail(error);
+                }
+            }
+            return res;
+        }, sub);
+    }
+    $.$mol_data_record = $mol_data_record;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_array(sub) {
+        return $mol_data_setup((val) => {
+            if (!Array.isArray(val))
+                return $mol_fail(new $mol_data_error(`${val} is not an array`));
+            return val.map((item, index) => {
+                try {
+                    return sub(item);
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        return $mol_fail_hidden(error);
+                    error.message = `[${index}] ${error.message}`;
+                    return $mol_fail(error);
+                }
+            });
+        }, sub);
+    }
+    $.$mol_data_array = $mol_data_array;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_data_boolean = (val) => {
+        if (typeof val === 'boolean')
+            return val;
+        return $mol_fail(new $mol_data_error(`${val} is not a boolean`));
+    };
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    const syntax = new $mol_syntax2({
+        'filter': /!?=/,
+        'range_separator': /@/,
+        'fetch_open': /\(/,
+        'fetch_separator': /[:;&\/?#]/,
+        'fetch_close': /\)/,
+    });
+    function $hyoo_harp_from_string(uri) {
+        let parent = {};
+        let prev = null;
+        let stack = [parent];
+        let range = null;
+        let values = null;
+        function fail_at(offset) {
+            const uri_marked = uri.substring(0, offset) + '\u035C' + uri.substring(offset);
+            $mol_fail(new Error(`Unexpected token at ${offset} of "${uri_marked}"`));
+        }
+        syntax.parse(uri, {
+            '': (text, chunks, offset) => {
+                if (values) {
+                    text = decodeURIComponent(text);
+                    range = (range && range.length > 1)
+                        ? [range[0], range[1] + text]
+                        : [(range?.[0] ?? '') + text];
+                }
+                else {
+                    let [, order, name] = /^([+-]?)(.*)$/.exec(text);
+                    prev = parent[decodeURIComponent(name)] = {};
+                    if (order)
+                        prev['+'] = order === '+';
+                    stack.push(parent);
+                }
+            },
+            'filter': (filter, chinks, offset) => {
+                if (values) {
+                    if (range) {
+                        if (filter === '!=')
+                            range.push(range.pop() + '!');
+                        values.push(range);
+                        range = null;
+                    }
+                    else {
+                        range = [filter];
+                    }
+                }
+                else if (prev) {
+                    values = prev[filter] = [];
+                }
+                else {
+                    values = [];
+                    parent[''] = values;
+                }
+            },
+            'range_separator': (found, chunks, offset) => {
+                if (!values)
+                    fail_at(offset);
+                range = [range?.[0] ?? '', ''];
+            },
+            'fetch_open': (found, chunks, offset) => {
+                if (range) {
+                    range[range.length - 1] += found;
+                }
+                else {
+                    if (!prev)
+                        fail_at(offset);
+                    parent = prev;
+                    values = null;
+                    prev = null;
+                }
+            },
+            'fetch_separator': (found, chunks, offset) => {
+                if (range) {
+                    values.push(range);
+                    range = null;
+                }
+                parent = stack.pop();
+                values = null;
+                prev = null;
+            },
+            'fetch_close': (found) => {
+                if (range) {
+                    range[range.length - 1] += found;
+                }
+                else {
+                    parent = stack.pop();
+                    values = null;
+                    prev = null;
+                }
+            },
+        });
+        if (range)
+            values.push(range);
+        return stack[0];
+    }
+    $.$hyoo_harp_from_string = $hyoo_harp_from_string;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $hyoo_harp_to_string(query) {
+        return Object.entries(query).map(([field, harp]) => {
+            if (field === '+')
+                return '';
+            if (field === '=')
+                return '';
+            if (field === '!=')
+                return '';
+            if (!harp)
+                return '';
+            const harp2 = harp;
+            const order = harp2['+'] === true ? '+' : harp2['+'] === false ? '-' : '';
+            const filter = harp2['='] ? '=' : harp2['!='] ? '!=' : '';
+            const name = encodeURIComponent(field);
+            let values = (harp2['='] || harp2['!='] || []).map(([min, max]) => {
+                if (max === undefined || min === max)
+                    return encodeURIComponent(String(min)) + '=';
+                min = (min === undefined) ? '' : encodeURIComponent(String(min));
+                max = (max === undefined) ? '' : encodeURIComponent(String(max));
+                return `${min}@${max}=`;
+            }).join('');
+            let fetch = $hyoo_harp_to_string(harp);
+            if (fetch)
+                fetch = `(${fetch})`;
+            return `${order}${name}${filter}${values}${fetch}`;
+        }).filter(Boolean).join(';');
+    }
+    $.$hyoo_harp_to_string = $hyoo_harp_to_string;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const Int = $mol_data_pipe($mol_data_variant($mol_data_string, $mol_data_integer), Number);
+    function $hyoo_harp_scheme(sub, value = $mol_data_integer) {
+        const inner = $mol_data_optional($mol_data_record(sub));
+        const values = $mol_data_optional($mol_data_array($mol_data_array(value)));
+        const val = $mol_data_record({
+            ...sub,
+            '+': $mol_data_optional($mol_data_boolean),
+            '=': values,
+            '!=': values,
+            '_num': $mol_data_optional($mol_data_record({
+                '=': $mol_data_array($mol_data_array(Int))
+            })),
+            '_len': inner,
+            '_max': inner,
+            '_min': inner,
+            '_sum': inner,
+        });
+        return Object.assign(val, {
+            parse(str) {
+                return val($hyoo_harp_from_string(str));
+            },
+            build(query) {
+                return $hyoo_harp_to_string(query);
+            },
+        });
+    }
+    $.$hyoo_harp_scheme = $hyoo_harp_scheme;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_offline() { }
+    $.$mol_offline = $mol_offline;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const blacklist = new Set([
+        '//cse.google.com/adsense/search/async-ads.js'
+    ]);
+    function $mol_offline_web() {
+        if (typeof window === 'undefined') {
+            self.addEventListener('install', (event) => {
+                ;
+                self.skipWaiting();
+            });
+            self.addEventListener('activate', (event) => {
+                ;
+                self.clients.claim();
+                $$.$mol_log3_done({
+                    place: '$mol_offline',
+                    message: 'Activated',
+                });
+            });
+            self.addEventListener('fetch', (event) => {
+                const request = event.request;
+                if (blacklist.has(request.url.replace(/^https?:/, ''))) {
+                    return event.respondWith(new Response(null, {
+                        status: 418,
+                        statusText: 'Blocked'
+                    }));
+                }
+                if (request.method !== 'GET')
+                    return;
+                if (!/^https?:/.test(request.url))
+                    return;
+                if (/\?/.test(request.url))
+                    return;
+                if (request.cache === 'no-store')
+                    return;
+                const fetch_data = () => fetch(new Request(request, { credentials: 'omit' })).then(response => {
+                    if (response.status !== 200)
+                        return response;
+                    event.waitUntil(caches.open('$mol_offline').then(cache => cache.put(request, response)));
+                    return response.clone();
+                });
+                const enrich = (response) => {
+                    if (!response.status)
+                        return response;
+                    const headers = new Headers(response.headers);
+                    headers.set("$mol_offline", "");
+                    headers.set("Origin-Agent-Cluster", "?1");
+                    return new Response(response.body, {
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers,
+                    });
+                };
+                const fresh = request.cache === 'force-cache' ? null : fetch_data();
+                if (fresh)
+                    event.waitUntil(fresh.then(enrich));
+                event.respondWith(caches.match(request).then(cached => request.cache === 'no-cache' || request.cache === 'reload'
+                    ? (cached
+                        ? fresh
+                            .then(actual => {
+                            if (actual.status === cached.status)
+                                return actual;
+                            throw new Error(`${actual.status}${actual.statusText ? ` ${actual.statusText}` : ''}`, { cause: actual });
+                        })
+                            .catch((err) => {
+                            const cloned = cached.clone();
+                            const message = `${err.cause instanceof Response ? '' : '500 '}${err.message} $mol_offline fallback to cache`;
+                            cloned.headers.set('$mol_offline_remote_status', message);
+                            return cloned;
+                        })
+                        : fresh)
+                    : (cached || fresh || fetch_data())).then(enrich));
+            });
+            self.addEventListener('beforeinstallprompt', (event) => event.prompt());
+        }
+        else if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+            console.warn('HTTPS or localhost is required for service workers.');
+        }
+        else if (!navigator.serviceWorker) {
+            console.warn('Service Worker is not supported.');
+        }
+        else {
+            $mol_dom.addEventListener('DOMContentLoaded', () => {
+                navigator.serviceWorker.register('web.js').then(reg => {
+                    reg.addEventListener('updatefound', () => {
+                        $$.$mol_log3_rise({
+                            place: '$mol_offline',
+                            message: 'Outdated',
+                        });
+                        const worker = reg.installing;
+                        worker.addEventListener('statechange', () => {
+                            if (worker.state !== 'activated')
+                                return;
+                            window.location.reload();
+                        });
+                    });
+                });
+            });
+        }
+    }
+    $.$mol_offline_web = $mol_offline_web;
+    $.$mol_offline = $mol_offline_web;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    try {
+        $mol_offline();
+    }
+    catch (error) {
+        console.error(error);
+    }
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    if (typeof window === 'undefined') {
+        const Query = $hyoo_harp_scheme({
+            BAZA: $hyoo_harp_scheme({}),
+            file: $hyoo_harp_scheme({}, $mol_data_string),
+        });
+        self.addEventListener('fetch', (event) => {
+            const url = new URL(event.request.url);
+            try {
+                var query = Query.parse(url.search);
+            }
+            catch {
+                return;
+            }
+            const id = query.file['=']?.[0][0];
+            if (!id)
+                return;
+            const link = new $giper_baza_link(id);
+            const file = $.$giper_baza_glob.Pawn(link, $giper_baza_file);
+            return event.respondWith($mol_wire_async(file).blob().then(blob => {
+                return new Response(blob, {
+                    status: file.filled() ? 200 : 404,
+                    statusText: file.filled() ? 'OK' : 'Not Filled',
+                    headers: {
+                        'Content-Type': file.type(),
+                        'X-Powered-By': '$giper_baza_file',
+                    },
+                });
+            }));
+        });
+    }
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_player extends $giper_baza_dict.with({
+            Score: $giper_baza_atom_real,
+            Name: $giper_baza_atom_text,
+            IsHost: $giper_baza_atom_bool,
+            Avatar: $giper_baza_atom_link_to(() => $giper_baza_file),
+            Answer_land: $giper_baza_atom_text,
+        }) {
+        }
+        $$.$bog_blitz_player = $bog_blitz_player;
+        class $bog_blitz_player_answers extends $giper_baza_dict.with({
+            Answer: $giper_baza_atom_text,
+            Answer_time: $giper_baza_atom_real,
+            React_heart: $giper_baza_atom_real,
+            React_smile: $giper_baza_atom_real,
+            React_fire: $giper_baza_atom_real,
+            React_clap: $giper_baza_atom_real,
+            React_poop: $giper_baza_atom_real,
+        }) {
+        }
+        $$.$bog_blitz_player_answers = $bog_blitz_player_answers;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_lobby_game_leaderboard extends $.$bog_blitz_lobby_game_leaderboard {
+            board_content() {
+                const parts = [];
+                if (this.my_row_content().length)
+                    parts.push(this.My_row());
+                parts.push(this.Top());
+                parts.push(this.Bottom());
+                return parts;
+            }
+            sorted_players() {
+                const dict = this.players_dict();
+                if (!dict)
+                    return [];
+                const keys = dict.keys() ?? [];
+                const players = [];
+                for (const key of keys) {
+                    if ($bog_blitz_session_fields.has(String(key)))
+                        continue;
+                    const player = dict.dive(key, $bog_blitz_player);
+                    if (!player)
+                        continue;
+                    if (player.IsHost()?.val())
+                        continue;
+                    players.push({
+                        key: String(key),
+                        name: player.Name()?.val() ?? String(key).slice(0, 8),
+                        score: player.Score()?.val() ?? 0,
+                    });
+                }
+                return players.sort((a, b) => b.score - a.score);
+            }
+            my_rank() {
+                const lord = this.my_lord_str();
+                const sorted = this.sorted_players();
+                const index = sorted.findIndex(p => p.key === lord);
+                return index >= 0 ? index + 1 : 0;
+            }
+            my_row_content() {
+                if (this.is_host())
+                    return [];
+                const lord = this.my_lord_str();
+                const sorted = this.sorted_players();
+                const me = sorted.find(p => p.key === lord);
+                if (!me)
+                    return [];
+                return [this.Row(`my_${lord}`)];
+            }
+            top_rows() {
+                const sorted = this.sorted_players();
+                return sorted.slice(0, 10).map((_, i) => this.Row(`top_${i}`));
+            }
+            bottom_rows() {
+                const sorted = this.sorted_players();
+                return sorted.slice(-10).reverse().map((_, i) => this.Row(`bottom_${i}`));
+            }
+            row_rank(key) {
+                const [type, index] = key.split('_');
+                if (type === 'my')
+                    return this.my_rank();
+                if (type === 'top')
+                    return Number(index) + 1;
+                if (type === 'bottom') {
+                    const sorted = this.sorted_players();
+                    return sorted.length - Number(index);
+                }
+                return 0;
+            }
+            row_name(key) {
+                const player = this.player_by_row_key(key);
+                return player?.name ?? '';
+            }
+            row_score(key) {
+                const player = this.player_by_row_key(key);
+                return player?.score ?? 0;
+            }
+            row_mine(key) {
+                const player = this.player_by_row_key(key);
+                return player?.key === this.my_lord_str();
+            }
+            player_by_row_key(key) {
+                const [type, index] = key.split('_');
+                const sorted = this.sorted_players();
+                if (type === 'my') {
+                    const lord = this.my_lord_str();
+                    return sorted.find(p => p.key === lord) ?? null;
+                }
+                if (type === 'top')
+                    return sorted[Number(index)] ?? null;
+                if (type === 'bottom') {
+                    return sorted[sorted.length - 1 - Number(index)] ?? null;
+                }
+                return null;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_leaderboard.prototype, "board_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_leaderboard.prototype, "sorted_players", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_leaderboard.prototype, "my_rank", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_leaderboard.prototype, "my_row_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_leaderboard.prototype, "top_rows", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_leaderboard.prototype, "bottom_rows", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game_leaderboard.prototype, "row_rank", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game_leaderboard.prototype, "row_name", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game_leaderboard.prototype, "row_score", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game_leaderboard.prototype, "row_mine", null);
+        $$.$bog_blitz_lobby_game_leaderboard = $bog_blitz_lobby_game_leaderboard;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_lobby_game_leaderboard, {
+            flex: {
+                direction: 'row',
+                wrap: 'wrap',
+            },
+            gap: '1.5rem',
+            padding: { top: '0.5rem', left: '1rem', right: '1rem' },
+            width: '100%',
+            My_row: {
+                width: '100%',
+                background: { color: $mol_theme.card },
+                borderRadius: '0.75rem',
+                boxShadow: `0 0 0 2px ${$mol_theme.special}`,
+                padding: { top: '0.5rem', bottom: '0.5rem', left: '0.75rem', right: '0.75rem' },
+            },
+            Top: {
+                flex: { grow: 1, basis: 0, direction: 'column' },
+                minWidth: '15rem',
+            },
+            Bottom: {
+                flex: { grow: 1, basis: 0, direction: 'column' },
+                minWidth: '15rem',
+            },
+            Top_title: {
+                font: { size: '1rem', weight: 700 },
+                opacity: 0.5,
+                padding: { bottom: '0.25rem', left: '0.75rem' },
+            },
+            Bottom_title: {
+                font: { size: '1rem', weight: 700 },
+                opacity: 0.5,
+                padding: { bottom: '0.25rem', left: '0.75rem' },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_lobby_game_reactboard) = class $bog_blitz_lobby_game_reactboard extends ($.$mol_view) {
+		Title_heart(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("❤️");
+			return obj;
+		}
+		rows_heart(){
+			return [];
+		}
+		List_heart(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.rows_heart()));
+			return obj;
+		}
+		Table_heart(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Title_heart()), (this.List_heart())]);
+			return obj;
+		}
+		Title_smile(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("😊");
+			return obj;
+		}
+		rows_smile(){
+			return [];
+		}
+		List_smile(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.rows_smile()));
+			return obj;
+		}
+		Table_smile(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Title_smile()), (this.List_smile())]);
+			return obj;
+		}
+		Title_fire(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("🔥");
+			return obj;
+		}
+		rows_fire(){
+			return [];
+		}
+		List_fire(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.rows_fire()));
+			return obj;
+		}
+		Table_fire(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Title_fire()), (this.List_fire())]);
+			return obj;
+		}
+		Title_clap(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("👏");
+			return obj;
+		}
+		rows_clap(){
+			return [];
+		}
+		List_clap(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.rows_clap()));
+			return obj;
+		}
+		Table_clap(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Title_clap()), (this.List_clap())]);
+			return obj;
+		}
+		Title_poop(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("💩");
+			return obj;
+		}
+		rows_poop(){
+			return [];
+		}
+		List_poop(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.rows_poop()));
+			return obj;
+		}
+		Table_poop(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Title_poop()), (this.List_poop())]);
+			return obj;
+		}
+		row_name(id){
+			return "";
+		}
+		Row_name(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.row_name(id)));
+			return obj;
+		}
+		row_count(id){
+			return "";
+		}
+		Row_count(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.row_count(id)));
+			return obj;
+		}
+		players_dict(){
+			return null;
+		}
+		sub(){
+			return [
+				(this.Table_heart()), 
+				(this.Table_smile()), 
+				(this.Table_fire()), 
+				(this.Table_clap()), 
+				(this.Table_poop())
+			];
+		}
+		Row(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Row_name(id)), (this.Row_count(id))]);
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "Title_heart"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "List_heart"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "Table_heart"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "Title_smile"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "List_smile"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "Table_smile"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "Title_fire"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "List_fire"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "Table_fire"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "Title_clap"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "List_clap"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "Table_clap"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "Title_poop"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "List_poop"));
+	($mol_mem(($.$bog_blitz_lobby_game_reactboard.prototype), "Table_poop"));
+	($mol_mem_key(($.$bog_blitz_lobby_game_reactboard.prototype), "Row_name"));
+	($mol_mem_key(($.$bog_blitz_lobby_game_reactboard.prototype), "Row_count"));
+	($mol_mem_key(($.$bog_blitz_lobby_game_reactboard.prototype), "Row"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const reaction_keys = ['heart', 'smile', 'fire', 'clap', 'poop'];
+        const reaction_fields = {
+            heart: 'React_heart',
+            smile: 'React_smile',
+            fire: 'React_fire',
+            clap: 'React_clap',
+            poop: 'React_poop',
+        };
+        class $bog_blitz_lobby_game_reactboard extends $.$bog_blitz_lobby_game_reactboard {
+            player_answers_data(player) {
+                const link = player.Answer_land()?.val();
+                if (!link)
+                    return null;
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(link)).Data($bog_blitz_player_answers);
+            }
+            sorted_by(key) {
+                const dict = this.players_dict();
+                if (!dict)
+                    return [];
+                const keys = dict.keys() ?? [];
+                const field = reaction_fields[key];
+                if (!field)
+                    return [];
+                const players = [];
+                for (const k of keys) {
+                    if ($bog_blitz_session_fields.has(String(k)))
+                        continue;
+                    const player = dict.dive(k, $bog_blitz_player);
+                    if (!player)
+                        continue;
+                    if (player.IsHost()?.val())
+                        continue;
+                    const pa = this.player_answers_data(player);
+                    if (!pa)
+                        continue;
+                    const count = pa[field]()?.val() ?? 0;
+                    if (!count)
+                        continue;
+                    players.push({
+                        name: player.Name()?.val() ?? String(k).slice(0, 8),
+                        count,
+                    });
+                }
+                return players.sort((a, b) => b.count - a.count).slice(0, 3);
+            }
+            make_rows(key) {
+                return this.sorted_by(key).map((_, i) => this.Row(`${key}_${i}`));
+            }
+            rows_heart() { return this.make_rows('heart'); }
+            rows_smile() { return this.make_rows('smile'); }
+            rows_fire() { return this.make_rows('fire'); }
+            rows_clap() { return this.make_rows('clap'); }
+            rows_poop() { return this.make_rows('poop'); }
+            row_name(id) {
+                const [key, index] = id.split('_');
+                const sorted = this.sorted_by(key);
+                return sorted[Number(index)]?.name ?? '';
+            }
+            row_count(id) {
+                const [key, index] = id.split('_');
+                const sorted = this.sorted_by(key);
+                const count = sorted[Number(index)]?.count ?? 0;
+                return count ? String(count) : '';
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_reactboard.prototype, "rows_heart", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_reactboard.prototype, "rows_smile", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_reactboard.prototype, "rows_fire", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_reactboard.prototype, "rows_clap", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_reactboard.prototype, "rows_poop", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game_reactboard.prototype, "row_name", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game_reactboard.prototype, "row_count", null);
+        $$.$bog_blitz_lobby_game_reactboard = $bog_blitz_lobby_game_reactboard;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const table_style = {
+            flex: { direction: 'column', grow: 1, basis: 0 },
+            align: { items: 'center' },
+            minWidth: '5rem',
+        };
+        const title_style = {
+            font: { size: '2rem' },
+            padding: { bottom: '0.25rem' },
+        };
+        $mol_style_define($bog_blitz_lobby_game_reactboard, {
+            flex: {
+                direction: 'row',
+                wrap: 'wrap',
+            },
+            gap: '0.5rem',
+            padding: { top: '1.5rem', left: '1rem', right: '1rem' },
+            width: '100%',
+            Table_heart: table_style,
+            Table_smile: table_style,
+            Table_fire: table_style,
+            Table_clap: table_style,
+            Table_poop: table_style,
+            Title_heart: title_style,
+            Title_smile: title_style,
+            Title_fire: title_style,
+            Title_clap: title_style,
+            Title_poop: title_style,
+            Row: {
+                gap: '0.5rem',
+                justify: { content: 'center' },
+            },
+            Row_name: {
+                font: { size: '0.875rem' },
+            },
+            Row_count: {
+                font: { size: '0.875rem', weight: 700 },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_lobby_game_option) = class $bog_blitz_lobby_game_option extends ($.$mol_button_major) {
+		selected(){
+			return "false";
+		}
+		correct(){
+			return "";
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"data-selected": (this.selected()), 
+				"data-correct": (this.correct())
+			};
+		}
+		image_uri(){
+			return "";
+		}
+		Option_image(){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.image_uri()));
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_blitz_lobby_game_option.prototype), "Option_image"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_lobby_game_option extends $.$bog_blitz_lobby_game_option {
+            sub() {
+                const parts = [];
+                if (this.image_uri())
+                    parts.push(this.Option_image());
+                parts.push(this.title());
+                return parts;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game_option.prototype, "sub", null);
+        $$.$bog_blitz_lobby_game_option = $bog_blitz_lobby_game_option;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_lobby_game_option, {
+            Option_image: {
+                maxWidth: '8rem',
+                maxHeight: '6rem',
+                objectFit: 'contain',
+                borderRadius: '0.5rem',
+            },
+            '@': {
+                'data-selected': {
+                    true: {
+                        boxShadow: `0 0 0 3px ${$mol_theme.special}`,
+                        opacity: 1,
+                    },
+                    false: {
+                        opacity: 0.4,
+                    },
+                },
+                'data-correct': {
+                    true: {
+                        boxShadow: '0 0 0 3px #22c55e',
+                        background: {
+                            color: '#22c55e33',
+                        },
+                        opacity: 1,
+                    },
+                    false: {
+                        boxShadow: '0 0 0 3px #ef4444',
+                        background: {
+                            color: '#ef444433',
+                        },
+                        opacity: 0.6,
+                    },
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_lobby_game) = class $bog_blitz_lobby_game extends ($.$mol_view) {
+		game_content(){
+			return [];
+		}
+		pause_label(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_game_pause_label"));
+		}
+		pause_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		resume_label(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_game_resume_label"));
+		}
+		resume_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		next_label(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_game_next_label"));
+		}
+		next_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Timer(){
+			const obj = new this.$.$bog_blitz_lobby_game_timer();
+			(obj.round_start) = () => ((this.round_start()));
+			(obj.duration) = () => ((this.duration()));
+			(obj.paused_at) = () => ((this.paused_at()));
+			return obj;
+		}
+		host_controls(){
+			return [];
+		}
+		Host_controls(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.host_controls()));
+			return obj;
+		}
+		State(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.state_label()));
+			return obj;
+		}
+		question_image_uri(){
+			return "";
+		}
+		Question_image(){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.question_image_uri()));
+			return obj;
+		}
+		Question(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.current_question_text()));
+			return obj;
+		}
+		answer_views(){
+			return [];
+		}
+		Answer_area(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.answer_views()));
+			return obj;
+		}
+		countdown_content(){
+			return [];
+		}
+		Countdown(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.countdown_content()));
+			return obj;
+		}
+		text_draft(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		text_input_enabled(){
+			return true;
+		}
+		text_submit(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Leaderboard_timer(){
+			const obj = new this.$.$bog_blitz_lobby_game_timer();
+			(obj.round_start) = () => ((this.round_start()));
+			(obj.duration) = () => ((this.duration()));
+			(obj.paused_at) = () => ((this.paused_at()));
+			return obj;
+		}
+		my_lord_str(){
+			return "";
+		}
+		Leaderboard(){
+			const obj = new this.$.$bog_blitz_lobby_game_leaderboard();
+			(obj.players_dict) = () => ((this.players_dict()));
+			(obj.my_lord_str) = () => ((this.my_lord_str()));
+			(obj.is_host) = () => ((this.is_host()));
+			return obj;
+		}
+		Final(){
+			const obj = new this.$.$bog_blitz_lobby_game_leaderboard();
+			(obj.players_dict) = () => ((this.players_dict()));
+			(obj.my_lord_str) = () => ((this.my_lord_str()));
+			(obj.is_host) = () => ((this.is_host()));
+			return obj;
+		}
+		Reactions_board(){
+			const obj = new this.$.$bog_blitz_lobby_game_reactboard();
+			(obj.players_dict) = () => ((this.players_dict()));
+			return obj;
+		}
+		submit_label(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_game_submit_label"));
+		}
+		submit_answer(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		submit_enabled(){
+			return true;
+		}
+		option_selected(id){
+			return "false";
+		}
+		option_correct(id){
+			return "";
+		}
+		option_enabled(id){
+			return true;
+		}
+		option_text(id){
+			return "";
+		}
+		option_image_uri(id){
+			return "";
+		}
+		option_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		land_id(){
+			return "";
+		}
+		session(){
+			return null;
+		}
+		quiz_data(){
+			return null;
+		}
+		game_state(){
+			return "";
+		}
+		current_question(){
+			return null;
+		}
+		current_question_text(){
+			return "";
+		}
+		my_player(){
+			return null;
+		}
+		my_answers(){
+			return null;
+		}
+		is_host(){
+			return false;
+		}
+		paused_at(){
+			return 0;
+		}
+		manual_mode(){
+			return false;
+		}
+		state_reading(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_game_state_reading"));
+		}
+		state_answering(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_game_state_answering"));
+		}
+		state_reveal(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_game_state_reveal"));
+		}
+		state_leaderboard(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_game_state_leaderboard"));
+		}
+		state_final(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_game_state_final"));
+		}
+		state_paused(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_game_state_paused"));
+		}
+		state_label(){
+			return "";
+		}
+		option_keys(){
+			return [];
+		}
+		round_start(){
+			return 0;
+		}
+		duration(){
+			return 0;
+		}
+		total_questions(){
+			return 0;
+		}
+		current_question_index(){
+			return 0;
+		}
+		players_dict(){
+			return null;
+		}
+		countdown_number(){
+			return 0;
+		}
+		countdown_text(){
+			return "";
+		}
+		Countdown_number(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.countdown_text()));
+			return obj;
+		}
+		sub(){
+			return (this.game_content());
+		}
+		Pause_button(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.pause_label()));
+			(obj.click) = (next) => ((this.pause_click(next)));
+			return obj;
+		}
+		Resume_button(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.resume_label()));
+			(obj.click) = (next) => ((this.resume_click(next)));
+			return obj;
+		}
+		Next_button(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.next_label()));
+			(obj.click) = (next) => ((this.next_click(next)));
+			return obj;
+		}
+		question_type(){
+			return "choice";
+		}
+		question_content(){
+			return [
+				(this.Timer()), 
+				(this.Host_controls()), 
+				(this.State()), 
+				(this.Question_image()), 
+				(this.Question()), 
+				(this.Answer_area()), 
+				(this.Countdown())
+			];
+		}
+		Answer_input(){
+			const obj = new this.$.$mol_string();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_blitz_lobby_game_Answer_input_hint")));
+			(obj.value) = (next) => ((this.text_draft(next)));
+			(obj.enabled) = () => ((this.text_input_enabled()));
+			(obj.submit) = (next) => ((this.text_submit(next)));
+			return obj;
+		}
+		leaderboard_content(){
+			return [
+				(this.Leaderboard_timer()), 
+				(this.Host_controls()), 
+				(this.State()), 
+				(this.Leaderboard())
+			];
+		}
+		final_content(){
+			return [
+				(this.State()), 
+				(this.Final()), 
+				(this.Reactions_board())
+			];
+		}
+		reveal_correct_text(){
+			return "";
+		}
+		Reveal_correct(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.reveal_correct_text()));
+			return obj;
+		}
+		Submit_answer(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.submit_label()));
+			(obj.click) = (next) => ((this.submit_answer(next)));
+			(obj.enabled) = () => ((this.submit_enabled()));
+			return obj;
+		}
+		Option(id){
+			const obj = new this.$.$bog_blitz_lobby_game_option();
+			(obj.selected) = () => ((this.option_selected(id)));
+			(obj.correct) = () => ((this.option_correct(id)));
+			(obj.enabled) = () => ((this.option_enabled(id)));
+			(obj.title) = () => ((this.option_text(id)));
+			(obj.image_uri) = () => ((this.option_image_uri(id)));
+			(obj.click) = (next) => ((this.option_click(id, next)));
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "pause_click"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "resume_click"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "next_click"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Timer"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Host_controls"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "State"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Question_image"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Question"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Answer_area"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Countdown"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "text_draft"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "text_submit"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Leaderboard_timer"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Leaderboard"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Final"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Reactions_board"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "submit_answer"));
+	($mol_mem_key(($.$bog_blitz_lobby_game.prototype), "option_click"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Countdown_number"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Pause_button"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Resume_button"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Next_button"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Answer_input"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Reveal_correct"));
+	($mol_mem(($.$bog_blitz_lobby_game.prototype), "Submit_answer"));
+	($mol_mem_key(($.$bog_blitz_lobby_game.prototype), "Option"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_question_option extends $giper_baza_dict.with({
+            Text: $giper_baza_atom_text,
+            Image: $giper_baza_atom_link_to(() => $giper_baza_file),
+            Is_correct: $giper_baza_atom_bool,
+        }) {
+        }
+        $$.$bog_blitz_question_option = $bog_blitz_question_option;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_question extends $giper_baza_dict.with({
+            Text: $giper_baza_atom_text,
+            Type: $giper_baza_atom_text,
+            Options: $giper_baza_list_link_to(() => $bog_blitz_question_option),
+            Correct_text: $giper_baza_atom_text,
+            Image: $giper_baza_atom_link_to(() => $giper_baza_file),
+        }) {
+        }
+        $$.$bog_blitz_question = $bog_blitz_question;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_quiz extends $giper_baza_dict.with({
+            Title: $giper_baza_atom_text,
+            Questions: $giper_baza_list_link_to(() => $bog_blitz_question),
+            Time_read: $giper_baza_atom_real,
+            Time_answer: $giper_baza_atom_real,
+            Time_leaderboard: $giper_baza_atom_real,
+            Time_reveal: $giper_baza_atom_real,
+            Points_base: $giper_baza_atom_real,
+            Time_multiplier: $giper_baza_atom_real,
+            Manual_mode: $giper_baza_atom_bool,
+        }) {
+        }
+        $$.$bog_blitz_quiz = $bog_blitz_quiz;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_lobby_game extends $.$bog_blitz_lobby_game {
+            game_content() {
+                const state = this.game_state();
+                if (state === 'leaderboard')
+                    return this.leaderboard_content();
+                if (state === 'final') {
+                    this.save_game_to_profile();
+                    return this.final_content();
+                }
+                return this.question_content();
+            }
+            save_game_to_profile() {
+                if (this.is_host())
+                    return;
+                const player = this.my_player();
+                if (!player)
+                    return;
+                const score = player.Score()?.val() ?? 0;
+                const home = this.$.$giper_baza_glob.home();
+                const profile = home.land().Data($bog_blitz_profile);
+                const land_id = this.land_id();
+                const existing = profile.Games_history()?.remote_list() ?? [];
+                if (existing.some(r => r.Land_link()?.val() === land_id))
+                    return;
+                const prev_played = profile.Games_played()?.val() ?? 0;
+                const prev_total = profile.Total_score()?.val() ?? 0;
+                const prev_best = profile.Best_score()?.val() ?? 0;
+                const prev_wins = profile.Wins()?.val() ?? 0;
+                profile.Games_played('auto')?.val(prev_played + 1);
+                profile.Total_score('auto')?.val(prev_total + score);
+                if (score > prev_best) {
+                    profile.Best_score('auto')?.val(score);
+                }
+                const place = this.my_place();
+                if (place === 1) {
+                    profile.Wins('auto')?.val(prev_wins + 1);
+                }
+                const quiz = this.quiz_data();
+                const history = profile.Games_history('auto');
+                const record = history.make(null);
+                record.Quiz_title('auto')?.val(quiz?.Title()?.val() ?? 'Untitled');
+                record.Score('auto')?.val(score);
+                record.Place('auto')?.val(place);
+                record.Players_count('auto')?.val(this.players_count());
+                record.Date('auto')?.val(Date.now());
+                record.Land_link('auto')?.val(land_id);
+            }
+            my_place() {
+                const dict = this.players_dict();
+                if (!dict)
+                    return 0;
+                const keys = dict.keys() ?? [];
+                const scores = [];
+                for (const key of keys) {
+                    if ($bog_blitz_session_fields.has(String(key)))
+                        continue;
+                    const p = dict.dive(key, $bog_blitz_player);
+                    if (!p || p.IsHost()?.val())
+                        continue;
+                    scores.push({ lord: String(key), score: p.Score()?.val() ?? 0 });
+                }
+                scores.sort((a, b) => b.score - a.score);
+                const my_lord = this.my_lord_str();
+                const idx = scores.findIndex(s => s.lord === my_lord);
+                return idx >= 0 ? idx + 1 : 0;
+            }
+            players_count() {
+                const dict = this.players_dict();
+                if (!dict)
+                    return 0;
+                const keys = dict.keys() ?? [];
+                let count = 0;
+                for (const key of keys) {
+                    if ($bog_blitz_session_fields.has(String(key)))
+                        continue;
+                    const p = dict.dive(key, $bog_blitz_player);
+                    if (!p || p.IsHost()?.val())
+                        continue;
+                    count++;
+                }
+                return count;
+            }
+            is_paused() {
+                return this.paused_at() > 0;
+            }
+            question_content() {
+                const base = [
+                    this.Host_controls(),
+                    this.State(),
+                    this.Question_image(),
+                    this.Question(),
+                    this.Answer_area(),
+                ];
+                if (this.manual_mode())
+                    return base;
+                return [this.Timer(), ...base, this.Countdown()];
+            }
+            leaderboard_content() {
+                const base = [
+                    this.Host_controls(),
+                    this.State(),
+                    this.Leaderboard(),
+                ];
+                if (this.manual_mode())
+                    return base;
+                return [this.Leaderboard_timer(), ...base];
+            }
+            countdown_content() {
+                if (this.manual_mode())
+                    return [];
+                const num = this.countdown_number();
+                if (!num)
+                    return [];
+                return [this.Countdown_number()];
+            }
+            state_label() {
+                this.auto_advance();
+                if (this.is_paused())
+                    return this.state_paused();
+                const state = this.game_state();
+                switch (state) {
+                    case 'reading':
+                        return this.state_reading();
+                    case 'answering':
+                        return this.state_answering();
+                    case 'reveal':
+                        return this.state_reveal();
+                    case 'leaderboard':
+                        return this.state_leaderboard();
+                    case 'final':
+                        return this.state_final();
+                    default:
+                        return state;
+                }
+            }
+            pause_click(next) {
+                if (next !== undefined) {
+                    const session = this.session();
+                    if (!session)
+                        return;
+                    session.Paused_at('auto')?.val(Date.now());
+                }
+            }
+            resume_click(next) {
+                if (next !== undefined) {
+                    const session = this.session();
+                    if (!session)
+                        return;
+                    const paused_at = this.paused_at();
+                    if (!paused_at)
+                        return;
+                    const pause_duration = Date.now() - paused_at;
+                    const old_start = this.round_start();
+                    if (old_start) {
+                        session.Round_start('auto')?.val(old_start + pause_duration);
+                    }
+                    session.Paused_at('auto')?.val(0);
+                }
+            }
+            host_controls() {
+                if (!this.is_host())
+                    return [];
+                const state = this.game_state();
+                if (state === 'final')
+                    return [];
+                if (this.is_paused())
+                    return [this.Resume_button()];
+                return [this.Pause_button(), this.Next_button()];
+            }
+            next_click(next) {
+                if (next !== undefined) {
+                    this.advance_state();
+                }
+            }
+            question_type() {
+                const question = this.current_question();
+                if (!question)
+                    return 'choice';
+                return question.Type()?.val() ?? 'choice';
+            }
+            question_image_uri() {
+                const question = this.current_question();
+                if (!question)
+                    return '';
+                const file = question.Image()?.remote();
+                if (!file)
+                    return '';
+                return file.uri() ?? '';
+            }
+            selected_options(next) {
+                this.current_question_index();
+                if (next !== undefined)
+                    return next;
+                return [];
+            }
+            publish_question_meta(session, index) {
+                const keys = this.answers_key_data();
+                if (!keys)
+                    return;
+                const key = keys[index];
+                if (!key)
+                    return;
+                const multi = key.type !== 'text_input' && key.correct.split(',').length >= 2;
+                session.Multi_correct('auto')?.val(multi);
+            }
+            has_multiple_correct() {
+                const session = this.session();
+                return session?.Multi_correct()?.val() ?? false;
+            }
+            submit_enabled() {
+                return this.selected_options().length > 0;
+            }
+            submit_answer(next) {
+                if (next !== undefined) {
+                    const selected = this.selected_options();
+                    if (!selected.length)
+                        return;
+                    const answers = this.my_answers();
+                    if (!answers)
+                        return;
+                    answers.Answer('auto')?.val(selected.sort().join(','));
+                    answers.Answer_time('auto')?.val(Date.now());
+                }
+            }
+            answer_views() {
+                const state = this.game_state();
+                if (this.question_type() === 'text_input') {
+                    if (state === 'reveal') {
+                        return [this.Answer_input(), this.Reveal_correct()];
+                    }
+                    return [this.Answer_input()];
+                }
+                const views = this.option_views();
+                if (state === 'answering' && !this.is_host() && !this.has_answered()) {
+                    return [...views, this.Submit_answer()];
+                }
+                return views;
+            }
+            text_submit(next) {
+                if (next !== undefined) {
+                    const draft = this.text_draft();
+                    if (!draft)
+                        return;
+                    const answers = this.my_answers();
+                    if (!answers)
+                        return;
+                    answers.Answer('auto')?.val(draft);
+                    answers.Answer_time('auto')?.val(Date.now());
+                }
+            }
+            text_input_enabled() {
+                if (this.is_host())
+                    return false;
+                if (this.game_state() !== 'answering')
+                    return false;
+                return !this.has_answered();
+            }
+            option_keys() {
+                const question = this.current_question();
+                if (!question)
+                    return [];
+                const options = question.Options()?.remote_list() ?? [];
+                const keys = options.map((_, i) => String(i));
+                let seed = Math.floor(Date.now() / 1000);
+                for (let i = keys.length - 1; i > 0; i--) {
+                    seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+                    const j = seed % (i + 1);
+                    [keys[i], keys[j]] = [keys[j], keys[i]];
+                }
+                return keys;
+            }
+            option_views() {
+                return this.option_keys().map(key => this.Option(key));
+            }
+            option_text(key) {
+                const question = this.current_question();
+                if (!question)
+                    return '';
+                const options = question.Options()?.remote_list() ?? [];
+                const option = options[Number(key)];
+                return option?.Text()?.val() ?? '';
+            }
+            option_image_uri(key) {
+                const question = this.current_question();
+                if (!question)
+                    return '';
+                const options = question.Options()?.remote_list() ?? [];
+                const option = options[Number(key)];
+                if (!option)
+                    return '';
+                const file = option.Image()?.remote();
+                if (!file)
+                    return '';
+                return file.uri() ?? '';
+            }
+            my_answer() {
+                const answers = this.my_answers();
+                return answers?.Answer()?.val() ?? '';
+            }
+            has_answered() {
+                return this.my_answer() !== '';
+            }
+            option_enabled(key) {
+                if (this.is_host())
+                    return false;
+                if (this.game_state() !== 'answering')
+                    return false;
+                return !this.has_answered();
+            }
+            option_correct(key) {
+                if (this.game_state() !== 'reveal')
+                    return '';
+                const session = this.session();
+                const reveal = session?.Reveal_correct()?.val() ?? '';
+                if (!reveal)
+                    return '';
+                const correct_indices = new Set(reveal.split(','));
+                return correct_indices.has(key) ? 'true' : 'false';
+            }
+            option_selected(key) {
+                const state = this.game_state();
+                if (state === 'reading')
+                    return '';
+                if (this.is_host())
+                    return '';
+                if (state === 'answering' && !this.has_answered()) {
+                    return String(this.selected_options().includes(key));
+                }
+                if (!this.has_answered())
+                    return '';
+                const answers = this.my_answer().split(',');
+                return String(answers.includes(key));
+            }
+            reveal_correct_text() {
+                if (this.game_state() !== 'reveal')
+                    return '';
+                if (this.question_type() !== 'text_input')
+                    return '';
+                const session = this.session();
+                return session?.Reveal_correct()?.val() ?? '';
+            }
+            countdown_number(next) {
+                if (!this.is_host())
+                    return 0;
+                if (this.manual_mode())
+                    return 0;
+                if (this.game_state() !== 'answering')
+                    return 0;
+                if (this.is_paused())
+                    return 0;
+                const start = this.round_start();
+                const duration = this.duration();
+                if (!start || !duration)
+                    return 0;
+                const remaining = (start + duration * 1000 - Date.now()) / 1000;
+                const num = Math.ceil(remaining);
+                if (num > 3 || num <= 0) {
+                    if (remaining > 3) {
+                        new $mol_after_timeout((remaining - 3) * 1000 + 50, () => this.countdown_number(null));
+                    }
+                    return 0;
+                }
+                this.play_tick(num);
+                new $mol_after_timeout(1000, () => this.countdown_number(null));
+                return num;
+            }
+            countdown_text() {
+                const num = this.countdown_number();
+                return num ? String(num) : '';
+            }
+            last_tick_num = 0;
+            play_tick(num) {
+                if (num === this.last_tick_num)
+                    return;
+                this.last_tick_num = num;
+                try {
+                    const ctx = new AudioContext();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.value = num === 1 ? 880 : num === 2 ? 660 : 520;
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + 0.3);
+                }
+                catch { }
+            }
+            option_click(key, e) {
+                if (e) {
+                    const current = this.selected_options();
+                    if (this.has_multiple_correct()) {
+                        if (current.includes(key)) {
+                            this.selected_options(current.filter(k => k !== key));
+                        }
+                        else {
+                            this.selected_options([...current, key]);
+                        }
+                    }
+                    else {
+                        this.selected_options(current.includes(key) ? [] : [key]);
+                    }
+                }
+                return null;
+            }
+            advance_state() {
+                const session = this.session();
+                if (!session)
+                    return;
+                const state = this.game_state();
+                const index = this.current_question_index();
+                const total = this.total_questions();
+                if (state === 'reading') {
+                    session.Round_start('auto')?.val(Date.now());
+                    session.Game_state('auto')?.val('answering');
+                }
+                else if (state === 'answering') {
+                    this.calculate_scores();
+                    session.Round_start('auto')?.val(Date.now());
+                    session.Game_state('auto')?.val('reveal');
+                }
+                else if (state === 'reveal') {
+                    if (index + 1 >= total) {
+                        session.Round_start('auto')?.val(0);
+                        session.Game_state('auto')?.val('final');
+                    }
+                    else {
+                        session.Round_start('auto')?.val(Date.now());
+                        session.Game_state('auto')?.val('leaderboard');
+                    }
+                }
+                else if (state === 'leaderboard') {
+                    this.reset_answers();
+                    session.Current_question('auto')?.val(index + 1);
+                    this.publish_question_meta(session, index + 1);
+                    session.Round_start('auto')?.val(Date.now());
+                    session.Game_state('auto')?.val('reading');
+                }
+            }
+            auto_advance(next) {
+                if (!this.is_host())
+                    return;
+                if (this.is_paused())
+                    return;
+                if (this.manual_mode())
+                    return;
+                const state = this.game_state();
+                const start = this.round_start();
+                const duration = this.duration();
+                if (!start || !duration)
+                    return;
+                const remaining = start + duration * 1000 - Date.now();
+                if (remaining > 0) {
+                    new $mol_after_timeout(remaining + 100, () => this.auto_advance(null));
+                    return;
+                }
+                this.advance_state();
+            }
+            answers_key_data() {
+                const session = this.session();
+                if (!session)
+                    return null;
+                const link = session.Answers_key_land()?.val();
+                if (!link)
+                    return null;
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                const raw = land.Data($bog_blitz_answers_key).Data()?.val();
+                if (!raw)
+                    return null;
+                try {
+                    return JSON.parse(raw);
+                }
+                catch {
+                    return null;
+                }
+            }
+            current_answer_key() {
+                const keys = this.answers_key_data();
+                if (!keys)
+                    return null;
+                const index = this.current_question_index();
+                return keys[index] ?? null;
+            }
+            player_answers_data(player) {
+                const link = player.Answer_land()?.val();
+                if (!link)
+                    return null;
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(link)).Data($bog_blitz_player_answers);
+            }
+            calculate_scores() {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return;
+                const key = this.current_answer_key();
+                if (!key)
+                    return;
+                const points_base = quiz.Points_base().val();
+                const time_multiplier = quiz.Time_multiplier().val();
+                const answer_duration = this.duration();
+                const round_start = this.round_start();
+                const session = this.session();
+                session?.Reveal_correct('auto')?.val(key.correct);
+                const dict = this.players_dict();
+                if (!dict)
+                    return;
+                const keys = dict.keys() ?? [];
+                for (const k of keys) {
+                    if ($bog_blitz_session_fields.has(String(k)))
+                        continue;
+                    const player = dict.dive(k, $bog_blitz_player);
+                    if (!player)
+                        continue;
+                    if (player.IsHost()?.val())
+                        continue;
+                    const pa = this.player_answers_data(player);
+                    const answer = pa?.Answer()?.val() ?? '';
+                    const answer_time = pa?.Answer_time()?.val() ?? 0;
+                    const elapsed = answer_time && round_start ? (answer_time - round_start) / 1000 : answer_duration;
+                    const time_ratio = Math.max(0, 1 - elapsed / answer_duration);
+                    const base = points_base * (1 + time_ratio * time_multiplier);
+                    let is_correct;
+                    if (key.type === 'text_input') {
+                        const variants = key.correct.split(',').map((v) => v.trim().toLowerCase());
+                        is_correct = variants.includes(answer.trim().toLowerCase());
+                    }
+                    else {
+                        const correct_set = new Set(key.correct.split(',').filter(Boolean));
+                        const answer_set = new Set(answer.split(',').filter(Boolean));
+                        is_correct = correct_set.size === answer_set.size &&
+                            [...correct_set].every(k => answer_set.has(k));
+                    }
+                    const points = is_correct ? base : -base;
+                    const prev = player.Score()?.val() ?? 0;
+                    player.Score('auto')?.val(prev + points);
+                }
+            }
+            reset_answers() {
+                const dict = this.players_dict();
+                if (!dict)
+                    return;
+                const keys = dict.keys() ?? [];
+                for (const key of keys) {
+                    if ($bog_blitz_session_fields.has(String(key)))
+                        continue;
+                    const player = dict.dive(key, $bog_blitz_player);
+                    if (!player)
+                        continue;
+                    const pa = this.player_answers_data(player);
+                    if (!pa)
+                        continue;
+                    pa.Answer('auto')?.val('');
+                    pa.Answer_time('auto')?.val(0);
+                }
+                const session = this.session();
+                session?.Reveal_correct('auto')?.val('');
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "game_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "save_game_to_profile", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "question_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "leaderboard_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "countdown_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "state_label", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "pause_click", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "resume_click", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "host_controls", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "next_click", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "question_type", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "question_image_uri", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "selected_options", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "submit_enabled", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "submit_answer", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "answer_views", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "text_submit", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "text_input_enabled", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "option_keys", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "option_views", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game.prototype, "option_text", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game.prototype, "option_image_uri", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "my_answer", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "has_answered", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game.prototype, "option_enabled", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game.prototype, "option_correct", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game.prototype, "option_selected", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "reveal_correct_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "countdown_number", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_game.prototype, "countdown_text", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_lobby_game.prototype, "option_click", null);
         __decorate([
             $mol_action
-        ], $bog_wiki_editor.prototype, "fetch_table", null);
+        ], $bog_blitz_lobby_game.prototype, "advance_state", null);
         __decorate([
             $mol_mem
-        ], $bog_wiki_editor.prototype, "data_spaces", null);
+        ], $bog_blitz_lobby_game.prototype, "auto_advance", null);
+        $$.$bog_blitz_lobby_game = $bog_blitz_lobby_game;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_lobby_game, {
+            flex: {
+                direction: 'column',
+            },
+            align: { items: 'center' },
+            padding: { top: '0px' },
+            Host_controls: {
+                padding: { top: '0.5rem', bottom: '0.5rem' },
+            },
+            State: {
+                font: { size: '1.5rem', weight: 600 },
+                opacity: 0.5,
+            },
+            Question_image: {
+                maxWidth: '20rem',
+                maxHeight: '15rem',
+                objectFit: 'contain',
+                borderRadius: '0.75rem',
+                margin: { top: '1rem' },
+            },
+            Question: {
+                font: { size: '1.75rem', weight: 700 },
+                textAlign: 'center',
+                padding: { top: '1rem', bottom: '1.5rem' },
+            },
+            Answer_area: {
+                flex: { direction: 'column' },
+                gap: '0.75rem',
+                width: '100%',
+                maxWidth: '30rem',
+                padding: { left: '1rem', right: '1rem' },
+            },
+            Answer_input: {
+                width: '100%',
+            },
+            Countdown: {
+                position: 'fixed',
+                top: '20%',
+                left: 0,
+                right: 0,
+                height: '60%',
+                display: 'flex',
+                align: { items: 'center' },
+                justify: { content: 'center' },
+                pointerEvents: 'none',
+            },
+            Countdown_number: {
+                font: { size: '15rem', weight: 900 },
+                opacity: 0.15,
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_lobby_reactions) = class $bog_blitz_lobby_reactions extends ($.$mol_view) {
+		Spacer(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		react_heart(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Btn_heart(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ("❤️");
+			(obj.click) = (next) => ((this.react_heart(next)));
+			return obj;
+		}
+		count_heart_text(){
+			return "";
+		}
+		Count_heart(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.count_heart_text()));
+			return obj;
+		}
+		Group_heart(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Btn_heart()), (this.Count_heart())]);
+			return obj;
+		}
+		react_smile(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Btn_smile(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ("😊");
+			(obj.click) = (next) => ((this.react_smile(next)));
+			return obj;
+		}
+		count_smile_text(){
+			return "";
+		}
+		Count_smile(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.count_smile_text()));
+			return obj;
+		}
+		Group_smile(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Btn_smile()), (this.Count_smile())]);
+			return obj;
+		}
+		react_fire(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Btn_fire(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ("🔥");
+			(obj.click) = (next) => ((this.react_fire(next)));
+			return obj;
+		}
+		count_fire_text(){
+			return "";
+		}
+		Count_fire(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.count_fire_text()));
+			return obj;
+		}
+		Group_fire(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Btn_fire()), (this.Count_fire())]);
+			return obj;
+		}
+		react_clap(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Btn_clap(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ("👏");
+			(obj.click) = (next) => ((this.react_clap(next)));
+			return obj;
+		}
+		count_clap_text(){
+			return "";
+		}
+		Count_clap(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.count_clap_text()));
+			return obj;
+		}
+		Group_clap(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Btn_clap()), (this.Count_clap())]);
+			return obj;
+		}
+		react_poop(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Btn_poop(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ("💩");
+			(obj.click) = (next) => ((this.react_poop(next)));
+			return obj;
+		}
+		count_poop_text(){
+			return "";
+		}
+		Count_poop(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.count_poop_text()));
+			return obj;
+		}
+		Group_poop(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Btn_poop()), (this.Count_poop())]);
+			return obj;
+		}
+		my_answers(){
+			return null;
+		}
+		players_dict(){
+			return null;
+		}
+		is_host(){
+			return false;
+		}
+		Fly(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		sub(){
+			return [
+				(this.Spacer()), 
+				(this.Group_heart()), 
+				(this.Group_smile()), 
+				(this.Group_fire()), 
+				(this.Group_clap()), 
+				(this.Group_poop())
+			];
+		}
+	};
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Spacer"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "react_heart"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Btn_heart"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Count_heart"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Group_heart"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "react_smile"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Btn_smile"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Count_smile"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Group_smile"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "react_fire"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Btn_fire"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Count_fire"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Group_fire"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "react_clap"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Btn_clap"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Count_clap"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Group_clap"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "react_poop"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Btn_poop"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Count_poop"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Group_poop"));
+	($mol_mem(($.$bog_blitz_lobby_reactions.prototype), "Fly"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const reaction_keys = ['heart', 'smile', 'fire', 'clap', 'poop'];
+        const reaction_emojis = {
+            heart: '❤️',
+            smile: '😊',
+            fire: '🔥',
+            clap: '👏',
+            poop: '💩',
+        };
+        const reaction_fields = {
+            heart: 'React_heart',
+            smile: 'React_smile',
+            fire: 'React_fire',
+            clap: 'React_clap',
+            poop: 'React_poop',
+        };
+        class $bog_blitz_lobby_reactions extends $.$bog_blitz_lobby_reactions {
+            react(key) {
+                const answers = this.my_answers();
+                if (!answers)
+                    return;
+                const field = reaction_fields[key];
+                if (!field)
+                    return;
+                const prev = answers[field]()?.val() ?? 0;
+                answers[field]('auto')?.val(prev + 1);
+                this.spawn_fly(key);
+            }
+            react_heart(next) { if (next !== undefined)
+                this.react('heart'); }
+            react_smile(next) { if (next !== undefined)
+                this.react('smile'); }
+            react_fire(next) { if (next !== undefined)
+                this.react('fire'); }
+            react_clap(next) { if (next !== undefined)
+                this.react('clap'); }
+            react_poop(next) { if (next !== undefined)
+                this.react('poop'); }
+            player_answers_data(player) {
+                const link = player.Answer_land()?.val();
+                if (!link)
+                    return null;
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(link)).Data($bog_blitz_player_answers);
+            }
+            total_count(key) {
+                const dict = this.players_dict();
+                if (!dict)
+                    return 0;
+                const keys = dict.keys() ?? [];
+                const field = reaction_fields[key];
+                if (!field)
+                    return 0;
+                let total = 0;
+                for (const k of keys) {
+                    if ($bog_blitz_session_fields.has(String(k)))
+                        continue;
+                    const player = dict.dive(k, $bog_blitz_player);
+                    if (!player)
+                        continue;
+                    if (player.IsHost()?.val())
+                        continue;
+                    const pa = this.player_answers_data(player);
+                    if (!pa)
+                        continue;
+                    total += pa[field]()?.val() ?? 0;
+                }
+                return total;
+            }
+            count_text(key) {
+                if (!this.is_host())
+                    return '';
+                const count = this.total_count(key);
+                return count ? String(count) : '';
+            }
+            count_heart_text() { return this.count_text('heart'); }
+            count_smile_text() { return this.count_text('smile'); }
+            count_fire_text() { return this.count_text('fire'); }
+            count_clap_text() { return this.count_text('clap'); }
+            count_poop_text() { return this.count_text('poop'); }
+            prev_totals = {};
+            watch_reactions() {
+                if (!this.is_host())
+                    return;
+                for (const key of reaction_keys) {
+                    const total = this.total_count(key);
+                    const prev = this.prev_totals[key] ?? 0;
+                    if (total > prev && prev > 0) {
+                        const diff = total - prev;
+                        for (let i = 0; i < Math.min(diff, 5); i++) {
+                            this.spawn_fly(key);
+                        }
+                    }
+                    this.prev_totals[key] = total;
+                }
+            }
+            auto() {
+                this.watch_reactions();
+            }
+            spawn_fly(key) {
+                const emoji = reaction_emojis[key];
+                if (!emoji)
+                    return;
+                const btn_map = {
+                    heart: () => this.Btn_heart(),
+                    smile: () => this.Btn_smile(),
+                    fire: () => this.Btn_fire(),
+                    clap: () => this.Btn_clap(),
+                    poop: () => this.Btn_poop(),
+                };
+                const container = this.dom_node();
+                const btn = btn_map[key]?.().dom_node();
+                const fly = document.createElement('div');
+                fly.textContent = emoji;
+                fly.setAttribute('bog_blitz_lobby_reactions_fly', '');
+                if (btn) {
+                    const btnRect = btn.getBoundingClientRect();
+                    const containerRect = container.getBoundingClientRect();
+                    fly.style.left = `${btnRect.left - containerRect.left + btnRect.width / 2}px`;
+                }
+                else {
+                    fly.style.left = '50%';
+                }
+                container.appendChild(fly);
+                fly.addEventListener('animationend', () => fly.remove());
+            }
+        }
         __decorate([
             $mol_mem
-        ], $bog_wiki_editor.prototype, "data_table", null);
+        ], $bog_blitz_lobby_reactions.prototype, "react_heart", null);
         __decorate([
             $mol_mem
-        ], $bog_wiki_editor.prototype, "get_data_spaces_stringify", null);
+        ], $bog_blitz_lobby_reactions.prototype, "react_smile", null);
         __decorate([
             $mol_mem
-        ], $bog_wiki_editor.prototype, "get_data_table_stringify", null);
-        $$.$bog_wiki_editor = $bog_wiki_editor;
+        ], $bog_blitz_lobby_reactions.prototype, "react_fire", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_reactions.prototype, "react_clap", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_reactions.prototype, "react_poop", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_reactions.prototype, "count_heart_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_reactions.prototype, "count_smile_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_reactions.prototype, "count_fire_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_reactions.prototype, "count_clap_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_reactions.prototype, "count_poop_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby_reactions.prototype, "watch_reactions", null);
+        $$.$bog_blitz_lobby_reactions = $bog_blitz_lobby_reactions;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/blitz/lobby/reactions/reactions.view.css", "[bog_blitz_lobby_reactions] {\n\tposition: fixed !important;\n\tbottom: 1rem !important;\n\tright: 1rem !important;\n\tz-index: 100;\n}\n\n[bog_blitz_lobby_reactions_fly] {\n\tanimation: bog_blitz_fly_up 1.5s ease-out forwards;\n\ttransform: translateX(-50%);\n}\n\n@keyframes bog_blitz_fly_up {\n\t0% {\n\t\topacity: 1;\n\t\ttransform: translateX(-50%) translateY(0);\n\t}\n\t100% {\n\t\topacity: 0;\n\t\ttransform: translateX(-50%) translateY(-200px);\n\t}\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const group_style = {
+            flex: { direction: 'column' },
+            align: { items: 'center' },
+        };
+        const btn_style = {
+            font: { size: '2rem' },
+            padding: { left: '0.25rem', right: '0.25rem', top: '0.25rem', bottom: '0.25rem' },
+            minWidth: '2.5rem',
+            minHeight: '2.5rem',
+        };
+        const count_style = {
+            font: { size: '0.75rem' },
+            textAlign: 'center',
+            minWidth: '1rem',
+        };
+        $mol_style_define($bog_blitz_lobby_reactions, {
+            flex: { direction: 'row' },
+            gap: '0.25rem',
+            align: { items: 'flex-end', self: 'stretch' },
+            width: '95%',
+            Spacer: {
+                flex: {
+                    grow: 1,
+                },
+            },
+            Group_heart: group_style,
+            Group_smile: group_style,
+            Group_fire: group_style,
+            Group_clap: group_style,
+            Group_poop: group_style,
+            Btn_heart: btn_style,
+            Btn_smile: btn_style,
+            Btn_fire: btn_style,
+            Btn_clap: btn_style,
+            Btn_poop: btn_style,
+            Count_heart: count_style,
+            Count_smile: count_style,
+            Count_fire: count_style,
+            Count_clap: count_style,
+            Count_poop: count_style,
+            Fly: {
+                position: 'absolute',
+                font: { size: '2rem' },
+                pointerEvents: 'none',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_lobby) = class $bog_blitz_lobby extends ($.$mol_page) {
+		counter_string(){
+			return "";
+		}
+		session(){
+			return null;
+		}
+		quiz_data(){
+			return null;
+		}
+		players_dict(){
+			return null;
+		}
+		my_lord_str(){
+			return "";
+		}
+		Host_players(){
+			const obj = new this.$.$bog_blitz_lobby_players();
+			(obj.players_dict) = () => ((this.players_dict()));
+			(obj.my_lord_str) = () => ((this.my_lord_str()));
+			return obj;
+		}
+		my_player_name(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		my_avatar_files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		join(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		is_synced(){
+			return false;
+		}
+		profile_avatar_uri(){
+			return "";
+		}
+		profile_name(){
+			return "";
+		}
+		No_game_text(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_lobby_No_game_text_title")));
+			return obj;
+		}
+		go_admin(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Go_admin(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_lobby_Go_admin_title")));
+			(obj.click) = (next) => ((this.go_admin(next)));
+			return obj;
+		}
+		game_state(){
+			return "";
+		}
+		current_question(){
+			return null;
+		}
+		current_question_text(){
+			return "";
+		}
+		my_player(){
+			return null;
+		}
+		my_answers(){
+			return null;
+		}
+		is_host(){
+			return false;
+		}
+		paused_at(){
+			return 0;
+		}
+		manual_mode(){
+			return false;
+		}
+		round_start(){
+			return 0;
+		}
+		duration(){
+			return 0;
+		}
+		total_questions(){
+			return 0;
+		}
+		current_question_index(){
+			return 0;
+		}
+		lobby_content(){
+			return [];
+		}
+		Head(){
+			return null;
+		}
+		players_string(){
+			return (this.$.$mol_locale.text("$bog_blitz_lobby_players_string"));
+		}
+		land_id(){
+			return "";
+		}
+		quiz_title(){
+			return "";
+		}
+		Host(){
+			const obj = new this.$.$bog_blitz_lobby_host();
+			(obj.counter_string) = () => ((this.counter_string()));
+			(obj.land_id) = () => ((this.land_id()));
+			(obj.quiz_title) = () => ((this.quiz_title()));
+			(obj.session) = () => ((this.session()));
+			(obj.quiz_data) = () => ((this.quiz_data()));
+			(obj.Players) = () => ((this.Host_players()));
+			return obj;
+		}
+		Join_screen(){
+			const obj = new this.$.$bog_blitz_lobby_join();
+			(obj.player_name) = (next) => ((this.my_player_name(next)));
+			(obj.avatar_files) = (next) => ((this.my_avatar_files(next)));
+			(obj.join) = (next) => ((this.join(next)));
+			(obj.is_synced) = () => ((this.is_synced()));
+			(obj.player_id) = () => ((this.my_lord_str()));
+			(obj.profile_avatar_uri) = () => ((this.profile_avatar_uri()));
+			(obj.profile_name) = () => ((this.profile_name()));
+			return obj;
+		}
+		Waiting(){
+			const obj = new this.$.$bog_blitz_lobby_waiting();
+			(obj.counter_string) = () => ((this.counter_string()));
+			(obj.quiz_title) = () => ((this.quiz_title()));
+			(obj.Players) = () => ((this.Host_players()));
+			return obj;
+		}
+		No_game(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.No_game_text()), (this.Go_admin())]);
+			return obj;
+		}
+		Game_screen(){
+			const obj = new this.$.$bog_blitz_lobby_game();
+			(obj.land_id) = () => ((this.land_id()));
+			(obj.session) = () => ((this.session()));
+			(obj.quiz_data) = () => ((this.quiz_data()));
+			(obj.game_state) = () => ((this.game_state()));
+			(obj.current_question) = () => ((this.current_question()));
+			(obj.current_question_text) = () => ((this.current_question_text()));
+			(obj.my_player) = () => ((this.my_player()));
+			(obj.my_answers) = () => ((this.my_answers()));
+			(obj.is_host) = () => ((this.is_host()));
+			(obj.paused_at) = () => ((this.paused_at()));
+			(obj.manual_mode) = () => ((this.manual_mode()));
+			(obj.round_start) = () => ((this.round_start()));
+			(obj.duration) = () => ((this.duration()));
+			(obj.total_questions) = () => ((this.total_questions()));
+			(obj.current_question_index) = () => ((this.current_question_index()));
+			(obj.players_dict) = () => ((this.players_dict()));
+			(obj.my_lord_str) = () => ((this.my_lord_str()));
+			return obj;
+		}
+		Reactions(){
+			const obj = new this.$.$bog_blitz_lobby_reactions();
+			(obj.my_answers) = () => ((this.my_answers()));
+			(obj.players_dict) = () => ((this.players_dict()));
+			(obj.is_host) = () => ((this.is_host()));
+			return obj;
+		}
+		body(){
+			return (this.lobby_content());
+		}
+	};
+	($mol_mem(($.$bog_blitz_lobby.prototype), "Host_players"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "my_player_name"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "my_avatar_files"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "join"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "No_game_text"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "go_admin"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "Go_admin"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "Host"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "Join_screen"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "Waiting"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "No_game"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "Game_screen"));
+	($mol_mem(($.$bog_blitz_lobby.prototype), "Reactions"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const Players_dict = $giper_baza_dict_to($bog_blitz_player);
+        class $bog_blitz_lobby extends $.$bog_blitz_lobby {
+            sub() {
+                const base = super.sub();
+                if (!this.my_player())
+                    return base;
+                if (this.game_state() === 'final')
+                    return base;
+                return [...base, this.Reactions()];
+            }
+            land() {
+                const link = this.$.$mol_state_arg.value('land') ?? '';
+                if (!link)
+                    return null;
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+            }
+            session() {
+                const land = this.land();
+                if (!land)
+                    return null;
+                return land.Data($bog_blitz_session);
+            }
+            quiz_data() {
+                const session = this.session();
+                if (!session)
+                    return null;
+                const quiz_link = session.Quiz_link()?.val();
+                if (!quiz_link)
+                    return null;
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(quiz_link)).Data($bog_blitz_quiz);
+            }
+            is_host() {
+                const player = this.my_player();
+                return player?.IsHost()?.val() ?? false;
+            }
+            my_player() {
+                const dict = this.players_dict();
+                if (!dict) {
+                    return null;
+                }
+                const lord = this.my_lord_str();
+                return dict.key(lord) ?? null;
+            }
+            my_answers() {
+                const player = this.my_player();
+                if (!player)
+                    return null;
+                const link = player.Answer_land()?.val();
+                if (!link)
+                    return null;
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(link)).Data($bog_blitz_player_answers);
+            }
+            players_dict() {
+                const land = this.land();
+                if (!land)
+                    return null;
+                return land.Data(Players_dict);
+            }
+            my_lord_str() {
+                return this.$.$giper_baza_auth.current().pass().lord().str;
+            }
+            my_player_create() {
+                const dict = this.players_dict();
+                if (!dict)
+                    return null;
+                const lord = this.my_lord_str();
+                const result = dict.key(lord, 'auto');
+                return result;
+            }
+            profile_data() {
+                const home = this.$.$giper_baza_glob.home();
+                return home.land().Data($bog_blitz_profile);
+            }
+            join(e) {
+                if (e) {
+                    const player = this.my_player_create();
+                    if (player) {
+                        const join_name = this.my_player_name();
+                        if (join_name) {
+                            player.Name('auto')?.val(join_name);
+                        }
+                        const files = this.my_avatar_files();
+                        if (files?.length) {
+                            const store = player.Avatar(null).ensure(null);
+                            if (store) {
+                                store.blob(files[0]);
+                                player.Avatar(null).remote(store);
+                            }
+                        }
+                        const answer_land = this.$.$giper_baza_glob.land_grab([
+                            [null, $giper_baza_rank_read],
+                        ]);
+                        player.Answer_land('auto')?.val(answer_land.link().str);
+                        this.sync_profile(player, join_name, files);
+                    }
+                }
+                return null;
+            }
+            sync_profile(player, join_name, files) {
+                const profile = this.profile_data();
+                if (!join_name) {
+                    const profile_name = profile.Name()?.val() ?? '';
+                    if (profile_name)
+                        player.Name('auto')?.val(profile_name);
+                }
+                else {
+                    profile.Name('auto')?.val(join_name);
+                }
+                if (files?.length) {
+                    const profile_store = profile.Avatar(null).ensure(null);
+                    if (profile_store) {
+                        profile_store.blob(files[0]);
+                        profile.Avatar(null).remote(profile_store);
+                    }
+                }
+                else {
+                    const profile_avatar = profile.Avatar()?.remote();
+                    if (profile_avatar) {
+                        player.Avatar(null).remote(profile_avatar);
+                    }
+                }
+            }
+            profile_avatar_uri() {
+                const profile = this.profile_data();
+                const file = profile.Avatar()?.remote();
+                if (!file)
+                    return '';
+                return file.uri() ?? '';
+            }
+            my_player_name(next) {
+                if (next !== undefined)
+                    return next;
+                return this.profile_name();
+            }
+            profile_name() {
+                return this.profile_data().Name()?.val() ?? '';
+            }
+            land_id() {
+                return this.$.$mol_state_arg.value('land') ?? '';
+            }
+            quiz_title() {
+                return this.quiz_data()?.Title()?.val() ?? '';
+            }
+            go_admin() {
+                this.$.$mol_state_arg.value('land', null);
+                this.$.$mol_state_arg.value('screen', 'admin');
+            }
+            player_keys() {
+                const raw = this.players_dict()?.keys() ?? [];
+                return Array.from(raw)
+                    .map(k => String(k))
+                    .filter(k => !$bog_blitz_session_fields.has(k));
+            }
+            game_state() {
+                return this.session()?.Game_state()?.val() ?? '';
+            }
+            current_question() {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return null;
+                const session = this.session();
+                const index = session?.Current_question()?.val() ?? 0;
+                const questions = quiz.Questions()?.remote_list() ?? [];
+                return questions[index] ?? null;
+            }
+            current_question_text() {
+                return this.current_question()?.Text()?.val() ?? '';
+            }
+            paused_at() {
+                return this.session()?.Paused_at()?.val() ?? 0;
+            }
+            manual_mode() {
+                return this.quiz_data()?.Manual_mode()?.val() ?? false;
+            }
+            round_start() {
+                return this.session()?.Round_start()?.val() ?? 0;
+            }
+            duration() {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return 0;
+                const state = this.game_state();
+                if (state === 'reading')
+                    return quiz.Time_read()?.val() ?? 10;
+                if (state === 'answering')
+                    return quiz.Time_answer()?.val() ?? 20;
+                if (state === 'reveal')
+                    return quiz.Time_reveal()?.val() ?? 5;
+                if (state === 'leaderboard')
+                    return quiz.Time_leaderboard()?.val() ?? 5;
+                return 0;
+            }
+            total_questions() {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return 0;
+                return quiz.Questions()?.remote_list()?.length ?? 0;
+            }
+            current_question_index() {
+                return this.session()?.Current_question()?.val() ?? 0;
+            }
+            lobby_content() {
+                const land = this.land();
+                if (!land) {
+                    return [this.No_game()];
+                }
+                if (!this.my_player()) {
+                    return [this.Join_screen()];
+                }
+                const state = this.game_state();
+                if (state) {
+                    return [this.Game_screen()];
+                }
+                if (this.is_host())
+                    return [this.Host()];
+                return [this.Waiting()];
+            }
+            counter_string() {
+                const dict = this.players_dict();
+                if (!dict)
+                    return '';
+                const count = this.player_keys().filter(k => {
+                    const p = dict.key(k);
+                    return !p?.IsHost()?.val();
+                }).length;
+                return `${this.players_string()}: ${count}`;
+            }
+            is_synced() {
+                if (this.player_keys().length === 0) {
+                    throw new Promise(() => { });
+                }
+                return true;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "sub", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "land", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "session", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "quiz_data", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "is_host", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "my_player", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "my_answers", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "players_dict", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "my_lord_str", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "join", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "profile_avatar_uri", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "my_player_name", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "profile_name", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "land_id", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "quiz_title", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_lobby.prototype, "go_admin", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "player_keys", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "game_state", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "current_question", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "current_question_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "paused_at", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "manual_mode", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "round_start", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "duration", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "total_questions", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "current_question_index", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "lobby_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "counter_string", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_lobby.prototype, "is_synced", null);
+        $$.$bog_blitz_lobby = $bog_blitz_lobby;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_lobby, {
+            No_game: {
+                flex: {
+                    direction: 'column',
+                    grow: 1,
+                },
+                align: {
+                    items: 'center',
+                    self: 'center',
+                },
+                justify: {
+                    content: 'center',
+                },
+                gap: '1.5rem',
+            },
+            No_game_text: {
+                font: { size: '1.5rem', weight: 600 },
+                opacity: 0.6,
+                textAlign: 'center',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_book2) = class $mol_book2 extends ($.$mol_scroll) {
+		pages_deep(){
+			return [];
+		}
+		pages(){
+			return (this.pages_deep());
+		}
+		Placeholder(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		placeholders(){
+			return [(this.Placeholder())];
+		}
+		menu_title(){
+			return "";
+		}
+		sub(){
+			return [...(this.pages()), ...(this.placeholders())];
+		}
+		minimal_width(){
+			return 0;
+		}
+		Gap(id){
+			const obj = new this.$.$mol_view();
+			(obj.title) = () => ("");
+			return obj;
+		}
+	};
+	($mol_mem(($.$mol_book2.prototype), "Placeholder"));
+	($mol_mem_key(($.$mol_book2.prototype), "Gap"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_book2 extends $.$mol_book2 {
+            pages_deep() {
+                let result = [];
+                for (const subpage of this.pages()) {
+                    if (subpage instanceof $mol_book2)
+                        result = [...result, ...subpage.pages_deep()];
+                    else
+                        result.push(subpage);
+                }
+                return result;
+            }
+            title() {
+                return this.pages_deep().map(page => {
+                    try {
+                        return page?.title();
+                    }
+                    catch (error) {
+                        $mol_fail_log(error);
+                    }
+                }).reverse().filter(Boolean).join(' | ');
+            }
+            menu_title() {
+                return this.pages_deep()[0]?.title() || this.title();
+            }
+            sub() {
+                const placeholders = this.placeholders();
+                const next = this.pages_deep().filter(Boolean);
+                const prev = $mol_mem_cached(() => this.sub())?.filter(page => !placeholders.includes(page)) ?? [];
+                for (let i = 1; i; ++i) {
+                    const p = prev[prev.length - i];
+                    const n = next[next.length - i];
+                    if (!n)
+                        break;
+                    if (p === n)
+                        continue;
+                    new this.$.$mol_after_tick(() => {
+                        const b = this.dom_node();
+                        const p = n.dom_node();
+                        b.scroll({
+                            left: p.offsetLeft + p.offsetWidth - b.offsetWidth,
+                            behavior: 'smooth',
+                        });
+                    });
+                    break;
+                }
+                return [...next, ...placeholders];
+            }
+            bring() {
+                const pages = this.pages_deep();
+                if (pages.length)
+                    pages[pages.length - 1].bring();
+                else
+                    super.bring();
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_book2.prototype, "pages_deep", null);
+        __decorate([
+            $mol_mem
+        ], $mol_book2.prototype, "sub", null);
+        $$.$mol_book2 = $mol_book2;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n\t/* transform: translateZ(0); */\n\ttransition: none;\n\tscroll-snap-type: x mandatory;\n\t/* padding: 0 1px;\n\tscroll-padding: 0 1px;\n\tgap: 1px; */\n}\n\n[mol_book2] > * {\n/* \tflex: none; */\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n\tflex-shrink: 0;\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_field);\n}\n\n[mol_book2] > *:not(:first-of-type):before,\n[mol_book2] > *:not(:last-of-type)::after {\n\tcontent: '';\n\tposition: absolute;\n\ttop: 1.5rem;\n\twidth: 3px;\n\theight: 1rem;\n\tbackground: linear-gradient(\n\t\tto bottom,\n\t\tvar(--mol_theme_special) 0%,\n\t\tvar(--mol_theme_special) 14%,\n\t\ttransparent 15%,\n\t\ttransparent 42%,\n\t\tvar(--mol_theme_special) 43%,\n\t\tvar(--mol_theme_special) 57%,\n\t\ttransparent 58%,\n\t\ttransparent 85%,\n\t\tvar(--mol_theme_special) 86%,\n\t\tvar(--mol_theme_special) 100%\n\t);\n\topacity: .5;\n\tz-index: var(--mol_layer_speck);\n}\n[mol_book2] > *:not(:first-of-type):before {\n\tleft: -3px;\n}\n[mol_book2] > *:not(:last-of-type)::after {\n\tright: -3px;\n}\n\n:where([mol_book2]) > * {\n\tbackground-color: var(--mol_theme_card);\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_back); */\n}\n\n[mol_book2] > [mol_book2] {\n\tdisplay: contents;\n}\n\n[mol_book2] > *:first-child {\n\tscroll-snap-align: start;\n}\n\n[mol_book2] > [mol_view] {\n\ttransform: none; /* prevent content clipping */\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\tbackground: none;\n}\n\n[mol_book2_gap] {\n\tbackground: none;\n\tflex-grow: 1;\n\tscroll-snap-align: none;\n\tmargin-right: -1px;\n\tbox-shadow: none;\n}\n\n[mol_book2_gap]::before,\n[mol_book2_gap]::after {\n\tdisplay: none;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_theme_auto) = class $mol_theme_auto extends ($.$mol_plugin) {
+		dark(){
+			return "$mol_theme_dark";
+		}
+		theme(){
+			return (this.dark());
+		}
+		light(){
+			return "$mol_theme_light";
+		}
+		attr(){
+			return {"mol_theme": (this.theme())};
+		}
+	};
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_theme_auto extends $.$mol_theme_auto {
+            theme() {
+                return this.$.$mol_lights() ? this.light() : this.dark();
+            }
+        }
+        $$.$mol_theme_auto = $mol_theme_auto;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$giper_web_frame) = class $giper_web_frame extends ($.$mol_frame) {
+		uri(){
+			return "https://web.giper.dev/#mol_lights={lights}/current={current}/query={query}";
+		}
+		query(){
+			return "";
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $giper_web_frame extends $.$giper_web_frame {
+            uri() {
+                return super.uri()
+                    .replace('{lights}', String(this.$.$mol_lights()))
+                    .replace('{query}', encodeURIComponent(this.query()))
+                    .replace('{current}', encodeURIComponent(this.$.$mol_state_arg.href().replace(/^https?:\/\/|\/?\??#.*$/, '')));
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $giper_web_frame.prototype, "uri", null);
+        $$.$giper_web_frame = $giper_web_frame;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("giper/web/frame/frame.view.css", "/* @keyframes giper_web_frame_show {\n\tfrom {\n\t\topacity: 0;\n\t}\n}\n\n[giper_web_frame] {\n\tanimation: 5s -1s ease-in giper_web_frame_show;\n} */\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($giper_web_frame, {
+            flex: {
+                basis: '4rem',
+                shrink: 0,
+                grow: 0,
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_trash_can) = class $mol_icon_trash_can extends ($.$mol_icon) {
+		path(){
+			return "M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_trash_can_outline) = class $mol_icon_trash_can_outline extends ($.$mol_icon) {
+		path(){
+			return "M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_gift) = class $mol_icon_gift extends ($.$mol_icon) {
+		path(){
+			return "M9.06,1.93C7.17,1.92 5.33,3.74 6.17,6H3A2,2 0 0,0 1,8V10A1,1 0 0,0 2,11H11V8H13V11H22A1,1 0 0,0 23,10V8A2,2 0 0,0 21,6H17.83C19,2.73 14.6,0.42 12.57,3.24L12,4L11.43,3.22C10.8,2.33 9.93,1.94 9.06,1.93M9,4C9.89,4 10.34,5.08 9.71,5.71C9.08,6.34 8,5.89 8,5A1,1 0 0,1 9,4M15,4C15.89,4 16.34,5.08 15.71,5.71C15.08,6.34 14,5.89 14,5A1,1 0 0,1 15,4M2,12V20A2,2 0 0,0 4,22H20A2,2 0 0,0 22,20V12H13V20H11V12H2Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_gift_outline) = class $mol_icon_gift_outline extends ($.$mol_icon) {
+		path(){
+			return "M22,12V20A2,2 0 0,1 20,22H4A2,2 0 0,1 2,20V12A1,1 0 0,1 1,11V8A2,2 0 0,1 3,6H6.17C6.06,5.69 6,5.35 6,5A3,3 0 0,1 9,2C10,2 10.88,2.5 11.43,3.24V3.23L12,4L12.57,3.23V3.24C13.12,2.5 14,2 15,2A3,3 0 0,1 18,5C18,5.35 17.94,5.69 17.83,6H21A2,2 0 0,1 23,8V11A1,1 0 0,1 22,12M4,20H11V12H4V20M20,20V12H13V20H20M9,4A1,1 0 0,0 8,5A1,1 0 0,0 9,6A1,1 0 0,0 10,5A1,1 0 0,0 9,4M15,4A1,1 0 0,0 14,5A1,1 0 0,0 15,6A1,1 0 0,0 16,5A1,1 0 0,0 15,4M3,8V10H11V8H3M13,8V10H21V8H13Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_link_donate) = class $mol_link_donate extends ($.$mol_link) {
+		Icon(){
+			const obj = new this.$.$mol_icon_gift_outline();
+			return obj;
+		}
+		hint(){
+			return (this.$.$mol_locale.text("$mol_link_donate_hint"));
+		}
+		sub(){
+			return [(this.Icon())];
+		}
+	};
+	($mol_mem(($.$mol_link_donate.prototype), "Icon"));
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_face) = class $mol_icon_face extends ($.$mol_icon) {
+		path(){
+			return "M9,11.75C8.31,11.75 7.75,12.31 7.75,13C7.75,13.69 8.31,14.25 9,14.25C9.69,14.25 10.25,13.69 10.25,13C10.25,12.31 9.69,11.75 9,11.75M15,11.75C14.31,11.75 13.75,12.31 13.75,13C13.75,13.69 14.31,14.25 15,14.25C15.69,14.25 16.25,13.69 16.25,13C16.25,12.31 15.69,11.75 15,11.75M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M12,20C7.59,20 4,16.41 4,12C4,11.71 4,11.42 4.05,11.14C6.41,10.09 8.28,8.16 9.26,5.77C11.07,8.33 14.05,10 17.42,10C18.2,10 18.95,9.91 19.67,9.74C19.88,10.45 20,11.21 20,12C20,16.41 16.41,20 12,20Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_face_agent) = class $mol_icon_face_agent extends ($.$mol_icon) {
+		path(){
+			return "M18.72,14.76C19.07,13.91 19.26,13 19.26,12C19.26,11.28 19.15,10.59 18.96,9.95C18.31,10.1 17.63,10.18 16.92,10.18C13.86,10.18 11.15,8.67 9.5,6.34C8.61,8.5 6.91,10.26 4.77,11.22C4.73,11.47 4.73,11.74 4.73,12A7.27,7.27 0 0,0 12,19.27C13.05,19.27 14.06,19.04 14.97,18.63C15.54,19.72 15.8,20.26 15.78,20.26C14.14,20.81 12.87,21.08 12,21.08C9.58,21.08 7.27,20.13 5.57,18.42C4.53,17.38 3.76,16.11 3.33,14.73H2V10.18H3.09C3.93,6.04 7.6,2.92 12,2.92C14.4,2.92 16.71,3.87 18.42,5.58C19.69,6.84 20.54,8.45 20.89,10.18H22V14.67H22V14.69L22,14.73H21.94L18.38,18L13.08,17.4V15.73H17.91L18.72,14.76M9.27,11.77C9.57,11.77 9.86,11.89 10.07,12.11C10.28,12.32 10.4,12.61 10.4,12.91C10.4,13.21 10.28,13.5 10.07,13.71C9.86,13.92 9.57,14.04 9.27,14.04C8.64,14.04 8.13,13.54 8.13,12.91C8.13,12.28 8.64,11.77 9.27,11.77M14.72,11.77C15.35,11.77 15.85,12.28 15.85,12.91C15.85,13.54 15.35,14.04 14.72,14.04C14.09,14.04 13.58,13.54 13.58,12.91A1.14,1.14 0 0,1 14.72,11.77Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_link_support) = class $mol_link_support extends ($.$mol_link) {
+		Icon(){
+			const obj = new this.$.$mol_icon_face_agent();
+			return obj;
+		}
+		hint(){
+			return (this.$.$mol_locale.text("$mol_link_support_hint"));
+		}
+		sub(){
+			return [(this.Icon())];
+		}
+	};
+	($mol_mem(($.$mol_link_support.prototype), "Icon"));
+
+
+;
+"use strict";
+
+;
+	($.$mol_check_icon) = class $mol_check_icon extends ($.$mol_check) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/icon/icon.view.css", "[mol_check_icon]:where([mol_check_checked]) {\n\tcolor: var(--mol_theme_current);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$mol_icon_brightness_4) = class $mol_icon_brightness_4 extends ($.$mol_icon) {
+		path(){
+			return "M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_lights_toggle) = class $mol_lights_toggle extends ($.$mol_check_icon) {
+		Lights_icon(){
+			const obj = new this.$.$mol_icon_brightness_4();
+			return obj;
+		}
+		lights(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Icon(){
+			return (this.Lights_icon());
+		}
+		hint(){
+			return (this.$.$mol_locale.text("$mol_lights_toggle_hint"));
+		}
+		checked(next){
+			return (this.lights(next));
+		}
+	};
+	($mol_mem(($.$mol_lights_toggle.prototype), "Lights_icon"));
+	($mol_mem(($.$mol_lights_toggle.prototype), "lights"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_lights_toggle extends $.$mol_lights_toggle {
+            lights(next) {
+                return this.$.$mol_lights(next);
+            }
+        }
+        $$.$mol_lights_toggle = $mol_lights_toggle;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_status) = class $mol_status extends ($.$mol_view) {
+		message(){
+			return "";
+		}
+		status(){
+			return (this.title());
+		}
+		minimal_height(){
+			return 24;
+		}
+		minimal_width(){
+			return 0;
+		}
+		sub(){
+			return [(this.message())];
+		}
+	};
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_status extends $.$mol_status {
+            message() {
+                try {
+                    return this.status() ?? null;
+                }
+                catch (error) {
+                    if (error instanceof Promise)
+                        $mol_fail_hidden(error);
+                    $mol_fail_log(error);
+                    return error.message;
+                }
+            }
+        }
+        $$.$mol_status = $mol_status;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/status/status.view.css", "[mol_status] {\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: block;\n\tflex-shrink: 1;\n\tword-wrap: break-word;\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]) {\n\tcolor: var(--mol_theme_focus);\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]):empty {\n\tdisplay: none;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_attach) = class $mol_attach extends ($.$mol_view) {
+		item_drop(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		item_uri(id){
+			return "";
+		}
+		Image(id){
+			const obj = new this.$.$mol_image();
+			(obj.title) = () => ("");
+			(obj.uri) = () => ((this.item_uri(id)));
+			return obj;
+		}
+		Item(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.item_drop(id, next)));
+			(obj.sub) = () => ([(this.Image(id))]);
+			return obj;
+		}
+		attach_title(){
+			return "";
+		}
+		attach_new(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Add(){
+			const obj = new this.$.$mol_button_open();
+			(obj.title) = () => ((this.attach_title()));
+			(obj.files) = (next) => ((this.attach_new(next)));
+			return obj;
+		}
+		content(){
+			return [(this.Item("0")), (this.Add())];
+		}
+		items(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		sub(){
+			return (this.content());
+		}
+	};
+	($mol_mem_key(($.$mol_attach.prototype), "item_drop"));
+	($mol_mem_key(($.$mol_attach.prototype), "Image"));
+	($mol_mem_key(($.$mol_attach.prototype), "Item"));
+	($mol_mem(($.$mol_attach.prototype), "attach_new"));
+	($mol_mem(($.$mol_attach.prototype), "Add"));
+	($mol_mem(($.$mol_attach.prototype), "items"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_attach extends $.$mol_attach {
+            attach_new(files) {
+                this.items([
+                    ...this.items(),
+                    ...files.map(file => URL.createObjectURL(file)),
+                ]);
+            }
+            content() {
+                return [...this.items().map((_, i) => this.Item(i)), this.Add()];
+            }
+            item_uri(index) {
+                return this.items()[index];
+            }
+            item_drop(index, event) {
+                const items = this.items();
+                this.items([
+                    ...items.slice(0, index),
+                    ...items.slice(index + 1),
+                ]);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_attach.prototype, "content", null);
+        $$.$mol_attach = $mol_attach;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/attach/attach.view.css", "[mol_attach] {\n\tflex-wrap: wrap;\n}\n\n[mol_attach_item] {\n\taspect-ratio: 1;\n\theight: 5rem;\n\tborder-radius: var(--mol_gap_round);\n\tpadding: 0;\n}\n[mol_attach_item]:hover {\n\topacity: .5;\n}\n\n[mol_attach_image] {\n\tbackground: var(--mol_theme_card);\n\twidth: 100%;\n\theight: 100%;\n}\n\n[mol_attach_add] {\n\tbackground: var(--mol_theme_card);\n\taspect-ratio: 1;\n\theight: 5rem;\n\talign-items: center;\n\tjustify-content: center;\n\toverflow: hidden;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_send) = class $mol_icon_send extends ($.$mol_icon) {
+		path(){
+			return "M2,21L23,12L2,3V10L17,12L2,14V21Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_bar) = class $mol_bar extends ($.$mol_view) {};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/bar/bar.view.css", "[mol_bar] {\n\tdisplay: flex;\n\t/* box-shadow: inset 0 0 0 1px var(--mol_theme_line); */\n\tborder-radius: var(--mol_gap_round);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$mol_icon_chevron_left) = class $mol_icon_chevron_left extends ($.$mol_icon) {
+		path(){
+			return "M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_chevron_right) = class $mol_icon_chevron_right extends ($.$mol_icon) {
+		path(){
+			return "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_paginator) = class $mol_paginator extends ($.$mol_bar) {
+		backward_hint(){
+			return (this.$.$mol_locale.text("$mol_paginator_backward_hint"));
+		}
+		backward(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Backward_icon(){
+			const obj = new this.$.$mol_icon_chevron_left();
+			return obj;
+		}
+		Backward(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.backward_hint()));
+			(obj.click) = (next) => ((this.backward(next)));
+			(obj.sub) = () => ([(this.Backward_icon())]);
+			return obj;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Value(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.value())]);
+			return obj;
+		}
+		forward_hint(){
+			return (this.$.$mol_locale.text("$mol_paginator_forward_hint"));
+		}
+		forward(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Forward_icon(){
+			const obj = new this.$.$mol_icon_chevron_right();
+			return obj;
+		}
+		Forward(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.forward_hint()));
+			(obj.click) = (next) => ((this.forward(next)));
+			(obj.sub) = () => ([(this.Forward_icon())]);
+			return obj;
+		}
+		step(){
+			return 1;
+		}
+		sub(){
+			return [
+				(this.Backward()), 
+				(this.Value()), 
+				(this.Forward())
+			];
+		}
+	};
+	($mol_mem(($.$mol_paginator.prototype), "backward"));
+	($mol_mem(($.$mol_paginator.prototype), "Backward_icon"));
+	($mol_mem(($.$mol_paginator.prototype), "Backward"));
+	($mol_mem(($.$mol_paginator.prototype), "value"));
+	($mol_mem(($.$mol_paginator.prototype), "Value"));
+	($mol_mem(($.$mol_paginator.prototype), "forward"));
+	($mol_mem(($.$mol_paginator.prototype), "Forward_icon"));
+	($mol_mem(($.$mol_paginator.prototype), "Forward"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_paginator extends $.$mol_paginator {
+            backward(event) {
+                if (event.defaultPrevented)
+                    return;
+                event.preventDefault();
+                this.value(this.value() - this.step());
+            }
+            forward(event) {
+                if (event.defaultPrevented)
+                    return;
+                event.preventDefault();
+                this.value(this.value() + this.step());
+            }
+        }
+        $$.$mol_paginator = $mol_paginator;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/paginator/paginator.view.css", "[mol_paginator] {\n\talign-items: flex-start;\n}\n\n[mol_paginator_value] {\n\tpadding: .5rem 0;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_const(ref) {
+        return $mol_data_setup((val) => {
+            if ($mol_compare_deep(val, ref))
+                return ref;
+            return $mol_fail(new $mol_data_error(`${JSON.stringify(val)} is not ${JSON.stringify(ref)}`));
+        }, ref);
+    }
+    $.$mol_data_const = $mol_data_const;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_data_nullable(sub) {
+        return $mol_data_setup((val) => {
+            if (val === null)
+                return null;
+            return sub(val);
+        }, sub);
+    }
+    $.$mol_data_nullable = $mol_data_nullable;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_array_shuffle(array) {
+        const res = new Array(array.length);
+        for (let i = 0; i < res.length; ++i) {
+            const j = Math.floor(Math.random() * (i + 1));
+            if (i !== j)
+                res[i] = res[j];
+            res[j] = array[i];
+        }
+        return res;
+    }
+    $.$mol_array_shuffle = $mol_array_shuffle;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_array_shuffle_sync = $mol_wire_sync($mol_array_shuffle);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_github_model_keys = [
+        '11AADME3A07jh1teLjee8r_O7MKyAF8rbdIlhk4OwsJHaCnh4CjDNxn1nLNAvW2Hy6OSTIYABWQyp0rOHt',
+        '11AADME3A0q6w8EFz9G9aa_byqEpTuWUa63PKoSAwN1eVi2GyGJ4SxYhm9OhAc2DCTANK2ULBQpQgUu6D9',
+        '11AADME3A0RsfJpmuZfl4r_Nw6G3v7vDgnrqDxmlgF6Gyj9YawDfTqatNUxhwPjzWwYYGIORGETiUtMOmR',
+        '11AADME3A0meTYzVZaOtJF_LrdN2tIDycZHDBN3560V3S2ZWpo07uATZON0XUYF2ZFFC3X2OHSwdUcVfUe',
+        '11AADME3A0myGzFwrNHkV0_InRujMNsqM7cLUWDvKCW5GRy2waC7fHXuSJdzW0mrwvX7VP4I2MoGXRXF6w',
+        '11AADME3A0LF4GM8Qam5xH_LFLHQqgcmudC8eyKLEqc4l5xDPcplSxAcEA3j8BO4MYTAE6FOROqFIuhGfR',
+        '11AADME3A0KUqaRrYVSMzf_rYLJd83byQ1HN8KOIzVnHPBvW6VPei911NJgPucm1hRETR55VB3mdyw2ezI',
+        '11AADME3A0exOKaaQLYR2b_2JKJDHVAWxoqRPlGcugBHNapcZWT9awRic8iBmgOirXRVC5X7ILtz6KDffv',
+        '11AADME3A071WbELDi8THV_v3dkQtbYpSGjUXeWT6dAiPBf5a5b0KDr0E029T6P4CsZOOYO3DPpopBkodL',
+        '11AADME3A0L5oFWUKk62fr_Dcbcn1ZcNBwWaLfbHzlgueGcxBEO5FoOieoowhJ6Q1zIWIIYZBG7XI16O4H',
+        '11ABRVBSY0f8VzkzaCnFmy_PMfBlJqT7DuvxfzbYRUlLOZJenEqBvNpGP7uQKCDOaO6ZKS4DFCG0qYxy2I',
+        '11ABRVBSY0no18F8ngCYoa_60v1HSbYVeEZ2d3tf1ix2Kq7G8ZRYaFFiHImNxERTkqJ5CWMQ6VmjH7ic86',
+        '11ABRVBSY0acYIFJ0b9cAV_0wPJI2JxZgLYasswZjIUMQqxnYcRAUEG68xtsh9uQtNZDYU37IS5GBobX8v',
+        '11ABRVBSY0KhLO9yDqoqMM_B328qDB5kCHqgAJNw3q1MW48gHQ9XYAnnRQFlXkE1MQGX3S5TOK6k4od8C8',
+        '11ABRVBSY04TXJfmvdflXC_o9UQLVNWbPWzaqaaZll9fFn9QLAZotSwi18clpeaaYkTQEHQSW3yvrSAsCb',
+        '11ABRVBSY0n7osgrVkUT0l_PQadBMEjSXLOGZGwuu5wVXydSnwxboWUAxAIdXgXP9hRVQOKM5UNsJaKk0M',
+        '11ABRVBSY0Zctkh9fg9Cpl_nqCk5TSio22hgtvAWqYzGvlsfaIH9e66ery772pkCW0C7EJA7HJrPGxIYQy',
+        '11ABRVBSY0XbD5DK094oOY_8mmeflfbf4mu48bWk7OFQvrxxPXp5gFCxO5PUokPwsw2LZRC6DZSujLHCVt',
+        '11ABRVBSY0AGZyClxdqZDx_gseo5RI9HKRPvlQtRFmmR5An2jaRna9glpzv40wi7MZCCCDAVIWk3l1Nwp9',
+        '11ABRVBSY0SvjU9l1d7DXU_LOZfXdIZuupZCmu1FA4NGUOy572G8ZJ6pzYyzu9RsWfG7HLRMLYIIIE54Mp',
+        '11AACDCYQ0R6jhkMIx4zY4_OlEwnePW3UFhkNsJuyAweBPsHtqlhBW7WD69mWjuuYTTAYOTX7KL4WK1Yg7',
+        '11AACDCYQ0Ai0LkLKrp9kE_D10SuqSODWeGWvA4Rgux6ZXs2AEwl3IqpElNGRI7JG0ZIGVKV5RaUDAchxe',
+        '11AACDCYQ0c94yhWtZq2HX_YFms0ToLulxGTnr80ndTsHZIOfNMl8QdLmoKL75fZ3oK6JN3NOKsnxMZ1qu',
+        '11AACDCYQ0DkrjD2bmmKpL_PcrQXvrbiEnJl0oazFx70p9wdCXd2rP5DhazexPAcygLGKIOQRXeeCXsP7B',
+        '11AACDCYQ0IMIYCLcX3xrO_901enZ0EKxk48giaCI7vkIHZgdOpqrvPyHiF4t02klvCLI7OVRE3uqJ3PKf',
+        '11AACDCYQ0WIjNWbjdJclE_KKiTwAIGNcbpPIO6SJfBxbuUVixxug7QH5KPRcMXAYv3ZOROGOVFvj4GzzG',
+        '11AACDCYQ0tKWudX3T6T6l_wGiLSmI6aYR7Wf5ZXFukZdPuUL7lpGpBIzkm8CSxcaoJQT7GDAU2PtnWWDj',
+        '11AACDCYQ0Ocm4JD37TfHG_0KPjGl3ucMm4ozREvzF1QNY3UECaZNh3SiY49AUzJgGNITGLVH2LdHhz7PT',
+        '11AACDCYQ0R5HgcrZOxDwc_dgCK0jETB27GYYCmh1YMfdE5dPuLNZ1DLiIDi2tQnr0IGUX5WFRNa9oTaSw',
+        '11AZC2M3A02nw2Q86BPmYQ_yl2RFA1RXRuEVWU0ufTjBXl12SvUWyeZxZ9cbZRuind6QWI65J4tXbAfF2p',
+        '11AZC2M3A0gcGTDvExPjEL_m1itogjz24QDTxT0zJTpDJmyZ3sSKO1UXapXfw7q0BLMUIOXP3SB7zRfavu',
+        '11AZC2M3A0Y1oDGiEjDZ1g_t5ry6SPyckVwZvBQvBke09QbNMF8rG1TXdcops2BiDmKDYKOOCV58edg7VY',
+        '11AZC2M3A00bI3vc5JPaA2_MZGbctgtp5KEdBD2dYVW7MaQ2Fqiw8UrIpHKZp8xnczJGHTTJQPa9QxXjrc',
+        '11AZC2M3A0fGlQkvashsda_CuaNQlzrajBrj82VlUzZQ67Qgq9X3QudJ9S3SM3wnzvNIQRQARZoClezK3C',
+        '11AZC2M3A06Zat4wc9fotV_0gdnr4cGXfzD2wTkBIr5QYyj3ErxgMcHJerQb81AtnqBSYKBHIEzBXbqzQr',
+        '11AZC2M3A0V1JUeQY0eOov_rrWyENLMO5Sxa4IEPbZMLippdb8TQi531bmfJQBBaCfQHIC5PQFFwUp49DW',
+        '11AZC2M3A0G89rDbsh2k20_l6kEuOm10kV86RGIp1s5wQ1n6kLe0WFgeCHLthnGNSyDSIBNNC6Q7kjGrem',
+        '11AZC2M3A0tAUQ7dX2dnaI_hvDm1d0lxDpHXkYx1khtJyidfjREBvg2qssXurwxihAHBEMII5T7l5WrXI9',
+        '11AZC2M3A0VPRCdsbErhom_W0wrECR4sbXQZLlG966rsb1G65pOXJGbk4uaV0zUNpMZPDBW5DSTZyRTCJy',
+        '11AZC2M3A06fZVQGXETeaM_KIU5iEeb6UtpBrGZMOG6kQc1r32A5Xh1uxAMdmZRwkHICW2HJMAHcv236fa',
+        '11AZC2M3A0QyPnQfDarLu5_x6eKghOwMB3yX2KPPVGvD3PKKuY5QiK7gJ4eoPiYCSwOBQVU2P6EOzN75xf',
+        '11AZC2M3A0VW9BdSxec56G_P3YnEAFXcC7IMauK8nhxHwFNS09AgIisAuy9Kft19o2LAHR5RXQyMHIl9yQ',
+        '11AZC2M3A0P4o9D1flcC0S_f2NS5FSSogJoFsocKShuv4m7ghDBamKRgPvPqACGEejJRU2BBE2gymGHhk1',
+        '11AZC2M3A0cI704OJ5EVfc_8c1ggPeodHoWEY8lMHH9cvKLGyGvGbgzW7tr4V7E5ITT7RDCHJYzNZoXxGF',
+        '11AZC2M3A0yFNB07z5VFbp_RtEMVMcdKpfFgn0ls2v3hlcJDsIs6v7e64TXSW2muOK5RPKAJ3WxdZS2vzT',
+        '11AZC2M3A06KL2qd1GmlIB_a7tt0VJaKLybMxJLdJ6JPk6iBgNaECXJsFd5FyCl4nSSQT3QSG4ETLYFOwj',
+        '11AZC2M3A0Ui6RqKCiBn6X_6S4OnreMp6Au5JSRwfcWop1SiHV9ooFsBHhYkFEiErAQYHDENGGzLmL1aD9',
+        '11AZC2M3A0hk74xKy52Egx_jYVCEjt9jpT2peCB0qT7JrnSX1a075ZASxKTzaV3KeqTTV5A7SRNxkaElKn',
+        '11AZC2M3A021XEPByvPlBg_rKr4RNMcfeflEKrL5qGxDieXMKLlf4S6FWvtUUzIYaoOK63JXVBv8XPAfi5',
+        '11AZC2M3A0yK6fYUgjj79M_5yu4OE4RdeFk8IoY3kcOC1xemTvjB1B8tOzA1KPmqQSX37EDQIOIuRjf9jF',
+    ].map(str => `github_pat_${str}`);
+    $.$mol_github_model_polyglots = [
+        'openai/gpt-4.1-mini',
+    ];
+    const Text = $mol_data_record({
+        type: $mol_data_const('text'),
+        text: $mol_data_string,
+    });
+    const Image = $mol_data_record({
+        type: $mol_data_const('image_url'),
+        image_url: $mol_data_record({
+            url: $mol_data_string,
+        }),
+    });
+    const Content_item = $mol_data_variant(Text, Image);
+    const Content = $mol_data_variant($mol_data_string, $mol_data_array(Content_item));
+    const System = $mol_data_record({
+        role: $mol_data_const('system'),
+        content: Content,
+    });
+    const Assistant = $mol_data_record({
+        role: $mol_data_const('assistant'),
+        content: $mol_data_nullable(Content),
+        tool_calls: $mol_data_optional($mol_data_array($mol_data_record({
+            type: $mol_data_const('function'),
+            id: $mol_data_string,
+            function: $mol_data_record({
+                name: $mol_data_string,
+                arguments: $mol_data_string,
+            }),
+        }))),
+    });
+    const User = $mol_data_record({
+        role: $mol_data_const('user'),
+        content: Content,
+    });
+    const Tool = $mol_data_record({
+        role: $mol_data_const('tool'),
+        tool_call_id: $mol_data_string,
+        content: Content,
+    });
+    const Message = $mol_data_variant(System, Assistant, User, Tool);
+    const Resp = $mol_data_record({
+        choices: $mol_data_array($mol_data_record({
+            message: Assistant,
+        })),
+    });
+    const RespFail = $mol_data_record({
+        error: $mol_data_record({
+            message: $mol_data_string,
+        }),
+    });
+    function bloat_content(val) {
+        if (typeof val !== 'string')
+            val = JSON.stringify(val);
+        else if (val.startsWith('data:'))
+            return { type: 'image_url', image_url: { url: val } };
+        return { type: 'text', text: val };
+    }
+    class $mol_github_model extends $mol_object {
+        names() {
+            return this.$.$mol_github_model_polyglots;
+        }
+        rules() {
+            return '';
+        }
+        tools() {
+            return new Map();
+        }
+        state(next) {
+            $mol_wire_solid();
+            return next ?? [];
+        }
+        params(next) {
+            $mol_wire_solid();
+            return next ?? {};
+        }
+        history(next) {
+            $mol_wire_solid();
+            return next ?? [];
+        }
+        fork() {
+            const fork = $mol_github_model.make({
+                names: $mol_const(this.names()),
+                rules: $mol_const(this.rules()),
+                tools: $mol_const(this.tools()),
+                state: () => this.state(),
+            });
+            fork.params(this.params());
+            fork.history(this.history());
+            return fork;
+        }
+        shot(prompt, context, params) {
+            const fork = this.fork();
+            if (params)
+                fork.params({ ...this.params(), ...params });
+            if (context)
+                fork.tell(context);
+            fork.ask(prompt);
+            return fork.response();
+        }
+        ask(chunks) {
+            this.history([
+                ...this.history(),
+                {
+                    role: "user",
+                    content: chunks.map(bloat_content),
+                }
+            ]);
+            return this;
+        }
+        tell(chunks) {
+            this.history([
+                ...this.history(),
+                {
+                    role: "assistant",
+                    content: chunks.map(bloat_content),
+                }
+            ]);
+            return this;
+        }
+        answer(id, chunks) {
+            const history = this.history();
+            const index = 1 + history.findIndex(msg => msg.role === 'tool' && msg.tool_call_id === id);
+            if (!index)
+                this.$.$mol_fail(new Error('Wrong tool call id', { cause: id }));
+            this.history([
+                ...history.slice(0, index),
+                {
+                    role: "tool",
+                    tool_call_id: id,
+                    content: chunks.map(bloat_content),
+                },
+                ...history.slice(index),
+            ]);
+            return this;
+        }
+        request_body(model) {
+            return JSON.stringify({
+                model,
+                stream: false,
+                response_format: { type: 'json_object' },
+                messages: [
+                    { role: 'system', content: this.rules() },
+                    ...this.history(),
+                    { role: 'system', content: this.state().map(bloat_content) },
+                ],
+                tools: [...this.tools()].map(([name, info]) => ({
+                    type: "function",
+                    function: {
+                        name,
+                        description: info.descr,
+                        strict: true,
+                        parameters: info.params,
+                    },
+                })),
+                ...this.params(),
+            });
+        }
+        request(model, key) {
+            return Resp(this.$.$mol_fetch.json(`https://models.github.ai/inference/chat/completions`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + key,
+                    'Content-Type': 'application/json',
+                },
+                body: this.request_body(model)
+            }));
+        }
+        response() {
+            const history = this.history();
+            const last = history.at(-1);
+            if (last?.role !== 'user')
+                return null;
+            const models = this.$.$mol_array_shuffle_sync(this.names());
+            const keys = this.$.$mol_array_shuffle_sync($.$mol_github_model_keys);
+            for (const model of models)
+                for (const key of keys) {
+                    try {
+                        const resp = this.request(model, key);
+                        const message = resp.choices[0].message;
+                        this.history([...history, message]);
+                        if (typeof message.content === 'string')
+                            return JSON.parse(message.content);
+                        return message.content;
+                    }
+                    catch (error) {
+                        const resp = error.cause;
+                        if (!resp)
+                            return $mol_fail_hidden(error);
+                        if (resp.code() === 429)
+                            continue;
+                        if (resp.code() === 400) {
+                            const message = RespFail(resp.json()).error.message;
+                            this.history([...history, { role: 'system', content: '📛 ' + message }]);
+                            $mol_fail(new Error(message));
+                        }
+                        $mol_fail_hidden(error);
+                    }
+                }
+            return this.$.$mol_fail(new Error('No alive token'));
+        }
+    }
+    __decorate([
+        $mol_memo.method
+    ], $mol_github_model.prototype, "names", null);
+    __decorate([
+        $mol_memo.method
+    ], $mol_github_model.prototype, "tools", null);
+    __decorate([
+        $mol_mem
+    ], $mol_github_model.prototype, "state", null);
+    __decorate([
+        $mol_mem
+    ], $mol_github_model.prototype, "params", null);
+    __decorate([
+        $mol_mem
+    ], $mol_github_model.prototype, "history", null);
+    __decorate([
+        $mol_action
+    ], $mol_github_model.prototype, "fork", null);
+    __decorate([
+        $mol_action
+    ], $mol_github_model.prototype, "shot", null);
+    __decorate([
+        $mol_action
+    ], $mol_github_model.prototype, "ask", null);
+    __decorate([
+        $mol_action
+    ], $mol_github_model.prototype, "tell", null);
+    __decorate([
+        $mol_action
+    ], $mol_github_model.prototype, "answer", null);
+    __decorate([
+        $mol_mem_key
+    ], $mol_github_model.prototype, "request_body", null);
+    __decorate([
+        $mol_mem
+    ], $mol_github_model.prototype, "response", null);
+    $.$mol_github_model = $mol_github_model;
+})($ || ($ = {}));
+
+;
+	($.$giper_bot) = class $giper_bot extends ($.$mol_book2) {
+		rules(){
+			return "Ты - Гипер Бот, универсальный интеллектуальный ассистент, помогающий пользователю редактировать текстовый документ.\nПользователь присылает тебе запрос в виде JSON строки.\nОтвет должен быть представлен в виде JSON объекта, соответствующего следующей схеме:\n\ttype Response = {\n\t\tmessage: string // ответ на вопрос пользователя в свободной форме\n\t\tfiles: string[] // ссылки на файлы для скачивания\n\t\tdocument: string | null // финальный текст, null если обновление не требуется\n\t\tconfidence: number // степень уверенности в ответе от 0 до 1\n\t\tdigest: string // краткий пересказ всего диалога от начала до конца\n\t\ttitle: string // ёмкий лаконичное название всего диалога\n\t}\nЕсли пользователь попросил что-то написать или изменить, то это должно быть отражено в document, а не должно дублироваться в message. \nЕсли пользователь что-то спросил, то в message должен быть максимально точный и лаконичный ответ без лишней информации, о которой пользователь не просил.\nГоворя о пользователе в пересказе (и только в нём) используй эмодзи 🙂 вместо слова \"пользователь\", а вместо \"Гипер Бота\" - используй эмозди 🤖.\nОтвечай всегда на языке с кодом {lang}, если пользователь не попросил иное.";
+		}
+		context(){
+			return (this.rules());
+		}
+		state(){
+			return ["Далее идёт состояние документа, на который сейчас смотрит пользователь, и к которому относится его последний запрос:", (this.result())];
+		}
+		Theme(){
+			const obj = new this.$.$mol_theme_auto();
+			return obj;
+		}
+		Space(){
+			const obj = new this.$.$giper_web_frame();
+			return obj;
+		}
+		dialog_title(next){
+			if(next !== undefined) return next;
+			return (this.$.$mol_locale.text("$giper_bot_dialog_title"));
+		}
+		reset(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Reset_icon(){
+			const obj = new this.$.$mol_icon_trash_can_outline();
+			return obj;
+		}
+		Reset(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$giper_bot_Reset_hint")));
+			(obj.click) = (next) => ((this.reset(next)));
+			(obj.sub) = () => ([(this.Reset_icon())]);
+			return obj;
+		}
+		Sources(){
+			const obj = new this.$.$mol_link_source();
+			(obj.uri) = () => ("https://github.com/giper-dev/bot/");
+			return obj;
+		}
+		Donate(){
+			const obj = new this.$.$mol_link_donate();
+			(obj.uri) = () => ("https://boosty.to/hyoo");
+			return obj;
+		}
+		Support(){
+			const obj = new this.$.$mol_link_support();
+			(obj.uri) = () => ("https://t.me/giper_web/276");
+			return obj;
+		}
+		Lights(){
+			const obj = new this.$.$mol_lights_toggle();
+			return obj;
+		}
+		communication(){
+			return null;
+		}
+		Status(){
+			const obj = new this.$.$mol_status();
+			(obj.status) = () => ((this.communication()));
+			return obj;
+		}
+		message_text(id){
+			return "";
+		}
+		Message_text(id){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.message_text(id)));
+			return obj;
+		}
+		Message(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Message_text(id))]);
+			return obj;
+		}
+		messages(){
+			return [(this.Message("0"))];
+		}
+		Messages(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.messages()));
+			return obj;
+		}
+		attach(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		Attach(){
+			const obj = new this.$.$mol_attach();
+			(obj.items) = (next) => ((this.attach(next)));
+			return obj;
+		}
+		quote_start(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		quote_end(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		prompt_text(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		prompt_submit(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Prompt_text(){
+			const obj = new this.$.$mol_textarea();
+			(obj.event) = () => ({
+				...(this.$.$mol_textarea.prototype.event.call(obj)), 
+				"pointerdown": (next) => (this.quote_start(next)), 
+				"pointerup": (next) => (this.quote_end(next))
+			});
+			(obj.hint) = () => ((this.$.$mol_locale.text("$giper_bot_Prompt_text_hint")));
+			(obj.value) = (next) => ((this.prompt_text(next)));
+			(obj.submit) = (next) => ((this.prompt_submit(next)));
+			return obj;
+		}
+		Prompt_submit_icon(){
+			const obj = new this.$.$mol_icon_send();
+			return obj;
+		}
+		Prompt_submit(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$giper_bot_Prompt_submit_hint")));
+			(obj.click) = (next) => ((this.prompt_submit(next)));
+			(obj.sub) = () => ([(this.Prompt_submit_icon())]);
+			return obj;
+		}
+		Dialog(){
+			const obj = new this.$.$mol_page();
+			(obj.title) = () => ((this.dialog_title()));
+			(obj.tools) = () => ([
+				(this.Reset()), 
+				(this.Sources()), 
+				(this.Donate()), 
+				(this.Support()), 
+				(this.Lights())
+			]);
+			(obj.body_content) = () => ([(this.Status()), (this.Messages())]);
+			(obj.foot) = () => ([
+				(this.Attach()), 
+				(this.Prompt_text()), 
+				(this.Prompt_submit())
+			]);
+			return obj;
+		}
+		result_title(next){
+			if(next !== undefined) return next;
+			return (this.$.$mol_locale.text("$giper_bot_result_title"));
+		}
+		version(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Version(){
+			const obj = new this.$.$mol_paginator();
+			(obj.value) = (next) => ((this.version(next)));
+			return obj;
+		}
+		result(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Result(){
+			const obj = new this.$.$mol_textarea();
+			(obj.sidebar_showed) = () => (true);
+			(obj.value) = (next) => ((this.result(next)));
+			return obj;
+		}
+		Result_page(id){
+			const obj = new this.$.$mol_page();
+			(obj.title) = () => ((this.result_title()));
+			(obj.tools) = () => ([(this.Version())]);
+			(obj.body) = () => ([(this.Result())]);
+			return obj;
+		}
+		digest(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Digest(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.digest()));
+			return obj;
+		}
+		Context(){
+			const obj = new this.$.$mol_page();
+			(obj.title) = () => ((this.$.$mol_locale.text("$giper_bot_Context_title")));
+			(obj.body) = () => ([(this.Digest())]);
+			return obj;
+		}
+		Model(next){
+			if(next !== undefined) return next;
+			const obj = new this.$.$mol_github_model();
+			(obj.params) = () => ({"temperature": 0});
+			(obj.rules) = () => ((this.context()));
+			(obj.state) = () => ((this.state()));
+			return obj;
+		}
+		plugins(){
+			return [(this.Theme())];
+		}
+		quote(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		pages(){
+			return [
+				(this.Space()), 
+				(this.Dialog()), 
+				(this.Result_page("0"))
+			];
+		}
+		placeholders(){
+			return [(this.Context())];
+		}
+	};
+	($mol_mem(($.$giper_bot.prototype), "Theme"));
+	($mol_mem(($.$giper_bot.prototype), "Space"));
+	($mol_mem(($.$giper_bot.prototype), "dialog_title"));
+	($mol_mem(($.$giper_bot.prototype), "reset"));
+	($mol_mem(($.$giper_bot.prototype), "Reset_icon"));
+	($mol_mem(($.$giper_bot.prototype), "Reset"));
+	($mol_mem(($.$giper_bot.prototype), "Sources"));
+	($mol_mem(($.$giper_bot.prototype), "Donate"));
+	($mol_mem(($.$giper_bot.prototype), "Support"));
+	($mol_mem(($.$giper_bot.prototype), "Lights"));
+	($mol_mem(($.$giper_bot.prototype), "Status"));
+	($mol_mem_key(($.$giper_bot.prototype), "Message_text"));
+	($mol_mem_key(($.$giper_bot.prototype), "Message"));
+	($mol_mem(($.$giper_bot.prototype), "Messages"));
+	($mol_mem(($.$giper_bot.prototype), "attach"));
+	($mol_mem(($.$giper_bot.prototype), "Attach"));
+	($mol_mem(($.$giper_bot.prototype), "quote_start"));
+	($mol_mem(($.$giper_bot.prototype), "quote_end"));
+	($mol_mem(($.$giper_bot.prototype), "prompt_text"));
+	($mol_mem(($.$giper_bot.prototype), "prompt_submit"));
+	($mol_mem(($.$giper_bot.prototype), "Prompt_text"));
+	($mol_mem(($.$giper_bot.prototype), "Prompt_submit_icon"));
+	($mol_mem(($.$giper_bot.prototype), "Prompt_submit"));
+	($mol_mem(($.$giper_bot.prototype), "Dialog"));
+	($mol_mem(($.$giper_bot.prototype), "result_title"));
+	($mol_mem(($.$giper_bot.prototype), "version"));
+	($mol_mem(($.$giper_bot.prototype), "Version"));
+	($mol_mem(($.$giper_bot.prototype), "result"));
+	($mol_mem(($.$giper_bot.prototype), "Result"));
+	($mol_mem_key(($.$giper_bot.prototype), "Result_page"));
+	($mol_mem(($.$giper_bot.prototype), "digest"));
+	($mol_mem(($.$giper_bot.prototype), "Digest"));
+	($mol_mem(($.$giper_bot.prototype), "Context"));
+	($mol_mem(($.$giper_bot.prototype), "Model"));
+	($mol_mem(($.$giper_bot.prototype), "quote"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_picture extends $mol_object2 {
+        canvas;
+        constructor(canvas) {
+            super();
+            this.canvas = canvas;
+        }
+        get context() {
+            return this.canvas.getContext('2d');
+        }
+        get bitmap() {
+            return this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        }
+        static fit(image, width = Number.POSITIVE_INFINITY, height = width) {
+            if (image instanceof Blob)
+                image = $mol_wire_sync(URL).createObjectURL(image);
+            if (typeof image === 'string')
+                image = $mol_wire_sync(this).load(image);
+            let [w, h] = this.sizes(image);
+            if (w > width) {
+                h *= width / w;
+                w = width;
+            }
+            if (h > height) {
+                w *= height / h;
+                h = height;
+            }
+            return this.make(image, w, h);
+        }
+        static make(image, width, height = width) {
+            const canvas = $mol_dom_context.document.createElement('canvas');
+            Object.assign(canvas, { width, height });
+            const context = canvas.getContext('2d');
+            context.drawImage(image, 0, 0, width, height);
+            return new this(canvas);
+        }
+        static sizes(image) {
+            if (image instanceof HTMLVideoElement)
+                return [
+                    image.videoWidth,
+                    image.videoHeight,
+                ];
+            if (image instanceof SVGImageElement)
+                return [
+                    image.width.baseVal.value,
+                    image.height.baseVal.value,
+                ];
+            return [
+                image.width,
+                image.height,
+            ];
+        }
+        static async load(uri) {
+            const image = new Image;
+            image.src = uri;
+            await new Promise((onload, onerror) => Object.assign(image, { onload, onerror }));
+            return image;
+        }
+        format(type, quality = .9) {
+            return new Promise(done => this.canvas.toBlob(done, type, quality));
+        }
+        url(type = 'image/webp', quality = .9) {
+            return this.canvas.toDataURL(type, quality);
+        }
+    }
+    __decorate([
+        $mol_action
+    ], $mol_picture.prototype, "format", null);
+    __decorate([
+        $mol_action
+    ], $mol_picture.prototype, "url", null);
+    __decorate([
+        $mol_action
+    ], $mol_picture, "fit", null);
+    $.$mol_picture = $mol_picture;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $giper_bot extends $.$giper_bot {
+            pages() {
+                return [
+                    this.Space(),
+                    this.Dialog(),
+                    ...this.result() ? [this.Result_page(this.version())] : [],
+                ];
+            }
+            result_item() {
+                return this.results()[this.version()];
+            }
+            result_title() {
+                return this.result_item()?.title ?? super.result_title();
+            }
+            digest() {
+                return this.result_item()?.digest ?? '';
+            }
+            prompt_text(next) {
+                return this.$.$mol_state_session.value('prompt_text', next) ?? '';
+            }
+            history(next) {
+                return this.$.$mol_state_session.value('history', next)
+                    ?? $mol_maybe(this.$.$mol_state_arg.value('prompt') || null).map(p => ({ message: p, files: [] }));
+            }
+            messages() {
+                return this.history().map((_, i) => this.Message(i));
+            }
+            message_text(index) {
+                const item = this.history()[index];
+                let text = [item.message, ...item.files.map(item => `""` + item + `""`)].join('\n');
+                if ('`#>|='.includes(text[0]))
+                    text = '\n' + text;
+                return this.message_name(index) + ' ' + text;
+            }
+            message_name(index) {
+                return index % 2 ? '🤖' : '🙂';
+            }
+            results() {
+                return this.history().filter(item => 'document' in item && item.document);
+            }
+            version(next) {
+                const count = this.results().length;
+                if (next && next < 0)
+                    next = 0;
+                if (next && next >= count)
+                    next = count - 1;
+                return Math.max(0, next ?? count - 1);
+            }
+            result(next) {
+                return next ?? this.results()[this.version()]?.document ?? '';
+            }
+            rules() {
+                return super.rules()
+                    .replaceAll('{lang}', this.$.$mol_locale.lang());
+            }
+            context() {
+                return this.rules();
+            }
+            communication() {
+                const history = this.history();
+                if (history.length % 2 === 0)
+                    return;
+                const model = this.Model().fork();
+                for (let i = 0; i < history.length; ++i) {
+                    const item = history[i];
+                    if (i % 2)
+                        model.tell([{ messsage: item.message }]);
+                    else
+                        model.ask([item.message, ...item.files]);
+                }
+                try {
+                    const resp = model.response();
+                    this.history([...history, resp]);
+                }
+                catch (error) {
+                    if ($mol_promise_like(error))
+                        $mol_fail_hidden(error);
+                    if ($mol_fail_log(error)) {
+                        this.history([...history, { message: '📛' + error.message, files: [] }]);
+                    }
+                }
+            }
+            prompt_submit() {
+                if (!this.prompt_text() && !this.attach())
+                    return;
+                const Picture = $mol_wire_sync(this.$.$mol_picture);
+                const files = this.attach().map(item => Picture.fit(item, 512).url('image/webp'));
+                this.history([...this.history(), { message: this.prompt_text(), files }]);
+                this.prompt_text('');
+                this.attach([]);
+            }
+            reset() {
+                this.history([]);
+            }
+            quote_start() {
+                this.quote($mol_dom.document.getSelection()?.toString() ?? '');
+            }
+            quote_end() {
+                let quote = this.quote().trim();
+                if (!quote)
+                    return;
+                const [from, to] = this.Prompt_text().Edit().selection();
+                if (from !== to)
+                    return;
+                let text = this.prompt_text();
+                if (to < text.length - 1)
+                    return;
+                text = (text ? text + '\n' : '') + quote.replaceAll(/^/mg, '> ') + '\n';
+                this.prompt_text(text);
+                this.Prompt_text().Edit().selection([text.length, text.length]);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $giper_bot.prototype, "pages", null);
+        __decorate([
+            $mol_mem
+        ], $giper_bot.prototype, "history", null);
+        __decorate([
+            $mol_mem_key
+        ], $giper_bot.prototype, "message_text", null);
+        __decorate([
+            $mol_mem
+        ], $giper_bot.prototype, "results", null);
+        __decorate([
+            $mol_mem
+        ], $giper_bot.prototype, "version", null);
+        __decorate([
+            $mol_mem
+        ], $giper_bot.prototype, "result", null);
+        __decorate([
+            $mol_mem
+        ], $giper_bot.prototype, "rules", null);
+        __decorate([
+            $mol_mem
+        ], $giper_bot.prototype, "communication", null);
+        __decorate([
+            $mol_action
+        ], $giper_bot.prototype, "prompt_submit", null);
+        $$.$giper_bot = $giper_bot;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const { url, linear_gradient, hsla } = $mol_style_func;
+        $mol_style_define($giper_bot, {
+            background: {
+                size: ['cover'],
+                position: 'center',
+                image: [
+                    [linear_gradient($mol_theme.spirit)],
+                    [url('giper/bot/logo/back.jpg')],
+                ]
+            },
+            Dialog: {
+                margin: {
+                    left: 'auto',
+                    right: 'auto',
+                },
+                flex: {
+                    basis: '30rem',
+                    grow: 1,
+                },
+                Body: {
+                    display: 'flex',
+                    flex: {
+                        direction: 'column-reverse',
+                    },
+                    align: {
+                        items: 'stretch',
+                    },
+                    padding: $mol_gap.block,
+                },
+            },
+            Result_page: {
+                flex: {
+                    basis: `50rem`,
+                    grow: 1,
+                },
+                margin: {
+                    right: 'auto',
+                },
+            },
+            Attach: {
+                Item: {
+                    height: '2.5rem',
+                },
+                Add: {
+                    height: '2.5rem',
+                },
+            },
+            Prompt_text: {
+                flex: {
+                    shrink: 1,
+                },
+            },
+            Context: {
+                flex: {
+                    basis: '30rem',
+                },
+                Body_content: {
+                    gap: $mol_gap.block,
+                },
+            }
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_admin_bot) = class $bog_blitz_admin_bot extends ($.$giper_bot) {
+		Space(){
+			return null;
+		}
+		dialog_title(next){
+			if(next !== undefined) return next;
+			return (this.$.$mol_locale.text("$bog_blitz_admin_bot_dialog_title"));
+		}
+		on_quiz(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+	};
+	($mol_mem(($.$bog_blitz_admin_bot.prototype), "dialog_title"));
+	($mol_mem(($.$bog_blitz_admin_bot.prototype), "on_quiz"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_admin_bot extends $.$bog_blitz_admin_bot {
+            rules() {
+                const base = super.rules();
+                return base + `
+
+ADDITIONAL CONTEXT: You are a quiz generator bot for Blitz Quiz app.
+When the user describes a topic, number of questions, or any quiz idea — generate a quiz in JSON format.
+Put the quiz JSON string into the "document" field of your response.
+The quiz JSON must follow this exact structure:
+
+{
+  "title": "Quiz Title",
+  "time_read": 5,
+  "time_answer": 10,
+  "time_leaderboard": 10,
+  "points_base": 100,
+  "time_multiplier": 1.5,
+  "questions": [
+    {
+      "text": "Question text?",
+      "type": "choice",
+      "options": [
+        { "text": "Option A", "is_correct": true },
+        { "text": "Option B", "is_correct": false },
+        { "text": "Option C", "is_correct": false },
+        { "text": "Option D", "is_correct": false }
+      ]
+    },
+    {
+      "text": "What is 2+2?",
+      "type": "text_input",
+      "correct_text": "4, four"
+    }
+  ]
+}
+
+Quiz generation rules:
+- "type" is either "choice" (multiple choice with options) or "text_input" (free text answer)
+- For "choice": provide 2-6 options, at least one must have "is_correct": true
+- For "text_input": provide "correct_text" with comma-separated acceptable answers (case-insensitive)
+- Generate interesting, varied questions
+- Every quiz must have a unique title — always vary the title, even if the topic is the same
+- In "message" briefly describe what you generated
+- The "document" field must contain the quiz JSON as a string`;
+            }
+            communication() {
+                super.communication();
+                const doc = this.result();
+                if (!doc)
+                    return;
+                try {
+                    const data = JSON.parse(doc);
+                    if (data.title && Array.isArray(data.questions)) {
+                        this.on_quiz(doc);
+                    }
+                }
+                catch { }
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_bot.prototype, "rules", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_bot.prototype, "communication", null);
+        $$.$bog_blitz_admin_bot = $bog_blitz_admin_bot;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$mol_icon_arrow_left) = class $mol_icon_arrow_left extends ($.$mol_icon) {
+		path(){
+			return "M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_share) = class $mol_icon_share extends ($.$mol_icon) {
+		path(){
+			return "M21,12L14,5V9C7,10 4,15 3,20C5.5,16.5 9,14.9 14,14.9V19L21,12Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$bog_blitz_admin_quiz) = class $bog_blitz_admin_quiz extends ($.$mol_row) {
+		Shared_icon(){
+			const obj = new this.$.$mol_icon_share();
+			return obj;
+		}
+		Shared_badge(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Shared_icon())]);
+			return obj;
+		}
+		quiz_title(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Title_input(){
+			const obj = new this.$.$mol_string_button();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_quiz_Title_input_hint")));
+			(obj.value) = (next) => ((this.quiz_title(next)));
+			return obj;
+		}
+		share(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Share(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_quiz_Share_title")));
+			(obj.click) = (next) => ((this.share(next)));
+			return obj;
+		}
+		duplicate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Duplicate(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_quiz_Duplicate_title")));
+			(obj.click) = (next) => ((this.duplicate(next)));
+			return obj;
+		}
+		edit(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Edit(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_quiz_Edit_title")));
+			(obj.click) = (next) => ((this.edit(next)));
+			return obj;
+		}
+		start(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Start(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_quiz_Start_title")));
+			(obj.click) = (next) => ((this.start(next)));
+			return obj;
+		}
+		delete(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Delete(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_quiz_Delete_title")));
+			(obj.click) = (next) => ((this.delete(next)));
+			return obj;
+		}
+		is_shared(){
+			return false;
+		}
+		sub(){
+			return [
+				(this.Shared_badge()), 
+				(this.Title_input()), 
+				(this.Share()), 
+				(this.Duplicate()), 
+				(this.Edit()), 
+				(this.Start()), 
+				(this.Delete())
+			];
+		}
+	};
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "Shared_icon"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "Shared_badge"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "quiz_title"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "Title_input"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "share"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "Share"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "duplicate"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "Duplicate"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "edit"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "Edit"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "start"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "Start"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "delete"));
+	($mol_mem(($.$bog_blitz_admin_quiz.prototype), "Delete"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_admin_quiz extends $.$bog_blitz_admin_quiz {
+            sub() {
+                if (this.is_shared()) {
+                    return [
+                        this.Shared_badge(),
+                        this.Title_input(),
+                        this.Share(),
+                        this.Duplicate(),
+                        this.Edit(),
+                        this.Start(),
+                        this.Delete(),
+                    ];
+                }
+                return [
+                    this.Title_input(),
+                    this.Share(),
+                    this.Edit(),
+                    this.Start(),
+                    this.Delete(),
+                ];
+            }
+        }
+        $$.$bog_blitz_admin_quiz = $bog_blitz_admin_quiz;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_admin_quiz, {
+            background: {
+                color: $mol_theme.card,
+            },
+            border: {
+                radius: '0.5rem',
+            },
+            padding: {
+                top: '0.25rem',
+                bottom: '0.25rem',
+                left: '0.75rem',
+                right: '0.25rem',
+            },
+            align: {
+                items: 'center',
+            },
+            gap: '0.25rem',
+            Title_input: {
+                flex: {
+                    grow: 1,
+                    shrink: 1,
+                },
+            },
+            Shared_badge: {
+                color: $mol_theme.focus,
+            },
+            Delete: {
+                color: '#cc3333',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_tick) = class $mol_icon_tick extends ($.$mol_icon) {
+		path(){
+			return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_check_box) = class $mol_check_box extends ($.$mol_check) {
+		Icon(){
+			const obj = new this.$.$mol_icon_tick();
+			return obj;
+		}
+	};
+	($mol_mem(($.$mol_check_box.prototype), "Icon"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/check/box/box.view.css", "[mol_check_box_icon] {\n\tborder-radius: var(--mol_gap_round);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n\tcolor: var(--mol_theme_shade);\n\theight: 1rem;\n\talign-self: center;\n}\n\n[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {\n\tfill: transparent;\n}\n\n[mol_check]:not([disabled]) > [mol_check_box_icon] {\n\tbackground: var(--mol_theme_field);\n\tcolor: var(--mol_theme_text);\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$mol_labeler) = class $mol_labeler extends ($.$mol_list) {
+		label(){
+			return [(this.title())];
+		}
+		Label(){
+			const obj = new this.$.$mol_view();
+			(obj.minimal_height) = () => (32);
+			(obj.sub) = () => ((this.label()));
+			return obj;
+		}
+		content(){
+			return [];
+		}
+		Content(){
+			const obj = new this.$.$mol_view();
+			(obj.minimal_height) = () => (24);
+			(obj.sub) = () => ((this.content()));
+			return obj;
+		}
+		rows(){
+			return [(this.Label()), (this.Content())];
+		}
+	};
+	($mol_mem(($.$mol_labeler.prototype), "Label"));
+	($mol_mem(($.$mol_labeler.prototype), "Content"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_label] {\n\tmin-height: 2rem;\n\tcolor: var(--mol_theme_shade);\n\tpadding: .5rem .75rem 0;\n\tgap: 0 var(--mol_gap_block);\n\tflex-wrap: wrap;\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n\tpadding: var(--mol_gap_text);\n\tmin-height: 2.5rem;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+	($.$mol_number) = class $mol_number extends ($.$mol_view) {
+		precision(){
+			return 1;
+		}
+		event_dec(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_inc(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_dec_boost(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		event_inc_boost(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Hotkey(){
+			const obj = new this.$.$mol_hotkey();
+			(obj.key) = () => ({
+				"down": (next) => (this.event_dec(next)), 
+				"up": (next) => (this.event_inc(next)), 
+				"pageDown": (next) => (this.event_dec_boost(next)), 
+				"pageUp": (next) => (this.event_inc_boost(next))
+			});
+			return obj;
+		}
+		dec_enabled(){
+			return (this.enabled());
+		}
+		dec_icon(){
+			const obj = new this.$.$mol_icon_chevron_left();
+			return obj;
+		}
+		Dec(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.event_click) = (next) => ((this.event_dec(next)));
+			(obj.enabled) = () => ((this.dec_enabled()));
+			(obj.sub) = () => ([(this.dec_icon())]);
+			return obj;
+		}
+		type(){
+			return "text";
+		}
+		value_string(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		hint(){
+			return " ";
+		}
+		string_enabled(){
+			return (this.enabled());
+		}
+		submit(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		String(){
+			const obj = new this.$.$mol_string();
+			(obj.type) = () => ((this.type()));
+			(obj.keyboard) = () => ("decimal");
+			(obj.value) = (next) => ((this.value_string(next)));
+			(obj.hint) = () => ((this.hint()));
+			(obj.enabled) = () => ((this.string_enabled()));
+			(obj.submit) = (next) => ((this.submit(next)));
+			return obj;
+		}
+		inc_enabled(){
+			return (this.enabled());
+		}
+		inc_icon(){
+			const obj = new this.$.$mol_icon_chevron_right();
+			return obj;
+		}
+		Inc(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.event_click) = (next) => ((this.event_inc(next)));
+			(obj.enabled) = () => ((this.inc_enabled()));
+			(obj.sub) = () => ([(this.inc_icon())]);
+			return obj;
+		}
+		precision_view(){
+			return (this.precision());
+		}
+		precision_change(){
+			return (this.precision());
+		}
+		boost(){
+			return 10;
+		}
+		value_min(){
+			return -Infinity;
+		}
+		value_max(){
+			return +Infinity;
+		}
+		value(next){
+			if(next !== undefined) return next;
+			return +NaN;
+		}
+		enabled(){
+			return true;
+		}
+		plugins(){
+			return [(this.Hotkey())];
+		}
+		sub(){
+			return [
+				(this.Dec()), 
+				(this.String()), 
+				(this.Inc())
+			];
+		}
+	};
+	($mol_mem(($.$mol_number.prototype), "event_dec"));
+	($mol_mem(($.$mol_number.prototype), "event_inc"));
+	($mol_mem(($.$mol_number.prototype), "event_dec_boost"));
+	($mol_mem(($.$mol_number.prototype), "event_inc_boost"));
+	($mol_mem(($.$mol_number.prototype), "Hotkey"));
+	($mol_mem(($.$mol_number.prototype), "dec_icon"));
+	($mol_mem(($.$mol_number.prototype), "Dec"));
+	($mol_mem(($.$mol_number.prototype), "value_string"));
+	($mol_mem(($.$mol_number.prototype), "submit"));
+	($mol_mem(($.$mol_number.prototype), "String"));
+	($mol_mem(($.$mol_number.prototype), "inc_icon"));
+	($mol_mem(($.$mol_number.prototype), "Inc"));
+	($mol_mem(($.$mol_number.prototype), "value"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/number/number.css", "[mol_number] {\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tposition: relative;\n\talign-items: stretch;\n\tmax-width: 100%;\n}\n\n[mol_number_string] {\n\tappearance: textfield;\n\tflex: 1 1 7rem;\n\twidth: 7rem;\n}\n\n[mol_number_string]::-webkit-inner-spin-button {\n\tdisplay: none;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_number extends $.$mol_number {
+            value_limited(val) {
+                if (Number.isNaN(val))
+                    return this.value(val);
+                if (val === undefined)
+                    return this.value();
+                const min = this.value_min();
+                const max = this.value_max();
+                if (val < min)
+                    return this.value(min);
+                if (val > max)
+                    return this.value(max);
+                return this.value(val);
+            }
+            event_dec(next) {
+                this.value_limited((this.value_limited() || 0) - this.precision_change());
+                next?.preventDefault();
+            }
+            event_inc(next) {
+                this.value_limited((this.value_limited() || 0) + this.precision_change());
+                next?.preventDefault();
+            }
+            event_dec_boost(next) {
+                this.value_limited((this.value_limited() || 0) - this.precision_change() * this.boost());
+                next?.preventDefault();
+            }
+            event_inc_boost(next) {
+                this.value_limited((this.value_limited() || 0) + this.precision_change() * this.boost());
+                next?.preventDefault();
+            }
+            round(val) {
+                if (Number.isNaN(val))
+                    return '';
+                if (val === 0)
+                    return '0';
+                if (!val)
+                    return '';
+                const precision_view = this.precision_view();
+                if (!precision_view)
+                    return val.toFixed();
+                if (precision_view >= 1) {
+                    return (val / precision_view).toFixed();
+                }
+                else {
+                    const fixed_number = Math.log10(1 / precision_view);
+                    return val.toFixed(Math.ceil(fixed_number));
+                }
+            }
+            value_string(next) {
+                const current = this.round(this.value_limited());
+                if (next === undefined)
+                    return current;
+                const precision = this.precision_view();
+                if (precision - Math.floor(precision) === 0)
+                    next = next.replace(/[.,]/g, '');
+                next = (this.value_min() < 0 && next.startsWith('-') ? '-' : '')
+                    + next.replace(/,/g, '.').replace(/[^\d\.]/g, '').replace(/^0{2,}/, '0');
+                let dot_pos = next.indexOf('.');
+                if (dot_pos !== -1) {
+                    const prev = $mol_wire_probe(() => this.value_string()) ?? '';
+                    const dot_pos_prev = prev.indexOf('.');
+                    if (dot_pos_prev === dot_pos)
+                        dot_pos = next.lastIndexOf('.');
+                    const frac = next.slice(dot_pos + 1).replace(/\./g, '');
+                    next = (next.slice(0, dot_pos) || '0').replace(/\./g, '') + '.' + frac;
+                }
+                if (Number.isNaN(Number(next)))
+                    return next;
+                if (next.endsWith('.'))
+                    return next;
+                if (next.endsWith('-'))
+                    return next;
+                this.value_limited(Number(next || Number.NaN));
+                return next;
+            }
+            dec_enabled() {
+                return this.enabled() && (!((this.value() || 0) <= this.value_min()));
+            }
+            inc_enabled() {
+                return this.enabled() && (!((this.value() || 0) >= this.value_max()));
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_number.prototype, "value_string", null);
+        __decorate([
+            $mol_mem
+        ], $mol_number.prototype, "dec_enabled", null);
+        __decorate([
+            $mol_mem
+        ], $mol_number.prototype, "inc_enabled", null);
+        $$.$mol_number = $mol_number;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_admin_question) = class $bog_blitz_admin_question extends ($.$mol_list) {
+		question_text(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Text_input(){
+			const obj = new this.$.$mol_string_button();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_question_Text_input_hint")));
+			(obj.value) = (next) => ((this.question_text(next)));
+			return obj;
+		}
+		number_title(){
+			return "";
+		}
+		Number(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.number_title()));
+			return obj;
+		}
+		question_type(next){
+			if(next !== undefined) return next;
+			return "choice";
+		}
+		Type_select(){
+			const obj = new this.$.$mol_select();
+			(obj.value) = (next) => ((this.question_type(next)));
+			(obj.dictionary) = () => ({"choice": (this.$.$mol_locale.text("$bog_blitz_admin_question_Type_select_dictionary_choice")), "text_input": (this.$.$mol_locale.text("$bog_blitz_admin_question_Type_select_dictionary_text_input"))});
+			return obj;
+		}
+		delete(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Delete(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_question_Delete_title")));
+			(obj.click) = (next) => ((this.delete(next)));
+			return obj;
+		}
+		Header(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ([
+				(this.Number()), 
+				(this.Type_select()), 
+				(this.Delete())
+			]);
+			return obj;
+		}
+		option_rows(){
+			return [];
+		}
+		Options_section(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.option_rows()));
+			return obj;
+		}
+		add_option(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Add_option(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_question_Add_option_title")));
+			(obj.click) = (next) => ((this.add_option(next)));
+			return obj;
+		}
+		correct_text(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Correct_text_input(){
+			const obj = new this.$.$mol_string_button();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_question_Correct_text_input_hint")));
+			(obj.value) = (next) => ((this.correct_text(next)));
+			return obj;
+		}
+		question_rows(){
+			return [
+				(this.Text_input()), 
+				(this.Header()), 
+				(this.Options_section()), 
+				(this.Add_option()), 
+				(this.Correct_text_input())
+			];
+		}
+		image_section_content(){
+			return [];
+		}
+		question_image_files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		question_image_uri(){
+			return "";
+		}
+		remove_image(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		question(){
+			return null;
+		}
+		number(){
+			return 0;
+		}
+		rows(){
+			return (this.question_rows());
+		}
+		Image_section(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ((this.image_section_content()));
+			return obj;
+		}
+		Image_upload(){
+			const obj = new this.$.$mol_button_open();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_question_Image_upload_title")));
+			(obj.files) = (next) => ((this.question_image_files(next)));
+			return obj;
+		}
+		Image_preview(){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.question_image_uri()));
+			return obj;
+		}
+		Image_remove(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_question_Image_remove_title")));
+			(obj.click) = (next) => ((this.remove_image(next)));
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "question_text"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Text_input"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Number"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "question_type"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Type_select"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "delete"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Delete"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Header"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Options_section"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "add_option"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Add_option"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "correct_text"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Correct_text_input"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "question_image_files"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "remove_image"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Image_section"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Image_upload"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Image_preview"));
+	($mol_mem(($.$bog_blitz_admin_question.prototype), "Image_remove"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_admin_question extends $.$bog_blitz_admin_question {
+            image_section_content() {
+                if (this.question_image_uri()) {
+                    return [this.Image_preview(), this.Image_remove()];
+                }
+                return [this.Image_upload()];
+            }
+            question_rows() {
+                const rows = [this.Text_input(), this.Header()];
+                if (this.question_type() === 'text_input') {
+                    rows.push(this.Correct_text_input());
+                }
+                else {
+                    rows.push(this.Options_section());
+                    rows.push(this.Add_option());
+                }
+                rows.push(this.Image_section());
+                return rows;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_question.prototype, "image_section_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_question.prototype, "question_rows", null);
+        $$.$bog_blitz_admin_question = $bog_blitz_admin_question;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_admin_question, {
+            background: {
+                color: $mol_theme.card,
+            },
+            border: {
+                radius: '0.5rem',
+            },
+            padding: {
+                top: '0.5rem',
+                bottom: '0.5rem',
+                left: '0.75rem',
+                right: '0.75rem',
+            },
+            Header: {
+                gap: '0.25rem',
+            },
+            Delete: {
+                color: '#cc3333',
+            },
+            Options_section: {
+                padding: {
+                    top: 0,
+                    bottom: 0,
+                    left: '1rem',
+                    right: 0,
+                },
+                gap: '0.5rem',
+            },
+            Add_option: {
+                align: {
+                    self: 'flex-start',
+                },
+            },
+            Image_section: {
+                align: {
+                    items: 'center',
+                },
+                gap: '0.5rem',
+            },
+            Image_upload: {
+                Native: {
+                    top: 0,
+                    height: '100%',
+                },
+            },
+            Image_preview: {
+                maxHeight: '8rem',
+                maxWidth: '12rem',
+                border: {
+                    radius: '0.25rem',
+                },
+                overflow: 'hidden',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_admin_option) = class $bog_blitz_admin_option extends ($.$mol_list) {
+		option_content(){
+			return [];
+		}
+		image_section_content(){
+			return [];
+		}
+		option_image_uri(){
+			return "";
+		}
+		option_image_files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		remove_image(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		option_text(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Text(){
+			const obj = new this.$.$mol_string_button();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_option_Text_hint")));
+			(obj.value) = (next) => ((this.option_text(next)));
+			return obj;
+		}
+		is_correct(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Checkbox(){
+			const obj = new this.$.$mol_check_box();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_option_Checkbox_title")));
+			(obj.checked) = (next) => ((this.is_correct(next)));
+			return obj;
+		}
+		delete(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Delete(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_option_Delete_title")));
+			(obj.click) = (next) => ((this.delete(next)));
+			return obj;
+		}
+		rows(){
+			return (this.option_content());
+		}
+		Image_section(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ((this.image_section_content()));
+			return obj;
+		}
+		Image_preview(){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.option_image_uri()));
+			return obj;
+		}
+		Image_upload(){
+			const obj = new this.$.$mol_button_open();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_option_Image_upload_title")));
+			(obj.files) = (next) => ((this.option_image_files(next)));
+			return obj;
+		}
+		Image_remove(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_option_Image_remove_title")));
+			(obj.click) = (next) => ((this.remove_image(next)));
+			return obj;
+		}
+		Controls(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ([
+				(this.Text()), 
+				(this.Checkbox()), 
+				(this.Delete())
+			]);
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "option_image_files"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "remove_image"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "option_text"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "Text"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "is_correct"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "Checkbox"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "delete"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "Delete"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "Image_section"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "Image_preview"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "Image_upload"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "Image_remove"));
+	($mol_mem(($.$bog_blitz_admin_option.prototype), "Controls"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_admin_option extends $.$bog_blitz_admin_option {
+            image_section_content() {
+                if (this.option_image_uri()) {
+                    return [this.Image_preview(), this.Image_remove()];
+                }
+                return [this.Image_upload()];
+            }
+            option_content() {
+                return [this.Image_section(), this.Controls()];
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_option.prototype, "image_section_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_option.prototype, "option_content", null);
+        $$.$bog_blitz_admin_option = $bog_blitz_admin_option;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_admin_option, {
+            background: {
+                color: $mol_theme.hover,
+            },
+            border: {
+                radius: '0.25rem',
+            },
+            padding: {
+                top: '0.25rem',
+                bottom: '0.25rem',
+                left: '0.5rem',
+                right: '0.25rem',
+            },
+            Controls: {
+                gap: '0.25rem',
+            },
+            Text: {
+                flex: {
+                    grow: 1,
+                    shrink: 1,
+                },
+            },
+            Delete: {
+                color: '#cc3333',
+            },
+            Image_section: {
+                align: {
+                    items: 'center',
+                },
+                gap: '0.5rem',
+            },
+            Image_upload: {
+                Native: {
+                    top: 0,
+                    height: '100%',
+                },
+            },
+            Image_preview: {
+                maxHeight: '6rem',
+                maxWidth: '10rem',
+                border: {
+                    radius: '0.25rem',
+                },
+                overflow: 'hidden',
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_admin_editor) = class $bog_blitz_admin_editor extends ($.$mol_list) {
+		editor_rows(){
+			return [];
+		}
+		quiz_title(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		manual_mode(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Manual_mode(){
+			const obj = new this.$.$mol_check_box();
+			(obj.checked) = (next) => ((this.manual_mode(next)));
+			return obj;
+		}
+		Manual_mode_row(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_editor_Manual_mode_row_title")));
+			(obj.content) = () => ([(this.Manual_mode())]);
+			return obj;
+		}
+		time_read(next){
+			if(next !== undefined) return next;
+			return 5;
+		}
+		Time_read(){
+			const obj = new this.$.$mol_number();
+			(obj.value) = (next) => ((this.time_read(next)));
+			return obj;
+		}
+		Time_read_row(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_editor_Time_read_row_title")));
+			(obj.content) = () => ([(this.Time_read())]);
+			return obj;
+		}
+		time_answer(next){
+			if(next !== undefined) return next;
+			return 10;
+		}
+		Time_answer(){
+			const obj = new this.$.$mol_number();
+			(obj.value) = (next) => ((this.time_answer(next)));
+			return obj;
+		}
+		Time_answer_row(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_editor_Time_answer_row_title")));
+			(obj.content) = () => ([(this.Time_answer())]);
+			return obj;
+		}
+		time_reveal(next){
+			if(next !== undefined) return next;
+			return 5;
+		}
+		Time_reveal(){
+			const obj = new this.$.$mol_number();
+			(obj.value) = (next) => ((this.time_reveal(next)));
+			return obj;
+		}
+		Time_reveal_row(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_editor_Time_reveal_row_title")));
+			(obj.content) = () => ([(this.Time_reveal())]);
+			return obj;
+		}
+		time_leaderboard(next){
+			if(next !== undefined) return next;
+			return 10;
+		}
+		Time_leaderboard(){
+			const obj = new this.$.$mol_number();
+			(obj.value) = (next) => ((this.time_leaderboard(next)));
+			return obj;
+		}
+		Time_leaderboard_row(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_editor_Time_leaderboard_row_title")));
+			(obj.content) = () => ([(this.Time_leaderboard())]);
+			return obj;
+		}
+		points_base(next){
+			if(next !== undefined) return next;
+			return 100;
+		}
+		Points_base(){
+			const obj = new this.$.$mol_number();
+			(obj.value) = (next) => ((this.points_base(next)));
+			return obj;
+		}
+		Points_base_row(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_editor_Points_base_row_title")));
+			(obj.content) = () => ([(this.Points_base())]);
+			return obj;
+		}
+		time_multiplier(next){
+			if(next !== undefined) return next;
+			return 1.5;
+		}
+		Time_multiplier(){
+			const obj = new this.$.$mol_number();
+			(obj.value) = (next) => ((this.time_multiplier(next)));
+			return obj;
+		}
+		Time_multiplier_row(){
+			const obj = new this.$.$mol_labeler();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_editor_Time_multiplier_row_title")));
+			(obj.content) = () => ([(this.Time_multiplier())]);
+			return obj;
+		}
+		add_question(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		question_number(id){
+			return 0;
+		}
+		question_text(id, next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		question_type(id, next){
+			if(next !== undefined) return next;
+			return "choice";
+		}
+		delete_question(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		option_rows(id){
+			return [];
+		}
+		add_option(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		correct_text(id, next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		question_image_files(id, next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		question_image_uri(id){
+			return "";
+		}
+		remove_question_image(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		option_text(id, next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		is_correct(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		delete_option(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		option_image_files(id, next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		option_image_uri(id){
+			return "";
+		}
+		remove_option_image(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		quiz_land(){
+			return null;
+		}
+		rows(){
+			return (this.editor_rows());
+		}
+		Title_input(){
+			const obj = new this.$.$mol_string_button();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_editor_Title_input_hint")));
+			(obj.value) = (next) => ((this.quiz_title(next)));
+			return obj;
+		}
+		Settings(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ([
+				(this.Manual_mode_row()), 
+				(this.Time_read_row()), 
+				(this.Time_answer_row()), 
+				(this.Time_reveal_row()), 
+				(this.Time_leaderboard_row()), 
+				(this.Points_base_row()), 
+				(this.Time_multiplier_row())
+			]);
+			return obj;
+		}
+		Add_question(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_editor_Add_question_title")));
+			(obj.click) = (next) => ((this.add_question(next)));
+			return obj;
+		}
+		Question(id){
+			const obj = new this.$.$bog_blitz_admin_question();
+			(obj.number) = () => ((this.question_number("0")));
+			(obj.question_text) = (next) => ((this.question_text(id, next)));
+			(obj.question_type) = (next) => ((this.question_type(id, next)));
+			(obj.delete) = (next) => ((this.delete_question(id, next)));
+			(obj.option_rows) = () => ((this.option_rows(id)));
+			(obj.add_option) = (next) => ((this.add_option(id, next)));
+			(obj.correct_text) = (next) => ((this.correct_text(id, next)));
+			(obj.question_image_files) = (next) => ((this.question_image_files(id, next)));
+			(obj.question_image_uri) = () => ((this.question_image_uri(id)));
+			(obj.remove_image) = (next) => ((this.remove_question_image(id, next)));
+			return obj;
+		}
+		Option(id){
+			const obj = new this.$.$bog_blitz_admin_option();
+			(obj.option_text) = (next) => ((this.option_text(id, next)));
+			(obj.is_correct) = (next) => ((this.is_correct(id, next)));
+			(obj.delete) = (next) => ((this.delete_option(id, next)));
+			(obj.option_image_files) = (next) => ((this.option_image_files(id, next)));
+			(obj.option_image_uri) = () => ((this.option_image_uri(id)));
+			(obj.remove_image) = (next) => ((this.remove_option_image(id, next)));
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "quiz_title"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "manual_mode"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Manual_mode"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Manual_mode_row"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "time_read"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Time_read"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Time_read_row"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "time_answer"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Time_answer"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Time_answer_row"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "time_reveal"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Time_reveal"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Time_reveal_row"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "time_leaderboard"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Time_leaderboard"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Time_leaderboard_row"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "points_base"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Points_base"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Points_base_row"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "time_multiplier"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Time_multiplier"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Time_multiplier_row"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "add_question"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "question_text"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "question_type"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "delete_question"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "add_option"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "correct_text"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "question_image_files"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "remove_question_image"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "option_text"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "is_correct"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "delete_option"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "option_image_files"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "remove_option_image"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Title_input"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Settings"));
+	($mol_mem(($.$bog_blitz_admin_editor.prototype), "Add_question"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "Question"));
+	($mol_mem_key(($.$bog_blitz_admin_editor.prototype), "Option"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        function compress_image(file, max_size = 400, quality = 0.3) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => {
+                    let { width, height } = img;
+                    if (width > max_size || height > max_size) {
+                        const ratio = Math.min(max_size / width, max_size / height);
+                        width = Math.round(width * ratio);
+                        height = Math.round(height * ratio);
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                    canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('compress failed')), 'image/jpeg', quality);
+                };
+                img.onerror = reject;
+                img.src = URL.createObjectURL(file);
+            });
+        }
+        class $bog_blitz_admin_editor extends $.$bog_blitz_admin_editor {
+            quiz_data() {
+                const land = this.quiz_land();
+                if (!land)
+                    return null;
+                return land.Data($bog_blitz_quiz);
+            }
+            questions() {
+                return this.quiz_data()?.Questions()?.remote_list() ?? [];
+            }
+            editor_rows() {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return [];
+                const rows = [this.Title_input(), this.Settings()];
+                const questions = this.questions();
+                for (let i = 0; i < questions.length; i++) {
+                    rows.push(this.Question(String(i)));
+                }
+                rows.push(this.Add_question());
+                return rows;
+            }
+            quiz_title(next) {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return '';
+                if (next !== undefined) {
+                    quiz.Title('auto')?.val(next);
+                    return next;
+                }
+                return quiz.Title()?.val() ?? '';
+            }
+            question_number(key) {
+                return Number(key) + 1;
+            }
+            question_text(key, next) {
+                const q = this.questions()[Number(key)];
+                if (!q)
+                    return '';
+                if (next !== undefined) {
+                    q.Text('auto')?.val(next);
+                    return next;
+                }
+                return q.Text()?.val() ?? '';
+            }
+            question_type(key, next) {
+                const q = this.questions()[Number(key)];
+                if (!q)
+                    return 'choice';
+                if (next !== undefined) {
+                    q.Type('auto')?.val(next);
+                    return next;
+                }
+                return q.Type()?.val() ?? 'choice';
+            }
+            add_question() {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return;
+                const questions = quiz.Questions('auto');
+                const q = questions.make(null);
+                q.Type('auto')?.val('choice');
+            }
+            delete_question(key) {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return;
+                const q = this.questions()[Number(key)];
+                if (!q)
+                    return;
+                quiz.Questions('auto').cut(q.link());
+            }
+            option_rows(key) {
+                const q = this.questions()[Number(key)];
+                if (!q)
+                    return [];
+                const options = q.Options()?.remote_list() ?? [];
+                return options.map((_, i) => this.Option(`${key}_${i}`));
+            }
+            add_option(key) {
+                const q = this.questions()[Number(key)];
+                if (!q)
+                    return;
+                q.Options('auto').make(null);
+            }
+            delete_option(key) {
+                const [qKey, oKey] = key.split('_');
+                const q = this.questions()[Number(qKey)];
+                if (!q)
+                    return;
+                const opt = (q.Options()?.remote_list() ?? [])[Number(oKey)];
+                if (!opt)
+                    return;
+                q.Options('auto').cut(opt.link());
+            }
+            option_text(key, next) {
+                const [qKey, oKey] = key.split('_');
+                const q = this.questions()[Number(qKey)];
+                if (!q)
+                    return '';
+                const opt = (q.Options()?.remote_list() ?? [])[Number(oKey)];
+                if (!opt)
+                    return '';
+                if (next !== undefined) {
+                    opt.Text('auto')?.val(next);
+                    return next;
+                }
+                return opt.Text()?.val() ?? '';
+            }
+            is_correct(key, next) {
+                const [qKey, oKey] = key.split('_');
+                const q = this.questions()[Number(qKey)];
+                if (!q)
+                    return false;
+                const opt = (q.Options()?.remote_list() ?? [])[Number(oKey)];
+                if (!opt)
+                    return false;
+                if (next !== undefined) {
+                    opt.Is_correct('auto')?.val(next);
+                    return next;
+                }
+                return opt.Is_correct()?.val() ?? false;
+            }
+            correct_text(key, next) {
+                const q = this.questions()[Number(key)];
+                if (!q)
+                    return '';
+                if (next !== undefined) {
+                    q.Correct_text('auto')?.val(next);
+                    return next;
+                }
+                return q.Correct_text()?.val() ?? '';
+            }
+            question_image_uri(key) {
+                const q = this.questions()[Number(key)];
+                if (!q)
+                    return '';
+                const file = q.Image()?.remote();
+                if (!file)
+                    return '';
+                return URL.createObjectURL(file.blob());
+            }
+            question_image_files(key, next) {
+                if (next?.length) {
+                    const q = this.questions()[Number(key)];
+                    if (q) {
+                        const store = q.Image(null).ensure(null);
+                        if (store) {
+                            compress_image(next[0]).then(blob => {
+                                store.blob(blob);
+                                q.Image(null).remote(store);
+                            });
+                        }
+                    }
+                }
+                return next ?? [];
+            }
+            option_image_uri(key) {
+                const [qKey, oKey] = key.split('_');
+                const q = this.questions()[Number(qKey)];
+                if (!q)
+                    return '';
+                const opt = (q.Options()?.remote_list() ?? [])[Number(oKey)];
+                if (!opt)
+                    return '';
+                const file = opt.Image()?.remote();
+                if (!file)
+                    return '';
+                return URL.createObjectURL(file.blob());
+            }
+            option_image_files(key, next) {
+                if (next?.length) {
+                    const [qKey, oKey] = key.split('_');
+                    const q = this.questions()[Number(qKey)];
+                    if (!q)
+                        return next ?? [];
+                    const opt = (q.Options()?.remote_list() ?? [])[Number(oKey)];
+                    if (opt) {
+                        const store = opt.Image(null).ensure(null);
+                        if (store) {
+                            compress_image(next[0]).then(blob => {
+                                store.blob(blob);
+                                opt.Image(null).remote(store);
+                            });
+                        }
+                    }
+                }
+                return next ?? [];
+            }
+            remove_question_image(key) {
+                const q = this.questions()[Number(key)];
+                if (!q)
+                    return;
+                q.Image('auto')?.val(null);
+            }
+            remove_option_image(key) {
+                const [qKey, oKey] = key.split('_');
+                const q = this.questions()[Number(qKey)];
+                if (!q)
+                    return;
+                const opt = (q.Options()?.remote_list() ?? [])[Number(oKey)];
+                if (!opt)
+                    return;
+                opt.Image('auto')?.val(null);
+            }
+            manual_mode(next) {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return false;
+                if (next !== undefined) {
+                    quiz.Manual_mode('auto')?.val(next);
+                    return next;
+                }
+                return quiz.Manual_mode()?.val() ?? false;
+            }
+            time_read(next) {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return 5;
+                if (next !== undefined) {
+                    quiz.Time_read('auto')?.val(next);
+                    return next;
+                }
+                return quiz.Time_read()?.val() ?? 5;
+            }
+            time_answer(next) {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return 10;
+                if (next !== undefined) {
+                    quiz.Time_answer('auto')?.val(next);
+                    return next;
+                }
+                return quiz.Time_answer()?.val() ?? 10;
+            }
+            time_reveal(next) {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return 5;
+                if (next !== undefined) {
+                    quiz.Time_reveal('auto')?.val(next);
+                    return next;
+                }
+                return quiz.Time_reveal()?.val() ?? 5;
+            }
+            time_leaderboard(next) {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return 10;
+                if (next !== undefined) {
+                    quiz.Time_leaderboard('auto')?.val(next);
+                    return next;
+                }
+                return quiz.Time_leaderboard()?.val() ?? 10;
+            }
+            points_base(next) {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return 100;
+                if (next !== undefined) {
+                    quiz.Points_base('auto')?.val(next);
+                    return next;
+                }
+                return quiz.Points_base()?.val() ?? 100;
+            }
+            time_multiplier(next) {
+                const quiz = this.quiz_data();
+                if (!quiz)
+                    return 1.5;
+                if (next !== undefined) {
+                    quiz.Time_multiplier('auto')?.val(next);
+                    return next;
+                }
+                return quiz.Time_multiplier()?.val() ?? 1.5;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_editor.prototype, "questions", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_editor.prototype, "editor_rows", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_editor.prototype, "quiz_title", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin_editor.prototype, "question_number", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin_editor.prototype, "question_text", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin_editor.prototype, "question_type", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin_editor.prototype, "add_question", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin_editor.prototype, "delete_question", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin_editor.prototype, "option_rows", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin_editor.prototype, "add_option", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin_editor.prototype, "delete_option", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin_editor.prototype, "option_text", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin_editor.prototype, "is_correct", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin_editor.prototype, "correct_text", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin_editor.prototype, "question_image_uri", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin_editor.prototype, "question_image_files", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin_editor.prototype, "option_image_uri", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin_editor.prototype, "option_image_files", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin_editor.prototype, "remove_question_image", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin_editor.prototype, "remove_option_image", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_editor.prototype, "manual_mode", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_editor.prototype, "time_read", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_editor.prototype, "time_answer", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_editor.prototype, "time_reveal", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_editor.prototype, "time_leaderboard", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_editor.prototype, "points_base", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin_editor.prototype, "time_multiplier", null);
+        $$.$bog_blitz_admin_editor = $bog_blitz_admin_editor;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_admin_editor, {
+            maxWidth: '50rem',
+            align: {
+                self: 'center',
+            },
+            width: '100%',
+            gap: '1rem',
+            padding: {
+                top: '0.5rem',
+                bottom: '1rem',
+                left: '1rem',
+                right: '1rem',
+            },
+            Title_input: {
+                background: {
+                    color: $mol_theme.card,
+                },
+                border: {
+                    radius: '0.5rem',
+                },
+            },
+            Settings: {
+                background: {
+                    color: $mol_theme.card,
+                },
+                border: {
+                    radius: '0.5rem',
+                },
+                padding: {
+                    top: '0.5rem',
+                    bottom: '0.5rem',
+                    left: '0.75rem',
+                    right: '0.75rem',
+                },
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                gap: '0.5rem',
+            },
+            Add_question: {
+                align: {
+                    self: 'flex-start',
+                },
+                border: {
+                    radius: '0.5rem',
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_admin) = class $bog_blitz_admin extends ($.$mol_page) {
+		admin_body(){
+			return [];
+		}
+		quiz_title(id, next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		quiz_is_shared(id){
+			return false;
+		}
+		edit_quiz(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		delete_quiz(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		start_quiz(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		duplicate_quiz(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		share_quiz(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		quiz_rows(){
+			return [];
+		}
+		create_quiz(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		import_bot_quiz(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Bot(){
+			const obj = new this.$.$bog_blitz_admin_bot();
+			(obj.on_quiz) = (next) => ((this.import_bot_quiz(next)));
+			return obj;
+		}
+		Import_hint(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_Import_hint_title")));
+			return obj;
+		}
+		import_json_text(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Import_area(){
+			const obj = new this.$.$mol_textarea();
+			(obj.value) = (next) => ((this.import_json_text(next)));
+			return obj;
+		}
+		import_json(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Import_button(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_Import_button_title")));
+			(obj.click) = (next) => ((this.import_json(next)));
+			return obj;
+		}
+		Back_icon(){
+			const obj = new this.$.$mol_icon_arrow_left();
+			return obj;
+		}
+		Back_label(){
+			return (this.$.$mol_locale.text("$bog_blitz_admin_Back_label"));
+		}
+		back_to_list(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Game_land_warning_text(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_Game_land_warning_text_title")));
+			return obj;
+		}
+		current_quiz_land(){
+			return null;
+		}
+		question_obj(id){
+			return null;
+		}
+		question_number(id){
+			return 0;
+		}
+		question_text(id, next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		question_type(id, next){
+			if(next !== undefined) return next;
+			return "choice";
+		}
+		delete_question(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		option_rows(id){
+			return [];
+		}
+		add_option(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Head(){
+			return null;
+		}
+		body(){
+			return (this.admin_body());
+		}
+		Quiz_card(id){
+			const obj = new this.$.$bog_blitz_admin_quiz();
+			(obj.quiz_title) = (next) => ((this.quiz_title(id, next)));
+			(obj.is_shared) = () => ((this.quiz_is_shared(id)));
+			(obj.edit) = (next) => ((this.edit_quiz(id, next)));
+			(obj.delete) = (next) => ((this.delete_quiz(id, next)));
+			(obj.start) = (next) => ((this.start_quiz(id, next)));
+			(obj.duplicate) = (next) => ((this.duplicate_quiz(id, next)));
+			(obj.share) = (next) => ((this.share_quiz(id, next)));
+			return obj;
+		}
+		Quizzes_list(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.quiz_rows()));
+			return obj;
+		}
+		Create_button(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_Create_button_title")));
+			(obj.click) = (next) => ((this.create_quiz(next)));
+			return obj;
+		}
+		Bot_expander(){
+			const obj = new this.$.$mol_expander();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_Bot_expander_title")));
+			(obj.content) = () => ([(this.Bot())]);
+			return obj;
+		}
+		Import_expander(){
+			const obj = new this.$.$mol_expander();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_admin_Import_expander_title")));
+			(obj.content) = () => ([
+				(this.Import_hint()), 
+				(this.Import_area()), 
+				(this.Import_button())
+			]);
+			return obj;
+		}
+		Back_button(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.sub) = () => ([(this.Back_icon()), (this.Back_label())]);
+			(obj.click) = (next) => ((this.back_to_list(next)));
+			return obj;
+		}
+		Game_land_warning(){
+			const obj = new this.$.$mol_status();
+			(obj.sub) = () => ([(this.Game_land_warning_text())]);
+			return obj;
+		}
+		Editor(){
+			const obj = new this.$.$bog_blitz_admin_editor();
+			(obj.quiz_land) = () => ((this.current_quiz_land()));
+			return obj;
+		}
+		Question(id){
+			const obj = new this.$.$bog_blitz_admin_question();
+			(obj.question) = () => ((this.question_obj("0")));
+			(obj.number) = () => ((this.question_number("0")));
+			(obj.question_text) = (next) => ((this.question_text(id, next)));
+			(obj.question_type) = (next) => ((this.question_type(id, next)));
+			(obj.delete) = (next) => ((this.delete_question(id, next)));
+			(obj.option_rows) = () => ((this.option_rows(id)));
+			(obj.add_option) = (next) => ((this.add_option(id, next)));
+			return obj;
+		}
+	};
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "quiz_title"));
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "edit_quiz"));
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "delete_quiz"));
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "start_quiz"));
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "duplicate_quiz"));
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "share_quiz"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "create_quiz"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "import_bot_quiz"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Bot"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Import_hint"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "import_json_text"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Import_area"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "import_json"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Import_button"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Back_icon"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "back_to_list"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Game_land_warning_text"));
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "question_text"));
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "question_type"));
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "delete_question"));
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "add_option"));
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "Quiz_card"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Quizzes_list"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Create_button"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Bot_expander"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Import_expander"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Back_button"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Game_land_warning"));
+	($mol_mem(($.$bog_blitz_admin.prototype), "Editor"));
+	($mol_mem_key(($.$bog_blitz_admin.prototype), "Question"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_admin extends $.$bog_blitz_admin {
+            home_ref() {
+                const home = this.$.$giper_baza_glob.home();
+                return home.land().Data($bog_blitz_home_ref);
+            }
+            quizzes_land_make() {
+                const land = this.$.$giper_baza_glob.land_grab([
+                    [null, $giper_baza_rank_read],
+                ]);
+                this.home_ref().Quizzes_land('auto')?.val(land.link().str);
+                return land;
+            }
+            quizzes_land() {
+                const link_str = this.home_ref().Quizzes_land()?.val();
+                if (!link_str)
+                    return this.quizzes_land_make();
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(link_str));
+            }
+            registry() {
+                return this.quizzes_land().Data($bog_blitz_registry);
+            }
+            quiz_links() {
+                return this.registry().Quizzes()?.remote_list() ?? [];
+            }
+            shared_quiz_links() {
+                return this.registry().Shared_quizzes()?.remote_list() ?? [];
+            }
+            quiz_by_key(key) {
+                if (key.startsWith('s_')) {
+                    return this.shared_quiz_links()[Number(key.slice(2))];
+                }
+                return this.quiz_links()[Number(key)];
+            }
+            current_quiz_link() {
+                return this.$.$mol_state_arg.value('quiz') ?? '';
+            }
+            current_quiz_land() {
+                const link = this.current_quiz_link();
+                if (!link)
+                    return null;
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+            }
+            is_game_land() {
+                const land = this.current_quiz_land();
+                if (!land)
+                    return false;
+                const session = land.Data($bog_blitz_session);
+                return !!session.Quiz_link()?.val();
+            }
+            ensure_in_registry() {
+                const link = this.current_quiz_link();
+                if (!link)
+                    return;
+                if (this.is_game_land())
+                    return;
+                const own = this.quiz_links();
+                if (own.some(q => q.land().link().str === link))
+                    return;
+                const shared = this.shared_quiz_links();
+                if (shared.some(q => q.land().link().str === link))
+                    return;
+                const shared_quizzes = this.registry().Shared_quizzes('auto');
+                shared_quizzes.add(new $giper_baza_link(link));
+            }
+            admin_body() {
+                if (this.current_quiz_link()) {
+                    if (this.is_game_land()) {
+                        return [this.Back_button(), this.Game_land_warning()];
+                    }
+                    this.ensure_in_registry();
+                    return [this.Back_button(), this.Editor()];
+                }
+                return [
+                    this.Create_button(),
+                    this.Bot_expander(),
+                    this.Import_expander(),
+                    this.Quizzes_list(),
+                ];
+            }
+            import_json_template() {
+                return [
+                    '{',
+                    '  "title": "Quiz Title",',
+                    '  "time_read": 5,',
+                    '  "time_answer": 10,',
+                    '  "time_reveal": 5,',
+                    '  "time_leaderboard": 10,',
+                    '  "points_base": 100,',
+                    '  "time_multiplier": 1.5,',
+                    '  "questions": [',
+                    '    {',
+                    '      "text": "Question?",',
+                    '      "type": "choice",',
+                    '      "options": [',
+                    '        { "text": "Option A", "is_correct": true },',
+                    '        { "text": "Option B", "is_correct": false }',
+                    '      ]',
+                    '    },',
+                    '    {',
+                    '      "text": "What is 2+2?",',
+                    '      "type": "text_input",',
+                    '      "correct_text": "4, four"',
+                    '    }',
+                    '  ]',
+                    '}',
+                ].join('\n');
+            }
+            create_quiz_from_json(text) {
+                let data;
+                try {
+                    data = JSON.parse(text);
+                }
+                catch {
+                    return;
+                }
+                const quizzes = this.registry().Quizzes('auto');
+                const quiz = quizzes.make([[null, $giper_baza_rank_post('just')]]);
+                quiz.Title('auto')?.val(data.title ?? 'Imported Quiz');
+                quiz.Time_read('auto')?.val(data.time_read ?? 5);
+                quiz.Time_answer('auto')?.val(data.time_answer ?? 10);
+                quiz.Time_reveal('auto')?.val(data.time_reveal ?? 5);
+                quiz.Time_leaderboard('auto')?.val(data.time_leaderboard ?? 10);
+                quiz.Points_base('auto')?.val(data.points_base ?? 100);
+                quiz.Time_multiplier('auto')?.val(data.time_multiplier ?? 1.5);
+                if (Array.isArray(data.questions)) {
+                    const questions_list = quiz.Questions('auto');
+                    for (const qData of data.questions) {
+                        const q = questions_list.make(null);
+                        q.Text('auto')?.val(qData.text ?? '');
+                        q.Type('auto')?.val(qData.type ?? 'choice');
+                        if (qData.type === 'text_input' && qData.correct_text) {
+                            q.Correct_text('auto')?.val(qData.correct_text);
+                        }
+                        if (Array.isArray(qData.options)) {
+                            const options_list = q.Options('auto');
+                            for (const oData of qData.options) {
+                                const opt = options_list.make(null);
+                                opt.Text('auto')?.val(oData.text ?? '');
+                                opt.Is_correct('auto')?.val(oData.is_correct ?? false);
+                            }
+                        }
+                    }
+                }
+            }
+            import_json_text(next) {
+                return next ?? this.import_json_template();
+            }
+            import_json() {
+                const text = this.import_json_text();
+                if (!text)
+                    return;
+                this.create_quiz_from_json(text);
+                this.import_json_text(this.import_json_template());
+            }
+            import_bot_quiz(text) {
+                if (!text)
+                    return;
+                try {
+                    const data = JSON.parse(text);
+                    const title = data.title ?? '';
+                    if (title) {
+                        const existing = this.quiz_links().find(q => q.Title()?.val() === title);
+                        if (existing)
+                            return;
+                    }
+                }
+                catch { }
+                this.create_quiz_from_json(text);
+            }
+            quiz_is_shared(key) {
+                return key.startsWith('s_');
+            }
+            share_quiz(key) {
+                const quiz = this.quiz_by_key(key);
+                if (!quiz)
+                    return;
+                const link = quiz.land().link().str;
+                const loc = this.$.$mol_dom_context.location;
+                const url = loc.origin + loc.pathname + '?screen=admin&quiz=' + encodeURIComponent(link);
+                this.$.$mol_dom_context.navigator.clipboard.writeText(url);
+            }
+            quiz_rows() {
+                const own = this.quiz_links();
+                const shared = this.shared_quiz_links();
+                const rows = [];
+                for (let i = 0; i < own.length; i++) {
+                    rows.push(this.Quiz_card(String(i)));
+                }
+                for (let i = 0; i < shared.length; i++) {
+                    rows.push(this.Quiz_card(`s_${i}`));
+                }
+                return rows;
+            }
+            quiz_title(key, next) {
+                const quiz = this.quiz_by_key(key);
+                if (!quiz)
+                    return '';
+                if (next !== undefined) {
+                    quiz.Title('auto')?.val(next);
+                    return next;
+                }
+                return quiz.Title()?.val() ?? 'Untitled Quiz';
+            }
+            create_quiz() {
+                const quizzes = this.registry().Quizzes('auto');
+                const count = this.quiz_links().length;
+                const quiz = quizzes.make([[null, $giper_baza_rank_post('just')]]);
+                quiz.Title('auto')?.val(`New Quiz ${count + 1}`);
+                quiz.Time_read('auto')?.val(5);
+                quiz.Time_answer('auto')?.val(10);
+                quiz.Time_reveal('auto')?.val(5);
+                quiz.Time_leaderboard('auto')?.val(10);
+                quiz.Points_base('auto')?.val(100);
+                quiz.Time_multiplier('auto')?.val(1.5);
+            }
+            edit_quiz(key) {
+                const quiz = this.quiz_by_key(key);
+                if (!quiz)
+                    return;
+                this.$.$mol_state_arg.value('quiz', quiz.land().link().str);
+            }
+            delete_quiz(key) {
+                const quiz = this.quiz_by_key(key);
+                if (!quiz)
+                    return;
+                if (key.startsWith('s_')) {
+                    this.registry().Shared_quizzes('auto').cut(quiz.link());
+                }
+                else {
+                    this.registry().Quizzes('auto').cut(quiz.link());
+                }
+            }
+            start_quiz(key) {
+                const quiz = this.quiz_by_key(key);
+                if (!quiz)
+                    return;
+                const session_land = this.$.$giper_baza_glob.land_grab([
+                    [null, $giper_baza_rank_post('just')],
+                ]);
+                const key_land = this.$.$giper_baza_glob.land_grab([
+                    [null, $giper_baza_rank_deny],
+                ]);
+                const answers_key = key_land.Data($bog_blitz_answers_key);
+                const questions = quiz.Questions()?.remote_list() ?? [];
+                const keys = [];
+                for (const q of questions) {
+                    const type = q.Type()?.val() ?? 'choice';
+                    if (type === 'text_input') {
+                        keys.push({ type, correct: q.Correct_text()?.val() ?? '' });
+                    }
+                    else {
+                        const options = q.Options()?.remote_list() ?? [];
+                        const indices = [];
+                        for (let i = 0; i < options.length; i++) {
+                            if (options[i]?.Is_correct()?.val()) {
+                                indices.push(i);
+                            }
+                        }
+                        keys.push({ type, correct: indices.join(',') });
+                    }
+                }
+                answers_key.Data('auto')?.val(JSON.stringify(keys));
+                const session = session_land.Data($bog_blitz_session);
+                session.Quiz_link('auto')?.val(quiz.land().link().str);
+                session.Answers_key_land('auto')?.val(key_land.link().str);
+                const Players_dict = $giper_baza_dict_to($bog_blitz_player);
+                const dict = session_land.Data(Players_dict);
+                const lord = this.$.$giper_baza_auth.current().pass().lord().str;
+                const player = dict.key(lord, 'auto');
+                if (player) {
+                    player.IsHost('auto')?.val(true);
+                }
+                this.$.$mol_state_arg.value('quiz', null);
+                this.$.$mol_state_arg.value('land', session_land.link().str);
+                this.$.$mol_state_arg.value('screen', 'lobby');
+            }
+            duplicate_quiz(key) {
+                const source = this.quiz_by_key(key);
+                if (!source)
+                    return;
+                const quizzes = this.registry().Quizzes('auto');
+                const target = quizzes.make([[null, $giper_baza_rank_post('just')]]);
+                target.Title('auto')?.val(source.Title()?.val() ?? 'Untitled Quiz');
+                target.Time_read('auto')?.val(source.Time_read()?.val() ?? 5);
+                target.Time_answer('auto')?.val(source.Time_answer()?.val() ?? 10);
+                target.Time_reveal('auto')?.val(source.Time_reveal()?.val() ?? 5);
+                target.Time_leaderboard('auto')?.val(source.Time_leaderboard()?.val() ?? 10);
+                target.Points_base('auto')?.val(source.Points_base()?.val() ?? 100);
+                target.Time_multiplier('auto')?.val(source.Time_multiplier()?.val() ?? 1.5);
+                const source_questions = source.Questions()?.remote_list() ?? [];
+                if (source_questions.length) {
+                    const target_questions = target.Questions('auto');
+                    for (const sq of source_questions) {
+                        const tq = target_questions.make(null);
+                        tq.Text('auto')?.val(sq.Text()?.val() ?? '');
+                        tq.Type('auto')?.val(sq.Type()?.val() ?? 'choice');
+                        if (sq.Type()?.val() === 'text_input') {
+                            tq.Correct_text('auto')?.val(sq.Correct_text()?.val() ?? '');
+                        }
+                        const source_options = sq.Options()?.remote_list() ?? [];
+                        if (source_options.length) {
+                            const target_options = tq.Options('auto');
+                            for (const so of source_options) {
+                                const to = target_options.make(null);
+                                to.Text('auto')?.val(so.Text()?.val() ?? '');
+                                to.Is_correct('auto')?.val(so.Is_correct()?.val() ?? false);
+                            }
+                        }
+                    }
+                }
+                if (key.startsWith('s_')) {
+                    this.registry().Shared_quizzes('auto').cut(source.link());
+                }
+                else {
+                    this.registry().Quizzes('auto').cut(source.link());
+                }
+            }
+            back_to_list() {
+                this.$.$mol_state_arg.value('quiz', null);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin.prototype, "home_ref", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin.prototype, "quizzes_land_make", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin.prototype, "quizzes_land", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin.prototype, "registry", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin.prototype, "quiz_links", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin.prototype, "shared_quiz_links", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin.prototype, "current_quiz_link", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin.prototype, "is_game_land", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin.prototype, "ensure_in_registry", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin.prototype, "admin_body", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin.prototype, "import_json_text", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin.prototype, "import_json", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin.prototype, "import_bot_quiz", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin.prototype, "quiz_is_shared", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin.prototype, "share_quiz", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_admin.prototype, "quiz_rows", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_admin.prototype, "quiz_title", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin.prototype, "create_quiz", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin.prototype, "edit_quiz", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin.prototype, "delete_quiz", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin.prototype, "start_quiz", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin.prototype, "duplicate_quiz", null);
+        __decorate([
+            $mol_action
+        ], $bog_blitz_admin.prototype, "back_to_list", null);
+        $$.$bog_blitz_admin = $bog_blitz_admin;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_admin, {
+            Body: {
+                maxWidth: '50rem',
+                align: {
+                    self: 'center',
+                },
+                flex: {
+                    grow: 1,
+                },
+                width: '100%',
+            },
+            Create_button: {
+                align: {
+                    self: 'flex-start',
+                },
+                margin: {
+                    top: '0.5rem',
+                    bottom: '0.5rem',
+                    left: '1rem',
+                    right: '1rem',
+                },
+            },
+            Bot_expander: {
+                margin: {
+                    top: 0,
+                    bottom: 0,
+                    left: '1rem',
+                    right: '1rem',
+                },
+            },
+            Bot: {
+                height: '25rem',
+                border: {
+                    radius: '0.5rem',
+                },
+                overflow: 'auto',
+            },
+            Import_expander: {
+                margin: {
+                    top: 0,
+                    bottom: 0,
+                    left: '1rem',
+                    right: '1rem',
+                },
+            },
+            Import_area: {
+                height: '19rem',
+                background: {
+                    color: $mol_theme.card,
+                },
+                border: {
+                    radius: '0.5rem',
+                },
+            },
+            Import_button: {
+                align: {
+                    self: 'flex-start',
+                },
+                border: {
+                    radius: '0.5rem',
+                },
+                margin: {
+                    top: '0.5rem',
+                    bottom: '0.5rem',
+                    left: 0,
+                    right: 0,
+                },
+            },
+            Quizzes_list: {
+                gap: '0.5rem',
+                padding: {
+                    top: '0.5rem',
+                    bottom: '0.5rem',
+                    left: '1rem',
+                    right: '1rem',
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_feedback2_entry extends $giper_baza_dict.with({
+        Text: $giper_baza_atom_text,
+        Contact: $giper_baza_atom_text,
+    }) {
+    }
+    $.$bog_feedback2_entry = $bog_feedback2_entry;
+})($ || ($ = {}));
+
+;
+	($.$mol_section) = class $mol_section extends ($.$mol_list) {
+		title_dom_name(){
+			return "h1";
+		}
+		Title(){
+			const obj = new this.$.$mol_view();
+			(obj.dom_name) = () => ((this.title_dom_name()));
+			(obj.sub) = () => ([(this.title())]);
+			return obj;
+		}
+		tools(){
+			return [];
+		}
+		Tools(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.tools()));
+			return obj;
+		}
+		head(){
+			return [(this.Title()), (this.Tools())];
+		}
+		Head(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.head()));
+			return obj;
+		}
+		content(){
+			return [];
+		}
+		Content(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.content()));
+			return obj;
+		}
+		level(){
+			return 1;
+		}
+		rows(){
+			return [(this.Head()), (this.Content())];
+		}
+	};
+	($mol_mem(($.$mol_section.prototype), "Title"));
+	($mol_mem(($.$mol_section.prototype), "Tools"));
+	($mol_mem(($.$mol_section.prototype), "Head"));
+	($mol_mem(($.$mol_section.prototype), "Content"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_section extends $.$mol_section {
+            title_dom_name() {
+                return 'h' + this.level();
+            }
+        }
+        $$.$mol_section = $mol_section;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/section/section.view.css", "[mol_section_head] {\n\tjustify-content: space-between;\n\talign-items: flex-end;\n\tflex-wrap: wrap;\n}\n\n[mol_section_title] {\n\tmargin: 0;\n\tpadding: var(--mol_gap_text);\n\ttext-shadow: 0 0;\n\tfont-weight: normal;\n}\n\n[mol_section_title]:where(h1) {\n\tfont-size: 1.5rem;\n}\n\n[mol_section_title]:where(h2) {\n\tfont-size: 1.5rem;\n\tfont-style: italic;\n}\n\n[mol_section_title]:where(h3) {\n\tfont-size: 1.25rem;\n}\n\n[mol_section_title]:where(h4) {\n\tfont-size: 1.25rem;\n\tfont-style: italic;\n}\n\n[mol_section_title]:where(h5) {\n\tfont-size: 1rem;\n}\n\n[mol_section_title]:where(h6) {\n\tfont-size: 1rem;\n\tfont-style: italic;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$bog_feedback2_form) = class $bog_feedback2_form extends ($.$mol_page) {
+		Close(){
+			return null;
+		}
+		prompt(){
+			return "";
+		}
+		Prompt(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.prompt()));
+			return obj;
+		}
+		draft_text(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Entry_my(){
+			const obj = new this.$.$mol_textarea();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_feedback2_form_Entry_my_hint")));
+			(obj.value) = (next) => ((this.draft_text(next)));
+			return obj;
+		}
+		draft_contact(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Contact_field(){
+			const obj = new this.$.$mol_string();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_feedback2_form_Contact_field_hint")));
+			(obj.value) = (next) => ((this.draft_contact(next)));
+			return obj;
+		}
+		submit_title(){
+			return "";
+		}
+		submit(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Submit(){
+			const obj = new this.$.$mol_button_major();
+			(obj.title) = () => ((this.submit_title()));
+			(obj.click) = (next) => ((this.submit(next)));
+			return obj;
+		}
+		entry_row_contact(id){
+			return "";
+		}
+		entry_row_text(id){
+			return "";
+		}
+		Entry_row_text(id){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ((this.entry_row_text(id)));
+			return obj;
+		}
+		Entry_row(id){
+			const obj = new this.$.$mol_section();
+			(obj.title) = () => ((this.entry_row_contact(id)));
+			(obj.content) = () => ([(this.Entry_row_text(id))]);
+			return obj;
+		}
+		entry_rows(){
+			return [(this.Entry_row("0"))];
+		}
+		Entries(){
+			const obj = new this.$.$mol_section();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_feedback2_form_Entries_title")));
+			(obj.content) = () => ((this.entry_rows()));
+			return obj;
+		}
+		waiting_title(){
+			return (this.$.$mol_locale.text("$bog_feedback2_form_waiting_title"));
+		}
+		Head(){
+			return null;
+		}
+		feedback_id(){
+			return "";
+		}
+		registry_link(){
+			return "4o4ds4yH_SXDxOCPR";
+		}
+		title(){
+			return (this.$.$mol_locale.text("$bog_feedback2_form_title"));
+		}
+		tools(){
+			return [(this.Close())];
+		}
+		body(){
+			return [
+				(this.Prompt()), 
+				(this.Entry_my()), 
+				(this.Contact_field()), 
+				(this.Submit()), 
+				(this.Entries())
+			];
+		}
+		Not_configured(){
+			const obj = new this.$.$mol_status();
+			(obj.message) = () => ((this.$.$mol_locale.text("$bog_feedback2_form_Not_configured_message")));
+			return obj;
+		}
+		Waiting(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.waiting_title()));
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_feedback2_form.prototype), "Prompt"));
+	($mol_mem(($.$bog_feedback2_form.prototype), "draft_text"));
+	($mol_mem(($.$bog_feedback2_form.prototype), "Entry_my"));
+	($mol_mem(($.$bog_feedback2_form.prototype), "draft_contact"));
+	($mol_mem(($.$bog_feedback2_form.prototype), "Contact_field"));
+	($mol_mem(($.$bog_feedback2_form.prototype), "submit"));
+	($mol_mem(($.$bog_feedback2_form.prototype), "Submit"));
+	($mol_mem_key(($.$bog_feedback2_form.prototype), "Entry_row_text"));
+	($mol_mem_key(($.$bog_feedback2_form.prototype), "Entry_row"));
+	($mol_mem(($.$bog_feedback2_form.prototype), "Entries"));
+	($mol_mem(($.$bog_feedback2_form.prototype), "Not_configured"));
+	($mol_mem(($.$bog_feedback2_form.prototype), "Waiting"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const Entries_dict = $giper_baza_dict_to($bog_feedback2_entry);
+        const Registry_dict = $giper_baza_dict_to($giper_baza_atom_text);
+        class $bog_feedback2_form extends $.$bog_feedback2_form {
+            registry_land() {
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(this.registry_link()));
+            }
+            registry_dict() {
+                return this.registry_land().Data(Registry_dict);
+            }
+            my_pass() {
+                return this.$.$giper_baza_auth.current().pass();
+            }
+            my_lord() {
+                return this.my_pass().lord().str;
+            }
+            feedback_land_link() {
+                const from_arg = this.$.$mol_state_arg.value('land');
+                if (from_arg)
+                    return from_arg;
+                return this.registry_dict().key(this.feedback_id())?.val() ?? null;
+            }
+            land() {
+                const link = this.feedback_land_link();
+                if (link)
+                    return this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                if (!this.is_owner())
+                    return null;
+                return this.land_ensure();
+            }
+            land_ensure() {
+                const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                const link = land.link().str;
+                const entry = this.registry_dict().key(this.feedback_id(), 'auto');
+                if (entry)
+                    entry.val(link);
+                return land;
+            }
+            entries_dict() {
+                return this.land()?.Data(Entries_dict) ?? null;
+            }
+            is_owner() {
+                const rank = this.registry_land().pass_rank(this.my_pass());
+                return $giper_baza_rank_tier_of(rank) >= $giper_baza_rank_tier.rule;
+            }
+            is_configured() {
+                return !!this.registry_link();
+            }
+            entry_mine() {
+                return this.entries_dict()?.key(this.my_lord()) ?? null;
+            }
+            entry_mine_or_create() {
+                return this.entries_dict()?.key(this.my_lord(), 'auto') ?? null;
+            }
+            prompt() {
+                return [
+                    '**Tell us what you think:**',
+                    '- What did you **like**?',
+                    '- What could be done **better**?',
+                    '- Any **suggestions** for the future?',
+                ].join('\n');
+            }
+            draft_text(next) {
+                if (next !== undefined)
+                    return next;
+                const entry = this.entry_mine();
+                return entry?.Text()?.val() ?? '';
+            }
+            draft_contact(next) {
+                if (next !== undefined)
+                    return next;
+                const entry = this.entry_mine();
+                return entry?.Contact()?.val() ?? '';
+            }
+            has_entry() {
+                return !!this.entry_mine();
+            }
+            submit_title() {
+                return this.has_entry() ? 'Update feedback' : 'Send feedback';
+            }
+            submit() {
+                const text = this.draft_text();
+                const contact = this.draft_contact();
+                if (!text)
+                    return;
+                const entry = this.entry_mine_or_create();
+                if (!entry)
+                    return;
+                entry.Text('auto').val(text);
+                if (contact)
+                    entry.Contact('auto').val(contact);
+            }
+            body() {
+                if (!this.is_configured())
+                    return [this.Not_configured()];
+                if (!this.land())
+                    return [this.Waiting()];
+                return [
+                    this.Prompt(),
+                    this.Entry_my(),
+                    this.Contact_field(),
+                    this.Submit(),
+                    ...(this.is_owner() ? [this.Entries()] : []),
+                ];
+            }
+            all_lords() {
+                return this.entries_dict()?.keys() ?? [];
+            }
+            entry_rows() {
+                return this.all_lords().map((_, i) => this.Entry_row(i));
+            }
+            entry_row_text(index) {
+                const lord = this.all_lords()[index];
+                if (!lord)
+                    return '';
+                const entry = this.entries_dict()?.key(lord);
+                return entry?.Text()?.val() ?? '';
+            }
+            entry_row_contact(index) {
+                const lord = this.all_lords()[index];
+                if (!lord)
+                    return '';
+                const entry = this.entries_dict()?.key(lord);
+                return entry?.Contact()?.val() ?? 'Anonymous';
+            }
+        }
+        __decorate([
+            $mol_action
+        ], $bog_feedback2_form.prototype, "land_ensure", null);
+        __decorate([
+            $mol_action
+        ], $bog_feedback2_form.prototype, "entry_mine_or_create", null);
+        __decorate([
+            $mol_mem
+        ], $bog_feedback2_form.prototype, "draft_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_feedback2_form.prototype, "draft_contact", null);
+        __decorate([
+            $mol_action
+        ], $bog_feedback2_form.prototype, "submit", null);
+        $$.$bog_feedback2_form = $bog_feedback2_form;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/feedback2/form/form.view.css", "@keyframes bog_feedback2_form_pulse {\n\t0%, 100% { opacity: 0.3; }\n\t50% { opacity: 0.8; }\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_feedback2_form, {
+        color: $mol_theme.text,
+        flex: {
+            basis: '40rem',
+        },
+        margin: [0, 'auto'],
+        Waiting: {
+            padding: $mol_gap.block,
+            textAlign: 'center',
+            opacity: 0.5,
+            animation: {
+                name: 'bog_feedback2_form_pulse',
+                duration: '1.5s',
+                iterationCount: 'infinite',
+                timingFunction: 'ease-in-out',
+            },
+        },
+        Prompt: {
+            padding: $mol_gap.block,
+        },
+        Contact_field: {
+            margin: {
+                top: $mol_gap.space,
+            },
+        },
+        Submit: {
+            margin: {
+                top: $mol_gap.block,
+            },
+        },
+        Entries: {
+            margin: {
+                top: $mol_gap.block,
+            },
+            Content: {
+                gap: $mol_gap.block,
+            },
+        },
+        Entry_row: {
+            background: {
+                color: $mol_theme.card,
+            },
+            border: {
+                radius: $mol_gap.round,
+            },
+            padding: $mol_gap.block,
+            boxShadow: `0 0 0 1px ${$mol_theme.line}`,
+            Head: {
+                font: {
+                    size: '1rem',
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_menu) = class $mol_icon_menu extends ($.$mol_icon) {
+		path(){
+			return "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_message) = class $mol_icon_message extends ($.$mol_icon) {
+		path(){
+			return "M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_message_draw) = class $mol_icon_message_draw extends ($.$mol_icon) {
+		path(){
+			return "M18,14H10.5L12.5,12H18M6,14V11.5L12.88,4.64C13.07,4.45 13.39,4.45 13.59,4.64L15.35,6.41C15.55,6.61 15.55,6.92 15.35,7.12L8.47,14M20,2H4A2,2 0 0,0 2,4V22L6,18H20A2,2 0 0,0 22,16V4C22,2.89 21.1,2 20,2Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_cog) = class $mol_icon_cog extends ($.$mol_icon) {
+		path(){
+			return "M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_music) = class $mol_icon_music extends ($.$mol_icon) {
+		path(){
+			return "M21,3V15.5A3.5,3.5 0 0,1 17.5,19A3.5,3.5 0 0,1 14,15.5A3.5,3.5 0 0,1 17.5,12C18.04,12 18.55,12.12 19,12.34V6.47L9,8.6V17.5A3.5,3.5 0 0,1 5.5,21A3.5,3.5 0 0,1 2,17.5A3.5,3.5 0 0,1 5.5,14C6.04,14 6.55,14.12 7,14.34V6L21,3Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$bog_blitz_radio) = class $bog_blitz_radio extends ($.$mol_pop) {
+		menu_showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Icon(){
+			const obj = new this.$.$mol_icon_music();
+			return obj;
+		}
+		Toggle(){
+			const obj = new this.$.$mol_check();
+			(obj.checked) = (next) => ((this.menu_showed(next)));
+			(obj.sub) = () => ([(this.Icon())]);
+			return obj;
+		}
+		volume_input(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Volume_label(){
+			const obj = new this.$.$mol_string_button();
+			(obj.value) = (next) => ((this.volume_input(next)));
+			return obj;
+		}
+		volume_up(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Volume_up(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ("+");
+			(obj.click) = (next) => ((this.volume_up(next)));
+			return obj;
+		}
+		volume_down(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Volume_down(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ("-");
+			(obj.click) = (next) => ((this.volume_down(next)));
+			return obj;
+		}
+		Volume_row(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Volume_label()), 
+				(this.Volume_up()), 
+				(this.Volume_down())
+			]);
+			return obj;
+		}
+		stop_click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Stop_button(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_radio_Stop_button_title")));
+			(obj.click) = (next) => ((this.stop_click(next)));
+			return obj;
+		}
+		station_title(id){
+			return "";
+		}
+		station_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Station(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.station_title(id)));
+			(obj.click) = (next) => ((this.station_click(id, next)));
+			return obj;
+		}
+		menu_content(){
+			return [
+				(this.Volume_row()), 
+				(this.Stop_button()), 
+				(this.Station("0"))
+			];
+		}
+		Menu(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.menu_content()));
+			return obj;
+		}
+		showed(next){
+			return (this.menu_showed(next));
+		}
+		Anchor(){
+			return (this.Toggle());
+		}
+		bubble_content(){
+			return [(this.Menu())];
+		}
+	};
+	($mol_mem(($.$bog_blitz_radio.prototype), "menu_showed"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "Icon"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "Toggle"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "volume_input"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "Volume_label"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "volume_up"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "Volume_up"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "volume_down"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "Volume_down"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "Volume_row"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "stop_click"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "Stop_button"));
+	($mol_mem_key(($.$bog_blitz_radio.prototype), "station_click"));
+	($mol_mem_key(($.$bog_blitz_radio.prototype), "Station"));
+	($mol_mem(($.$bog_blitz_radio.prototype), "Menu"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const stations = [
+            { id: 'lofi', title: '🎧 Lofi Hip Hop', url: 'https://listen.reyfm.de/lofi_320kbps.mp3' },
+            { id: 'chill', title: '☕ Chillhop', url: 'https://ilm.stream35.radiohost.de/ilm_ilovechillhop_mp3-192' },
+            { id: 'party', title: '🎉 House Party', url: 'https://listen.reyfm.de/houseparty_192kbps.mp3' },
+            { id: 'dj', title: '🎵 DJ Charts', url: 'https://breakz-high.rautemusik.fm/' },
+            { id: 'lounge', title: '🍸 Workday Lounge', url: 'https://stream.epic-lounge.com/workday-lounge' },
+        ];
+        class $bog_blitz_radio extends $.$bog_blitz_radio {
+            audio = null;
+            current_station(next) {
+                return next ?? '';
+            }
+            volume(next) {
+                if (next !== undefined) {
+                    this.$.$mol_state_local.value('bog_blitz_radio_volume', next);
+                    return next;
+                }
+                return this.$.$mol_state_local.value('bog_blitz_radio_volume') ?? 50;
+            }
+            volume_input(next) {
+                if (next !== undefined) {
+                    const num = parseInt(next, 10);
+                    if (!isNaN(num)) {
+                        const vol = Math.max(0, Math.min(100, num));
+                        this.volume(vol);
+                        if (this.audio)
+                            this.audio.volume = vol / 100;
+                    }
+                    return next;
+                }
+                const playing = this.current_station();
+                const vol = this.volume();
+                if (!playing)
+                    return `🔇 ${vol}%`;
+                return `🔊 ${vol}%`;
+            }
+            volume_up(next) {
+                if (next !== undefined) {
+                    const vol = Math.min(100, this.volume() + 10);
+                    this.volume(vol);
+                    if (this.audio)
+                        this.audio.volume = vol / 100;
+                }
+            }
+            volume_down(next) {
+                if (next !== undefined) {
+                    const vol = Math.max(0, this.volume() - 10);
+                    this.volume(vol);
+                    if (this.audio)
+                        this.audio.volume = vol / 100;
+                }
+            }
+            station_keys() {
+                return stations.map(s => s.id);
+            }
+            menu_content() {
+                return [
+                    this.Volume_row(),
+                    this.Stop_button(),
+                    ...this.station_keys().map(id => this.Station(id)),
+                ];
+            }
+            station_title(id) {
+                const s = stations.find(s => s.id === id);
+                const prefix = this.current_station() === id ? '▶ ' : '';
+                return prefix + (s?.title ?? id);
+            }
+            station_click(id, e) {
+                if (e) {
+                    this.play(id);
+                }
+                return null;
+            }
+            stop_click(next) {
+                if (next !== undefined) {
+                    this.stop();
+                }
+            }
+            play(id) {
+                this.stop();
+                const s = stations.find(s => s.id === id);
+                if (!s)
+                    return;
+                const audio = new Audio(s.url);
+                audio.volume = this.volume() / 100;
+                audio.play().catch(() => { });
+                this.audio = audio;
+                this.current_station(id);
+            }
+            stop() {
+                if (this.audio) {
+                    this.audio.pause();
+                    this.audio.src = '';
+                    this.audio = null;
+                }
+                this.current_station('');
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_radio.prototype, "current_station", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_radio.prototype, "volume", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_radio.prototype, "volume_input", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_radio.prototype, "volume_up", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_radio.prototype, "volume_down", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_radio.prototype, "station_keys", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_radio.prototype, "menu_content", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_radio.prototype, "station_title", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_blitz_radio.prototype, "station_click", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_radio.prototype, "stop_click", null);
+        $$.$bog_blitz_radio = $bog_blitz_radio;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_radio, {
+            Menu: {
+                flex: { direction: 'column' },
+                padding: { top: '0.5rem', bottom: '0.5rem', left: '0.5rem', right: '0.5rem' },
+                gap: '0.25rem',
+                minWidth: '12rem',
+            },
+            Volume_row: {
+                justify: { content: 'center' },
+                align: { items: 'center' },
+                gap: '0.25rem',
+            },
+            Volume_label: {
+                font: { size: '0.875rem' },
+                minWidth: '4rem',
+                textAlign: 'center',
+            },
+            Stop_button: {
+                justify: { content: 'center' },
+            },
+            Station: {
+                justify: { content: 'flex-start' },
+            },
+        });
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -20579,37 +30187,1288 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_book2) = class $mol_book2 extends ($.$mol_scroll) {
-		pages_deep(){
-			return [];
-		}
-		pages(){
-			return (this.pages_deep());
-		}
-		Placeholder(){
-			const obj = new this.$.$mol_view();
+	($.$bog_blitz) = class $bog_blitz extends ($.$mol_page) {
+		Lobby(){
+			const obj = new this.$.$bog_blitz_lobby();
 			return obj;
 		}
-		placeholders(){
-			return [(this.Placeholder())];
+		Admin(){
+			const obj = new this.$.$bog_blitz_admin();
+			return obj;
 		}
-		menu_title(){
+		Profile(){
+			const obj = new this.$.$bog_blitz_profile_page();
+			return obj;
+		}
+		Feedback(){
+			const obj = new this.$.$bog_feedback2_form();
+			(obj.feedback_id) = () => ("blitz");
+			return obj;
+		}
+		screen(next){
+			if(next !== undefined) return next;
+			return "lobby";
+		}
+		mobile_menu_showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Mobile_menu_icon(){
+			const obj = new this.$.$mol_icon_menu();
+			return obj;
+		}
+		Mobile_menu_trigger(){
+			const obj = new this.$.$mol_check();
+			(obj.checked) = (next) => ((this.mobile_menu_showed(next)));
+			(obj.sub) = () => ([(this.Mobile_menu_icon())]);
+			return obj;
+		}
+		Feedback_icon(){
+			const obj = new this.$.$mol_icon_message_draw();
+			return obj;
+		}
+		Feedback_link(){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({"screen": "feedback"});
+			(obj.sub) = () => ([(this.Feedback_icon())]);
+			return obj;
+		}
+		Settings_icon(){
+			const obj = new this.$.$mol_icon_cog();
+			return obj;
+		}
+		Status(){
+			const obj = new this.$.$giper_baza_status();
+			return obj;
+		}
+		Theme_toggle(){
+			const obj = new this.$.$bog_theme_toggle();
+			(obj.theme_auto) = () => ((this.Theme()));
+			return obj;
+		}
+		Sources(){
+			const obj = new this.$.$mol_link_source();
+			(obj.uri) = () => ("https://github.com/b-on-g/blitz");
+			return obj;
+		}
+		Settings_content(){
+			const obj = new this.$.$mol_row();
+			(obj.sub) = () => ([
+				(this.Status()), 
+				(this.Theme_toggle()), 
+				(this.Sources())
+			]);
+			return obj;
+		}
+		Powered(){
+			const obj = new this.$.$mol_text();
+			(obj.text) = () => ("Пишите нам в [Telegram](https://t.me/@Dev_Cmyser)\n*Создано на [$mol](https://mol.hyoo.ru/#!section=docs/=4kd8nv_evh111) и [Giper Baza](https://t.me/mol_news/226)*");
+			return obj;
+		}
+		Settings(){
+			const obj = new this.$.$mol_pick();
+			(obj.hint) = () => ("Настройки");
+			(obj.trigger_content) = () => ([(this.Settings_icon())]);
+			(obj.bubble_content) = () => ([(this.Settings_content()), (this.Powered())]);
+			return obj;
+		}
+		Radio(){
+			const obj = new this.$.$bog_blitz_radio();
+			return obj;
+		}
+		Theme(){
+			const obj = new this.$.$bog_theme_auto();
+			(obj.theme_light) = () => ("$mol_theme_calm_light");
+			(obj.theme_dark) = () => ("$mol_theme_calm_dark");
+			(obj.themes) = () => (["$mol_theme_calm_light", "$mol_theme_calm_dark"]);
+			return obj;
+		}
+		screen_body(){
+			return [];
+		}
+		title(){
+			return (this.$.$mol_locale.text("$bog_blitz_title"));
+		}
+		pages(){
+			return {
+				"lobby": (this.Lobby()), 
+				"admin": (this.Admin()), 
+				"profile": (this.Profile()), 
+				"feedback": (this.Feedback())
+			};
+		}
+		nav_options(){
+			return {
+				"lobby": "Лобби", 
+				"admin": "Админ", 
+				"profile": "Профиль"
+			};
+		}
+		Navbar(){
+			const obj = new this.$.$mol_switch();
+			(obj.value) = (next) => ((this.screen(next)));
+			(obj.options) = () => ((this.nav_options()));
+			return obj;
+		}
+		Mobile_nav(){
+			const obj = new this.$.$mol_switch();
+			(obj.value) = (next) => ((this.screen(next)));
+			(obj.options) = () => ((this.nav_options()));
+			return obj;
+		}
+		Mobile_menu(){
+			const obj = new this.$.$mol_pop();
+			(obj.showed) = (next) => ((this.mobile_menu_showed(next)));
+			(obj.Anchor) = () => ((this.Mobile_menu_trigger()));
+			(obj.bubble_content) = () => ([(this.Mobile_nav())]);
+			return obj;
+		}
+		tools(){
+			return [
+				(this.Feedback_link()), 
+				(this.Settings()), 
+				(this.Radio())
+			];
+		}
+		head(){
+			return [
+				(this.Title()), 
+				(this.Navbar()), 
+				(this.Tools()), 
+				(this.Mobile_menu())
+			];
+		}
+		plugins(){
+			return [(this.Theme())];
+		}
+		body(){
+			return (this.screen_body());
+		}
+	};
+	($mol_mem(($.$bog_blitz.prototype), "Lobby"));
+	($mol_mem(($.$bog_blitz.prototype), "Admin"));
+	($mol_mem(($.$bog_blitz.prototype), "Profile"));
+	($mol_mem(($.$bog_blitz.prototype), "Feedback"));
+	($mol_mem(($.$bog_blitz.prototype), "screen"));
+	($mol_mem(($.$bog_blitz.prototype), "mobile_menu_showed"));
+	($mol_mem(($.$bog_blitz.prototype), "Mobile_menu_icon"));
+	($mol_mem(($.$bog_blitz.prototype), "Mobile_menu_trigger"));
+	($mol_mem(($.$bog_blitz.prototype), "Feedback_icon"));
+	($mol_mem(($.$bog_blitz.prototype), "Feedback_link"));
+	($mol_mem(($.$bog_blitz.prototype), "Settings_icon"));
+	($mol_mem(($.$bog_blitz.prototype), "Status"));
+	($mol_mem(($.$bog_blitz.prototype), "Theme_toggle"));
+	($mol_mem(($.$bog_blitz.prototype), "Sources"));
+	($mol_mem(($.$bog_blitz.prototype), "Settings_content"));
+	($mol_mem(($.$bog_blitz.prototype), "Powered"));
+	($mol_mem(($.$bog_blitz.prototype), "Settings"));
+	($mol_mem(($.$bog_blitz.prototype), "Radio"));
+	($mol_mem(($.$bog_blitz.prototype), "Theme"));
+	($mol_mem(($.$bog_blitz.prototype), "Navbar"));
+	($mol_mem(($.$bog_blitz.prototype), "Mobile_nav"));
+	($mol_mem(($.$bog_blitz.prototype), "Mobile_menu"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz extends $.$bog_blitz {
+            tools() {
+                const is_host = this.Lobby().is_host();
+                return [is_host ? this.Radio() : null, this.Feedback_link(), this.Settings()];
+            }
+            screen_body() {
+                const page = this.pages()[this.screen()];
+                return page ? [page] : [];
+            }
+            screen(next) {
+                if (next !== undefined) {
+                    this.mobile_menu_showed(false);
+                    if (next === 'lobby') {
+                        this.$.$mol_state_arg.value('quiz', null);
+                    }
+                }
+                return this.$.$mol_state_arg.value('screen', next || undefined) || 'admin';
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz.prototype, "tools", null);
+        $$.$bog_blitz = $bog_blitz;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz, {
+            Title: {
+                flex: {
+                    grow: 1,
+                    basis: 0,
+                },
+                align: {
+                    items: 'center',
+                },
+            },
+            Navbar: {
+                flex: {
+                    grow: 0,
+                },
+            },
+            Tools: {
+                flex: {
+                    grow: 1,
+                    basis: 0,
+                },
+                justify: {
+                    content: 'flex-end',
+                },
+                align: {
+                    items: 'center',
+                },
+            },
+            Mobile_menu: {
+                display: 'none',
+            },
+            '@media': {
+                '(width < 600px)': {
+                    Mobile_menu: {
+                        display: 'flex',
+                    },
+                    Navbar: {
+                        display: 'none',
+                    },
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_blitz_profile_page) = class $bog_blitz_profile_page extends ($.$mol_page) {
+		avatar_preview(){
+			return null;
+		}
+		Avatar_circle(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.avatar_preview())]);
+			return obj;
+		}
+		Avatar_label(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_profile_page_Avatar_label_title")));
+			return obj;
+		}
+		avatar_files(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		Avatar_native(){
+			const obj = new this.$.$mol_button_open_native();
+			(obj.files) = (next) => ((this.avatar_files(next)));
+			(obj.accept) = () => ("image/*");
+			(obj.multiple) = () => (false);
+			return obj;
+		}
+		Avatar(){
+			const obj = new this.$.$mol_button_open();
+			(obj.sub) = () => ([(this.Avatar_label()), (this.Avatar_native())]);
+			return obj;
+		}
+		profile_name(next){
+			if(next !== undefined) return next;
 			return "";
 		}
-		sub(){
-			return [...(this.pages()), ...(this.placeholders())];
+		Name_input(){
+			const obj = new this.$.$mol_string_button();
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_blitz_profile_page_Name_input_hint")));
+			(obj.value) = (next) => ((this.profile_name(next)));
+			return obj;
 		}
-		minimal_width(){
-			return 0;
-		}
-		Gap(id){
+		Name_row(){
 			const obj = new this.$.$mol_view();
-			(obj.title) = () => ("");
+			(obj.sub) = () => ([(this.Name_input())]);
+			return obj;
+		}
+		stat_rows(){
+			return [];
+		}
+		Stats(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.stat_rows()));
+			return obj;
+		}
+		Fun_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_blitz_profile_page_Fun_title_title")));
+			return obj;
+		}
+		persona_text(){
+			return "";
+		}
+		Fun_text(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.persona_text()));
+			return obj;
+		}
+		Fun_card(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Fun_title()), (this.Fun_text())]);
+			return obj;
+		}
+		Card(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Avatar_circle()), 
+				(this.Avatar()), 
+				(this.Name_row()), 
+				(this.Stats()), 
+				(this.Fun_card())
+			]);
+			return obj;
+		}
+		Games_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("История игр");
+			return obj;
+		}
+		games_query(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Games_search(){
+			const obj = new this.$.$mol_search();
+			(obj.query) = (next) => ((this.games_query(next)));
+			return obj;
+		}
+		game_rows(){
+			return [];
+		}
+		Games_list(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.game_rows()));
+			return obj;
+		}
+		games_empty_text(){
+			return "";
+		}
+		Games_empty(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.games_empty_text()));
+			return obj;
+		}
+		Games_section(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Games_title()), 
+				(this.Games_search()), 
+				(this.Games_list()), 
+				(this.Games_empty())
+			]);
+			return obj;
+		}
+		avatar_uri(){
+			return "";
+		}
+		player_id(){
+			return "";
+		}
+		stat_label(id){
+			return "";
+		}
+		Stat_label(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.stat_label(id)));
+			return obj;
+		}
+		stat_value(id){
+			return "";
+		}
+		Stat_value(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.stat_value(id)));
+			return obj;
+		}
+		game_arg(id){
+			return {};
+		}
+		game_title(id){
+			return "";
+		}
+		Game_title(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.game_title(id)));
+			return obj;
+		}
+		game_details(id){
+			return "";
+		}
+		Game_details(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.game_details(id)));
+			return obj;
+		}
+		Game_info(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Game_title(id)), (this.Game_details(id))]);
+			return obj;
+		}
+		game_score(id){
+			return "";
+		}
+		Game_score(id){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.game_score(id)));
+			return obj;
+		}
+		Head(){
+			return null;
+		}
+		body(){
+			return [(this.Card()), (this.Games_section())];
+		}
+		Avatar_image(){
+			const obj = new this.$.$mol_image();
+			(obj.uri) = () => ((this.avatar_uri()));
+			return obj;
+		}
+		Avatar_icon(){
+			const obj = new this.$.$mol_avatar();
+			(obj.id) = () => ((this.player_id()));
+			return obj;
+		}
+		Stat_row(id){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Stat_label(id)), (this.Stat_value(id))]);
+			return obj;
+		}
+		Game_row(id){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ((this.game_arg(id)));
+			(obj.sub) = () => ([(this.Game_info(id)), (this.Game_score(id))]);
 			return obj;
 		}
 	};
-	($mol_mem(($.$mol_book2.prototype), "Placeholder"));
-	($mol_mem_key(($.$mol_book2.prototype), "Gap"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Avatar_circle"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Avatar_label"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "avatar_files"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Avatar_native"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Avatar"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "profile_name"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Name_input"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Name_row"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Stats"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Fun_title"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Fun_text"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Fun_card"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Card"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Games_title"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "games_query"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Games_search"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Games_list"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Games_empty"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Games_section"));
+	($mol_mem_key(($.$bog_blitz_profile_page.prototype), "Stat_label"));
+	($mol_mem_key(($.$bog_blitz_profile_page.prototype), "Stat_value"));
+	($mol_mem_key(($.$bog_blitz_profile_page.prototype), "Game_title"));
+	($mol_mem_key(($.$bog_blitz_profile_page.prototype), "Game_details"));
+	($mol_mem_key(($.$bog_blitz_profile_page.prototype), "Game_info"));
+	($mol_mem_key(($.$bog_blitz_profile_page.prototype), "Game_score"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Avatar_image"));
+	($mol_mem(($.$bog_blitz_profile_page.prototype), "Avatar_icon"));
+	($mol_mem_key(($.$bog_blitz_profile_page.prototype), "Stat_row"));
+	($mol_mem_key(($.$bog_blitz_profile_page.prototype), "Game_row"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_session extends $giper_baza_dict.with({
+            Quiz_link: $giper_baza_atom_text,
+            Game_state: $giper_baza_atom_text,
+            Current_question: $giper_baza_atom_real,
+            Round_start: $giper_baza_atom_real,
+            Paused_at: $giper_baza_atom_real,
+            Answers_key_land: $giper_baza_atom_text,
+            Reveal_correct: $giper_baza_atom_text,
+            Multi_correct: $giper_baza_atom_bool,
+        }) {
+        }
+        $$.$bog_blitz_session = $bog_blitz_session;
+        $$.$bog_blitz_session_fields = new Set([
+            'Quiz_link',
+            'Game_state',
+            'Current_question',
+            'Round_start',
+            'Paused_at',
+            'Answers_key_land',
+            'Reveal_correct',
+            'Multi_correct',
+        ]);
+        class $bog_blitz_answers_key extends $giper_baza_dict.with({
+            Data: $giper_baza_atom_text,
+        }) {
+        }
+        $$.$bog_blitz_answers_key = $bog_blitz_answers_key;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_home_ref extends $giper_baza_dict.with({
+            Quizzes_land: $giper_baza_atom_text,
+        }) {
+        }
+        $$.$bog_blitz_home_ref = $bog_blitz_home_ref;
+        class $bog_blitz_registry extends $giper_baza_dict.with({
+            Quizzes: $giper_baza_list_link_to(() => $bog_blitz_quiz),
+            Shared_quizzes: $giper_baza_list_link_to(() => $bog_blitz_quiz),
+        }) {
+        }
+        $$.$bog_blitz_registry = $bog_blitz_registry;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_blitz_profile extends $giper_baza_dict.with({
+            Name: $giper_baza_atom_text,
+            Avatar: $giper_baza_atom_link_to(() => $giper_baza_file),
+            Games_played: $giper_baza_atom_real,
+            Total_score: $giper_baza_atom_real,
+            Wins: $giper_baza_atom_real,
+            Best_score: $giper_baza_atom_real,
+            Games_history: $giper_baza_list_link_to(() => $bog_blitz_game_record),
+        }) {
+        }
+        $$.$bog_blitz_profile = $bog_blitz_profile;
+        class $bog_blitz_game_record extends $giper_baza_dict.with({
+            Quiz_title: $giper_baza_atom_text,
+            Score: $giper_baza_atom_real,
+            Place: $giper_baza_atom_real,
+            Players_count: $giper_baza_atom_real,
+            Date: $giper_baza_atom_real,
+            Land_link: $giper_baza_atom_text,
+        }) {
+        }
+        $$.$bog_blitz_game_record = $bog_blitz_game_record;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const personas = [
+            { min: 0, title: 'Новичок', desc: 'Вы только начали свой путь в квизах. Впереди много открытий!' },
+            { min: 3, title: 'Любопытный', desc: 'Вы уже распробовали вкус квизов. Теперь вас не остановить!' },
+            { min: 10, title: 'Знаток', desc: 'Ваши знания впечатляют. Соперники начинают вас бояться.' },
+            { min: 25, title: 'Гуру', desc: 'Легенда квизов! Ваше имя произносят с придыханием.' },
+            { min: 50, title: 'Грандмастер', desc: 'Вы — живая энциклопедия. Квиз — ваша стихия!' },
+        ];
+        class $bog_blitz_profile_page extends $.$bog_blitz_profile_page {
+            profile_data() {
+                const home = this.$.$giper_baza_glob.home();
+                return home.land().Data($bog_blitz_profile);
+            }
+            player_id() {
+                return this.$.$giper_baza_auth.current().pass().lord().str;
+            }
+            profile_name(next) {
+                const profile = this.profile_data();
+                if (next !== undefined) {
+                    profile.Name('auto')?.val(next);
+                    return next;
+                }
+                return profile.Name()?.val() ?? '';
+            }
+            avatar_uri() {
+                const files = this.avatar_files();
+                if (files.length)
+                    return URL.createObjectURL(files[0]);
+                const profile = this.profile_data();
+                const file = profile.Avatar()?.remote();
+                if (!file)
+                    return '';
+                return file.uri() ?? '';
+            }
+            avatar_files(next) {
+                if (next?.length) {
+                    const profile = this.profile_data();
+                    const store = profile.Avatar(null).ensure(null);
+                    if (store) {
+                        store.blob(next[0]);
+                        profile.Avatar(null).remote(store);
+                    }
+                }
+                return next ?? [];
+            }
+            avatar_preview() {
+                try {
+                    const uri = this.avatar_uri();
+                    if (uri)
+                        return this.Avatar_image();
+                }
+                catch { }
+                return this.Avatar_icon();
+            }
+            all_stats() {
+                const profile = this.profile_data();
+                const played = profile.Games_played()?.val() ?? 0;
+                const total = Math.round(profile.Total_score()?.val() ?? 0);
+                const wins = profile.Wins()?.val() ?? 0;
+                const best = Math.round(profile.Best_score()?.val() ?? 0);
+                const avg = played ? Math.round(total / played) : 0;
+                const winRate = played ? Math.round((wins / played) * 100) + '%' : '0%';
+                return [String(played), String(total), String(wins), String(avg), String(best), winRate];
+            }
+            stat_rows() {
+                return [0, 1, 2, 3, 4, 5].map(i => this.Stat_row(String(i)));
+            }
+            stat_label(key) {
+                const labels = [
+                    '🎮 Игр сыграно',
+                    '⭐ Общий счёт',
+                    '🏆 Побед',
+                    '📊 Средний счёт',
+                    '🔥 Лучший счёт',
+                    '🎯 Винрейт',
+                ];
+                return labels[Number(key)] ?? '';
+            }
+            stat_value(key) {
+                return this.all_stats()[Number(key)] ?? '0';
+            }
+            persona_text() {
+                const played = Number(this.all_stats()[0] ?? 0);
+                let persona = personas[0];
+                for (const p of personas) {
+                    if (played >= p.min)
+                        persona = p;
+                }
+                return `${persona.title} — ${persona.desc}`;
+            }
+            games_history() {
+                const profile = this.profile_data();
+                const list = profile.Games_history()?.remote_list() ?? [];
+                return list.slice().sort((a, b) => {
+                    const da = a.Date()?.val() ?? 0;
+                    const db = b.Date()?.val() ?? 0;
+                    return db - da;
+                });
+            }
+            games_filtered() {
+                const query = this.games_query().toLowerCase().trim();
+                const all = this.games_history();
+                if (!query)
+                    return all;
+                return all.filter(g => {
+                    const title = (g.Quiz_title()?.val() ?? '').toLowerCase();
+                    return title.includes(query);
+                });
+            }
+            games_empty_text() {
+                if (this.games_history().length === 0)
+                    return 'Пока нет сыгранных игр';
+                if (this.games_filtered().length === 0)
+                    return 'Ничего не найдено';
+                return '';
+            }
+            game_rows() {
+                const games = this.games_filtered();
+                if (!games.length)
+                    return [];
+                return games.map((_, i) => this.Game_row(String(i)));
+            }
+            game_record(key) {
+                return this.games_filtered()[Number(key)];
+            }
+            game_arg(key) {
+                const land = this.game_record(key)?.Land_link()?.val() ?? '';
+                return { screen: 'lobby', land };
+            }
+            game_title(key) {
+                return this.game_record(key)?.Quiz_title()?.val() ?? 'Untitled';
+            }
+            game_details(key) {
+                const rec = this.game_record(key);
+                const place = rec?.Place()?.val() ?? 0;
+                const players = rec?.Players_count()?.val() ?? 0;
+                const ts = rec?.Date()?.val() ?? 0;
+                const date = ts ? new Date(ts).toLocaleDateString('ru-RU') : '';
+                return `${date} · ${place}/${players} место`;
+            }
+            game_score(key) {
+                const score = Math.round(this.game_record(key)?.Score()?.val() ?? 0);
+                return String(score);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "player_id", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "profile_name", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "avatar_uri", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "avatar_files", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "avatar_preview", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "all_stats", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "stat_rows", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "persona_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "games_history", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "games_filtered", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "games_empty_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_blitz_profile_page.prototype, "game_rows", null);
+        $$.$bog_blitz_profile_page = $bog_blitz_profile_page;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        $mol_style_define($bog_blitz_profile_page, {
+            Card: {
+                flex: {
+                    direction: 'column',
+                },
+                padding: {
+                    top: '2rem',
+                    bottom: '2rem',
+                    left: '1rem',
+                    right: '1rem',
+                },
+                gap: '1.5rem',
+                maxWidth: '480px',
+                align: {
+                    self: 'center',
+                    items: 'center',
+                },
+            },
+            Avatar_circle: {
+                borderRadius: '50%',
+                overflow: 'hidden',
+                width: '80px',
+                height: '80px',
+                minWidth: '80px',
+                minHeight: '80px',
+                maxWidth: '80px',
+                maxHeight: '80px',
+                flex: {
+                    shrink: 0,
+                    grow: 0,
+                },
+            },
+            Avatar: {
+                font: {
+                    size: '0.75rem',
+                },
+                opacity: 0.5,
+            },
+            Avatar_image: {
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+            },
+            Avatar_icon: {
+                width: '100%',
+                height: '100%',
+                font: {
+                    size: '2.5rem',
+                },
+            },
+            Name_row: {
+                justify: {
+                    content: 'center',
+                },
+            },
+            Name_input: {
+                font: {
+                    size: '1.5rem',
+                    weight: 600,
+                },
+                textAlign: 'center',
+            },
+            Stats: {
+                flex: {
+                    direction: 'column',
+                },
+                gap: '0.5rem',
+                width: '100%',
+            },
+            Stat_row: {
+                justify: {
+                    content: 'space-between',
+                },
+                padding: {
+                    top: '0.5rem',
+                    bottom: '0.5rem',
+                    left: '0.75rem',
+                    right: '0.75rem',
+                },
+                borderRadius: '8px',
+                background: {
+                    color: $mol_theme.card,
+                },
+            },
+            Stat_label: {
+                font: {
+                    size: '0.95rem',
+                },
+            },
+            Stat_value: {
+                font: {
+                    size: '0.95rem',
+                    weight: 700,
+                },
+            },
+            Games_section: {
+                flex: {
+                    direction: 'column',
+                },
+                width: '100%',
+                gap: '0.75rem',
+            },
+            Games_title: {
+                font: {
+                    size: '1.1rem',
+                    weight: 600,
+                },
+            },
+            Games_list: {
+                gap: '0.5rem',
+            },
+            Games_empty: {
+                textAlign: 'center',
+                opacity: 0.5,
+                font: {
+                    size: '0.875rem',
+                },
+            },
+            Game_row: {
+                justify: {
+                    content: 'space-between',
+                },
+                align: {
+                    items: 'center',
+                },
+                padding: {
+                    top: '0.5rem',
+                    bottom: '0.5rem',
+                    left: '0.75rem',
+                    right: '0.75rem',
+                },
+                borderRadius: '8px',
+                background: {
+                    color: $mol_theme.card,
+                },
+            },
+            Game_info: {
+                flex: {
+                    direction: 'column',
+                },
+                gap: '0.125rem',
+            },
+            Game_title: {
+                font: {
+                    size: '0.95rem',
+                    weight: 600,
+                },
+            },
+            Game_details: {
+                font: {
+                    size: '0.8rem',
+                },
+                opacity: 0.6,
+            },
+            Game_score: {
+                font: {
+                    size: '1.1rem',
+                    weight: 700,
+                },
+                flex: {
+                    shrink: 0,
+                },
+            },
+            Fun_card: {
+                flex: {
+                    direction: 'column',
+                },
+                align: {
+                    items: 'center',
+                },
+                padding: {
+                    top: '1rem',
+                    bottom: '1rem',
+                    left: '1rem',
+                    right: '1rem',
+                },
+                borderRadius: '12px',
+                background: {
+                    color: $mol_theme.card,
+                },
+                width: '100%',
+                margin: {
+                    top: '0.5rem',
+                },
+            },
+            Fun_title: {
+                font: {
+                    size: '1rem',
+                    weight: 600,
+                },
+                margin: {
+                    bottom: '0.25rem',
+                },
+            },
+            Fun_text: {
+                textAlign: 'center',
+                opacity: 0.7,
+                font: {
+                    size: '0.875rem',
+                },
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const Comments_list = $giper_baza_list_link_to(() => $bog_wysiwyg_model_comment);
+        class $bog_wysiwyg_comment_thread extends $.$bog_wysiwyg_comment_thread {
+            comment_land() {
+                const link = this.comment_land_link();
+                if (!link)
+                    return null;
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+            }
+            comments_list() {
+                const land = this.comment_land();
+                if (!land)
+                    return null;
+                return land.Data(Comments_list);
+            }
+            comment_items() {
+                const list = this.comments_list();
+                if (!list)
+                    return [];
+                return list.remote_list();
+            }
+            comment_views() {
+                return this.comment_items().map((_, i) => this.Comment_row(i));
+            }
+            comment_author_id(index) {
+                const item = this.comment_items()[index];
+                if (!item)
+                    return '';
+                return item.Author()?.val() ?? '';
+            }
+            comment_author(index) {
+                const item = this.comment_items()[index];
+                if (!item)
+                    return '';
+                const lord_id = item.Author()?.val() ?? '';
+                const name = this.author_name(lord_id);
+                const time = item.Time()?.val() ?? 0;
+                const date = time ? new Date(time).toLocaleString() : '';
+                return name + (date ? ' \u00b7 ' + date : '');
+            }
+            author_name(lord_id) {
+                if (!lord_id)
+                    return '';
+                try {
+                    const home_land = this.$.$giper_baza_glob.Land(new $giper_baza_link(lord_id));
+                    const profile = home_land.Data($bog_blitz_profile);
+                    const name = profile.Name()?.val();
+                    if (name)
+                        return name;
+                }
+                catch { }
+                return lord_id.slice(0, 8);
+            }
+            comment_text(index) {
+                const item = this.comment_items()[index];
+                if (!item)
+                    return '';
+                return item.Text()?.val() ?? '';
+            }
+            draft(next) {
+                return next ?? '';
+            }
+            comment_count() {
+                return this.comment_items().length;
+            }
+            send(event) {
+                if (!event)
+                    return null;
+                const text = this.draft();
+                if (!text.trim())
+                    return null;
+                const list = this.comments_list();
+                if (!list)
+                    return null;
+                const comment = list.make(null);
+                comment.Text('auto')?.val(text.trim());
+                const pass = this.$.$giper_baza_auth.current().pass();
+                comment.Author('auto')?.val(pass.lord().str);
+                comment.Time('auto')?.val(Date.now());
+                this.draft('');
+                return event;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_comment_thread.prototype, "comment_views", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_comment_thread.prototype, "draft", null);
+        __decorate([
+            $mol_action
+        ], $bog_wysiwyg_comment_thread.prototype, "send", null);
+        $$.$bog_wysiwyg_comment_thread = $bog_wysiwyg_comment_thread;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_wysiwyg_comment_thread, {
+        flex: {
+            direction: 'column',
+            grow: 1,
+        },
+        gap: '0.5rem',
+        padding: {
+            top: '0.5rem',
+            bottom: '0.5rem',
+            left: '0.5rem',
+            right: '0.5rem',
+        },
+        Comments: {
+            flex: {
+                direction: 'column',
+                grow: 1,
+            },
+            gap: '0.5rem',
+            overflow: 'auto',
+        },
+        Comment_row: {
+            flex: {
+                direction: 'column',
+            },
+            padding: {
+                top: '0.375rem',
+                bottom: '0.375rem',
+                left: '0.5rem',
+                right: '0.5rem',
+            },
+            background: {
+                color: $mol_theme.hover,
+            },
+            border: {
+                radius: $mol_gap.round,
+            },
+            gap: '0.25rem',
+        },
+        Comment_head: {
+            flex: {
+                direction: 'row',
+            },
+            alignItems: 'center',
+            gap: '0.375rem',
+        },
+        Comment_avatar: {
+            width: '1.25rem',
+            height: '1.25rem',
+            flex: {
+                shrink: 0,
+                grow: 0,
+            },
+        },
+        Comment_author: {
+            font: {
+                size: '0.75rem',
+                weight: 600,
+            },
+            color: $mol_theme.shade,
+        },
+        Comment_text: {
+            font: {
+                size: '0.875rem',
+            },
+        },
+        Input_row: {
+            flex: {
+                direction: 'row',
+            },
+            gap: '0.25rem',
+            alignItems: 'flex-end',
+        },
+        Input: {
+            flex: {
+                grow: 1,
+            },
+        },
+        Send: {
+            flex: {
+                shrink: 0,
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_wysiwyg_comment) = class $bog_wysiwyg_comment extends ($.$mol_pop) {
+		panel_open(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		has_comments(){
+			return false;
+		}
+		Comment_icon(){
+			const obj = new this.$.$mol_icon_comment_outline();
+			return obj;
+		}
+		comment_count_text(){
+			return "";
+		}
+		Comment_count(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.comment_count_text())]);
+			return obj;
+		}
+		toggle(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Comment_button(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.sub) = () => ([(this.Comment_icon()), (this.Comment_count())]);
+			(obj.click) = (next) => ((this.toggle(next)));
+			return obj;
+		}
+		Panel_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_comment_Panel_title_title")));
+			return obj;
+		}
+		Close_icon(){
+			const obj = new this.$.$mol_icon_close();
+			return obj;
+		}
+		close(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Close(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.sub) = () => ([(this.Close_icon())]);
+			(obj.click) = (next) => ((this.close(next)));
+			return obj;
+		}
+		Panel_head(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Panel_title()), (this.Close())]);
+			return obj;
+		}
+		comment_land_link(){
+			return "";
+		}
+		Thread(){
+			const obj = new this.$.$bog_wysiwyg_comment_thread();
+			(obj.comment_land_link) = () => ((this.comment_land_link()));
+			return obj;
+		}
+		Panel(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Panel_head()), (this.Thread())]);
+			return obj;
+		}
+		showed(next){
+			return (this.panel_open(next));
+		}
+		align(){
+			return "left_center";
+		}
+		attr(){
+			return {...(super.attr()), "bog_wysiwyg_comment_has_comments": (this.has_comments())};
+		}
+		Anchor(){
+			return (this.Comment_button());
+		}
+		bubble_content(){
+			return [(this.Panel())];
+		}
+	};
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "panel_open"));
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "Comment_icon"));
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "Comment_count"));
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "toggle"));
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "Comment_button"));
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "Panel_title"));
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "Close_icon"));
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "close"));
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "Close"));
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "Panel_head"));
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "Thread"));
+	($mol_mem(($.$bog_wysiwyg_comment.prototype), "Panel"));
 
 
 ;
@@ -20621,68 +31480,34 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        class $mol_book2 extends $.$mol_book2 {
-            pages_deep() {
-                let result = [];
-                for (const subpage of this.pages()) {
-                    if (subpage instanceof $mol_book2)
-                        result = [...result, ...subpage.pages_deep()];
-                    else
-                        result.push(subpage);
-                }
-                return result;
+        class $bog_wysiwyg_comment extends $.$bog_wysiwyg_comment {
+            comment_count_text() {
+                const count = this.Thread().comment_count();
+                return count > 0 ? String(count) : '';
             }
-            title() {
-                return this.pages_deep().map(page => {
-                    try {
-                        return page?.title();
-                    }
-                    catch (error) {
-                        $mol_fail_log(error);
-                    }
-                }).reverse().filter(Boolean).join(' | ');
+            has_comments() {
+                return this.Thread().comment_count() > 0;
             }
-            menu_title() {
-                return this.pages_deep()[0]?.title() || this.title();
+            toggle(event) {
+                if (!event)
+                    return null;
+                this.panel_open(!this.panel_open());
+                return event;
             }
-            sub() {
-                const placeholders = this.placeholders();
-                const next = this.pages_deep().filter(Boolean);
-                const prev = $mol_mem_cached(() => this.sub())?.filter(page => !placeholders.includes(page)) ?? [];
-                for (let i = 1; i; ++i) {
-                    const p = prev[prev.length - i];
-                    const n = next[next.length - i];
-                    if (!n)
-                        break;
-                    if (p === n)
-                        continue;
-                    new this.$.$mol_after_tick(() => {
-                        const b = this.dom_node();
-                        const p = n.dom_node();
-                        b.scroll({
-                            left: p.offsetLeft + p.offsetWidth - b.offsetWidth,
-                            behavior: 'smooth',
-                        });
-                    });
-                    break;
-                }
-                return [...next, ...placeholders];
-            }
-            bring() {
-                const pages = this.pages_deep();
-                if (pages.length)
-                    pages[pages.length - 1].bring();
-                else
-                    super.bring();
+            close(event) {
+                if (!event)
+                    return null;
+                this.panel_open(false);
+                return event;
             }
         }
         __decorate([
             $mol_mem
-        ], $mol_book2.prototype, "pages_deep", null);
+        ], $bog_wysiwyg_comment.prototype, "comment_count_text", null);
         __decorate([
             $mol_mem
-        ], $mol_book2.prototype, "sub", null);
-        $$.$mol_book2 = $mol_book2;
+        ], $bog_wysiwyg_comment.prototype, "has_comments", null);
+        $$.$bog_wysiwyg_comment = $bog_wysiwyg_comment;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
@@ -20690,7 +31515,4814 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n\t/* transform: translateZ(0); */\n\ttransition: none;\n\tscroll-snap-type: x mandatory;\n\t/* padding: 0 1px;\n\tscroll-padding: 0 1px;\n\tgap: 1px; */\n}\n\n[mol_book2] > * {\n/* \tflex: none; */\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n\tflex-shrink: 0;\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_field);\n}\n\n[mol_book2] > *:not(:first-of-type):before,\n[mol_book2] > *:not(:last-of-type)::after {\n\tcontent: '';\n\tposition: absolute;\n\ttop: 1.5rem;\n\twidth: 3px;\n\theight: 1rem;\n\tbackground: linear-gradient(\n\t\tto bottom,\n\t\tvar(--mol_theme_special) 0%,\n\t\tvar(--mol_theme_special) 14%,\n\t\ttransparent 15%,\n\t\ttransparent 42%,\n\t\tvar(--mol_theme_special) 43%,\n\t\tvar(--mol_theme_special) 57%,\n\t\ttransparent 58%,\n\t\ttransparent 85%,\n\t\tvar(--mol_theme_special) 86%,\n\t\tvar(--mol_theme_special) 100%\n\t);\n\topacity: .5;\n\tz-index: var(--mol_layer_speck);\n}\n[mol_book2] > *:not(:first-of-type):before {\n\tleft: -3px;\n}\n[mol_book2] > *:not(:last-of-type)::after {\n\tright: -3px;\n}\n\n:where([mol_book2]) > * {\n\tbackground-color: var(--mol_theme_card);\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_back); */\n}\n\n[mol_book2] > [mol_book2] {\n\tdisplay: contents;\n}\n\n[mol_book2] > *:first-child {\n\tscroll-snap-align: start;\n}\n\n[mol_book2] > [mol_view] {\n\ttransform: none; /* prevent content clipping */\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\tbackground: none;\n}\n\n[mol_book2_gap] {\n\tbackground: none;\n\tflex-grow: 1;\n\tscroll-snap-align: none;\n\tmargin-right: -1px;\n\tbox-shadow: none;\n}\n\n[mol_book2_gap]::before,\n[mol_book2_gap]::after {\n\tdisplay: none;\n}\n");
+    $mol_style_define($bog_wysiwyg_comment, {
+        Comment_button: {
+            opacity: 0.4,
+            transition: 'opacity 0.15s',
+            cursor: 'pointer',
+            minWidth: '1.5rem',
+            minHeight: '1.5rem',
+            padding: {
+                top: '0.25rem',
+                bottom: '0.25rem',
+                left: '0.25rem',
+                right: '0.25rem',
+            },
+        },
+        Comment_count: {
+            font: {
+                size: '0.75rem',
+                weight: 600,
+            },
+            color: $mol_theme.focus,
+        },
+        Panel: {
+            flex: {
+                direction: 'column',
+            },
+            width: '18rem',
+            maxWidth: '90vw',
+            maxHeight: '24rem',
+            background: {
+                color: $mol_theme.card,
+            },
+            border: {
+                radius: $mol_gap.round,
+            },
+            boxShadow: `0 4px 16px 0 ${$mol_theme.shade}`,
+        },
+        Panel_head: {
+            flex: {
+                direction: 'row',
+            },
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: {
+                top: '0.5rem',
+                bottom: '0.25rem',
+                left: '0.75rem',
+                right: '0.25rem',
+            },
+            border: {
+                bottom: {
+                    width: '1px',
+                    style: 'solid',
+                    color: $mol_theme.line,
+                },
+            },
+        },
+        Panel_title: {
+            font: {
+                weight: 600,
+            },
+        },
+        Thread: {
+            flex: {
+                grow: 1,
+            },
+            overflow: 'auto',
+        },
+        '@': {
+            'bog_wysiwyg_comment_has_comments': {
+                'true': {
+                    Comment_button: {
+                        opacity: 1,
+                        color: $mol_theme.focus,
+                    },
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_wysiwyg_links) = class $bog_wysiwyg_links extends ($.$mol_list) {
+		header_text(){
+			return "Backlinks";
+		}
+		Header(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.header_text())]);
+			return obj;
+		}
+		link_views(){
+			return [];
+		}
+		Links(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.link_views()));
+			return obj;
+		}
+		link_page_id(id){
+			return "";
+		}
+		link_title(id){
+			return "";
+		}
+		page_id(){
+			return "";
+		}
+		all_pages(){
+			return [];
+		}
+		rows(){
+			return [(this.Header()), (this.Links())];
+		}
+		Link(id){
+			const obj = new this.$.$mol_link();
+			(obj.arg) = () => ({"page": (this.link_page_id(id))});
+			(obj.sub) = () => ([(this.link_title(id))]);
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_wysiwyg_links.prototype), "Header"));
+	($mol_mem(($.$bog_wysiwyg_links.prototype), "Links"));
+	($mol_mem_key(($.$bog_wysiwyg_links.prototype), "Link"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg_links extends $.$bog_wysiwyg_links {
+            backlink_pages() {
+                const target = this.page_id();
+                if (!target)
+                    return [];
+                const pattern = '[[' + target + ']]';
+                const all = this.all_pages();
+                return all.filter(page => {
+                    if (page.id === target)
+                        return false;
+                    return page.blocks_html.some((html) => html.includes(pattern));
+                });
+            }
+            rows() {
+                const links = this.backlink_pages();
+                if (!links.length)
+                    return [];
+                return [this.Header(), this.Links()];
+            }
+            header_text() {
+                const count = this.backlink_pages().length;
+                return `Backlinks (${count})`;
+            }
+            link_views() {
+                return this.backlink_pages().map(page => this.Link(page.id));
+            }
+            link_page_id(id) {
+                return id;
+            }
+            link_title(id) {
+                const pages = this.backlink_pages();
+                const page = pages.find(p => p.id === id);
+                return page?.title || id;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_links.prototype, "backlink_pages", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_links.prototype, "rows", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_links.prototype, "header_text", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_links.prototype, "link_views", null);
+        $$.$bog_wysiwyg_links = $bog_wysiwyg_links;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_wysiwyg_links, {
+        padding: {
+            top: $mol_gap.block,
+            bottom: $mol_gap.block,
+            left: 0,
+            right: 0,
+        },
+        border: {
+            top: {
+                width: '1px',
+                style: 'solid',
+                color: $mol_theme.line,
+            },
+        },
+        margin: {
+            top: $mol_gap.block,
+        },
+        gap: $mol_gap.text,
+        Header: {
+            font: {
+                weight: 'bold',
+                size: '0.875rem',
+            },
+            color: $mol_theme.shade,
+            padding: {
+                left: $mol_gap.text,
+                right: $mol_gap.text,
+            },
+        },
+        Link: {
+            padding: {
+                top: $mol_gap.text,
+                bottom: $mol_gap.text,
+                left: $mol_gap.text,
+                right: $mol_gap.text,
+            },
+            color: $mol_theme.focus,
+            cursor: 'pointer',
+            border: {
+                radius: $mol_gap.round,
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_wysiwyg_menu) = class $bog_wysiwyg_menu extends ($.$mol_view) {
+		option_title(id){
+			return "";
+		}
+		option_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		option_active(id){
+			return false;
+		}
+		option_rows(){
+			return [];
+		}
+		pos_y_str(){
+			return "0px";
+		}
+		pos_x_str(){
+			return "0px";
+		}
+		showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		picked(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		index(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		pos_y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		pos_x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		commands(){
+			return [];
+		}
+		Option(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.option_title(id)));
+			(obj.click) = (next) => ((this.option_click(id, next)));
+			(obj.attr) = () => ({...(this.$.$mol_button_minor.prototype.attr.call(obj)), "bog_wysiwyg_menu_option_active": (this.option_active(id))});
+			return obj;
+		}
+		sub(){
+			return (this.option_rows());
+		}
+		attr(){
+			return {...(super.attr()), "bog_wysiwyg_menu_showed": (this.showed())};
+		}
+		style(){
+			return {
+				...(super.style()), 
+				"top": (this.pos_y_str()), 
+				"left": (this.pos_x_str())
+			};
+		}
+	};
+	($mol_mem_key(($.$bog_wysiwyg_menu.prototype), "option_click"));
+	($mol_mem(($.$bog_wysiwyg_menu.prototype), "showed"));
+	($mol_mem(($.$bog_wysiwyg_menu.prototype), "picked"));
+	($mol_mem(($.$bog_wysiwyg_menu.prototype), "index"));
+	($mol_mem(($.$bog_wysiwyg_menu.prototype), "pos_y"));
+	($mol_mem(($.$bog_wysiwyg_menu.prototype), "pos_x"));
+	($mol_mem_key(($.$bog_wysiwyg_menu.prototype), "Option"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg_menu extends $.$bog_wysiwyg_menu {
+            commands() {
+                const t = (key) => this.$.$mol_locale.text(key);
+                const builtin = [
+                    { id: 'paragraph', title: '\u00B6 ' + t('$bog_wysiwyg_menu_command_paragraph') },
+                    { id: 'heading1', title: 'H1 ' + t('$bog_wysiwyg_menu_command_heading1') },
+                    { id: 'heading2', title: 'H2 ' + t('$bog_wysiwyg_menu_command_heading2') },
+                    { id: 'heading3', title: 'H3 ' + t('$bog_wysiwyg_menu_command_heading3') },
+                    { id: 'code', title: '</> ' + t('$bog_wysiwyg_menu_command_code') },
+                    { id: 'quote', title: '\u275D ' + t('$bog_wysiwyg_menu_command_quote') },
+                    { id: 'list', title: '\u2022 ' + t('$bog_wysiwyg_menu_command_list') },
+                    { id: 'divider', title: '\u2014 ' + t('$bog_wysiwyg_menu_command_divider') },
+                    { id: 'image', title: '\uD83D\uDDBC ' + t('$bog_wysiwyg_menu_command_image') },
+                ];
+                const plugins = $bog_wysiwyg_plugin_registry.all().map(p => ({
+                    id: p.id,
+                    title: p.title,
+                }));
+                return [...builtin, ...plugins];
+            }
+            option_rows() {
+                return this.commands().map(cmd => this.Option(cmd.id));
+            }
+            option_title(id) {
+                return this.commands().find(c => c.id === id)?.title ?? '';
+            }
+            option_active(id) {
+                const cmds = this.commands();
+                const idx = this.index();
+                return cmds[idx]?.id === id;
+            }
+            option_click(id, event) {
+                if (!event)
+                    return null;
+                this.picked(id);
+                this.showed(false);
+                return event;
+            }
+            pos_y_str() {
+                return this.pos_y() + 'px';
+            }
+            pos_x_str() {
+                return this.pos_x() + 'px';
+            }
+        }
+        $$.$bog_wysiwyg_menu = $bog_wysiwyg_menu;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_wysiwyg_menu, {
+        position: 'fixed',
+        zIndex: 100,
+        background: {
+            color: $mol_theme.back,
+        },
+        borderRadius: '0.5rem',
+        padding: {
+            top: '0.25rem',
+            bottom: '0.25rem',
+        },
+        minWidth: '12rem',
+        flex: {
+            direction: 'column',
+        },
+        box: {
+            shadow: [
+                {
+                    inset: false,
+                    x: 0,
+                    y: '0.25rem',
+                    blur: '1rem',
+                    spread: 0,
+                    color: '#00000026',
+                },
+            ],
+        },
+        ':not([bog_wysiwyg_menu_showed])': {
+            display: 'none',
+        },
+        Option: {
+            '[bog_wysiwyg_menu_option_active]': {
+                'true': {
+                    background: {
+                        color: $mol_theme.hover,
+                    },
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_wysiwyg_ai) = class $bog_wysiwyg_ai extends ($.$mol_view) {
+		option_title(id){
+			return "";
+		}
+		option_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		option_active(id){
+			return false;
+		}
+		option_rows(){
+			return [];
+		}
+		pos_y_str(){
+			return "0px";
+		}
+		pos_x_str(){
+			return "0px";
+		}
+		showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		context(){
+			return "";
+		}
+		loading(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		on_result(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		picked(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		index(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		pos_y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		pos_x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Model(){
+			const obj = new this.$.$mol_github_model();
+			(obj.rules) = () => ("You are a writing assistant. Respond in JSON: {\"text\": \"your result\"}. Return only the result text, no explanations.");
+			return obj;
+		}
+		commands(){
+			return [];
+		}
+		Option(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.option_title(id)));
+			(obj.click) = (next) => ((this.option_click(id, next)));
+			(obj.attr) = () => ({...(this.$.$mol_button_minor.prototype.attr.call(obj)), "bog_wysiwyg_ai_option_active": (this.option_active(id))});
+			return obj;
+		}
+		sub(){
+			return (this.option_rows());
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"bog_wysiwyg_ai_showed": (this.showed()), 
+				"bog_wysiwyg_ai_loading": (this.loading())
+			};
+		}
+		style(){
+			return {
+				...(super.style()), 
+				"top": (this.pos_y_str()), 
+				"left": (this.pos_x_str())
+			};
+		}
+	};
+	($mol_mem_key(($.$bog_wysiwyg_ai.prototype), "option_click"));
+	($mol_mem(($.$bog_wysiwyg_ai.prototype), "showed"));
+	($mol_mem(($.$bog_wysiwyg_ai.prototype), "loading"));
+	($mol_mem(($.$bog_wysiwyg_ai.prototype), "on_result"));
+	($mol_mem(($.$bog_wysiwyg_ai.prototype), "picked"));
+	($mol_mem(($.$bog_wysiwyg_ai.prototype), "index"));
+	($mol_mem(($.$bog_wysiwyg_ai.prototype), "pos_y"));
+	($mol_mem(($.$bog_wysiwyg_ai.prototype), "pos_x"));
+	($mol_mem(($.$bog_wysiwyg_ai.prototype), "Model"));
+	($mol_mem_key(($.$bog_wysiwyg_ai.prototype), "Option"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg_ai extends $.$bog_wysiwyg_ai {
+            commands() {
+                return [
+                    { id: 'continue', title: '\u270D \u0414\u043E\u043F\u0438\u0441\u0430\u0442\u044C', prompt: '\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438 \u0442\u0435\u043A\u0441\u0442 \u0432 \u0442\u043E\u043C \u0436\u0435 \u0441\u0442\u0438\u043B\u0435. \u0412\u0435\u0440\u043D\u0438 \u0442\u043E\u043B\u044C\u043A\u043E \u043D\u043E\u0432\u044B\u0439 \u0442\u0435\u043A\u0441\u0442 (\u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0435\u043D\u0438\u0435), \u0431\u0435\u0437 \u0438\u0441\u0445\u043E\u0434\u043D\u043E\u0433\u043E.' },
+                    { id: 'rewrite', title: '\u{1F504} \u041F\u0435\u0440\u0435\u043F\u0438\u0441\u0430\u0442\u044C', prompt: '\u041F\u0435\u0440\u0435\u043F\u0438\u0448\u0438 \u0442\u0435\u043A\u0441\u0442 \u0431\u043E\u043B\u0435\u0435 \u044F\u0441\u043D\u043E \u0438 \u0447\u0438\u0442\u0430\u0431\u0435\u043B\u044C\u043D\u043E.' },
+                    { id: 'translate', title: '\u{1F310} \u041F\u0435\u0440\u0435\u0432\u0435\u0441\u0442\u0438', prompt: 'Translate to English.' },
+                    { id: 'simplify', title: '\u{1F4A1} \u0423\u043F\u0440\u043E\u0441\u0442\u0438\u0442\u044C', prompt: '\u0423\u043F\u0440\u043E\u0441\u0442\u0438 \u0442\u0435\u043A\u0441\u0442, \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0432 \u0441\u043C\u044B\u0441\u043B.' },
+                ];
+            }
+            option_rows() {
+                if (this.loading()) {
+                    return ['\u2026 \u0413\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F...'];
+                }
+                return this.commands().map(cmd => this.Option(cmd.id));
+            }
+            option_title(id) {
+                return this.commands().find(c => c.id === id)?.title ?? '';
+            }
+            option_active(id) {
+                const cmds = this.commands();
+                const idx = this.index();
+                return cmds[idx]?.id === id;
+            }
+            option_click(id, event) {
+                if (!event)
+                    return null;
+                this.picked(id);
+                this.run_command(id);
+                return event;
+            }
+            run_command(id) {
+                const cmd = this.commands().find(c => c.id === id);
+                if (!cmd)
+                    return;
+                const context = this.context();
+                this.loading(true);
+                $mol_wire_async(this.Model()).shot([`${cmd.prompt}\n\n\u0422\u0435\u043A\u0441\u0442:\n${context}`]).then((result) => {
+                    this.loading(false);
+                    this.showed(false);
+                    this.on_result(result?.text ?? '');
+                }, (error) => {
+                    this.loading(false);
+                    this.showed(false);
+                    $mol_fail_log(error);
+                });
+            }
+            pos_y_str() {
+                return this.pos_y() + 'px';
+            }
+            pos_x_str() {
+                return this.pos_x() + 'px';
+            }
+        }
+        $$.$bog_wysiwyg_ai = $bog_wysiwyg_ai;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_wysiwyg_ai, {
+        position: 'fixed',
+        zIndex: 100,
+        background: {
+            color: $mol_theme.back,
+        },
+        borderRadius: '0.5rem',
+        padding: {
+            top: '0.25rem',
+            bottom: '0.25rem',
+        },
+        minWidth: '14rem',
+        flex: {
+            direction: 'column',
+        },
+        box: {
+            shadow: [
+                {
+                    inset: false,
+                    x: 0,
+                    y: '0.25rem',
+                    blur: '1rem',
+                    spread: 0,
+                    color: '#00000026',
+                },
+            ],
+        },
+        ':not([bog_wysiwyg_ai_showed])': {
+            display: 'none',
+        },
+        Option: {
+            '[bog_wysiwyg_ai_option_active]': {
+                'true': {
+                    background: {
+                        color: $mol_theme.hover,
+                    },
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_wysiwyg_history) = class $bog_wysiwyg_history extends ($.$mol_view) {
+		version_title(id){
+			return "";
+		}
+		version_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		version_active(id){
+			return false;
+		}
+		save_version(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Save_button(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_history_Save_button_title")));
+			(obj.click) = (next) => ((this.save_version(next)));
+			return obj;
+		}
+		version_rows(){
+			return [];
+		}
+		Version_list(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.version_rows()));
+			return obj;
+		}
+		page_land_link(){
+			return "";
+		}
+		showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Version(id){
+			const obj = new this.$.$bog_wysiwyg_history_version();
+			(obj.title) = () => ((this.version_title(id)));
+			(obj.click) = (next) => ((this.version_click(id, next)));
+			(obj.active) = () => ((this.version_active(id)));
+			return obj;
+		}
+		sub(){
+			return [(this.Save_button()), (this.Version_list())];
+		}
+		attr(){
+			return {...(super.attr()), "bog_wysiwyg_history_showed": (this.showed())};
+		}
+	};
+	($mol_mem_key(($.$bog_wysiwyg_history.prototype), "version_click"));
+	($mol_mem(($.$bog_wysiwyg_history.prototype), "save_version"));
+	($mol_mem(($.$bog_wysiwyg_history.prototype), "Save_button"));
+	($mol_mem(($.$bog_wysiwyg_history.prototype), "Version_list"));
+	($mol_mem(($.$bog_wysiwyg_history.prototype), "showed"));
+	($mol_mem_key(($.$bog_wysiwyg_history.prototype), "Version"));
+	($.$bog_wysiwyg_history_version) = class $bog_wysiwyg_history_version extends ($.$mol_button_minor) {
+		active(){
+			return false;
+		}
+		attr(){
+			return {...(super.attr()), "bog_wysiwyg_history_version_active": (this.active())};
+		}
+	};
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg_model_block extends $giper_baza_dict.with({
+            Type: $giper_baza_atom_text,
+            Level: $giper_baza_atom_real,
+            Content: $giper_baza_atom_text,
+        }) {
+        }
+        $$.$bog_wysiwyg_model_block = $bog_wysiwyg_model_block;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg_model_page extends $giper_baza_dict.with({
+            Title: $giper_baza_atom_text,
+            Blocks: $giper_baza_list_link_to(() => $bog_wysiwyg_model_block),
+            Versions: $giper_baza_list_link,
+            Comments: $giper_baza_dict_to($giper_baza_atom_text),
+        }) {
+        }
+        $$.$bog_wysiwyg_model_page = $bog_wysiwyg_model_page;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg_history extends $.$bog_wysiwyg_history {
+            page_land() {
+                const link = this.page_land_link();
+                if (!link)
+                    return null;
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+            }
+            page_data() {
+                const land = this.page_land();
+                if (!land)
+                    return null;
+                return land.Data($bog_wysiwyg_model_page);
+            }
+            version_links() {
+                const data = this.page_data();
+                if (!data)
+                    return [];
+                const versions = data.Versions();
+                if (!versions)
+                    return [];
+                const items = versions.items_vary() ?? [];
+                return items
+                    .map(v => $giper_baza_vary_cast_link(v))
+                    .filter($mol_guard_defined)
+                    .map(link => link.str);
+            }
+            save_version(event) {
+                if (!event)
+                    return null;
+                const src_data = this.page_data();
+                if (!src_data)
+                    return null;
+                const snap_land = this.$.$giper_baza_glob.land_grab();
+                const snap_data = snap_land.Data($bog_wysiwyg_model_page);
+                const title_val = src_data.Title()?.val() ?? '';
+                if (title_val) {
+                    snap_data.Title('auto')?.val(title_val);
+                }
+                const src_blocks = src_data.Blocks();
+                if (src_blocks) {
+                    const blocks = src_blocks.remote_list() ?? [];
+                    const snap_blocks = snap_data.Blocks('auto');
+                    if (snap_blocks) {
+                        for (const block of blocks) {
+                            const snap_block = snap_blocks.make(null);
+                            const type_val = block.Type()?.val() ?? '';
+                            const level_val = block.Level()?.val() ?? 0;
+                            const content_val = block.Content()?.val() ?? '';
+                            snap_block.Type('auto')?.val(type_val);
+                            snap_block.Level('auto')?.val(level_val);
+                            snap_block.Content('auto')?.val(content_val);
+                        }
+                    }
+                }
+                const versions = src_data.Versions('auto');
+                if (!versions)
+                    return null;
+                const current = versions.items_vary() ?? [];
+                versions.items_vary([snap_land.link(), ...current]);
+                return event;
+            }
+            version_rows() {
+                return this.version_links().map(link => this.Version(link));
+            }
+            version_title(link) {
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                const data = land.Data($bog_wysiwyg_model_page);
+                const title = data.Title()?.val() ?? '';
+                const index = this.version_links().indexOf(link);
+                const num = this.version_links().length - index;
+                const label = this.$.$mol_locale.text('$bog_wysiwyg_history_version_label');
+                return title
+                    ? `#${num} — ${title}`
+                    : `${label} #${num}`;
+            }
+            current_version(next) {
+                return next ?? null;
+            }
+            version_active(link) {
+                return this.current_version() === link;
+            }
+            version_click(link, event) {
+                if (!event)
+                    return null;
+                const dst_data = this.page_data();
+                if (!dst_data)
+                    return null;
+                const snap_land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                const snap_data = snap_land.Data($bog_wysiwyg_model_page);
+                const snap_title = snap_data.Title()?.val() ?? '';
+                if (snap_title) {
+                    dst_data.Title('auto')?.val(snap_title);
+                }
+                const dst_blocks = dst_data.Blocks('auto');
+                const snap_blocks = snap_data.Blocks();
+                if (dst_blocks && snap_blocks) {
+                    const src_list = snap_blocks.remote_list() ?? [];
+                    const existing = dst_blocks.remote_list() ?? [];
+                    for (const block of existing) {
+                        dst_blocks.cut(block.link());
+                    }
+                    for (const block of src_list) {
+                        const new_block = dst_blocks.make(null);
+                        const type_val = block.Type()?.val() ?? '';
+                        const level_val = block.Level()?.val() ?? 0;
+                        const content_val = block.Content()?.val() ?? '';
+                        new_block.Type('auto')?.val(type_val);
+                        new_block.Level('auto')?.val(level_val);
+                        new_block.Content('auto')?.val(content_val);
+                    }
+                }
+                this.current_version(link);
+                return event;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_history.prototype, "version_links", null);
+        __decorate([
+            $mol_action
+        ], $bog_wysiwyg_history.prototype, "save_version", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_history.prototype, "version_rows", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_history.prototype, "current_version", null);
+        __decorate([
+            $mol_action
+        ], $bog_wysiwyg_history.prototype, "version_click", null);
+        $$.$bog_wysiwyg_history = $bog_wysiwyg_history;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_wysiwyg_history, {
+        flex: {
+            direction: 'column',
+        },
+        padding: {
+            top: '0.5rem',
+            bottom: '0.5rem',
+            left: '0.5rem',
+            right: '0.5rem',
+        },
+        gap: '0.5rem',
+        ':not([bog_wysiwyg_history_showed])': {
+            display: 'none',
+        },
+        Save_button: {
+            justifyContent: 'center',
+            fontWeight: 'bold',
+            background: {
+                color: $mol_theme.control,
+            },
+            color: $mol_theme.back,
+            border: {
+                radius: $mol_gap.round,
+            },
+        },
+        Version_list: {
+            flex: {
+                direction: 'column',
+            },
+            gap: '0.125rem',
+        },
+        Version: {
+            border: {
+                radius: $mol_gap.round,
+            },
+        },
+    });
+    $mol_style_define($bog_wysiwyg_history_version, {
+        '@': {
+            'bog_wysiwyg_history_version_active': {
+                'true': {
+                    background: {
+                        color: $mol_theme.hover,
+                    },
+                    font: {
+                        weight: 'bold',
+                    },
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_wysiwyg) = class $bog_wysiwyg extends ($.$mol_view) {
+		block_html(id, next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		block_type(id, next){
+			if(next !== undefined) return next;
+			return "paragraph";
+		}
+		block_level(id, next){
+			if(next !== undefined) return next;
+			return 1;
+		}
+		menu_showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		ai_showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		block_enter(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		block_remove(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		block_slash(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		block_menu_key(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		block_image(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		block_ai(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		block_ai_key(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		block_paste_blocks(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		row_is_drag_over(id){
+			return false;
+		}
+		row_drag_position(id){
+			return "";
+		}
+		row_is_dragging(id){
+			return false;
+		}
+		row_dragover(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		row_drop(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		row_dragend(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		handle_dragstart(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Drag_handle(id){
+			const obj = new this.$.$mol_view();
+			(obj.attr) = () => ({"draggable": "true"});
+			(obj.event) = () => ({"dragstart": (next) => (this.handle_dragstart(id, next))});
+			(obj.sub) = () => (["⠿"]);
+			return obj;
+		}
+		block_comment_land_link(id){
+			return "";
+		}
+		block_comment_open(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Block_comment(id){
+			const obj = new this.$.$bog_wysiwyg_comment();
+			(obj.comment_land_link) = () => ((this.block_comment_land_link(id)));
+			(obj.panel_open) = (next) => ((this.block_comment_open(id, next)));
+			return obj;
+		}
+		editor_keydown(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		editor_copy(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Status(){
+			const obj = new this.$.$giper_baza_status();
+			return obj;
+		}
+		block_row_views(){
+			return [];
+		}
+		Block_list(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.block_row_views()));
+			return obj;
+		}
+		Backlinks(){
+			const obj = new this.$.$bog_wysiwyg_links();
+			(obj.page_id) = () => ((this.page_land_link()));
+			(obj.all_pages) = () => ((this.all_pages()));
+			return obj;
+		}
+		menu_picked(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		menu_index(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		menu_pos_y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		menu_pos_x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Menu(){
+			const obj = new this.$.$bog_wysiwyg_menu();
+			(obj.showed) = (next) => ((this.menu_showed(next)));
+			(obj.picked) = (next) => ((this.menu_picked(next)));
+			(obj.index) = (next) => ((this.menu_index(next)));
+			(obj.pos_y) = () => ((this.menu_pos_y()));
+			(obj.pos_x) = () => ((this.menu_pos_x()));
+			return obj;
+		}
+		ai_context(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		ai_loading(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		ai_result(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		ai_picked(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		ai_index(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		ai_pos_y(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		ai_pos_x(next){
+			if(next !== undefined) return next;
+			return 0;
+		}
+		Ai(){
+			const obj = new this.$.$bog_wysiwyg_ai();
+			(obj.showed) = (next) => ((this.ai_showed(next)));
+			(obj.context) = () => ((this.ai_context()));
+			(obj.loading) = (next) => ((this.ai_loading(next)));
+			(obj.on_result) = (next) => ((this.ai_result(next)));
+			(obj.picked) = (next) => ((this.ai_picked(next)));
+			(obj.index) = (next) => ((this.ai_index(next)));
+			(obj.pos_y) = () => ((this.ai_pos_y()));
+			(obj.pos_x) = () => ((this.ai_pos_x()));
+			return obj;
+		}
+		history_showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		History(){
+			const obj = new this.$.$bog_wysiwyg_history();
+			(obj.page_land_link) = () => ((this.page_land_link()));
+			(obj.showed) = (next) => ((this.history_showed(next)));
+			return obj;
+		}
+		page_land_link(){
+			return "";
+		}
+		block_ids(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		Block(id){
+			const obj = new this.$.$bog_wysiwyg_block();
+			(obj.html) = (next) => ((this.block_html(id, next)));
+			(obj.type) = (next) => ((this.block_type(id, next)));
+			(obj.level) = (next) => ((this.block_level(id, next)));
+			(obj.menu_open) = () => ((this.menu_showed()));
+			(obj.ai_open) = () => ((this.ai_showed()));
+			(obj.on_enter) = (next) => ((this.block_enter(id, next)));
+			(obj.on_remove) = (next) => ((this.block_remove(id, next)));
+			(obj.on_slash) = (next) => ((this.block_slash(id, next)));
+			(obj.on_menu_key) = (next) => ((this.block_menu_key(id, next)));
+			(obj.on_image) = (next) => ((this.block_image(id, next)));
+			(obj.on_ai) = (next) => ((this.block_ai(id, next)));
+			(obj.on_ai_key) = (next) => ((this.block_ai_key(id, next)));
+			(obj.on_paste_blocks) = (next) => ((this.block_paste_blocks(id, next)));
+			return obj;
+		}
+		Block_row(id){
+			const obj = new this.$.$mol_view();
+			(obj.attr) = () => ({
+				"bog_wysiwyg_drag_over": (this.row_is_drag_over(id)), 
+				"bog_wysiwyg_drag_pos": (this.row_drag_position(id)), 
+				"bog_wysiwyg_dragging": (this.row_is_dragging(id))
+			});
+			(obj.event) = () => ({
+				"dragover": (next) => (this.row_dragover(id, next)), 
+				"drop": (next) => (this.row_drop(id, next)), 
+				"dragend": (next) => (this.row_dragend(id, next))
+			});
+			(obj.sub) = () => ([
+				(this.Drag_handle(id)), 
+				(this.Block(id)), 
+				(this.Block_comment(id))
+			]);
+			return obj;
+		}
+		drag_source_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		drag_over_id(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		drag_over_position(next){
+			if(next !== undefined) return next;
+			return "after";
+		}
+		all_pages(){
+			return [];
+		}
+		event(){
+			return {
+				...(super.event()), 
+				"keydown": (next) => (this.editor_keydown(next)), 
+				"copy": (next) => (this.editor_copy(next))
+			};
+		}
+		sub(){
+			return [
+				(this.Status()), 
+				(this.Block_list()), 
+				(this.Backlinks()), 
+				(this.Menu()), 
+				(this.Ai()), 
+				(this.History())
+			];
+		}
+	};
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_html"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_type"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_level"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "menu_showed"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "ai_showed"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_enter"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_remove"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_slash"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_menu_key"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_image"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_ai"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_ai_key"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_paste_blocks"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "row_dragover"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "row_drop"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "row_dragend"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "handle_dragstart"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "Drag_handle"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "block_comment_open"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "Block_comment"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "editor_keydown"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "editor_copy"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "Status"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "Block_list"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "Backlinks"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "menu_picked"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "menu_index"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "menu_pos_y"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "menu_pos_x"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "Menu"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "ai_context"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "ai_loading"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "ai_result"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "ai_picked"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "ai_index"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "ai_pos_y"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "ai_pos_x"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "Ai"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "history_showed"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "History"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "block_ids"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "Block"));
+	($mol_mem_key(($.$bog_wysiwyg.prototype), "Block_row"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "drag_source_id"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "drag_over_id"));
+	($mol_mem(($.$bog_wysiwyg.prototype), "drag_over_position"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $bog_wysiwyg_html_to_md(html) {
+        let text = html;
+        text = text.replace(/<br\s*\/?>/gi, '\n');
+        text = text.replace(/<(?:b|strong)>(.+?)<\/(?:b|strong)>/gi, '**$1**');
+        text = text.replace(/<(?:i|em)>(.+?)<\/(?:i|em)>/gi, '*$1*');
+        text = text.replace(/<code>(.+?)<\/code>/gi, '`$1`');
+        text = text.replace(/<(?:s|del)>(.+?)<\/(?:s|del)>/gi, '~~$1~~');
+        text = text.replace(/<a[^>]*href="([^"]*)"[^>]*>(.+?)<\/a>/gi, '[$2]($1)');
+        text = text.replace(/<[^>]*>/g, '');
+        text = text.replace(/&amp;/g, '&');
+        text = text.replace(/&lt;/g, '<');
+        text = text.replace(/&gt;/g, '>');
+        text = text.replace(/&quot;/g, '"');
+        text = text.replace(/&nbsp;/g, ' ');
+        return text;
+    }
+    $.$bog_wysiwyg_html_to_md = $bog_wysiwyg_html_to_md;
+})($ || ($ = {}));
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg extends $.$bog_wysiwyg {
+            has_baza() {
+                return !!this.page_land_link();
+            }
+            page_land() {
+                const link = this.page_land_link();
+                if (!link)
+                    return null;
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+            }
+            page_data() {
+                const land = this.page_land();
+                if (!land)
+                    return null;
+                return land.Data($bog_wysiwyg_model_page);
+            }
+            baza_block(link_str) {
+                return this.$.$giper_baza_glob.Pawn(new $giper_baza_link(link_str), $bog_wysiwyg_model_block);
+            }
+            page_title(next) {
+                if (!this.has_baza())
+                    return next ?? '';
+                const data = this.page_data();
+                if (!data)
+                    return next ?? '';
+                if (next !== undefined) {
+                    data.Title('auto')?.val(next);
+                    return next;
+                }
+                return data.Title()?.val() ?? '';
+            }
+            generate_id() {
+                return Math.random().toString(36).slice(2, 10);
+            }
+            block_ids(next) {
+                if (!this.has_baza())
+                    return next ?? [this.generate_id()];
+                const data = this.page_data();
+                if (!data)
+                    return next ?? [this.generate_id()];
+                const blocks_list = data.Blocks('auto');
+                if (!blocks_list)
+                    return next ?? [this.generate_id()];
+                if (next !== undefined) {
+                    const links = next.map(id => new $giper_baza_link(id));
+                    blocks_list.items_vary(links);
+                    return next;
+                }
+                const blocks = blocks_list.remote_list();
+                if (!blocks.length) {
+                    const block = blocks_list.make(null);
+                    block.Type('auto')?.val('paragraph');
+                    return [block.link().str];
+                }
+                return blocks.map((b) => b.link().str);
+            }
+            block_html(id, next) {
+                if (!this.has_baza())
+                    return super.block_html(id, next);
+                const block = this.baza_block(id);
+                if (next !== undefined) {
+                    block.Content('auto')?.val(next);
+                    return next;
+                }
+                return block.Content()?.val() ?? '';
+            }
+            block_type(id, next) {
+                if (!this.has_baza())
+                    return super.block_type(id, next);
+                const block = this.baza_block(id);
+                if (next !== undefined) {
+                    block.Type('auto')?.val(next);
+                    return next;
+                }
+                return block.Type()?.val() ?? 'paragraph';
+            }
+            block_level(id, next) {
+                if (!this.has_baza())
+                    return super.block_level(id, next);
+                const block = this.baza_block(id);
+                if (next !== undefined) {
+                    block.Level('auto')?.val(next);
+                    return next;
+                }
+                return block.Level()?.val() ?? 1;
+            }
+            block_row_views() {
+                return this.block_ids().map(id => this.Block_row(id));
+            }
+            block_views() {
+                return this.block_ids().map(id => this.Block(id));
+            }
+            active_block_id(next) {
+                return next ?? '';
+            }
+            focus_block(id) {
+                setTimeout(() => {
+                    try {
+                        const node = this.Block(id).dom_node();
+                        node.focus();
+                        const sel = window.getSelection();
+                        if (sel) {
+                            sel.selectAllChildren(node);
+                            sel.collapseToEnd();
+                        }
+                    }
+                    catch (e) {
+                        $mol_fail_log(e);
+                    }
+                }, 0);
+            }
+            block_enter(id, event) {
+                if (!event)
+                    return null;
+                if (this.has_baza()) {
+                    const data = this.page_data();
+                    const blocks_list = data?.Blocks('auto');
+                    if (blocks_list) {
+                        const block = blocks_list.make(null);
+                        block.Type('auto')?.val('paragraph');
+                        const new_id = block.link().str;
+                        const ids = [...this.block_ids()];
+                        const index = ids.indexOf(id);
+                        ids.splice(index + 1, 0, new_id);
+                        this.block_ids(ids);
+                        this.focus_block(new_id);
+                        return event;
+                    }
+                }
+                const ids = [...this.block_ids()];
+                const index = ids.indexOf(id);
+                const new_id = this.generate_id();
+                ids.splice(index + 1, 0, new_id);
+                this.block_ids(ids);
+                setTimeout(() => {
+                    try {
+                        const node = this.Block(new_id).dom_node();
+                        node.focus();
+                    }
+                    catch (e) {
+                        $mol_fail_log(e);
+                    }
+                }, 0);
+                return event;
+            }
+            block_remove(id, event) {
+                if (!event)
+                    return null;
+                const ids = [...this.block_ids()];
+                if (ids.length <= 1)
+                    return null;
+                const index = ids.indexOf(id);
+                ids.splice(index, 1);
+                this.block_ids(ids);
+                if (this.has_baza()) {
+                    const data = this.page_data();
+                    const blocks_list = data?.Blocks('auto');
+                    if (blocks_list) {
+                        blocks_list.cut(new $giper_baza_link(id));
+                    }
+                }
+                const prev_id = ids[Math.max(0, index - 1)];
+                this.focus_block(prev_id);
+                return event;
+            }
+            block_slash(id, event) {
+                if (!event)
+                    return null;
+                this.active_block_id(id);
+                const block_node = this.Block(id).dom_node();
+                const block_rect = block_node.getBoundingClientRect();
+                this.menu_pos_y(block_rect.bottom);
+                this.menu_pos_x(block_rect.left);
+                this.menu_index(0);
+                this.menu_showed(true);
+                return event;
+            }
+            block_menu_key(id, event) {
+                if (!event)
+                    return null;
+                if (event.key === 'Escape') {
+                    this.menu_showed(false);
+                    return event;
+                }
+                if (event.key.length === 1 && !event.ctrlKey && !event.metaKey) {
+                    this.menu_showed(false);
+                    return event;
+                }
+                const cmds = this.Menu().commands();
+                if (event.key === 'ArrowDown') {
+                    this.menu_index(Math.min(this.menu_index() + 1, cmds.length - 1));
+                    return event;
+                }
+                if (event.key === 'ArrowUp') {
+                    this.menu_index(Math.max(this.menu_index() - 1, 0));
+                    return event;
+                }
+                if (event.key === 'Enter') {
+                    const cmd = cmds[this.menu_index()];
+                    if (cmd)
+                        this.menu_picked(cmd.id);
+                    return event;
+                }
+                return event;
+            }
+            apply_menu_command(cmd) {
+                const id = this.active_block_id();
+                if (!id)
+                    return;
+                const plugin = $bog_wysiwyg_plugin_registry.get(cmd);
+                if (plugin) {
+                    if (plugin.on_select) {
+                        plugin.on_select(this, id);
+                    }
+                    else {
+                        this.block_type(id, cmd);
+                    }
+                    this.menu_showed(false);
+                    this.focus_block(id);
+                    return;
+                }
+                if (cmd === 'image') {
+                    this.menu_showed(false);
+                    const url = this.$.$mol_dom_context.prompt(this.$.$mol_locale.text('$bog_wysiwyg_image_url_prompt'));
+                    if (!url) {
+                        this.focus_block(id);
+                        return;
+                    }
+                    this.block_type(id, 'image');
+                    this.block_html(id, '<img src="' + url.replace(/"/g, '&quot;') + '">');
+                    return;
+                }
+                if (cmd.startsWith('heading')) {
+                    const level = parseInt(cmd.replace('heading', '')) || 1;
+                    this.block_type(id, 'heading');
+                    this.block_level(id, level);
+                }
+                else {
+                    this.block_type(id, cmd);
+                }
+                this.menu_showed(false);
+                this.block_html(id, '');
+                this.focus_block(id);
+            }
+            block_paste_blocks(id, val) {
+                if (!val || !val.length)
+                    return null;
+                this.block_type(id, val[0].type);
+                this.block_html(id, val[0].content);
+                if (val[0].level)
+                    this.block_level(id, val[0].level);
+                const ids = [...this.block_ids()];
+                const index = ids.indexOf(id);
+                let last_id = id;
+                for (let i = 1; i < val.length; i++) {
+                    const block = val[i];
+                    let new_id;
+                    if (this.has_baza()) {
+                        const data = this.page_data();
+                        const blocks_list = data?.Blocks('auto');
+                        if (blocks_list) {
+                            const pawn = blocks_list.make(null);
+                            pawn.Type('auto')?.val(block.type);
+                            pawn.Content('auto')?.val(block.content);
+                            if (block.level)
+                                pawn.Level('auto')?.val(block.level);
+                            new_id = pawn.link().str;
+                        }
+                        else {
+                            new_id = this.generate_id();
+                        }
+                    }
+                    else {
+                        new_id = this.generate_id();
+                    }
+                    const insert_at = ids.indexOf(last_id) + 1;
+                    ids.splice(insert_at, 0, new_id);
+                    last_id = new_id;
+                }
+                this.block_ids(ids);
+                if (!this.has_baza()) {
+                    let pos = index + 1;
+                    for (let i = 1; i < val.length; i++) {
+                        const new_id = ids[pos];
+                        this.block_type(new_id, val[i].type);
+                        this.block_html(new_id, val[i].content);
+                        if (val[i].level)
+                            this.block_level(new_id, val[i].level);
+                        pos++;
+                    }
+                }
+                this.focus_block(last_id);
+                return val;
+            }
+            block_image(id, src) {
+                if (!src)
+                    return null;
+                this.block_type(id, 'image');
+                this.block_html(id, '<img src="' + src.replace(/"/g, '&quot;') + '">');
+                return src;
+            }
+            menu_picked(next) {
+                const val = next ?? '';
+                if (!val)
+                    return val;
+                this.apply_menu_command(val);
+                return val;
+            }
+            block_ai(id, event) {
+                if (!event)
+                    return null;
+                this.active_block_id(id);
+                const block_node = this.Block(id).dom_node();
+                const block_rect = block_node.getBoundingClientRect();
+                const text = block_node.textContent ?? '';
+                this.ai_context(text);
+                this.ai_pos_y(block_rect.bottom);
+                this.ai_pos_x(block_rect.left);
+                this.ai_index(0);
+                this.ai_showed(true);
+                return event;
+            }
+            block_ai_key(id, event) {
+                if (!event)
+                    return null;
+                if (event.key === 'Escape') {
+                    this.ai_showed(false);
+                    return event;
+                }
+                if (event.key.length === 1 && !event.ctrlKey && !event.metaKey) {
+                    this.ai_showed(false);
+                    return event;
+                }
+                const cmds = this.Ai().commands();
+                if (event.key === 'ArrowDown') {
+                    this.ai_index(Math.min(this.ai_index() + 1, cmds.length - 1));
+                    return event;
+                }
+                if (event.key === 'ArrowUp') {
+                    this.ai_index(Math.max(this.ai_index() - 1, 0));
+                    return event;
+                }
+                if (event.key === 'Enter') {
+                    const cmd = cmds[this.ai_index()];
+                    if (cmd) {
+                        this.ai_picked(cmd.id);
+                        this.Ai().run_command(cmd.id);
+                    }
+                    return event;
+                }
+                return event;
+            }
+            ai_result(next) {
+                const text = next ?? null;
+                if (!text)
+                    return text;
+                const id = this.active_block_id();
+                if (!id)
+                    return text;
+                const current_html = this.block_html(id);
+                const cmd = this.ai_picked();
+                if (cmd === 'continue') {
+                    this.block_html(id, current_html + ' ' + text);
+                }
+                else {
+                    this.block_html(id, text);
+                }
+                this.ai_loading(false);
+                this.focus_block(id);
+                return text;
+            }
+            comments_dict() {
+                const data = this.page_data();
+                if (!data)
+                    return null;
+                return data.Comments('auto');
+            }
+            block_comment_land_link(id) {
+                if (!this.has_baza())
+                    return '';
+                const dict = this.comments_dict();
+                if (!dict)
+                    return '';
+                return dict.key(id)?.val() ?? '';
+            }
+            block_comment_open(id, next) {
+                if (next === undefined)
+                    return false;
+                if (next && this.has_baza() && !this.block_comment_land_link(id)) {
+                    this.comment_land_ensure(id);
+                }
+                return next;
+            }
+            comment_land_ensure(block_id) {
+                const dict = this.comments_dict();
+                if (!dict)
+                    return;
+                const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                const atom = dict.key(block_id, 'auto');
+                if (atom)
+                    atom.val(land.link().str);
+            }
+            editor_keydown(event) {
+                if (!event)
+                    return null;
+                if ((event.ctrlKey || event.metaKey) && event.key === 'a') {
+                    event.preventDefault();
+                    this.select_all_blocks();
+                    return event;
+                }
+                if (event.key === 'Backspace' || event.key === 'Delete') {
+                    const selected = this.selected_block_ids();
+                    if (selected.length > 1) {
+                        event.preventDefault();
+                        this.delete_blocks(selected);
+                        return event;
+                    }
+                }
+                return event;
+            }
+            selected_block_ids() {
+                const sel = this.$.$mol_dom_context.document.defaultView?.getSelection();
+                if (!sel || sel.isCollapsed)
+                    return [];
+                const ids = this.block_ids();
+                return ids.filter(id => {
+                    const node = this.Block(id).dom_node();
+                    return sel.containsNode(node, true);
+                });
+            }
+            delete_blocks(selected) {
+                const ids = [...this.block_ids()];
+                for (const id of selected) {
+                    const index = ids.indexOf(id);
+                    if (index >= 0) {
+                        ids.splice(index, 1);
+                        if (this.has_baza()) {
+                            const data = this.page_data();
+                            const blocks_list = data?.Blocks('auto');
+                            if (blocks_list) {
+                                blocks_list.cut(new $giper_baza_link(id));
+                            }
+                        }
+                    }
+                }
+                if (ids.length === 0) {
+                    if (this.has_baza()) {
+                        const data = this.page_data();
+                        const blocks_list = data?.Blocks('auto');
+                        if (blocks_list) {
+                            const block = blocks_list.make(null);
+                            block.Type('auto')?.val('paragraph');
+                            ids.push(block.link().str);
+                        }
+                    }
+                    else {
+                        ids.push(this.generate_id());
+                    }
+                }
+                this.block_ids(ids);
+                this.focus_block(ids[0]);
+            }
+            select_all_blocks() {
+                const ids = this.block_ids();
+                if (!ids.length)
+                    return;
+                const first = this.Block(ids[0]).dom_node();
+                const last = this.Block(ids[ids.length - 1]).dom_node();
+                const sel = this.$.$mol_dom_context.document.defaultView?.getSelection();
+                if (!sel)
+                    return;
+                sel.removeAllRanges();
+                const range = this.$.$mol_dom_context.document.createRange();
+                range.setStart(first, 0);
+                range.setEnd(last, last.childNodes.length);
+                sel.addRange(range);
+            }
+            editor_copy(event) {
+                if (!event)
+                    return null;
+                const sel = this.$.$mol_dom_context.document.defaultView?.getSelection();
+                if (!sel || sel.isCollapsed)
+                    return event;
+                const ids = this.block_ids();
+                const md_parts = [];
+                for (const id of ids) {
+                    const node = this.Block(id).dom_node();
+                    if (!sel.containsNode(node, true))
+                        continue;
+                    const type = this.block_type(id);
+                    const html = node.innerHTML;
+                    switch (type) {
+                        case 'heading': {
+                            const level = this.block_level(id);
+                            md_parts.push('#'.repeat(level) + ' ' + $.$bog_wysiwyg_html_to_md(html));
+                            break;
+                        }
+                        case 'code':
+                            md_parts.push('```\n' + (node.textContent ?? '') + '\n```');
+                            break;
+                        case 'quote':
+                            md_parts.push($.$bog_wysiwyg_html_to_md(html)
+                                .split('\n')
+                                .map(l => '> ' + l)
+                                .join('\n'));
+                            break;
+                        case 'divider':
+                            md_parts.push('---');
+                            break;
+                        case 'image': {
+                            const img = node.querySelector('img');
+                            if (img)
+                                md_parts.push(`![](${img.src})`);
+                            break;
+                        }
+                        default:
+                            md_parts.push($.$bog_wysiwyg_html_to_md(html));
+                    }
+                }
+                if (md_parts.length > 1) {
+                    event.preventDefault();
+                    const md = md_parts.join('\n\n');
+                    event.clipboardData?.setData('text/plain', md);
+                    const html = ids
+                        .filter(id => sel.containsNode(this.Block(id).dom_node(), true))
+                        .map(id => this.Block(id).dom_node().outerHTML)
+                        .join('');
+                    event.clipboardData?.setData('text/html', html);
+                }
+                return event;
+            }
+            row_is_drag_over(id) {
+                return this.drag_over_id() === id && this.drag_source_id() !== id;
+            }
+            row_drag_position(id) {
+                if (this.drag_over_id() !== id)
+                    return '';
+                return this.drag_over_position();
+            }
+            row_is_dragging(id) {
+                return this.drag_source_id() === id;
+            }
+            handle_dragstart(id, event) {
+                if (!event)
+                    return null;
+                this.drag_source_id(id);
+                if (event.dataTransfer) {
+                    event.dataTransfer.effectAllowed = 'move';
+                    event.dataTransfer.setData('text/plain', id);
+                }
+                return event;
+            }
+            row_dragover(id, event) {
+                if (!event)
+                    return null;
+                event.preventDefault();
+                if (event.dataTransfer) {
+                    event.dataTransfer.dropEffect = 'move';
+                }
+                const row_node = this.Block_row(id).dom_node();
+                const rect = row_node.getBoundingClientRect();
+                const mid = rect.top + rect.height / 2;
+                const position = event.clientY < mid ? 'before' : 'after';
+                this.drag_over_id(id);
+                this.drag_over_position(position);
+                return event;
+            }
+            row_drop(id, event) {
+                if (!event)
+                    return null;
+                event.preventDefault();
+                const source_id = this.drag_source_id();
+                if (source_id && source_id !== id) {
+                    this.move_block(source_id, id, this.drag_over_position());
+                }
+                this.clear_drag_state();
+                return event;
+            }
+            row_dragend(id, event) {
+                if (!event)
+                    return null;
+                this.clear_drag_state();
+                return event;
+            }
+            clear_drag_state() {
+                this.drag_source_id('');
+                this.drag_over_id('');
+                this.drag_over_position('after');
+            }
+            move_block(from_id, to_id, position) {
+                const ids = [...this.block_ids()];
+                const from = ids.indexOf(from_id);
+                if (from < 0)
+                    return;
+                ids.splice(from, 1);
+                const to = ids.indexOf(to_id);
+                if (to < 0)
+                    return;
+                const insert = position === 'before' ? to : to + 1;
+                ids.splice(insert, 0, from_id);
+                this.block_ids(ids);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg.prototype, "page_title", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg.prototype, "block_ids", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg.prototype, "block_row_views", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg.prototype, "block_views", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg.prototype, "active_block_id", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg.prototype, "menu_picked", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg.prototype, "ai_result", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_wysiwyg.prototype, "block_comment_open", null);
+        __decorate([
+            $mol_action
+        ], $bog_wysiwyg.prototype, "comment_land_ensure", null);
+        $$.$bog_wysiwyg = $bog_wysiwyg;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    if (typeof KeyboardEvent === 'undefined') {
+        globalThis.KeyboardEvent = class KeyboardEvent extends Event {
+            key;
+            code;
+            ctrlKey;
+            shiftKey;
+            altKey;
+            metaKey;
+            constructor(type, init) {
+                super(type, init);
+                this.key = init?.key ?? '';
+                this.code = init?.code ?? '';
+                this.ctrlKey = init?.ctrlKey ?? false;
+                this.shiftKey = init?.shiftKey ?? false;
+                this.altKey = init?.altKey ?? false;
+                this.metaKey = init?.metaKey ?? false;
+            }
+        };
+    }
+    if (typeof MouseEvent === 'undefined') {
+        globalThis.MouseEvent = class MouseEvent extends Event {
+            clientX;
+            clientY;
+            button;
+            constructor(type, init) {
+                super(type, init);
+                this.clientX = init?.clientX ?? 0;
+                this.clientY = init?.clientY ?? 0;
+                this.button = init?.button ?? 0;
+            }
+        };
+    }
+    if (typeof ClipboardEvent === 'undefined') {
+        globalThis.ClipboardEvent = class ClipboardEvent extends Event {
+            clipboardData;
+            constructor(type, init) {
+                super(type, init);
+                this.clipboardData = init?.clipboardData ?? null;
+            }
+        };
+    }
+    if (typeof DragEvent === 'undefined') {
+        globalThis.DragEvent = class DragEvent extends Event {
+            dataTransfer;
+            constructor(type, init) {
+                super(type, init);
+                this.dataTransfer = init?.dataTransfer ?? null;
+            }
+        };
+    }
+    if (typeof InputEvent === 'undefined') {
+        globalThis.InputEvent = class InputEvent extends Event {
+            data;
+            inputType;
+            constructor(type, init) {
+                super(type, init);
+                this.data = init?.data ?? null;
+                this.inputType = init?.inputType ?? '';
+            }
+        };
+    }
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_wysiwyg, {
+        position: 'relative',
+        flex: {
+            direction: 'column',
+            grow: 1,
+        },
+        padding: {
+            top: '2rem',
+            bottom: '2rem',
+            left: '3rem',
+            right: '3rem',
+        },
+        maxWidth: '50rem',
+        alignSelf: 'center',
+        width: '100%',
+        Block_row: {
+            position: 'relative',
+            flex: {
+                direction: 'row',
+            },
+            alignItems: 'flex-start',
+            '@': {
+                'bog_wysiwyg_dragging': {
+                    'true': {
+                        opacity: 0.5,
+                    },
+                },
+                'bog_wysiwyg_drag_over': {
+                    'true': {
+                        '@': {
+                            'bog_wysiwyg_drag_pos': {
+                                'before': {
+                                    border: {
+                                        top: {
+                                            width: '2px',
+                                            style: 'solid',
+                                            color: $mol_theme.focus,
+                                        },
+                                    },
+                                },
+                                'after': {
+                                    border: {
+                                        bottom: {
+                                            width: '2px',
+                                            style: 'solid',
+                                            color: $mol_theme.focus,
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        Drag_handle: {
+            flex: {
+                shrink: 0,
+            },
+            width: '1.5rem',
+            cursor: 'grab',
+            opacity: 0.4,
+            transition: 'opacity 0.15s',
+            alignSelf: 'center',
+            textAlign: 'center',
+            color: $mol_theme.shade,
+            userSelect: 'none',
+            fontSize: '1rem',
+            lineHeight: '1.6',
+            ':active': {
+                cursor: 'grabbing',
+            },
+        },
+        Block: {
+            flex: {
+                grow: 1,
+            },
+            minWidth: 0,
+            width: '0px',
+        },
+        Block_comment: {
+            flex: {
+                shrink: 0,
+            },
+            alignSelf: 'center',
+        },
+    });
+    $mol_style_attach('bog_wysiwyg_hover', `
+		.bog_wysiwyg_block_row:hover > .bog_wysiwyg_drag_handle,
+		.bog_wysiwyg_block_row:hover > .bog_wysiwyg_comment .bog_wysiwyg_comment_comment_button {
+			opacity: 1;
+		}
+	`);
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_notebook) = class $mol_icon_notebook extends ($.$mol_icon) {
+		path(){
+			return "M3,7V5H5V4C5,2.89 5.9,2 7,2H13V9L15.5,7.5L18,9V2H19C20.05,2 21,2.95 21,4V20C21,21.05 20.05,22 19,22H7C5.95,22 5,21.05 5,20V19H3V17H5V13H3V11H5V7H3M7,11H5V13H7V11M7,7V5H5V7H7M7,19V17H5V19H7Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_notebook_multiple) = class $mol_icon_notebook_multiple extends ($.$mol_icon) {
+		path(){
+			return "M9.05,9H7.06V6H9.05V4.03H7.06V3.03C7.06,1.92 7.95,1.04 9.05,1.04H15.03V8L17.5,6.5L20,8V1.04H21C22.05,1.04 23,2 23,3.03V17C23,18.03 22.05,19 21,19H9.05C8,19 7.06,18.05 7.06,17V16H9.05V14H7.06V11H9.05V9M1,18H3V15H1V13H3V10H1V8H3V5H5V8H3V10H5V13H3V15H5V18H3V20H5V21H21V23H5A2,2 0 0,1 3,21V20H1V18Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_history) = class $mol_icon_history extends ($.$mol_icon) {
+		path(){
+			return "M13.5,8H12V13L16.28,15.54L17,14.33L13.5,12.25V8M13,3A9,9 0 0,0 4,12H1L4.96,16.03L9,12H6A7,7 0 0,1 13,5A7,7 0 0,1 20,12A7,7 0 0,1 13,19C11.07,19 9.32,18.21 8.06,16.94L6.64,18.36C8.27,20 10.5,21 13,21A9,9 0 0,0 22,12A9,9 0 0,0 13,3";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_graph) = class $mol_icon_graph extends ($.$mol_icon) {
+		path(){
+			return "M19.5 17C19.37 17 19.24 17 19.11 17.04L17.5 13.79C17.95 13.34 18.25 12.71 18.25 12C18.25 10.62 17.13 9.5 15.75 9.5C15.62 9.5 15.5 9.5 15.36 9.54L13.73 6.29C14.21 5.84 14.5 5.21 14.5 4.5C14.5 3.12 13.38 2 12 2S9.5 3.12 9.5 4.5C9.5 5.21 9.79 5.84 10.26 6.29L8.64 9.54C8.5 9.5 8.38 9.5 8.25 9.5C6.87 9.5 5.75 10.62 5.75 12C5.75 12.71 6.05 13.34 6.5 13.79L4.89 17.04C4.76 17 4.63 17 4.5 17C3.12 17 2 18.12 2 19.5C2 20.88 3.12 22 4.5 22S7 20.88 7 19.5C7 18.8 6.71 18.16 6.24 17.71L7.86 14.46C8 14.5 8.12 14.5 8.25 14.5C8.38 14.5 8.5 14.5 8.64 14.46L10.27 17.71C9.8 18.16 9.5 18.8 9.5 19.5C9.5 20.88 10.62 22 12 22S14.5 20.88 14.5 19.5C14.5 18.12 13.38 17 12 17C11.87 17 11.74 17 11.61 17.04L10 13.79C10.46 13.34 10.75 12.71 10.75 12S10.46 10.66 10 10.21L11.61 6.96C11.74 7 11.87 7 12 7S12.26 7 12.39 6.96L14 10.21C13.55 10.66 13.25 11.3 13.25 12C13.25 13.38 14.37 14.5 15.75 14.5C15.88 14.5 16 14.5 16.14 14.46L17.77 17.71C17.3 18.16 17 18.8 17 19.5C17 20.88 18.12 22 19.5 22S22 20.88 22 19.5C22 18.12 20.88 17 19.5 17Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_graph_outline) = class $mol_icon_graph_outline extends ($.$mol_icon) {
+		path(){
+			return "M19.5 17C19.36 17 19.24 17 19.11 17.04L17.5 13.8C17.95 13.35 18.25 12.71 18.25 12C18.25 10.62 17.13 9.5 15.75 9.5C15.61 9.5 15.5 9.5 15.35 9.54L13.74 6.3C14.21 5.84 14.5 5.21 14.5 4.5C14.5 3.12 13.38 2 12 2S9.5 3.12 9.5 4.5C9.5 5.2 9.79 5.84 10.26 6.29L8.65 9.54C8.5 9.5 8.39 9.5 8.25 9.5C6.87 9.5 5.75 10.62 5.75 12C5.75 12.71 6.04 13.34 6.5 13.79L4.89 17.04C4.76 17 4.64 17 4.5 17C3.12 17 2 18.12 2 19.5C2 20.88 3.12 22 4.5 22S7 20.88 7 19.5C7 18.8 6.71 18.16 6.24 17.71L7.86 14.46C8 14.5 8.12 14.5 8.25 14.5C8.38 14.5 8.5 14.5 8.63 14.46L10.26 17.71C9.79 18.16 9.5 18.8 9.5 19.5C9.5 20.88 10.62 22 12 22S14.5 20.88 14.5 19.5C14.5 18.12 13.38 17 12 17C11.87 17 11.74 17 11.61 17.04L10 13.8C10.45 13.35 10.75 12.71 10.75 12C10.75 11.3 10.46 10.67 10 10.21L11.61 6.96C11.74 7 11.87 7 12 7C12.13 7 12.26 7 12.39 6.96L14 10.21C13.54 10.66 13.25 11.3 13.25 12C13.25 13.38 14.37 14.5 15.75 14.5C15.88 14.5 16 14.5 16.13 14.46L17.76 17.71C17.29 18.16 17 18.8 17 19.5C17 20.88 18.12 22 19.5 22S22 20.88 22 19.5C22 18.12 20.88 17 19.5 17M4.5 20.5C3.95 20.5 3.5 20.05 3.5 19.5S3.95 18.5 4.5 18.5 5.5 18.95 5.5 19.5 5.05 20.5 4.5 20.5M13 19.5C13 20.05 12.55 20.5 12 20.5S11 20.05 11 19.5 11.45 18.5 12 18.5 13 18.95 13 19.5M7.25 12C7.25 11.45 7.7 11 8.25 11S9.25 11.45 9.25 12 8.8 13 8.25 13 7.25 12.55 7.25 12M11 4.5C11 3.95 11.45 3.5 12 3.5S13 3.95 13 4.5 12.55 5.5 12 5.5 11 5.05 11 4.5M14.75 12C14.75 11.45 15.2 11 15.75 11S16.75 11.45 16.75 12 16.3 13 15.75 13 14.75 12.55 14.75 12M19.5 20.5C18.95 20.5 18.5 20.05 18.5 19.5S18.95 18.5 19.5 18.5 20.5 18.95 20.5 19.5 20.05 20.5 19.5 20.5Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_account) = class $mol_icon_account extends ($.$mol_icon) {
+		path(){
+			return "M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$bog_ui_sidebar) = class $bog_ui_sidebar extends ($.$mol_view) {
+		Header(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([]);
+			return obj;
+		}
+		items_with_collapsed(){
+			return [];
+		}
+		Items(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.items_with_collapsed()));
+			return obj;
+		}
+		Footer(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([]);
+			return obj;
+		}
+		toggle(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Toggle_icon(){
+			const obj = new this.$.$mol_icon_menu();
+			return obj;
+		}
+		Toggle(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.toggle(next)));
+			(obj.sub) = () => ([(this.Toggle_icon())]);
+			return obj;
+		}
+		mode(next){
+			if(next !== undefined) return next;
+			return "dock";
+		}
+		items(){
+			return [];
+		}
+		sub(){
+			return [
+				(this.Header()), 
+				(this.Items()), 
+				(this.Footer()), 
+				(this.Toggle())
+			];
+		}
+		attr(){
+			return {"bog_ui_sidebar_mode": (this.mode())};
+		}
+	};
+	($mol_mem(($.$bog_ui_sidebar.prototype), "Header"));
+	($mol_mem(($.$bog_ui_sidebar.prototype), "Items"));
+	($mol_mem(($.$bog_ui_sidebar.prototype), "Footer"));
+	($mol_mem(($.$bog_ui_sidebar.prototype), "toggle"));
+	($mol_mem(($.$bog_ui_sidebar.prototype), "Toggle_icon"));
+	($mol_mem(($.$bog_ui_sidebar.prototype), "Toggle"));
+	($mol_mem(($.$bog_ui_sidebar.prototype), "mode"));
+
+
+;
+	($.$bog_ui_sidebar_item) = class $bog_ui_sidebar_item extends ($.$mol_button_minor) {
+		Label(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.label())]);
+			return obj;
+		}
+		Icon(){
+			const obj = new this.$.$mol_icon();
+			return obj;
+		}
+		label(){
+			return "";
+		}
+		active(){
+			return false;
+		}
+		collapsed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		sub(){
+			return [(this.Icon()), (this.Label())];
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"bog_ui_sidebar_item_active": (this.active()), 
+				"bog_ui_sidebar_item_collapsed": (this.collapsed())
+			};
+		}
+	};
+	($mol_mem(($.$bog_ui_sidebar_item.prototype), "Label"));
+	($mol_mem(($.$bog_ui_sidebar_item.prototype), "Icon"));
+	($mol_mem(($.$bog_ui_sidebar_item.prototype), "collapsed"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/ui/sidebar/item/item.view.css", "[bog_ui_sidebar_item]:not([bog_ui_sidebar_item_active=\"true\"]):hover {\n\tbackground: var(--mol_theme_card);\n}\n\n[bog_ui_sidebar_item_label] {\n\ttransition: width 0.2s ease, opacity 0.15s ease;\n}\n\n[bog_ui_sidebar_item_collapsed=\"true\"] [bog_ui_sidebar_item_label] {\n\twidth: 0;\n\toverflow: hidden;\n\topacity: 0;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_ui_sidebar_item, {
+        display: 'flex',
+        flex: {
+            shrink: 1,
+        },
+        align: {
+            items: 'center',
+        },
+        gap: '.75rem',
+        padding: {
+            top: '.5rem',
+            bottom: '.5rem',
+            left: '.75rem',
+            right: '.75rem',
+        },
+        border: {
+            radius: $mol_gap.round,
+        },
+        color: $mol_theme.text,
+        overflow: 'hidden',
+        Icon: {
+            flex: {
+                shrink: 0,
+            },
+        },
+        Label: {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            flex: {
+                shrink: 1,
+            },
+        },
+        '@': {
+            bog_ui_sidebar_item_active: {
+                'true': {
+                    background: {
+                        color: $mol_theme.current,
+                    },
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_ui_sidebar extends $.$bog_ui_sidebar {
+            items_with_collapsed() {
+                const collapsed = this.mode() === 'rail';
+                return this.items().map(item => {
+                    if (item instanceof $bog_ui_sidebar_item) {
+                        item.collapsed(collapsed);
+                    }
+                    return item;
+                });
+            }
+            toggle(next) {
+                if (next !== undefined) {
+                    this.mode(this.mode() === 'dock' ? 'rail' : 'dock');
+                }
+                return null;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_ui_sidebar.prototype, "items_with_collapsed", null);
+        __decorate([
+            $mol_action
+        ], $bog_ui_sidebar.prototype, "toggle", null);
+        $$.$bog_ui_sidebar = $bog_ui_sidebar;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("bog/ui/sidebar/sidebar.view.css", "[bog_ui_sidebar] {\n\ttransition: width 0.2s ease, min-width 0.2s ease;\n}\n\n[bog_ui_sidebar_mode=\"dock\"] {\n\twidth: clamp(180px, 20%, 280px);\n\tmin-width: clamp(180px, 20%, 280px);\n}\n\n[bog_ui_sidebar_mode=\"rail\"] {\n\twidth: 56px;\n\tmin-width: 56px;\n}\n\n[bog_ui_sidebar_mode=\"hidden\"] {\n\twidth: 0;\n\tmin-width: 0;\n\tpadding: 0;\n\toverflow: hidden;\n}\n\n[bog_ui_sidebar_mode=\"hidden\"] > * {\n\topacity: 0;\n\tpointer-events: none;\n}\n\n[bog_ui_sidebar_mode] > * {\n\ttransition: opacity 0.15s ease;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_ui_sidebar, {
+        display: 'flex',
+        flex: {
+            direction: 'column',
+            shrink: 0,
+        },
+        overflow: 'hidden',
+        background: {
+            color: $mol_theme.back,
+        },
+        border: {
+            radius: 0,
+        },
+        padding: {
+            top: '.5rem',
+            bottom: '.5rem',
+            left: '.5rem',
+            right: '.5rem',
+        },
+        Header: {
+            padding: {
+                top: '.5rem',
+                bottom: '.5rem',
+                left: '.75rem',
+                right: '.75rem',
+            },
+        },
+        Items: {
+            flex: {
+                grow: 1,
+            },
+            overflow: {
+                y: 'auto',
+                x: 'hidden',
+            },
+        },
+        Footer: {
+            padding: {
+                top: '.5rem',
+                bottom: '.5rem',
+                left: '.75rem',
+                right: '.75rem',
+            },
+        },
+        Toggle: {
+            flex: {
+                shrink: 0,
+            },
+            align: {
+                self: 'flex-start',
+            },
+            padding: {
+                top: '.5rem',
+                bottom: '.5rem',
+                left: '.75rem',
+                right: '.75rem',
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_wysiwyg_graph) = class $bog_wysiwyg_graph extends ($.$mol_view) {
+		pages(){
+			return [];
+		}
+		current_page_id(){
+			return "";
+		}
+		on_navigate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+	};
+	($mol_mem(($.$bog_wysiwyg_graph.prototype), "on_navigate"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const wiki_link_re = /\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g;
+        const wiki_attr_re = /data-wiki-link="([^"]+)"/g;
+        class $bog_wysiwyg_graph extends $.$bog_wysiwyg_graph {
+            sub() {
+                return null;
+            }
+            auto() {
+                const node = this.dom_node();
+                const pages = this.pages();
+                if (pages.length === 0) {
+                    node.textContent = 'No pages yet';
+                    return;
+                }
+                let canvas = node.querySelector('canvas');
+                if (!canvas) {
+                    node.textContent = '';
+                    canvas = this.$.$mol_dom_context.document.createElement('canvas');
+                    canvas.style.position = 'absolute';
+                    canvas.style.top = '0';
+                    canvas.style.left = '0';
+                    canvas.style.display = 'block';
+                    node.appendChild(canvas);
+                    this.bind_events(canvas);
+                }
+                const rect = node.getBoundingClientRect();
+                if (rect.width < 1 || rect.height < 1)
+                    return;
+                const dpr = this.$.$mol_dom_context.devicePixelRatio || 1;
+                const w = rect.width;
+                const h = rect.height;
+                canvas.style.width = w + 'px';
+                canvas.style.height = h + 'px';
+                canvas.width = Math.ceil(w * dpr);
+                canvas.height = Math.ceil(h * dpr);
+                const nodes = this.compute_nodes(w, h);
+                const sim = this.simulate(nodes, this.edges(), w, h);
+                const current = this.current_page_id();
+                const ctx = canvas.getContext('2d');
+                if (!ctx)
+                    return;
+                const style = this.$.$mol_dom_context.getComputedStyle(node);
+                const colors = {
+                    edge: style.getPropertyValue('--mol_theme_line').trim() || '#88888866',
+                    focus: style.getPropertyValue('--mol_theme_focus').trim() || '#3b82f6',
+                    back: style.getPropertyValue('--mol_theme_back').trim() || '#ffffff',
+                    line: style.getPropertyValue('--mol_theme_line').trim() || '#cccccc',
+                    text: style.getPropertyValue('--mol_theme_text').trim() || '#333333',
+                };
+                this._sim_cache = sim;
+                this.paint(ctx, dpr, w, h, sim, this.edges(), current, colors);
+            }
+            _sim_cache = [];
+            compute_nodes(w, h) {
+                const pages = this.pages();
+                const cx = w / 2;
+                const cy = h / 2;
+                const r = Math.min(w, h) * 0.3;
+                return pages.map((page, i) => ({
+                    id: page.id(),
+                    title: page.title() || page.id().slice(0, 8),
+                    x: cx + r * Math.cos(2 * Math.PI * i / Math.max(pages.length, 1)),
+                    y: cy + r * Math.sin(2 * Math.PI * i / Math.max(pages.length, 1)),
+                    vx: 0,
+                    vy: 0,
+                }));
+            }
+            edges() {
+                const pages = this.pages();
+                const page_ids = new Set(pages.map(p => p.id()));
+                const result = [];
+                for (const page of pages) {
+                    if (!page.block_ids || !page.block_html)
+                        continue;
+                    const seen = new Set();
+                    for (const bid of page.block_ids()) {
+                        const html = page.block_html(bid) ?? '';
+                        let match;
+                        wiki_attr_re.lastIndex = 0;
+                        while ((match = wiki_attr_re.exec(html)) !== null) {
+                            const target = match[1].trim();
+                            if (page_ids.has(target) && target !== page.id() && !seen.has(target)) {
+                                seen.add(target);
+                                result.push({ source: page.id(), target });
+                            }
+                        }
+                        const text = html.replace(/<[^>]*>/g, '');
+                        wiki_link_re.lastIndex = 0;
+                        while ((match = wiki_link_re.exec(text)) !== null) {
+                            const target = match[1].trim();
+                            if (page_ids.has(target) && target !== page.id() && !seen.has(target)) {
+                                seen.add(target);
+                                result.push({ source: page.id(), target });
+                            }
+                        }
+                    }
+                }
+                return result;
+            }
+            simulate(nodes, edges, w, h) {
+                const result = nodes.map(n => ({ ...n }));
+                if (result.length === 0)
+                    return result;
+                const cx = w / 2;
+                const cy = h / 2;
+                const node_map = new Map(result.map(n => [n.id, n]));
+                for (let iter = 0; iter < 80; iter++) {
+                    for (let i = 0; i < result.length; i++) {
+                        for (let j = i + 1; j < result.length; j++) {
+                            const a = result[i];
+                            const b = result[j];
+                            let dx = b.x - a.x;
+                            let dy = b.y - a.y;
+                            let dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist < 1) {
+                                dx = 1;
+                                dy = 1;
+                                dist = 1.41;
+                            }
+                            const force = 5000 / (dist * dist);
+                            const fx = dx / dist * force;
+                            const fy = dy / dist * force;
+                            a.vx -= fx;
+                            a.vy -= fy;
+                            b.vx += fx;
+                            b.vy += fy;
+                        }
+                    }
+                    for (const edge of edges) {
+                        const a = node_map.get(edge.source);
+                        const b = node_map.get(edge.target);
+                        if (!a || !b)
+                            continue;
+                        const dx = b.x - a.x;
+                        const dy = b.y - a.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 1)
+                            continue;
+                        const force = (dist - 120) * 0.02;
+                        const fx = dx / dist * force;
+                        const fy = dy / dist * force;
+                        a.vx += fx;
+                        a.vy += fy;
+                        b.vx -= fx;
+                        b.vy -= fy;
+                    }
+                    for (const n of result) {
+                        n.vx += (cx - n.x) * 0.005;
+                        n.vy += (cy - n.y) * 0.005;
+                    }
+                    for (const n of result) {
+                        n.vx *= 0.85;
+                        n.vy *= 0.85;
+                        n.x += n.vx;
+                        n.y += n.vy;
+                        n.x = Math.max(40, Math.min(w - 40, n.x));
+                        n.y = Math.max(40, Math.min(h - 40, n.y));
+                    }
+                }
+                return result;
+            }
+            node_at(x, y) {
+                const nodes = this._sim_cache;
+                for (let i = nodes.length - 1; i >= 0; i--) {
+                    const n = nodes[i];
+                    const dx = n.x - x;
+                    const dy = n.y - y;
+                    if (dx * dx + dy * dy < 24 * 24)
+                        return n;
+                }
+                return null;
+            }
+            paint(ctx, dpr, w, h, nodes, edges, current, colors) {
+                ctx.save();
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                ctx.clearRect(0, 0, w, h);
+                const node_map = new Map(nodes.map(n => [n.id, n]));
+                ctx.strokeStyle = colors.edge;
+                ctx.lineWidth = 1.5;
+                for (const edge of edges) {
+                    const a = node_map.get(edge.source);
+                    const b = node_map.get(edge.target);
+                    if (!a || !b)
+                        continue;
+                    ctx.beginPath();
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                    ctx.stroke();
+                    const angle = Math.atan2(b.y - a.y, b.x - a.x);
+                    const ax = b.x - 20 * Math.cos(angle);
+                    const ay = b.y - 20 * Math.sin(angle);
+                    ctx.beginPath();
+                    ctx.moveTo(ax, ay);
+                    ctx.lineTo(ax - 8 * Math.cos(angle - 0.4), ay - 8 * Math.sin(angle - 0.4));
+                    ctx.lineTo(ax - 8 * Math.cos(angle + 0.4), ay - 8 * Math.sin(angle + 0.4));
+                    ctx.closePath();
+                    ctx.fillStyle = colors.edge;
+                    ctx.fill();
+                }
+                for (const n of nodes) {
+                    const is_current = n.id === current;
+                    const radius = is_current ? 20 : 16;
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, radius, 0, Math.PI * 2);
+                    ctx.fillStyle = is_current ? colors.focus : colors.back;
+                    ctx.fill();
+                    ctx.strokeStyle = is_current ? colors.focus : colors.line;
+                    ctx.lineWidth = is_current ? 2.5 : 1.5;
+                    ctx.stroke();
+                    ctx.fillStyle = colors.text;
+                    ctx.font = is_current ? 'bold 12px system-ui' : '11px system-ui';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'top';
+                    const label = n.title.length > 18 ? n.title.slice(0, 16) + '..' : n.title;
+                    ctx.fillText(label, n.x, n.y + radius + 4);
+                }
+                ctx.restore();
+            }
+            _events_bound = false;
+            bind_events(canvas) {
+                if (this._events_bound)
+                    return;
+                this._events_bound = true;
+                canvas.addEventListener('click', (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    const node = this.node_at(e.clientX - rect.left, e.clientY - rect.top);
+                    if (node)
+                        this.on_navigate(node.id);
+                });
+                canvas.addEventListener('mousemove', (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    canvas.style.cursor = this.node_at(x, y) ? 'pointer' : 'default';
+                });
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_graph.prototype, "edges", null);
+        $$.$bog_wysiwyg_graph = $bog_wysiwyg_graph;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_wysiwyg_graph, {
+        flex: {
+            direction: 'column',
+            grow: 1,
+        },
+        position: 'relative',
+        minWidth: 0,
+        height: '30rem',
+        overflow: 'hidden',
+        border: {
+            radius: $mol_gap.round,
+        },
+        background: {
+            color: $mol_theme.card,
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_wysiwyg_profile) = class $bog_wysiwyg_profile extends ($.$bog_blitz_profile_page) {
+		Id_label(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ("ID:");
+			return obj;
+		}
+		id_display(){
+			return "";
+		}
+		Id_value(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.id_display()));
+			return obj;
+		}
+		Id_row(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Id_label()), (this.Id_value())]);
+			return obj;
+		}
+		Stats(){
+			return null;
+		}
+		Fun_card(){
+			return null;
+		}
+		Games_section(){
+			return null;
+		}
+		Avatar_label(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_profile_Avatar_label_title")));
+			return obj;
+		}
+		body(){
+			return [(this.Card()), (this.Id_row())];
+		}
+	};
+	($mol_mem(($.$bog_wysiwyg_profile.prototype), "Id_label"));
+	($mol_mem(($.$bog_wysiwyg_profile.prototype), "Id_value"));
+	($mol_mem(($.$bog_wysiwyg_profile.prototype), "Id_row"));
+	($mol_mem(($.$bog_wysiwyg_profile.prototype), "Avatar_label"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg_profile extends $.$bog_wysiwyg_profile {
+            id_display() {
+                return this.player_id();
+            }
+        }
+        $$.$bog_wysiwyg_profile = $bog_wysiwyg_profile;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_wysiwyg_profile, {
+        Id_row: {
+            flex: {
+                direction: 'row',
+            },
+            justifyContent: 'center',
+            gap: '0.25rem',
+            padding: {
+                top: '0.5rem',
+                bottom: '0.5rem',
+                left: 0,
+                right: 0,
+            },
+        },
+        Id_label: {
+            font: {
+                size: '0.75rem',
+            },
+            color: $mol_theme.shade,
+        },
+        Id_value: {
+            font: {
+                size: '0.75rem',
+                family: 'monospace',
+            },
+            color: $mol_theme.shade,
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$mol_icon_pencil) = class $mol_icon_pencil extends ($.$mol_icon) {
+		path(){
+			return "M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$mol_icon_check) = class $mol_icon_check extends ($.$mol_icon) {
+		path(){
+			return "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z";
+		}
+	};
+
+
+;
+"use strict";
+
+;
+	($.$bog_wysiwyg_app) = class $bog_wysiwyg_app extends ($.$mol_page) {
+		Theme(){
+			const obj = new this.$.$mol_theme_auto();
+			return obj;
+		}
+		Status(){
+			const obj = new this.$.$giper_baza_status();
+			return obj;
+		}
+		Registry_icon(){
+			const obj = new this.$.$mol_icon_notebook_multiple();
+			return obj;
+		}
+		registry_panel_showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Registry_toggle(){
+			const obj = new this.$.$mol_check_icon();
+			(obj.Icon) = () => ((this.Registry_icon()));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_app_Registry_toggle_hint")));
+			(obj.checked) = (next) => ((this.registry_panel_showed(next)));
+			return obj;
+		}
+		History_icon(){
+			const obj = new this.$.$mol_icon_history();
+			return obj;
+		}
+		history_showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		History_toggle(){
+			const obj = new this.$.$mol_check_icon();
+			(obj.Icon) = () => ((this.History_icon()));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_app_History_toggle_hint")));
+			(obj.checked) = (next) => ((this.history_showed(next)));
+			return obj;
+		}
+		Graph_icon(){
+			const obj = new this.$.$mol_icon_graph_outline();
+			return obj;
+		}
+		graph_showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Graph_toggle(){
+			const obj = new this.$.$mol_check_icon();
+			(obj.Icon) = () => ((this.Graph_icon()));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_app_Graph_toggle_hint")));
+			(obj.checked) = (next) => ((this.graph_showed(next)));
+			return obj;
+		}
+		Profile_icon(){
+			const obj = new this.$.$mol_icon_account();
+			return obj;
+		}
+		profile_showed(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		Profile_toggle(){
+			const obj = new this.$.$mol_check_icon();
+			(obj.Icon) = () => ((this.Profile_icon()));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_app_Profile_toggle_hint")));
+			(obj.checked) = (next) => ((this.profile_showed(next)));
+			return obj;
+		}
+		Lights(){
+			const obj = new this.$.$mol_lights_toggle();
+			return obj;
+		}
+		Registry_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_app_Registry_title_title")));
+			return obj;
+		}
+		registry_create(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		New_registry(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_app_New_registry_title")));
+			(obj.click) = (next) => ((this.registry_create(next)));
+			return obj;
+		}
+		Registry_head(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Registry_title()), (this.New_registry())]);
+			return obj;
+		}
+		registry_rows(){
+			return [];
+		}
+		Registry_list(){
+			const obj = new this.$.$mol_list();
+			(obj.rows) = () => ((this.registry_rows()));
+			return obj;
+		}
+		Registry_panel(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Registry_head()), (this.Registry_list())]);
+			return obj;
+		}
+		page_rows(){
+			return [];
+		}
+		Sidebar_title(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_app_Sidebar_title_title")));
+			return obj;
+		}
+		page_create(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		New_page(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.$.$mol_locale.text("$bog_wysiwyg_app_New_page_title")));
+			(obj.click) = (next) => ((this.page_create(next)));
+			return obj;
+		}
+		Sidebar_head(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Sidebar_title()), (this.New_page())]);
+			return obj;
+		}
+		Sidebar(){
+			const obj = new this.$.$bog_ui_sidebar();
+			(obj.items) = () => ((this.page_rows()));
+			(obj.Header) = () => ((this.Sidebar_head()));
+			return obj;
+		}
+		page_land_link(){
+			return "";
+		}
+		all_pages_info(){
+			return [];
+		}
+		Editor(){
+			const obj = new this.$.$bog_wysiwyg();
+			(obj.page_land_link) = () => ((this.page_land_link()));
+			(obj.all_pages) = () => ((this.all_pages_info()));
+			(obj.history_showed) = (next) => ((this.history_showed(next)));
+			return obj;
+		}
+		main_content(){
+			return [(this.Editor())];
+		}
+		Main(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.main_content()));
+			return obj;
+		}
+		graph_pages(){
+			return [];
+		}
+		page_navigate(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Graph(){
+			const obj = new this.$.$bog_wysiwyg_graph();
+			(obj.pages) = () => ((this.graph_pages()));
+			(obj.current_page_id) = () => ((this.page_land_link()));
+			(obj.on_navigate) = (next) => ((this.page_navigate(next)));
+			return obj;
+		}
+		Graph_panel(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Graph())]);
+			return obj;
+		}
+		Profile(){
+			const obj = new this.$.$bog_wysiwyg_profile();
+			return obj;
+		}
+		Profile_panel(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.Profile())]);
+			return obj;
+		}
+		layout_content(){
+			return [
+				(this.Registry_panel()), 
+				(this.Sidebar()), 
+				(this.Main()), 
+				(this.Graph_panel()), 
+				(this.Profile_panel())
+			];
+		}
+		Layout(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ((this.layout_content()));
+			return obj;
+		}
+		registry_item_title(id){
+			return "";
+		}
+		registry_item_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		registry_item_active(id){
+			return false;
+		}
+		page_item_title(id){
+			return "";
+		}
+		page_item_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		page_item_active(id){
+			return false;
+		}
+		page_item_rename(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		title(){
+			return (this.$.$mol_locale.text("$bog_wysiwyg_app_title"));
+		}
+		plugins(){
+			return [(this.Theme()), (this.Status())];
+		}
+		tools(){
+			return [
+				(this.Registry_toggle()), 
+				(this.History_toggle()), 
+				(this.Graph_toggle()), 
+				(this.Profile_toggle()), 
+				(this.Lights())
+			];
+		}
+		sub(){
+			return [(this.Head()), (this.Layout())];
+		}
+		Registry_item(id){
+			const obj = new this.$.$bog_wysiwyg_app_registry();
+			(obj.title) = () => ((this.registry_item_title(id)));
+			(obj.click) = (next) => ((this.registry_item_click(id, next)));
+			(obj.active) = () => ((this.registry_item_active(id)));
+			return obj;
+		}
+		Page_item(id){
+			const obj = new this.$.$bog_wysiwyg_app_page();
+			(obj.title) = () => ((this.page_item_title(id)));
+			(obj.click) = (next) => ((this.page_item_click(id, next)));
+			(obj.active) = () => ((this.page_item_active(id)));
+			(obj.on_rename) = (next) => ((this.page_item_rename(id, next)));
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Theme"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Status"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Registry_icon"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "registry_panel_showed"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Registry_toggle"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "History_icon"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "history_showed"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "History_toggle"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Graph_icon"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "graph_showed"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Graph_toggle"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Profile_icon"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "profile_showed"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Profile_toggle"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Lights"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Registry_title"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "registry_create"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "New_registry"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Registry_head"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Registry_list"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Registry_panel"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Sidebar_title"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "page_create"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "New_page"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Sidebar_head"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Sidebar"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Editor"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Main"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "page_navigate"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Graph"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Graph_panel"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Profile"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Profile_panel"));
+	($mol_mem(($.$bog_wysiwyg_app.prototype), "Layout"));
+	($mol_mem_key(($.$bog_wysiwyg_app.prototype), "registry_item_click"));
+	($mol_mem_key(($.$bog_wysiwyg_app.prototype), "page_item_click"));
+	($mol_mem_key(($.$bog_wysiwyg_app.prototype), "page_item_rename"));
+	($mol_mem_key(($.$bog_wysiwyg_app.prototype), "Registry_item"));
+	($mol_mem_key(($.$bog_wysiwyg_app.prototype), "Page_item"));
+	($.$bog_wysiwyg_app_registry) = class $bog_wysiwyg_app_registry extends ($.$mol_view) {
+		click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Title_nav(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.title()));
+			(obj.click) = (next) => ((this.click(next)));
+			return obj;
+		}
+		active(){
+			return false;
+		}
+		title(){
+			return "";
+		}
+		attr(){
+			return {"bog_wysiwyg_app_registry_active": (this.active())};
+		}
+		sub(){
+			return [(this.Title_nav())];
+		}
+	};
+	($mol_mem(($.$bog_wysiwyg_app_registry.prototype), "click"));
+	($mol_mem(($.$bog_wysiwyg_app_registry.prototype), "Title_nav"));
+	($.$bog_wysiwyg_app_page) = class $bog_wysiwyg_app_page extends ($.$mol_view) {
+		click(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Title_nav(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ((this.title()));
+			(obj.click) = (next) => ((this.click(next)));
+			return obj;
+		}
+		Rename_icon(){
+			const obj = new this.$.$mol_icon_pencil();
+			return obj;
+		}
+		start_rename(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Rename_trigger(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.sub) = () => ([(this.Rename_icon())]);
+			(obj.click) = (next) => ((this.start_rename(next)));
+			return obj;
+		}
+		page_content(){
+			return [(this.Title_nav()), (this.Rename_trigger())];
+		}
+		Confirm_icon(){
+			const obj = new this.$.$mol_icon_check();
+			return obj;
+		}
+		confirm_rename(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		active(){
+			return false;
+		}
+		editing(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		title(){
+			return "";
+		}
+		on_rename(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		edit_title(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		attr(){
+			return {"bog_wysiwyg_app_page_active": (this.active()), "bog_wysiwyg_app_page_editing": (this.editing())};
+		}
+		sub(){
+			return (this.page_content());
+		}
+		Title_input(){
+			const obj = new this.$.$mol_string();
+			(obj.value) = (next) => ((this.edit_title(next)));
+			return obj;
+		}
+		Rename_confirm(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.sub) = () => ([(this.Confirm_icon())]);
+			(obj.click) = (next) => ((this.confirm_rename(next)));
+			return obj;
+		}
+	};
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "click"));
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "Title_nav"));
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "Rename_icon"));
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "start_rename"));
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "Rename_trigger"));
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "Confirm_icon"));
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "confirm_rename"));
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "editing"));
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "on_rename"));
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "edit_title"));
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "Title_input"));
+	($mol_mem(($.$bog_wysiwyg_app_page.prototype), "Rename_confirm"));
+
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg_model_user_data extends $giper_baza_dict.with({
+            Registries: $giper_baza_list_link,
+        }) {
+        }
+        $$.$bog_wysiwyg_model_user_data = $bog_wysiwyg_model_user_data;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg_model_registry extends $giper_baza_dict.with({
+            Title: $giper_baza_atom_text,
+            Pages: $giper_baza_list_link,
+        }) {
+        }
+        $$.$bog_wysiwyg_model_registry = $bog_wysiwyg_model_registry;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_wysiwyg_block) = class $bog_wysiwyg_block extends ($.$mol_view) {
+		is_empty(){
+			return false;
+		}
+		Hotkey_format(){
+			const obj = new this.$.$mol_hotkey();
+			(obj.mod_ctrl) = () => (true);
+			(obj.key) = () => ({
+				"B": (next) => (this.bold_exec(next)), 
+				"I": (next) => (this.italic_exec(next)), 
+				"U": (next) => (this.underline_exec(next))
+			});
+			return obj;
+		}
+		Hotkey_strike(){
+			const obj = new this.$.$mol_hotkey();
+			(obj.mod_ctrl) = () => (true);
+			(obj.mod_shift) = () => (true);
+			(obj.key) = () => ({"S": (next) => (this.strike_exec(next))});
+			return obj;
+		}
+		input_event(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		keydown_event(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		paste_event(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		drop_event(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		dragover_event(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		html(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		type(next){
+			if(next !== undefined) return next;
+			return "paragraph";
+		}
+		level(next){
+			if(next !== undefined) return next;
+			return 1;
+		}
+		menu_open(){
+			return false;
+		}
+		placeholder(){
+			return "";
+		}
+		on_enter(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		on_remove(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		on_slash(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		on_menu_key(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		on_image(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		ai_open(){
+			return false;
+		}
+		on_ai(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		on_ai_key(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		on_paste_blocks(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		bold_exec(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		italic_exec(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		underline_exec(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		strike_exec(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		link_exec(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		attr(){
+			return {
+				...(super.attr()), 
+				"contenteditable": "true", 
+				"bog_wysiwyg_block_type": (this.type()), 
+				"bog_wysiwyg_block_level": (this.level()), 
+				"bog_wysiwyg_block_empty": (this.is_empty()), 
+				"bog_wysiwyg_block_placeholder": (this.placeholder())
+			};
+		}
+		plugins(){
+			return [(this.Hotkey_format()), (this.Hotkey_strike())];
+		}
+		event(){
+			return {
+				...(super.event()), 
+				"input": (next) => (this.input_event(next)), 
+				"keydown": (next) => (this.keydown_event(next)), 
+				"paste": (next) => (this.paste_event(next)), 
+				"drop": (next) => (this.drop_event(next)), 
+				"dragover": (next) => (this.dragover_event(next))
+			};
+		}
+		sub(){
+			return [];
+		}
+	};
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "Hotkey_format"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "Hotkey_strike"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "input_event"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "keydown_event"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "paste_event"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "drop_event"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "dragover_event"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "html"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "type"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "level"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "on_enter"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "on_remove"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "on_slash"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "on_menu_key"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "on_image"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "on_ai"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "on_ai_key"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "on_paste_blocks"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "bold_exec"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "italic_exec"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "underline_exec"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "strike_exec"));
+	($mol_mem(($.$bog_wysiwyg_block.prototype), "link_exec"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    function $bog_wysiwyg_parse_markdown(text) {
+        const blocks = [];
+        const lines = text.split('\n');
+        let i = 0;
+        while (i < lines.length) {
+            const line = lines[i];
+            if (!line.trim()) {
+                i++;
+                continue;
+            }
+            if (line.trimStart().startsWith('```')) {
+                const code_lines = [];
+                i++;
+                while (i < lines.length && !lines[i].trimStart().startsWith('```')) {
+                    code_lines.push(lines[i]);
+                    i++;
+                }
+                if (i < lines.length)
+                    i++;
+                blocks.push({ type: 'code', content: md_escape_html(code_lines.join('\n')) });
+                continue;
+            }
+            const heading_match = line.match(/^(#{1,3})\s+(.+)/);
+            if (heading_match) {
+                blocks.push({ type: 'heading', content: md_inline(heading_match[2]), level: heading_match[1].length });
+                i++;
+                continue;
+            }
+            if (/^[-*_]{3,}\s*$/.test(line.trim())) {
+                blocks.push({ type: 'divider', content: '' });
+                i++;
+                continue;
+            }
+            if (line.trimStart().startsWith('> ') || line.trimStart() === '>') {
+                const quote_lines = [];
+                while (i < lines.length && (lines[i].trimStart().startsWith('> ') || lines[i].trimStart() === '>')) {
+                    quote_lines.push(lines[i].replace(/^>\s?/, ''));
+                    i++;
+                }
+                blocks.push({ type: 'quote', content: md_inline(quote_lines.join('<br>')) });
+                continue;
+            }
+            const para_lines = [];
+            while (i < lines.length && lines[i].trim()
+                && !lines[i].trimStart().startsWith('```')
+                && !lines[i].match(/^#{1,3}\s/)
+                && !(/^[-*_]{3,}\s*$/.test(lines[i].trim()))
+                && !lines[i].trimStart().startsWith('> ')) {
+                para_lines.push(lines[i]);
+                i++;
+            }
+            if (para_lines.length) {
+                blocks.push({ type: 'paragraph', content: md_inline(para_lines.join('<br>')) });
+            }
+        }
+        return blocks;
+    }
+    $.$bog_wysiwyg_parse_markdown = $bog_wysiwyg_parse_markdown;
+    function md_inline(text) {
+        text = text.replace(/\[(.+?)\]\((\S+?)\)/g, '<a href="$2">$1</a>');
+        text = text.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+        text = text.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<i>$1</i>');
+        text = text.replace(/`(.+?)`/g, '<code>$1</code>');
+        text = text.replace(/~~(.+?)~~/g, '<s>$1</s>');
+        return text;
+    }
+    function md_escape_html(text) {
+        return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+})($ || ($ = {}));
+(function ($) {
+    var $$;
+    (function ($$) {
+        const markdown_patterns = [
+            {
+                regex: /\*\*(.+?)\*\*/,
+                tag: 'b',
+            },
+            {
+                regex: /(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/,
+                tag: 'i',
+            },
+            {
+                regex: /`(.+?)`/,
+                tag: 'code',
+            },
+            {
+                regex: /~~(.+?)~~/,
+                tag: 's',
+            },
+        ];
+        const link_pattern = /\[(.+?)\]\((\S+?)\)/;
+        const wiki_link_pattern = /\[\[([^\]]+)\]\]/;
+        class $bog_wysiwyg_block extends $.$bog_wysiwyg_block {
+            minimal_height() {
+                return 40;
+            }
+            is_empty() {
+                const html = this.html();
+                if (this.type() === 'image' && html?.includes('<img'))
+                    return false;
+                if (this.type() === 'embed' && html?.includes('<a'))
+                    return false;
+                const plugin = $bog_wysiwyg_plugin_registry.get(this.type());
+                if (plugin?.render && html)
+                    return false;
+                return !html?.replace(/<[^>]*>/g, '').trim();
+            }
+            sub() {
+                return null;
+            }
+            is_image() {
+                return this.type() === 'image';
+            }
+            is_static() {
+                if (this.type() === 'image' || this.type() === 'embed')
+                    return true;
+                const plugin = $bog_wysiwyg_plugin_registry.get(this.type());
+                return !!plugin?.render;
+            }
+            static render_cache = new WeakMap();
+            auto() {
+                const node = this.dom_node();
+                const doc = this.$.$mol_dom_context.document;
+                const plugin = $bog_wysiwyg_plugin_registry.get(this.type());
+                if (plugin?.render) {
+                    node.contentEditable = 'false';
+                    let component = $bog_wysiwyg_block.render_cache.get(this);
+                    if (!component) {
+                        component = plugin.render(this);
+                        if (component)
+                            $bog_wysiwyg_block.render_cache.set(this, component);
+                    }
+                    if (component) {
+                        try {
+                            const rendered = component.dom_tree();
+                            if (node.firstChild !== rendered) {
+                                node.textContent = '';
+                                node.appendChild(rendered);
+                            }
+                        }
+                        catch (error) {
+                            if (error instanceof Promise)
+                                throw error;
+                            node.textContent = String(error);
+                        }
+                    }
+                    else {
+                        node.textContent = 'Loading plugin...';
+                    }
+                    return;
+                }
+                if (this.is_static()) {
+                    node.contentEditable = 'false';
+                    const html = this.html();
+                    if (node.innerHTML !== html) {
+                        node.innerHTML = html;
+                    }
+                    return;
+                }
+                node.contentEditable = 'true';
+                if (node !== doc.activeElement) {
+                    const html = this.html();
+                    if (node.innerHTML !== html) {
+                        node.innerHTML = html;
+                    }
+                }
+            }
+            input_event(event) {
+                if (!event)
+                    return null;
+                const node = event.target;
+                this.try_markdown(node);
+                this.html(node.innerHTML);
+                return event;
+            }
+            try_markdown(container) {
+                const doc = container.ownerDocument;
+                const sel = doc.defaultView?.getSelection();
+                if (!sel || sel.rangeCount === 0)
+                    return;
+                const cursor = sel.getRangeAt(0);
+                const text_node = cursor.startContainer;
+                if (text_node.nodeType !== 3)
+                    return;
+                const text = text_node.textContent ?? '';
+                const link_match = link_pattern.exec(text);
+                if (link_match) {
+                    const link_text = link_match[1];
+                    const url = link_match[2];
+                    if (link_text && url) {
+                        const el = doc.createElement('a');
+                        el.href = url;
+                        el.textContent = link_text;
+                        this.replace_match_in_text(text_node, link_match, el, sel);
+                        return;
+                    }
+                }
+                const wiki_match = wiki_link_pattern.exec(text);
+                if (wiki_match) {
+                    const page_id = wiki_match[1];
+                    if (page_id) {
+                        const el = doc.createElement('a');
+                        el.href = '#' + page_id;
+                        el.setAttribute('data-wiki-link', page_id);
+                        el.className = 'bog_wysiwyg_wiki_link';
+                        el.textContent = page_id;
+                        this.replace_match_in_text(text_node, wiki_match, el, sel);
+                        return;
+                    }
+                }
+                for (const pattern of markdown_patterns) {
+                    const match = pattern.regex.exec(text);
+                    if (!match)
+                        continue;
+                    const content = match[1];
+                    if (!content)
+                        continue;
+                    const el = doc.createElement(pattern.tag);
+                    el.textContent = content;
+                    this.replace_match_in_text(text_node, match, el, sel);
+                    return;
+                }
+            }
+            replace_match_in_text(text_node, match, el, sel) {
+                const start = match.index;
+                const end = start + match[0].length;
+                const range = text_node.ownerDocument.createRange();
+                range.setStart(text_node, start);
+                range.setEnd(text_node, end);
+                range.deleteContents();
+                range.insertNode(el);
+                const after = text_node.ownerDocument.createRange();
+                after.setStartAfter(el);
+                after.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(after);
+            }
+            bold_exec(event) {
+                if (!event)
+                    return null;
+                event.preventDefault();
+                this.$.$mol_dom_context.document.execCommand('bold');
+                this.html(this.dom_node().innerHTML);
+                return event;
+            }
+            italic_exec(event) {
+                if (!event)
+                    return null;
+                event.preventDefault();
+                this.$.$mol_dom_context.document.execCommand('italic');
+                this.html(this.dom_node().innerHTML);
+                return event;
+            }
+            underline_exec(event) {
+                if (!event)
+                    return null;
+                event.preventDefault();
+                this.$.$mol_dom_context.document.execCommand('underline');
+                this.html(this.dom_node().innerHTML);
+                return event;
+            }
+            strike_exec(event) {
+                if (!event)
+                    return null;
+                event.preventDefault();
+                this.$.$mol_dom_context.document.execCommand('strikeThrough');
+                this.html(this.dom_node().innerHTML);
+                return event;
+            }
+            link_exec(event) {
+                if (!event)
+                    return null;
+                event.preventDefault();
+                const url = this.$.$mol_dom_context.prompt(this.$.$mol_locale.text('$bog_wysiwyg_block_link_url_prompt'));
+                if (!url)
+                    return event;
+                const doc = this.$.$mol_dom_context.document;
+                const sel = doc.defaultView?.getSelection();
+                if (sel && sel.toString().length > 0) {
+                    doc.execCommand('createLink', false, url);
+                }
+                else {
+                    const a = doc.createElement('a');
+                    a.href = url;
+                    a.textContent = url;
+                    doc.execCommand('insertHTML', false, a.outerHTML);
+                }
+                this.html(this.dom_node().innerHTML);
+                return event;
+            }
+            paste_event(event) {
+                if (!event)
+                    return null;
+                const items = event.clipboardData?.items;
+                if (!items)
+                    return event;
+                for (const item of items) {
+                    if (item.type.startsWith('image/')) {
+                        event.preventDefault();
+                        const file = item.getAsFile();
+                        if (file)
+                            this.insert_image_file(file);
+                        return event;
+                    }
+                }
+                const text = event.clipboardData?.getData('text/plain') ?? '';
+                if (text.includes('\n')) {
+                    event.preventDefault();
+                    const blocks = $.$bog_wysiwyg_parse_markdown(text);
+                    if (blocks.length > 0) {
+                        this.on_paste_blocks(blocks);
+                    }
+                    return event;
+                }
+                return event;
+            }
+            drop_event(event) {
+                if (!event)
+                    return null;
+                const files = event.dataTransfer?.files;
+                if (!files)
+                    return event;
+                for (const file of files) {
+                    if (file.type.startsWith('image/')) {
+                        event.preventDefault();
+                        this.insert_image_file(file);
+                        return event;
+                    }
+                }
+                return event;
+            }
+            dragover_event(event) {
+                if (!event)
+                    return null;
+                event.preventDefault();
+                return event;
+            }
+            insert_image_file(file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const src = reader.result;
+                    this.on_image(src);
+                };
+                reader.readAsDataURL(file);
+            }
+            keydown_event(event) {
+                if (!event)
+                    return null;
+                const node = event.target;
+                if (this.is_image() || $bog_wysiwyg_plugin_registry.get(this.type())?.render) {
+                    if (event.key === 'Backspace' || event.key === 'Delete') {
+                        event.preventDefault();
+                        this.on_remove(event);
+                        return event;
+                    }
+                    if (event.key === 'Enter' && !event.shiftKey) {
+                        event.preventDefault();
+                        this.on_enter(event);
+                        return event;
+                    }
+                    return event;
+                }
+                if (this.ai_open()) {
+                    if (['ArrowDown', 'ArrowUp', 'Enter', 'Escape'].includes(event.key)) {
+                        event.preventDefault();
+                        this.on_ai_key(event);
+                        return event;
+                    }
+                    if (event.key.length === 1 && !event.ctrlKey && !event.metaKey) {
+                        this.on_ai_key(event);
+                        return event;
+                    }
+                }
+                if (this.menu_open()) {
+                    if (['ArrowDown', 'ArrowUp', 'Enter', 'Escape'].includes(event.key)) {
+                        event.preventDefault();
+                        this.on_menu_key(event);
+                        return event;
+                    }
+                    if (event.key.length === 1 && !event.ctrlKey && !event.metaKey) {
+                        this.on_menu_key(event);
+                        return event;
+                    }
+                }
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    this.on_enter(event);
+                    return event;
+                }
+                if (event.key === 'Backspace' && !node.textContent?.trim()) {
+                    event.preventDefault();
+                    this.on_remove(event);
+                    return event;
+                }
+                if (event.key === '/' && !node.textContent?.trim()) {
+                    event.preventDefault();
+                    this.on_slash(event);
+                    return event;
+                }
+                if (event.key === '@') {
+                    event.preventDefault();
+                    this.on_ai(event);
+                    return event;
+                }
+                if (event.key === 'j' && (event.ctrlKey || event.metaKey) && !event.shiftKey) {
+                    event.preventDefault();
+                    this.on_ai(event);
+                    return event;
+                }
+                if (event.key === 'k' && (event.ctrlKey || event.metaKey) && !event.shiftKey) {
+                    this.link_exec(event);
+                    return event;
+                }
+                return event;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_block.prototype, "is_empty", null);
+        $$.$bog_wysiwyg_block = $bog_wysiwyg_block;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_wysiwyg_block, {
+        display: 'block',
+        outline: 'none',
+        padding: {
+            top: '0.25rem',
+            bottom: '0.25rem',
+            left: '0.5rem',
+            right: '0.5rem',
+        },
+        minHeight: '1.5em',
+        lineHeight: '1.6',
+        borderRadius: '0.25rem',
+        cursor: 'text',
+        position: 'relative',
+        overflowWrap: 'break-word',
+        ':hover': {
+            background: {
+                color: $mol_theme.hover,
+            },
+        },
+        ':focus': {
+            outline: 'none',
+            background: {
+                color: $mol_theme.hover,
+            },
+        },
+        '[bog_wysiwyg_block_empty]': {
+            'true': {
+                '::before': {
+                    content: 'attr(bog_wysiwyg_block_placeholder)',
+                    color: $mol_theme.shade,
+                    pointerEvents: 'none',
+                    position: 'absolute',
+                },
+            },
+        },
+        '[bog_wysiwyg_block_type]': {
+            heading: {
+                '[bog_wysiwyg_block_level]': {
+                    '1': {
+                        font: { size: '2rem', weight: 700 },
+                        lineHeight: '1.2',
+                        margin: { top: '1rem' },
+                    },
+                    '2': {
+                        font: { size: '1.5rem', weight: 700 },
+                        lineHeight: '1.3',
+                        margin: { top: '0.75rem' },
+                    },
+                    '3': {
+                        font: { size: '1.25rem', weight: 600 },
+                        lineHeight: '1.4',
+                        margin: { top: '0.5rem' },
+                    },
+                },
+            },
+            code: {
+                font: { family: 'monospace' },
+                background: { color: $mol_theme.card },
+                padding: {
+                    top: '1rem',
+                    bottom: '1rem',
+                    left: '1rem',
+                    right: '1rem',
+                },
+                borderRadius: '0.5rem',
+                whiteSpace: 'pre-wrap',
+            },
+            quote: {
+                border: {
+                    left: {
+                        width: '3px',
+                        style: 'solid',
+                        color: $mol_theme.focus,
+                    },
+                },
+                padding: { left: '1rem' },
+                color: $mol_theme.shade,
+                font: { style: 'italic' },
+            },
+            divider: {
+                border: {
+                    top: {
+                        width: '1px',
+                        style: 'solid',
+                        color: $mol_theme.line,
+                    },
+                },
+                minHeight: 0,
+                padding: {
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                },
+                margin: { top: '0.5rem', bottom: '0.5rem' },
+                pointerEvents: 'none',
+            },
+            image: {
+                cursor: 'default',
+                padding: {
+                    top: '0.5rem',
+                    bottom: '0.5rem',
+                    left: 0,
+                    right: 0,
+                },
+                textAlign: 'center',
+            },
+        },
+    });
+    $mol_style_attach('bog_wysiwyg_block_inner', `
+		[bog_wysiwyg_block_type="image"] img {
+			max-width: 100%;
+			height: auto;
+			border-radius: 0.5rem;
+			display: block;
+			margin: 0 auto;
+		}
+
+		[bog_wysiwyg_block_type="image"][bog_wysiwyg_block_empty="true"] {
+			border: 2px dashed var(--mol_theme_line);
+			border-radius: 0.5rem;
+			min-height: 6rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+		}
+
+		[bog_wysiwyg_block_type="image"][bog_wysiwyg_block_empty="true"]::before {
+			content: "\\1F5BC  \\0414\\043E\\0431\\0430\\0432\\044C\\0442\\0435 \\043A\\0430\\0440\\0442\\0438\\043D\\043A\\0443";
+		}
+
+		.bog_wysiwyg_wiki_link {
+			color: var(--mol_theme_focus);
+			text-decoration: none;
+			border-bottom: 1px dashed var(--mol_theme_focus);
+			cursor: pointer;
+		}
+
+		.bog_wysiwyg_wiki_link:hover {
+			border-bottom-style: solid;
+		}
+	`);
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_wysiwyg_plugin_registry {
+        static plugins = new Map();
+        static register(config) {
+            this.plugins.set(config.id, config);
+        }
+        static all() {
+            return [...this.plugins.values()];
+        }
+        static get(id) {
+            return this.plugins.get(id) ?? null;
+        }
+    }
+    $.$bog_wysiwyg_plugin_registry = $bog_wysiwyg_plugin_registry;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $bog_wysiwyg_plugin_registry.register({
+        id: 'callout',
+        title: '\uD83D\uDCA1 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430',
+        on_select: (editor, block_id) => {
+            editor.block_type(block_id, 'callout');
+            editor.block_html(block_id, '');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach('bog_wysiwyg_block_callout', `
+		[bog_wysiwyg_block_type="callout"] {
+			background: var(--mol_theme_card);
+			padding: 0.75rem 1rem;
+			border-radius: 0.5rem;
+			border-left: 4px solid var(--mol_theme_focus);
+		}
+	`);
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $bog_wysiwyg_plugin_registry.register({
+        id: 'embed',
+        title: '🔗 Ссылка',
+        on_select: (editor, block_id) => {
+            const url = editor.$.$mol_dom_context.prompt('URL:');
+            if (!url)
+                return;
+            const safe = url.replace(/"/g, '&quot;').replace(/</g, '&lt;');
+            let display = url.replace(/^https?:\/\//, '');
+            if (display.length > 60)
+                display = display.slice(0, 57) + '...';
+            const safe_display = display.replace(/</g, '&lt;');
+            editor.block_type(block_id, 'embed');
+            editor.block_html(block_id, '<a href="' + safe + '" target="_blank" rel="noopener">' + safe_display + '</a>');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach('bog_wysiwyg_block_embed', `
+		[bog_wysiwyg_block_type="embed"] {
+			background: var(--mol_theme_card);
+			padding: 0.75rem 1rem;
+			border-radius: 0.5rem;
+			cursor: default;
+		}
+
+		[bog_wysiwyg_block_type="embed"] a {
+			color: var(--mol_theme_focus);
+			text-decoration: none;
+			font-weight: 500;
+			word-break: break-all;
+		}
+
+		[bog_wysiwyg_block_type="embed"] a:hover {
+			text-decoration: underline;
+		}
+
+		[bog_wysiwyg_block_type="embed"] a::before {
+			content: "\\1F517 ";
+		}
+	`);
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wysiwyg_app extends $.$bog_wysiwyg_app {
+            page_land_link(next) {
+                if (next !== undefined) {
+                    this.$.$mol_state_arg.value('page', next || null);
+                    return next;
+                }
+                return this.$.$mol_state_arg.value('page') ?? '';
+            }
+            registry_land_link(next) {
+                if (next !== undefined) {
+                    this.$.$mol_state_arg.value('registry', next || null);
+                    return next;
+                }
+                return this.$.$mol_state_arg.value('registry') ?? '';
+            }
+            user_data() {
+                const home = this.$.$giper_baza_glob.home();
+                if (!home)
+                    return null;
+                return home.land().Data($bog_wysiwyg_model_user_data);
+            }
+            user_registry_links() {
+                const data = this.user_data();
+                if (!data)
+                    return [];
+                const list = data.Registries();
+                if (!list)
+                    return [];
+                const items = list.items_vary() ?? [];
+                return items
+                    .map(v => $giper_baza_vary_cast_link(v))
+                    .filter($mol_guard_defined)
+                    .map(link => link.str);
+            }
+            user_registries_add(link_str) {
+                const data = this.user_data();
+                if (!data)
+                    return;
+                const list = data.Registries('auto');
+                if (!list)
+                    return;
+                const current = list.items_vary() ?? [];
+                list.items_vary([...current, new $giper_baza_link(link_str)]);
+            }
+            registry_data() {
+                const link = this.registry_land_link();
+                if (!link)
+                    return null;
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                return land.Data($bog_wysiwyg_model_registry);
+            }
+            registry_ensure() {
+                let data = this.registry_data();
+                if (data)
+                    return data;
+                const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                const link_str = land.link().str;
+                this.registry_land_link(link_str);
+                this.user_registries_add(link_str);
+                return land.Data($bog_wysiwyg_model_registry);
+            }
+            page_links() {
+                const data = this.registry_data();
+                if (!data)
+                    return [];
+                const list = data.Pages();
+                if (!list)
+                    return [];
+                const items = list.items_vary() ?? [];
+                return items
+                    .map(v => $giper_baza_vary_cast_link(v))
+                    .filter($mol_guard_defined)
+                    .map(link => link.str);
+            }
+            page_title_by_link(link) {
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                const data = land.Data($bog_wysiwyg_model_page);
+                return data.Title()?.val() ?? '';
+            }
+            page_block_ids(link) {
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                const data = land.Data($bog_wysiwyg_model_page);
+                const blocks = data.Blocks();
+                if (!blocks)
+                    return [];
+                return blocks.remote_list().map((b) => b.link().str);
+            }
+            page_block_html(link, block_link) {
+                const block = this.$.$giper_baza_glob.Pawn(new $giper_baza_link(block_link), $bog_wysiwyg_model_block);
+                return block.Content()?.val() ?? '';
+            }
+            all_pages_info() {
+                return this.page_links().map(link => ({
+                    id: link,
+                    title: this.page_title_by_link(link),
+                    blocks_html: this.page_block_ids(link).map(bid => this.page_block_html(link, bid)),
+                }));
+            }
+            registry_title_by_link(link) {
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                const data = land.Data($bog_wysiwyg_model_registry);
+                return data.Title()?.val() ?? '';
+            }
+            registry_rows() {
+                return this.user_registry_links().map((_, i) => this.Registry_item(i));
+            }
+            registry_item_title(index) {
+                const link = this.user_registry_links()[index];
+                if (!link)
+                    return '';
+                const title = this.registry_title_by_link(link);
+                return title || `Registry ${index + 1}`;
+            }
+            registry_item_active(index) {
+                return this.user_registry_links()[index] === this.registry_land_link();
+            }
+            registry_item_click(index, event) {
+                if (!event)
+                    return null;
+                const link = this.user_registry_links()[index];
+                if (link) {
+                    this.registry_land_link(link);
+                    const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                    const data = land.Data($bog_wysiwyg_model_registry);
+                    const pages = data.Pages();
+                    if (pages) {
+                        const items = pages.items_vary() ?? [];
+                        const first = items[0];
+                        if (first) {
+                            const first_link = $giper_baza_vary_cast_link(first);
+                            if (first_link)
+                                this.page_land_link(first_link.str);
+                        }
+                    }
+                }
+                return event;
+            }
+            registry_create(event) {
+                if (!event)
+                    return null;
+                const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                const data = land.Data($bog_wysiwyg_model_registry);
+                data.Title('auto')?.val('');
+                const link_str = land.link().str;
+                this.user_registries_add(link_str);
+                this.registry_land_link(link_str);
+                this.page_create(new Event('auto'));
+                return event;
+            }
+            page_rows() {
+                return this.page_links().map((link, i) => this.Page_item(i));
+            }
+            page_item_title(index) {
+                const link = this.page_links()[index];
+                if (!link)
+                    return '';
+                const title = this.page_title_by_link(link);
+                return title || `Page ${index + 1}`;
+            }
+            page_item_active(index) {
+                return this.page_links()[index] === this.page_land_link();
+            }
+            page_item_click(index, event) {
+                if (!event)
+                    return null;
+                const link = this.page_links()[index];
+                if (link)
+                    this.page_land_link(link);
+                return event;
+            }
+            page_item_rename(index, val) {
+                if (val === undefined)
+                    return null;
+                const link = this.page_links()[index];
+                if (!link)
+                    return val;
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                const data = land.Data($bog_wysiwyg_model_page);
+                data.Title('auto')?.val(val);
+                return val;
+            }
+            page_create(event) {
+                if (!event)
+                    return null;
+                const reg = this.registry_ensure();
+                const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                const data = land.Data($bog_wysiwyg_model_page);
+                data.Title('auto')?.val('');
+                const pages = reg.Pages('auto');
+                if (pages) {
+                    const current = pages.items_vary() ?? [];
+                    pages.items_vary([...current, land.link()]);
+                }
+                this.page_land_link(land.link().str);
+                return event;
+            }
+            page_navigate(id) {
+                if (id)
+                    this.page_land_link(id);
+                return id ?? null;
+            }
+            auto() {
+                const reg_link = this.registry_land_link();
+                if (reg_link) {
+                    const current = this.page_land_link();
+                    if (current)
+                        return;
+                    const pages = this.page_links();
+                    if (pages.length > 0) {
+                        this.page_land_link(pages[0]);
+                    }
+                    return;
+                }
+                const saved = this.user_registry_links();
+                if (saved.length > 0) {
+                    this.registry_land_link(saved[0]);
+                    return;
+                }
+                this.registry_ensure();
+                this.page_create(new Event('auto'));
+            }
+            layout_content() {
+                const parts = [];
+                if (this.registry_panel_showed()) {
+                    parts.push(this.Registry_panel());
+                }
+                parts.push(this.Sidebar());
+                if (this.profile_showed()) {
+                    parts.push(this.Profile_panel());
+                }
+                else if (this.graph_showed()) {
+                    if (this.page_links().length === 0) {
+                        this.page_create(new Event('auto'));
+                    }
+                    parts.push(this.Graph_panel());
+                }
+                else {
+                    parts.push(this.Main());
+                }
+                return parts;
+            }
+            graph_pages() {
+                const self = this;
+                return this.page_links().map(link => ({
+                    id() { return link; },
+                    title() { return self.page_title_by_link(link); },
+                    block_ids() { return self.page_block_ids(link); },
+                    block_html(bid) { return self.page_block_html(link, bid); },
+                }));
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_app.prototype, "page_land_link", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_app.prototype, "registry_land_link", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_app.prototype, "user_registry_links", null);
+        __decorate([
+            $mol_action
+        ], $bog_wysiwyg_app.prototype, "user_registries_add", null);
+        __decorate([
+            $mol_action
+        ], $bog_wysiwyg_app.prototype, "registry_ensure", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_app.prototype, "page_links", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_app.prototype, "all_pages_info", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_app.prototype, "registry_rows", null);
+        __decorate([
+            $mol_action
+        ], $bog_wysiwyg_app.prototype, "registry_create", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_app.prototype, "page_rows", null);
+        __decorate([
+            $mol_action
+        ], $bog_wysiwyg_app.prototype, "page_create", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_app.prototype, "auto", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_app.prototype, "layout_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_app.prototype, "graph_pages", null);
+        $$.$bog_wysiwyg_app = $bog_wysiwyg_app;
+        class $bog_wysiwyg_app_page extends $.$bog_wysiwyg_app_page {
+            page_content() {
+                if (this.editing()) {
+                    return [this.Title_input(), this.Rename_confirm()];
+                }
+                return [this.Title_nav(), this.Rename_trigger()];
+            }
+            start_rename(event) {
+                if (!event)
+                    return null;
+                this.edit_title(this.title());
+                this.editing(true);
+                return event;
+            }
+            confirm_rename(event) {
+                if (!event)
+                    return null;
+                this.on_rename(this.edit_title());
+                this.editing(false);
+                return event;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_wysiwyg_app_page.prototype, "page_content", null);
+        __decorate([
+            $mol_action
+        ], $bog_wysiwyg_app_page.prototype, "start_rename", null);
+        __decorate([
+            $mol_action
+        ], $bog_wysiwyg_app_page.prototype, "confirm_rename", null);
+        $$.$bog_wysiwyg_app_page = $bog_wysiwyg_app_page;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_wysiwyg_app, {
+        Editor: {
+            margin: {
+                top: '3rem'
+            }
+        },
+        Layout: {
+            flex: {
+                direction: 'row',
+                grow: 1,
+            },
+        },
+        Registry_panel: {
+            flex: {
+                direction: 'column',
+                shrink: 0,
+            },
+            overflow: {
+                y: 'auto',
+            },
+            minWidth: '12rem',
+            maxWidth: '16rem',
+        },
+        Registry_head: {
+            flex: {
+                direction: 'row',
+            },
+            justifyContent: 'space-between',
+            alignItems: 'center',
+        },
+        Registry_title: {
+            font: {
+                weight: 'bold',
+            },
+        },
+        Registry_item: {
+            textAlign: 'left',
+        },
+        Sidebar_head: {
+            flex: {
+                direction: 'row',
+            },
+            justifyContent: 'space-between',
+            alignItems: 'center',
+        },
+        Sidebar_title: {
+            font: {
+                weight: 'bold',
+            },
+        },
+        Page_item: {
+            textAlign: 'left',
+        },
+        Main: {
+            flex: {
+                direction: 'column',
+                grow: 1,
+            },
+            minWidth: 0,
+            width: '0px',
+            overflow: {
+                y: 'auto',
+            },
+        },
+        Graph_panel: {
+            flex: {
+                grow: 1,
+            },
+            minWidth: 0,
+            overflow: 'hidden',
+        },
+    });
+    $mol_style_define($bog_wysiwyg_app_registry, {
+        flex: {
+            direction: 'row',
+        },
+        alignItems: 'center',
+        Title_nav: {
+            flex: {
+                grow: 1,
+            },
+            textAlign: 'left',
+        },
+        '@': {
+            'bog_wysiwyg_app_registry_active': {
+                'true': {
+                    background: {
+                        color: $mol_theme.hover,
+                    },
+                    font: {
+                        weight: 'bold',
+                    },
+                },
+            },
+        },
+    });
+    $mol_style_define($bog_wysiwyg_app_page, {
+        flex: {
+            direction: 'row',
+        },
+        alignItems: 'center',
+        Title_nav: {
+            flex: {
+                grow: 1,
+            },
+            textAlign: 'left',
+        },
+        Rename_trigger: {
+            opacity: 0,
+            transition: 'opacity 0.15s',
+            flex: {
+                shrink: 0,
+            },
+        },
+        Title_input: {
+            flex: {
+                grow: 1,
+            },
+        },
+        ':hover': {
+            Rename_trigger: {
+                opacity: 1,
+            },
+        },
+        '@': {
+            'bog_wysiwyg_app_page_active': {
+                'true': {
+                    background: {
+                        color: $mol_theme.hover,
+                    },
+                    font: {
+                        weight: 'bold',
+                    },
+                },
+            },
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_wiki_mws_space) = class $bog_wiki_mws_space extends ($.$mol_view) {
+		space_name(){
+			return "";
+		}
+		Space_name(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.space_name())]);
+			return obj;
+		}
+		space_description(){
+			return "";
+		}
+		Space_description(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.space_description())]);
+			return obj;
+		}
+		space_created_at(){
+			return "";
+		}
+		Space_created_at(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([(this.space_created_at())]);
+			return obj;
+		}
+		Space_updated_at(){
+			const obj = new this.$.$mol_view();
+			return obj;
+		}
+		sub(){
+			return [
+				(this.Space_name()), 
+				(this.Space_description()), 
+				(this.Space_created_at()), 
+				(this.Space_updated_at())
+			];
+		}
+	};
+	($mol_mem(($.$bog_wiki_mws_space.prototype), "Space_name"));
+	($mol_mem(($.$bog_wiki_mws_space.prototype), "Space_description"));
+	($mol_mem(($.$bog_wiki_mws_space.prototype), "Space_created_at"));
+	($mol_mem(($.$bog_wiki_mws_space.prototype), "Space_updated_at"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wiki_mws_space extends $.$bog_wiki_mws_space {
+        }
+        $$.$bog_wiki_mws_space = $bog_wiki_mws_space;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_wiki_editor) = class $bog_wiki_editor extends ($.$bog_wysiwyg_app) {
+		Space(){
+			const obj = new this.$.$bog_wiki_mws_space();
+			return obj;
+		}
+		main_content(){
+			return [(this.Editor()), (this.Space())];
+		}
+	};
+	($mol_mem(($.$bog_wiki_editor.prototype), "Space"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    class $bog_wiki_model extends $mol_object {
+        base_url() {
+            return 'http://87.120.36.150:39281/https://tables.mws.ru/fusion/v1';
+        }
+        bearer_token() {
+            return 'uskurJvFb5GHRVAWGi1jMCP';
+        }
+        request(url) {
+            return $mol_fetch.json(this.base_url() + url, {
+                headers: {
+                    Authorization: 'Bearer ' + this.bearer_token(),
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            });
+        }
+        request_mut(url, method, body) {
+            return $mol_fetch.json(this.base_url() + url, {
+                method,
+                headers: {
+                    Authorization: 'Bearer ' + this.bearer_token(),
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: body ? JSON.stringify(body) : undefined,
+            });
+        }
+        data_revision(next) {
+            return next ?? 0;
+        }
+        get_spaces() {
+            void this.data_revision();
+            return this.request('/spaces');
+        }
+        get_nodes(spaceId) {
+            void this.data_revision();
+            return this.request(`/spaces/${spaceId}/nodes`);
+        }
+        get_views(dstId) {
+            void this.data_revision();
+            return this.request(`/datasheets/${dstId}/views`);
+        }
+        get_table(ids) {
+            void this.data_revision();
+            const [dstId, viewId] = ids;
+            const qs = viewId ? `?viewId=${viewId}` : '';
+            return this.request(`/datasheets/${dstId}/records${qs}`);
+        }
+        get_fields(ids) {
+            void this.data_revision();
+            const [dstId, viewId] = ids;
+            const qs = viewId ? `?viewId=${viewId}` : '';
+            return this.request(`/datasheets/${dstId}/fields${qs}`);
+        }
+        create_records(dstId, records) {
+            return this.request_mut(`/datasheets/${dstId}/records`, 'POST', { records, fieldKey: 'name' });
+        }
+        update_records(dstId, records) {
+            return this.request_mut(`/datasheets/${dstId}/records`, 'PATCH', { records, fieldKey: 'name' });
+        }
+        delete_records(dstId, recordIds) {
+            const qs = recordIds.map(id => `recordIds=${id}`).join('&');
+            return this.request_mut(`/datasheets/${dstId}/records?${qs}`, 'DELETE');
+        }
+    }
+    __decorate([
+        $mol_mem
+    ], $bog_wiki_model.prototype, "data_revision", null);
+    __decorate([
+        $mol_mem
+    ], $bog_wiki_model.prototype, "get_spaces", null);
+    __decorate([
+        $mol_mem_key
+    ], $bog_wiki_model.prototype, "get_nodes", null);
+    __decorate([
+        $mol_mem_key
+    ], $bog_wiki_model.prototype, "get_views", null);
+    __decorate([
+        $mol_mem_key
+    ], $bog_wiki_model.prototype, "get_table", null);
+    __decorate([
+        $mol_mem_key
+    ], $bog_wiki_model.prototype, "get_fields", null);
+    $.$bog_wiki_model = $bog_wiki_model;
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const wiki_table_ids = ['dstBumsSV6ng3k0nHd', 'viwklpg2YdqyQ'];
+        class $bog_wiki_editor extends $.$bog_wiki_editor {
+            model() {
+                return new this.$.$bog_wiki_model();
+            }
+            fetch_table() {
+                const m = this.model();
+                m.data_revision(m.data_revision() + 1);
+            }
+            data_spaces(next) {
+                return next === undefined ? this.model().get_spaces() : next;
+            }
+            data_table(next) {
+                return next === undefined ? this.model().get_table(wiki_table_ids) : next;
+            }
+            data_fields(next) {
+                return next === undefined ? this.model().get_fields(wiki_table_ids) : next;
+            }
+            get_data_spaces_stringify() {
+                return 'Spaces: \n' + JSON.stringify(this.data_spaces(), null, 2);
+            }
+            get_data_table_stringify() {
+                return 'Table: \n' + JSON.stringify(this.data_table(), null, 2);
+            }
+            get_data_fields_stringify() {
+                return 'Fields: \n' + JSON.stringify(this.data_fields(), null, 2);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "model", null);
+        __decorate([
+            $mol_action
+        ], $bog_wiki_editor.prototype, "fetch_table", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "data_spaces", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "data_table", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "data_fields", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "get_data_spaces_stringify", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "get_data_table_stringify", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "get_data_fields_stringify", null);
+        $$.$bog_wiki_editor = $bog_wiki_editor;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -20983,17 +36615,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_icon_account) = class $mol_icon_account extends ($.$mol_icon) {
-		path(){
-			return "M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
 	($.$mol_icon_security) = class $mol_icon_security extends ($.$mol_icon) {
 		path(){
 			return "M12,12H19C18.47,16.11 15.72,19.78 12,20.92V12H5V6.3L12,3.19M12,1L3,5V11C3,16.55 6.84,21.73 12,23C17.16,21.73 21,16.55 21,11V5L12,1Z";
@@ -21022,6 +36643,9 @@ var $;
 	};
 	($mol_mem(($.$giper_baza_link_chip.prototype), "link"));
 
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -21076,9 +36700,6 @@ var $;
         $$.$giper_baza_link_chip = $giper_baza_link_chip;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -21470,6 +37091,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -21491,9 +37115,6 @@ var $;
         $$.$giper_baza_unit_sand_dump = $giper_baza_unit_sand_dump;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -21759,318 +37380,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_icon_tick) = class $mol_icon_tick extends ($.$mol_icon) {
-		path(){
-			return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_check_box) = class $mol_check_box extends ($.$mol_check) {
-		Icon(){
-			const obj = new this.$.$mol_icon_tick();
-			return obj;
-		}
-	};
-	($mol_mem(($.$mol_check_box.prototype), "Icon"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/box/box.view.css", "[mol_check_box_icon] {\n\tborder-radius: var(--mol_gap_round);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_line);\n\tcolor: var(--mol_theme_shade);\n\theight: 1rem;\n\talign-self: center;\n}\n\n[mol_check]:not([mol_check_checked]) > [mol_check_box_icon] {\n\tfill: transparent;\n}\n\n[mol_check]:not([disabled]) > [mol_check_box_icon] {\n\tbackground: var(--mol_theme_field);\n\tcolor: var(--mol_theme_text);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-	($.$mol_icon_chevron_left) = class $mol_icon_chevron_left extends ($.$mol_icon) {
-		path(){
-			return "M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_icon_chevron_right) = class $mol_icon_chevron_right extends ($.$mol_icon) {
-		path(){
-			return "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_number) = class $mol_number extends ($.$mol_view) {
-		precision(){
-			return 1;
-		}
-		event_dec(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_inc(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_dec_boost(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		event_inc_boost(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		Hotkey(){
-			const obj = new this.$.$mol_hotkey();
-			(obj.key) = () => ({
-				"down": (next) => (this.event_dec(next)), 
-				"up": (next) => (this.event_inc(next)), 
-				"pageDown": (next) => (this.event_dec_boost(next)), 
-				"pageUp": (next) => (this.event_inc_boost(next))
-			});
-			return obj;
-		}
-		dec_enabled(){
-			return (this.enabled());
-		}
-		dec_icon(){
-			const obj = new this.$.$mol_icon_chevron_left();
-			return obj;
-		}
-		Dec(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.event_click) = (next) => ((this.event_dec(next)));
-			(obj.enabled) = () => ((this.dec_enabled()));
-			(obj.sub) = () => ([(this.dec_icon())]);
-			return obj;
-		}
-		type(){
-			return "text";
-		}
-		value_string(next){
-			if(next !== undefined) return next;
-			return "";
-		}
-		hint(){
-			return " ";
-		}
-		string_enabled(){
-			return (this.enabled());
-		}
-		submit(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		String(){
-			const obj = new this.$.$mol_string();
-			(obj.type) = () => ((this.type()));
-			(obj.keyboard) = () => ("decimal");
-			(obj.value) = (next) => ((this.value_string(next)));
-			(obj.hint) = () => ((this.hint()));
-			(obj.enabled) = () => ((this.string_enabled()));
-			(obj.submit) = (next) => ((this.submit(next)));
-			return obj;
-		}
-		inc_enabled(){
-			return (this.enabled());
-		}
-		inc_icon(){
-			const obj = new this.$.$mol_icon_chevron_right();
-			return obj;
-		}
-		Inc(){
-			const obj = new this.$.$mol_button_minor();
-			(obj.event_click) = (next) => ((this.event_inc(next)));
-			(obj.enabled) = () => ((this.inc_enabled()));
-			(obj.sub) = () => ([(this.inc_icon())]);
-			return obj;
-		}
-		precision_view(){
-			return (this.precision());
-		}
-		precision_change(){
-			return (this.precision());
-		}
-		boost(){
-			return 10;
-		}
-		value_min(){
-			return -Infinity;
-		}
-		value_max(){
-			return +Infinity;
-		}
-		value(next){
-			if(next !== undefined) return next;
-			return +NaN;
-		}
-		enabled(){
-			return true;
-		}
-		plugins(){
-			return [(this.Hotkey())];
-		}
-		sub(){
-			return [
-				(this.Dec()), 
-				(this.String()), 
-				(this.Inc())
-			];
-		}
-	};
-	($mol_mem(($.$mol_number.prototype), "event_dec"));
-	($mol_mem(($.$mol_number.prototype), "event_inc"));
-	($mol_mem(($.$mol_number.prototype), "event_dec_boost"));
-	($mol_mem(($.$mol_number.prototype), "event_inc_boost"));
-	($mol_mem(($.$mol_number.prototype), "Hotkey"));
-	($mol_mem(($.$mol_number.prototype), "dec_icon"));
-	($mol_mem(($.$mol_number.prototype), "Dec"));
-	($mol_mem(($.$mol_number.prototype), "value_string"));
-	($mol_mem(($.$mol_number.prototype), "submit"));
-	($mol_mem(($.$mol_number.prototype), "String"));
-	($mol_mem(($.$mol_number.prototype), "inc_icon"));
-	($mol_mem(($.$mol_number.prototype), "Inc"));
-	($mol_mem(($.$mol_number.prototype), "value"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/number/number.css", "[mol_number] {\n\tdisplay: flex;\n\tflex: 0 1 auto;\n\tposition: relative;\n\talign-items: stretch;\n\tmax-width: 100%;\n}\n\n[mol_number_string] {\n\tappearance: textfield;\n\tflex: 1 1 7rem;\n\twidth: 7rem;\n}\n\n[mol_number_string]::-webkit-inner-spin-button {\n\tdisplay: none;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_number extends $.$mol_number {
-            value_limited(val) {
-                if (Number.isNaN(val))
-                    return this.value(val);
-                if (val === undefined)
-                    return this.value();
-                const min = this.value_min();
-                const max = this.value_max();
-                if (val < min)
-                    return this.value(min);
-                if (val > max)
-                    return this.value(max);
-                return this.value(val);
-            }
-            event_dec(next) {
-                this.value_limited((this.value_limited() || 0) - this.precision_change());
-                next?.preventDefault();
-            }
-            event_inc(next) {
-                this.value_limited((this.value_limited() || 0) + this.precision_change());
-                next?.preventDefault();
-            }
-            event_dec_boost(next) {
-                this.value_limited((this.value_limited() || 0) - this.precision_change() * this.boost());
-                next?.preventDefault();
-            }
-            event_inc_boost(next) {
-                this.value_limited((this.value_limited() || 0) + this.precision_change() * this.boost());
-                next?.preventDefault();
-            }
-            round(val) {
-                if (Number.isNaN(val))
-                    return '';
-                if (val === 0)
-                    return '0';
-                if (!val)
-                    return '';
-                const precision_view = this.precision_view();
-                if (!precision_view)
-                    return val.toFixed();
-                if (precision_view >= 1) {
-                    return (val / precision_view).toFixed();
-                }
-                else {
-                    const fixed_number = Math.log10(1 / precision_view);
-                    return val.toFixed(Math.ceil(fixed_number));
-                }
-            }
-            value_string(next) {
-                const current = this.round(this.value_limited());
-                if (next === undefined)
-                    return current;
-                const precision = this.precision_view();
-                if (precision - Math.floor(precision) === 0)
-                    next = next.replace(/[.,]/g, '');
-                next = (this.value_min() < 0 && next.startsWith('-') ? '-' : '')
-                    + next.replace(/,/g, '.').replace(/[^\d\.]/g, '').replace(/^0{2,}/, '0');
-                let dot_pos = next.indexOf('.');
-                if (dot_pos !== -1) {
-                    const prev = $mol_wire_probe(() => this.value_string()) ?? '';
-                    const dot_pos_prev = prev.indexOf('.');
-                    if (dot_pos_prev === dot_pos)
-                        dot_pos = next.lastIndexOf('.');
-                    const frac = next.slice(dot_pos + 1).replace(/\./g, '');
-                    next = (next.slice(0, dot_pos) || '0').replace(/\./g, '') + '.' + frac;
-                }
-                if (Number.isNaN(Number(next)))
-                    return next;
-                if (next.endsWith('.'))
-                    return next;
-                if (next.endsWith('-'))
-                    return next;
-                this.value_limited(Number(next || Number.NaN));
-                return next;
-            }
-            dec_enabled() {
-                return this.enabled() && (!((this.value() || 0) <= this.value_min()));
-            }
-            inc_enabled() {
-                return this.enabled() && (!((this.value() || 0) >= this.value_max()));
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_number.prototype, "value_string", null);
-        __decorate([
-            $mol_mem
-        ], $mol_number.prototype, "dec_enabled", null);
-        __decorate([
-            $mol_mem
-        ], $mol_number.prototype, "inc_enabled", null);
-        $$.$mol_number = $mol_number;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-	($.$mol_bar) = class $mol_bar extends ($.$mol_view) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/bar/bar.view.css", "[mol_bar] {\n\tdisplay: flex;\n\t/* box-shadow: inset 0 0 0 1px var(--mol_theme_line); */\n\tborder-radius: var(--mol_gap_round);\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
 	($.$mol_icon_calendar) = class $mol_icon_calendar extends ($.$mol_icon) {
 		path(){
 			return "M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z";
@@ -22177,28 +37486,6 @@ var $;
 (function ($) {
     $mol_style_attach("mol/format/format.view.css", "[mol_format] {\n\tfont-family: monospace;\n}\n");
 })($ || ($ = {}));
-
-;
-	($.$mol_icon_trash_can) = class $mol_icon_trash_can extends ($.$mol_icon) {
-		path(){
-			return "M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_icon_trash_can_outline) = class $mol_icon_trash_can_outline extends ($.$mol_icon) {
-		path(){
-			return "M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z";
-		}
-	};
-
-
-;
-"use strict";
 
 ;
 	($.$mol_hor) = class $mol_hor extends ($.$mol_view) {};
@@ -23421,6 +38708,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -23613,9 +38903,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     var $$;
@@ -23676,44 +38963,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_labeler) = class $mol_labeler extends ($.$mol_list) {
-		label(){
-			return [(this.title())];
-		}
-		Label(){
-			const obj = new this.$.$mol_view();
-			(obj.minimal_height) = () => (32);
-			(obj.sub) = () => ((this.label()));
-			return obj;
-		}
-		content(){
-			return [];
-		}
-		Content(){
-			const obj = new this.$.$mol_view();
-			(obj.minimal_height) = () => (24);
-			(obj.sub) = () => ((this.content()));
-			return obj;
-		}
-		rows(){
-			return [(this.Label()), (this.Content())];
-		}
-	};
-	($mol_mem(($.$mol_labeler.prototype), "Label"));
-	($mol_mem(($.$mol_labeler.prototype), "Content"));
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_label] {\n\tmin-height: 2rem;\n\tcolor: var(--mol_theme_shade);\n\tpadding: .5rem .75rem 0;\n\tgap: 0 var(--mol_gap_block);\n\tflex-wrap: wrap;\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n\tpadding: var(--mol_gap_text);\n\tmin-height: 2.5rem;\n}\n");
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
 	($.$mol_form_field) = class $mol_form_field extends ($.$mol_labeler) {
 		name(){
 			return "";
@@ -23768,59 +39017,6 @@ var $;
 var $;
 (function ($) {
     $mol_style_attach("mol/form/field/field.view.css", "[mol_form_field] {\n\talign-items: stretch;\n}\n\n[mol_form_field_bid] {\n\tcolor: var(--mol_theme_focus);\n\tdisplay: inline-block;\n\ttext-shadow: 0 0;\n}\n\n[mol_form_field_content] {\n\tborder-radius: var(--mol_gap_round);\n}\n");
-})($ || ($ = {}));
-
-;
-	($.$mol_status) = class $mol_status extends ($.$mol_view) {
-		message(){
-			return "";
-		}
-		status(){
-			return (this.title());
-		}
-		minimal_height(){
-			return 24;
-		}
-		minimal_width(){
-			return 0;
-		}
-		sub(){
-			return [(this.message())];
-		}
-	};
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_status extends $.$mol_status {
-            message() {
-                try {
-                    return this.status() ?? null;
-                }
-                catch (error) {
-                    if (error instanceof Promise)
-                        $mol_fail_hidden(error);
-                    $mol_fail_log(error);
-                    return error.message;
-                }
-            }
-        }
-        $$.$mol_status = $mol_status;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/status/status.view.css", "[mol_status] {\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n\tdisplay: block;\n\tflex-shrink: 1;\n\tword-wrap: break-word;\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]) {\n\tcolor: var(--mol_theme_focus);\n}\n\n[mol_status]:not([mol_view_error=\"Promise\"]):empty {\n\tdisplay: none;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -24056,6 +39252,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -24094,9 +39293,6 @@ var $;
         $$.$giper_baza_flex_form = $giper_baza_flex_form;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 	($.$giper_baza_pawn_dump) = class $giper_baza_pawn_dump extends ($.$mol_expander) {
@@ -24298,6 +39494,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -24378,9 +39577,6 @@ var $;
         $$.$giper_baza_pawn_dump = $giper_baza_pawn_dump;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -24780,6 +39976,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -24841,9 +40040,6 @@ var $;
         $$.$giper_baza_land_page = $giper_baza_land_page;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -24921,6 +40117,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -24940,131 +40139,6 @@ var $;
         }
         $$.$giper_baza_land_grab = $giper_baza_land_grab;
     })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-
-;
-	($.$mol_icon_upload) = class $mol_icon_upload extends ($.$mol_icon) {
-		path(){
-			return "M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z";
-		}
-	};
-
-
-;
-"use strict";
-
-;
-	($.$mol_button_open) = class $mol_button_open extends ($.$mol_button_minor) {
-		Icon(){
-			const obj = new this.$.$mol_icon_upload();
-			return obj;
-		}
-		files(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		files_handled(next){
-			return (this.files(next));
-		}
-		accept(){
-			return "";
-		}
-		multiple(){
-			return true;
-		}
-		Native(){
-			const obj = new this.$.$mol_button_open_native();
-			(obj.files) = (next) => ((this.files_handled(next)));
-			(obj.accept) = () => ((this.accept()));
-			(obj.multiple) = () => ((this.multiple()));
-			return obj;
-		}
-		sub(){
-			return [(this.Icon()), (this.Native())];
-		}
-	};
-	($mol_mem(($.$mol_button_open.prototype), "Icon"));
-	($mol_mem(($.$mol_button_open.prototype), "files"));
-	($mol_mem(($.$mol_button_open.prototype), "Native"));
-	($.$mol_button_open_native) = class $mol_button_open_native extends ($.$mol_view) {
-		accept(){
-			return "";
-		}
-		multiple(){
-			return true;
-		}
-		picked(next){
-			if(next !== undefined) return next;
-			return null;
-		}
-		dom_name(){
-			return "input";
-		}
-		files(next){
-			if(next !== undefined) return next;
-			return [];
-		}
-		attr(){
-			return {
-				"type": "file", 
-				"accept": (this.accept()), 
-				"multiple": (this.multiple())
-			};
-		}
-		event(){
-			return {"change": (next) => (this.picked(next))};
-		}
-	};
-	($mol_mem(($.$mol_button_open_native.prototype), "picked"));
-	($mol_mem(($.$mol_button_open_native.prototype), "files"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_button_open extends $.$mol_button_open {
-            files_handled(next) {
-                try {
-                    const files = this.files(next);
-                    this.status([null]);
-                    return files;
-                }
-                catch (error) {
-                    Promise.resolve().then(() => this.status([error]));
-                    $mol_fail_hidden(error);
-                }
-            }
-        }
-        $$.$mol_button_open = $mol_button_open;
-        class $mol_button_open_native extends $.$mol_button_open_native {
-            dom_node() {
-                return super.dom_node();
-            }
-            picked() {
-                const files = this.dom_node().files;
-                if (!files || !files.length)
-                    return;
-                this.files([...files]);
-            }
-        }
-        $$.$mol_button_open_native = $mol_button_open_native;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/button/open/open.view.css", "[mol_button_open_native] {\n\tposition: absolute;\n\tleft: 0;\n\ttop: -100%;\n\twidth: 100%;\n\theight: 200%;\n\tcursor: pointer;\n\topacity: 0;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -25217,6 +40291,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -25298,9 +40375,6 @@ var $;
         $$.$giper_baza_land_rights = $giper_baza_land_rights;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -25572,6 +40646,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -25699,9 +40776,6 @@ var $;
         $$.$giper_baza_glob_book = $giper_baza_glob_book;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -28444,6 +43518,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -28563,9 +43640,6 @@ var $;
 
 ;
 "use strict";
-
-;
-"use strict";
 var $;
 (function ($) {
     var $$;
@@ -28603,20 +43677,6 @@ var $;
 		}
 	};
 
-
-;
-"use strict";
-
-;
-	($.$mol_check_icon) = class $mol_check_icon extends ($.$mol_check) {};
-
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/check/icon/icon.view.css", "[mol_check_icon]:where([mol_check_checked]) {\n\tcolor: var(--mol_theme_current);\n}\n");
-})($ || ($ = {}));
 
 ;
 "use strict";
@@ -28712,6 +43772,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -28779,9 +43842,6 @@ var $;
         $$.$giper_baza_auth_slot = $giper_baza_auth_slot;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -28865,6 +43925,9 @@ var $;
 
 ;
 "use strict";
+
+;
+"use strict";
 var $;
 (function ($) {
     var $$;
@@ -28881,9 +43944,6 @@ var $;
         $$.$giper_baza_app = $giper_baza_app;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -28974,7 +44034,6 @@ var $;
 		}
 		Theme(){
 			const obj = new this.$.$bog_theme_auto();
-			(obj.mode) = () => ("light");
 			(obj.theme_light) = () => ("$mol_theme_calm_light");
 			(obj.theme_dark) = () => ("$mol_theme_calm_dark");
 			(obj.themes) = () => (["$mol_theme_calm_light", "$mol_theme_calm_dark"]);
@@ -29046,129 +44105,685 @@ var $;
 
 
 ;
+	($.$bog_ui_table) = class $bog_ui_table extends ($.$mol_grid) {
+		cells(id){
+			return [];
+		}
+		row_even(id){
+			return false;
+		}
+		row_selected(id){
+			return false;
+		}
+		col_head_click(id, next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		head_button_content(id){
+			return [];
+		}
+		all_selected(next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		row_checked(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		cell_value(id, next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Cell_string(id){
+			const obj = new this.$.$mol_string();
+			(obj.value) = (next) => ((this.cell_value(id, next)));
+			return obj;
+		}
+		columns(){
+			return [];
+		}
+		data(){
+			return [];
+		}
+		sort_column(next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		sort_dir(next){
+			if(next !== undefined) return next;
+			return "asc";
+		}
+		selectable(){
+			return false;
+		}
+		selected(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		Row(id){
+			const obj = new this.$.$mol_grid_row();
+			(obj.minimal_height) = () => ((this.row_height()));
+			(obj.minimal_width) = () => ((this.minimal_width()));
+			(obj.cells) = () => ((this.cells(id)));
+			(obj.attr) = () => ({
+				...(this.$.$mol_grid_row.prototype.attr.call(obj)), 
+				"bog_ui_table_row_even": (this.row_even(id)), 
+				"bog_ui_table_row_selected": (this.row_selected(id))
+			});
+			return obj;
+		}
+		Head_button(id){
+			const obj = new this.$.$mol_button_minor();
+			(obj.click) = (next) => ((this.col_head_click(id, next)));
+			(obj.sub) = () => ([(this.head_button_content(id))]);
+			return obj;
+		}
+		Select_all(){
+			const obj = new this.$.$mol_check_box();
+			(obj.checked) = (next) => ((this.all_selected(next)));
+			return obj;
+		}
+		Select_row(id){
+			const obj = new this.$.$mol_check_box();
+			(obj.checked) = (next) => ((this.row_checked(id, next)));
+			return obj;
+		}
+		Cell_input(id){
+			const obj = new this.$.$mol_grid_cell();
+			(obj.sub) = () => ([(this.Cell_string(id))]);
+			return obj;
+		}
+	};
+	($mol_mem_key(($.$bog_ui_table.prototype), "col_head_click"));
+	($mol_mem(($.$bog_ui_table.prototype), "all_selected"));
+	($mol_mem_key(($.$bog_ui_table.prototype), "row_checked"));
+	($mol_mem_key(($.$bog_ui_table.prototype), "cell_value"));
+	($mol_mem_key(($.$bog_ui_table.prototype), "Cell_string"));
+	($mol_mem(($.$bog_ui_table.prototype), "sort_column"));
+	($mol_mem(($.$bog_ui_table.prototype), "sort_dir"));
+	($mol_mem(($.$bog_ui_table.prototype), "selected"));
+	($mol_mem_key(($.$bog_ui_table.prototype), "Row"));
+	($mol_mem_key(($.$bog_ui_table.prototype), "Head_button"));
+	($mol_mem(($.$bog_ui_table.prototype), "Select_all"));
+	($mol_mem_key(($.$bog_ui_table.prototype), "Select_row"));
+	($mol_mem_key(($.$bog_ui_table.prototype), "Cell_input"));
+
+
+;
 "use strict";
-var $;
-(function ($) {
-    function $mol_offline() { }
-    $.$mol_offline = $mol_offline;
-})($ || ($ = {}));
 
 ;
 "use strict";
 var $;
 (function ($) {
-    const blacklist = new Set([
-        '//cse.google.com/adsense/search/async-ads.js'
-    ]);
-    function $mol_offline_web() {
-        if (typeof window === 'undefined') {
-            self.addEventListener('install', (event) => {
-                ;
-                self.skipWaiting();
-            });
-            self.addEventListener('activate', (event) => {
-                ;
-                self.clients.claim();
-                $$.$mol_log3_done({
-                    place: '$mol_offline',
-                    message: 'Activated',
+    var $$;
+    (function ($$) {
+        class $bog_ui_table extends $.$bog_ui_table {
+            col_ids() {
+                const columns = this.columns();
+                if (!columns.length)
+                    return [];
+                const ids = columns.map((col) => String(col.id));
+                if (this.selectable())
+                    return ['__select', ...ids];
+                return ids;
+            }
+            col_head_content(colId) {
+                if (colId === '__select')
+                    return [this.Select_all()];
+                return [this.Head_button(colId)];
+            }
+            cells(id) {
+                return this.col_ids().map(col_id => {
+                    if (col_id === '__select')
+                        return this.Select_row(id[0]);
+                    return this.Cell_input({ row: id, col: col_id });
                 });
-            });
-            self.addEventListener('fetch', (event) => {
-                const request = event.request;
-                if (blacklist.has(request.url.replace(/^https?:/, ''))) {
-                    return event.respondWith(new Response(null, {
-                        status: 418,
-                        statusText: 'Blocked'
-                    }));
+            }
+            cell_value(id, next) {
+                if (next !== undefined)
+                    return next;
+                const val = this.record(id.row[id.row.length - 1])[id.col];
+                return val == null ? '' : String(val);
+            }
+            row_checked(rowId, next) {
+                if (next !== undefined) {
+                    const sel = this.selected();
+                    if (next) {
+                        if (sel.indexOf(rowId) < 0)
+                            this.selected([...sel, rowId]);
+                    }
+                    else {
+                        this.selected(sel.filter(id => id !== rowId));
+                    }
                 }
-                if (request.method !== 'GET')
-                    return;
-                if (!/^https?:/.test(request.url))
-                    return;
-                if (/\?/.test(request.url))
-                    return;
-                if (request.cache === 'no-store')
-                    return;
-                const fetch_data = () => fetch(new Request(request, { credentials: 'omit' })).then(response => {
-                    if (response.status !== 200)
-                        return response;
-                    event.waitUntil(caches.open('$mol_offline').then(cache => cache.put(request, response)));
-                    return response.clone();
+                return this.selected().indexOf(rowId) >= 0;
+            }
+            all_selected(next) {
+                if (next !== undefined) {
+                    if (next) {
+                        this.selected(this.row_ids().map(id => id[0]));
+                    }
+                    else {
+                        this.selected([]);
+                    }
+                }
+                const sel = this.selected();
+                const rows = this.row_ids();
+                return rows.length > 0 && sel.length >= rows.length;
+            }
+            row_selected(rowId) {
+                return this.selected().indexOf(rowId[0]) >= 0;
+            }
+            head_button_content(colId) {
+                const col = this.columns().find((c) => c.id === colId);
+                const title = col?.title ?? colId;
+                if (this.sort_column() !== colId)
+                    return [title];
+                const arrow = this.sort_dir() === 'asc' ? ' ▲' : ' ▼';
+                return [title + arrow];
+            }
+            col_head_click(colId, next) {
+                if (next === undefined)
+                    return null;
+                const col = this.columns().find((c) => c.id === colId);
+                if (col?.sortable === false)
+                    return null;
+                if (this.sort_column() === colId) {
+                    this.sort_dir(this.sort_dir() === 'asc' ? 'desc' : 'asc');
+                }
+                else {
+                    this.sort_column(colId);
+                    this.sort_dir('asc');
+                }
+                return null;
+            }
+            records() {
+                const data = this.data();
+                const result = {};
+                for (let i = 0; i < data.length; i++) {
+                    result[String(i)] = data[i];
+                }
+                return result;
+            }
+            row_ids() {
+                const data = this.data();
+                const indices = data.map((_, i) => [String(i)]);
+                const sortCol = this.sort_column();
+                if (!sortCol)
+                    return indices;
+                const dir = this.sort_dir() === 'desc' ? -1 : 1;
+                indices.sort((a, b) => {
+                    const va = data[Number(a[0])]?.[sortCol] ?? '';
+                    const vb = data[Number(b[0])]?.[sortCol] ?? '';
+                    if (typeof va === 'number' && typeof vb === 'number') {
+                        return (va - vb) * dir;
+                    }
+                    return String(va).localeCompare(String(vb)) * dir;
                 });
-                const enrich = (response) => {
-                    if (!response.status)
-                        return response;
-                    const headers = new Headers(response.headers);
-                    headers.set("$mol_offline", "");
-                    headers.set("Origin-Agent-Cluster", "?1");
-                    return new Response(response.body, {
-                        status: response.status,
-                        statusText: response.statusText,
-                        headers,
-                    });
-                };
-                const fresh = request.cache === 'force-cache' ? null : fetch_data();
-                if (fresh)
-                    event.waitUntil(fresh.then(enrich));
-                event.respondWith(caches.match(request).then(cached => request.cache === 'no-cache' || request.cache === 'reload'
-                    ? (cached
-                        ? fresh
-                            .then(actual => {
-                            if (actual.status === cached.status)
-                                return actual;
-                            throw new Error(`${actual.status}${actual.statusText ? ` ${actual.statusText}` : ''}`, { cause: actual });
-                        })
-                            .catch((err) => {
-                            const cloned = cached.clone();
-                            const message = `${err.cause instanceof Response ? '' : '500 '}${err.message} $mol_offline fallback to cache`;
-                            cloned.headers.set('$mol_offline_remote_status', message);
-                            return cloned;
-                        })
-                        : fresh)
-                    : (cached || fresh || fetch_data())).then(enrich));
-            });
-            self.addEventListener('beforeinstallprompt', (event) => event.prompt());
-        }
-        else if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
-            console.warn('HTTPS or localhost is required for service workers.');
-        }
-        else if (!navigator.serviceWorker) {
-            console.warn('Service Worker is not supported.');
-        }
-        else {
-            $mol_dom.addEventListener('DOMContentLoaded', () => {
-                navigator.serviceWorker.register('web.js').then(reg => {
-                    reg.addEventListener('updatefound', () => {
-                        $$.$mol_log3_rise({
-                            place: '$mol_offline',
-                            message: 'Outdated',
-                        });
-                        const worker = reg.installing;
-                        worker.addEventListener('statechange', () => {
-                            if (worker.state !== 'activated')
-                                return;
-                            window.location.reload();
-                        });
-                    });
+                return indices;
+            }
+            row_index_map() {
+                const map = {};
+                this.row_ids().forEach((id, i) => {
+                    map[id[0]] = i;
                 });
-            });
+                return map;
+            }
+            row_even(row_id) {
+                return (this.row_index_map()[row_id[0]] ?? 0) % 2 === 0;
+            }
         }
-    }
-    $.$mol_offline_web = $mol_offline_web;
-    $.$mol_offline = $mol_offline_web;
+        __decorate([
+            $mol_mem
+        ], $bog_ui_table.prototype, "col_ids", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_ui_table.prototype, "cell_value", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_ui_table.prototype, "row_checked", null);
+        __decorate([
+            $mol_mem
+        ], $bog_ui_table.prototype, "all_selected", null);
+        __decorate([
+            $mol_mem
+        ], $bog_ui_table.prototype, "records", null);
+        __decorate([
+            $mol_mem
+        ], $bog_ui_table.prototype, "row_ids", null);
+        __decorate([
+            $mol_mem
+        ], $bog_ui_table.prototype, "row_index_map", null);
+        $$.$bog_ui_table = $bog_ui_table;
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
 "use strict";
 var $;
 (function ($) {
-    try {
-        $mol_offline();
-    }
-    catch (error) {
-        console.error(error);
-    }
+    $mol_style_attach("bog/ui/table/table.view.css", "[bog_ui_table_row_even=\"false\"] {\n\tbackground: var(--mol_theme_card);\n}\n\n[bog_ui_table_row_selected=\"true\"] {\n\tbackground: var(--mol_theme_current);\n}\n\n[bog_ui_table] [mol_grid_row]:hover {\n\tbackground: var(--mol_theme_current);\n}\n\n[bog_ui_table] [mol_grid_col_id=\"__select\"] {\n\twidth: 3rem;\n\tmin-width: 3rem;\n\tmax-width: 3rem;\n\tflex-shrink: 0;\n}\n");
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_ui_table, {
+        overflow: { x: 'auto' },
+        width: '100%',
+        Head: {
+            background: {
+                color: $mol_theme.back,
+            },
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
+        },
+        Head_button: {
+            justify: {
+                content: 'flex-start',
+            },
+            flex: {
+                grow: 1,
+            },
+            font: {
+                weight: 'bold',
+            },
+            whiteSpace: 'nowrap',
+        },
+        Col_head: {
+            border: {
+                style: 'solid',
+                width: 0,
+                color: $mol_theme.line,
+            },
+            minWidth: '100px',
+        },
+        Row: {
+            border: {
+                style: 'solid',
+                width: 0,
+                color: $mol_theme.line,
+            },
+        },
+        Cell_input: {
+            flex: {
+                grow: 1,
+            },
+            minWidth: '100px',
+        },
+        Select_all: {
+            flex: {
+                shrink: 0,
+                grow: 0,
+            },
+            width: '3rem',
+        },
+        Select_row: {
+            flex: {
+                shrink: 0,
+                grow: 0,
+            },
+            width: '3rem',
+        },
+    });
+})($ || ($ = {}));
+
+;
+	($.$bog_wiki_mws_table) = class $bog_wiki_mws_table extends ($.$mol_view) {
+		columns(){
+			return [];
+		}
+		data(){
+			return [];
+		}
+		Table_ui_table(){
+			const obj = new this.$.$bog_ui_table();
+			(obj.columns) = () => ((this.columns()));
+			(obj.data) = () => ((this.data()));
+			return obj;
+		}
+		table_data(){
+			return null;
+		}
+		fields_data(){
+			return null;
+		}
+		sub(){
+			return [(this.Table_ui_table())];
+		}
+	};
+	($mol_mem(($.$bog_wiki_mws_table.prototype), "Table_ui_table"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wiki_mws_table extends $.$bog_wiki_mws_table {
+            columns() {
+                const fields = this.fields_data()?.data?.fields;
+                return fields?.map((field) => ({
+                    ...field,
+                    id: field.name,
+                    title: field.name,
+                })) ?? [];
+            }
+            data() {
+                console.log(this.columns());
+                const records = this.table_data()?.data?.records;
+                const dataFormatted = records?.map((record) => {
+                    return record.fields;
+                }) ?? [];
+                console.log('records', records);
+                console.log('columns', this.columns());
+                console.log('dataFormatted', dataFormatted);
+                return dataFormatted;
+            }
+        }
+        $$.$bog_wiki_mws_table = $bog_wiki_mws_table;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+	($.$bog_wiki_mws_table_live) = class $bog_wiki_mws_table_live extends ($.$mol_view) {
+		toolbar_title(){
+			return "MWS Table";
+		}
+		Toolbar_label(){
+			const obj = new this.$.$mol_paragraph();
+			(obj.title) = () => ((this.toolbar_title()));
+			return obj;
+		}
+		refresh(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Refresh(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ("↻");
+			(obj.click) = (next) => ((this.refresh(next)));
+			return obj;
+		}
+		add_row(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Add_row(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ("+ Row");
+			(obj.click) = (next) => ((this.add_row(next)));
+			return obj;
+		}
+		delete_selected(next){
+			if(next !== undefined) return next;
+			return null;
+		}
+		Delete_selected(){
+			const obj = new this.$.$mol_button_minor();
+			(obj.title) = () => ("🗑 Delete");
+			(obj.click) = (next) => ((this.delete_selected(next)));
+			return obj;
+		}
+		Toolbar(){
+			const obj = new this.$.$mol_view();
+			(obj.sub) = () => ([
+				(this.Toolbar_label()), 
+				(this.Refresh()), 
+				(this.Add_row()), 
+				(this.Delete_selected())
+			]);
+			return obj;
+		}
+		columns(){
+			return [];
+		}
+		data(){
+			return [];
+		}
+		selected(next){
+			if(next !== undefined) return next;
+			return [];
+		}
+		cell_value(id, next){
+			if(next !== undefined) return next;
+			return "";
+		}
+		Table(){
+			const obj = new this.$.$bog_ui_table();
+			(obj.columns) = () => ((this.columns()));
+			(obj.data) = () => ((this.data()));
+			(obj.selectable) = () => (true);
+			(obj.selected) = (next) => ((this.selected(next)));
+			(obj.cell_value) = (id, next) => ((this.cell_value(id, next)));
+			return obj;
+		}
+		dst_id(){
+			return "";
+		}
+		view_id(){
+			return "";
+		}
+		sub(){
+			return [(this.Toolbar()), (this.Table())];
+		}
+	};
+	($mol_mem(($.$bog_wiki_mws_table_live.prototype), "Toolbar_label"));
+	($mol_mem(($.$bog_wiki_mws_table_live.prototype), "refresh"));
+	($mol_mem(($.$bog_wiki_mws_table_live.prototype), "Refresh"));
+	($mol_mem(($.$bog_wiki_mws_table_live.prototype), "add_row"));
+	($mol_mem(($.$bog_wiki_mws_table_live.prototype), "Add_row"));
+	($mol_mem(($.$bog_wiki_mws_table_live.prototype), "delete_selected"));
+	($mol_mem(($.$bog_wiki_mws_table_live.prototype), "Delete_selected"));
+	($mol_mem(($.$bog_wiki_mws_table_live.prototype), "Toolbar"));
+	($mol_mem(($.$bog_wiki_mws_table_live.prototype), "selected"));
+	($mol_mem_key(($.$bog_wiki_mws_table_live.prototype), "cell_value"));
+	($mol_mem(($.$bog_wiki_mws_table_live.prototype), "Table"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $bog_wiki_mws_table_live extends $.$bog_wiki_mws_table_live {
+            model() {
+                return new this.$.$bog_wiki_model();
+            }
+            table_data() {
+                return this.model().get_table([this.dst_id(), this.view_id()]);
+            }
+            fields_data() {
+                return this.model().get_fields([this.dst_id(), this.view_id()]);
+            }
+            bump_revision() {
+                const m = this.model();
+                m.data_revision(m.data_revision() + 1);
+            }
+            toolbar_title() {
+                const dstId = this.dst_id();
+                return dstId ? `MWS: ${dstId}` : 'MWS Table';
+            }
+            columns() {
+                const fields = this.fields_data()?.data?.fields;
+                if (!fields)
+                    return [];
+                return fields.map((field) => ({
+                    id: field.name ?? field.id ?? '',
+                    title: field.name ?? field.id ?? '',
+                }));
+            }
+            records_raw() {
+                return this.table_data()?.data?.records ?? [];
+            }
+            data() {
+                return this.records_raw().map((r) => r.fields ?? {});
+            }
+            save_timers = new Map();
+            cell_value(id, next) {
+                if (next !== undefined) {
+                    const key = id.row.join('/') + '\t' + id.col;
+                    this.save_timers.get(key)?.destructor();
+                    this.save_timers.set(key, new this.$.$mol_after_timeout(1000, () => {
+                        this.save_timers.delete(key);
+                        const idx = Number(id.row[id.row.length - 1]);
+                        const record = this.records_raw()[idx];
+                        if (record?.recordId) {
+                            this.model().update_records(this.dst_id(), [{ recordId: record.recordId, fields: { [id.col]: next } }]);
+                            this.bump_revision();
+                        }
+                    }));
+                    return next;
+                }
+                const idx = Number(id.row[id.row.length - 1]);
+                const val = this.records_raw()[idx]?.fields?.[id.col];
+                return val == null ? '' : String(val);
+            }
+            refresh(event) {
+                if (!event)
+                    return null;
+                this.bump_revision();
+                return event;
+            }
+            add_row(event) {
+                if (!event)
+                    return null;
+                this.model().create_records(this.dst_id(), [{ fields: {} }]);
+                this.bump_revision();
+                return event;
+            }
+            delete_selected(event) {
+                if (!event)
+                    return null;
+                const sel = this.selected();
+                const recordIds = sel
+                    .map(idx => this.records_raw()[Number(idx)]?.recordId)
+                    .filter(Boolean);
+                if (!recordIds.length)
+                    return event;
+                this.model().delete_records(this.dst_id(), recordIds);
+                this.selected([]);
+                this.bump_revision();
+                return event;
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_mws_table_live.prototype, "model", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_mws_table_live.prototype, "table_data", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_mws_table_live.prototype, "fields_data", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_mws_table_live.prototype, "toolbar_title", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_mws_table_live.prototype, "columns", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_mws_table_live.prototype, "records_raw", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_mws_table_live.prototype, "data", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_wiki_mws_table_live.prototype, "cell_value", null);
+        __decorate([
+            $mol_action
+        ], $bog_wiki_mws_table_live.prototype, "refresh", null);
+        __decorate([
+            $mol_action
+        ], $bog_wiki_mws_table_live.prototype, "add_row", null);
+        __decorate([
+            $mol_action
+        ], $bog_wiki_mws_table_live.prototype, "delete_selected", null);
+        $$.$bog_wiki_mws_table_live = $bog_wiki_mws_table_live;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_define($bog_wiki_mws_table_live, {
+        flex: {
+            direction: 'column',
+            grow: 1,
+        },
+        gap: '0.5rem',
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    const render_cache = new WeakMap();
+    $bog_wysiwyg_plugin_registry.register({
+        id: 'mws_table',
+        title: '📋 MWS Table',
+        on_select: (editor, block_id) => {
+            const dstId = editor.$.$mol_dom_context.prompt('Datasheet ID (dstXXX):', 'dstBumsSV6ng3k0nHd');
+            if (!dstId) {
+                return;
+            }
+            const viewId = editor.$.$mol_dom_context.prompt('View ID (viwXXX, пусто = все):', 'viwklpg2YdqyQ') ?? '';
+            editor.block_type(block_id, 'mws_table');
+            editor.block_html(block_id, JSON.stringify({ dstId, viewId }));
+        },
+        render: (block) => {
+            let table = render_cache.get(block);
+            if (table)
+                return table;
+            try {
+                const html = block.html();
+                const config = JSON.parse(html || '{}');
+                const dstId = config.dstId || 'dstBumsSV6ng3k0nHd';
+                const viewId = config.viewId || 'viwklpg2YdqyQ';
+                table = new block.$.$bog_wiki_mws_table_live();
+                table.dst_id = () => dstId;
+                table.view_id = () => viewId;
+                render_cache.set(block, table);
+                return table;
+            }
+            catch (error) {
+                if (error instanceof Promise)
+                    throw error;
+                return null;
+            }
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach('bog_wiki_mws_table_block', `
+
+		[bog_wysiwyg_block_type="mws_table"] {
+			background: var(--mol_theme_card);
+			padding: 0.5rem;
+			border-radius: 0.5rem;
+			border: 1px solid var(--mol_theme_line);
+			cursor: default;
+		}
+
+	`);
 })($ || ($ = {}));
 
 ;

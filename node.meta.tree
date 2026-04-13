@@ -42,6 +42,8 @@
 	pack docs git \https://github.com/b-on-g/quiz.git
 	pack blitz git \https://github.com/b-on-g/blitz.git
 	pack wikilive git \https://github.com/b-on-g/WikiLive.git
+	pack wiki git \https://github.com/b-on-g/wiki.git
+	pack wysiwyg git \https://github.com/b-on-g/wysiwyg.git
 \/mol
 	pack icon git \https://github.com/nin-jin/mol_icon.git
 \/mol/view
@@ -81,12 +83,22 @@
 	deploy \/giper/baza/diagram/crus-jepsen.png
 	deploy \/giper/baza/docker/deploy.sh
 	deploy \/giper/baza/docker/autopull_and_restart.sh
+\/giper/baza/file
+	include \/mol/offline/install
+\/giper/bot
+	deploy \/giper/bot/logo
+	include \/mol/offline/install
+\/bog/blitz
+	include \/mol/offline/install
+	deploy \/bog/blitz/assets
 \/bog/ui
 	namespace \bog\ui
-\/milis
-	pack snake git \https://github.com/Lyumih/milis.snake.git
-	pack log git \https://github.com/Lyumih/milis_log.git
-	pack ideag git \https://github.com/Lyumih/milis_ideag.git
+\/bog/wysiwyg/app
+	include \/mol/offline/install
+	include \/bog/wysiwyg/plugin/callout
+	include \/bog/wysiwyg/plugin/embed
 \/bog/wiki/app
 	include \/mol/offline/install
+	include \/bog/wiki/mws/table_live
+	include \/bog/wiki/plugin/mws_table
 	deploy \/bog/wiki/assets
