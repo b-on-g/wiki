@@ -25,39 +25,97 @@ namespace $ {
             return 'uskurJvFb5GHRVAWGi1jMCP'
         }
 
-        /** Ответы Fusion описаны в {@link $bog_wiki_model_gen_components} (ген. `gen/gen.ts`). */
-        request<T>(url: string) {
-            return $mol_fetch.json(this.base_url() + url, {
+        /** GET request */
+        request<T>( url: string ) {
+            return $mol_fetch.json( this.base_url() + url, {
                 headers: {
                     Authorization: 'Bearer ' + this.bearer_token(),
                     'Content-Type': 'application/json',
                 },
-            }) as T
+            } ) as T
+        }
+
+        /** POST / PATCH / DELETE request */
+        request_mut<T>( url: string, method: string, body?: any ) {
+            return $mol_fetch.json( this.base_url() + url, {
+                method,
+                headers: {
+                    Authorization: 'Bearer ' + this.bearer_token(),
+                    'Content-Type': 'application/json',
+                },
+                body: body ? JSON.stringify( body ) : undefined,
+            } ) as T
         }
 
         @$mol_mem
-        data_revision(next?: number) {
+        data_revision( next?: number ) {
             return next ?? 0
         }
+
+        // ── Read ──
 
         @$mol_mem
         get_spaces(): $bog_wiki_model_gen_components['schemas']['ResponseGetSpaces'] {
             void this.data_revision()
-            return this.request('/spaces')
+            return this.request( '/spaces' )
         }
 
         @$mol_mem_key
-        get_table(ids: readonly [string, string]): $bog_wiki_model_gen_components['schemas']['GetRecordsData'] {
+        get_nodes( spaceId: string ) {
             void this.data_revision()
-            const [dstId, viewId] = ids
-            return this.request(`/datasheets/${dstId}/records?viewId=${viewId}`)
+            return this.request<$bog_wiki_model_gen_components['schemas']['ResponseGetNodes']>(
+                `/spaces/${ spaceId }/nodes`
+            )
         }
 
         @$mol_mem_key
-        get_fields(ids: readonly [string, string]): $bog_wiki_model_gen_components['schemas']['GetFieldsResponse'] {
+        get_views( dstId: string ) {
             void this.data_revision()
-            const [dstId, viewId] = ids
-            return this.request(`/datasheets/${dstId}/fields?viewId=${viewId}`)
+            return this.request<$bog_wiki_model_gen_components['schemas']['GetViewsResponse']>(
+                `/datasheets/${ dstId }/views`
+            )
+        }
+
+        @$mol_mem_key
+        get_table( ids: readonly [string, string] ): $bog_wiki_model_gen_components['schemas']['GetRecordsData'] {
+            void this.data_revision()
+            const [ dstId, viewId ] = ids
+            const qs = viewId ? `?viewId=${ viewId }` : ''
+            return this.request( `/datasheets/${ dstId }/records${ qs }` )
+        }
+
+        @$mol_mem_key
+        get_fields( ids: readonly [string, string] ): $bog_wiki_model_gen_components['schemas']['GetFieldsResponse'] {
+            void this.data_revision()
+            const [ dstId, viewId ] = ids
+            const qs = viewId ? `?viewId=${ viewId }` : ''
+            return this.request( `/datasheets/${ dstId }/fields${ qs }` )
+        }
+
+        // ── Create / Update / Delete ──
+
+        create_records( dstId: string, records: { fields: Record<string, any> }[] ) {
+            return this.request_mut(
+                `/datasheets/${ dstId }/records`,
+                'POST',
+                { records, fieldKey: 'name' },
+            )
+        }
+
+        update_records( dstId: string, records: { recordId: string, fields: Record<string, any> }[] ) {
+            return this.request_mut(
+                `/datasheets/${ dstId }/records`,
+                'PATCH',
+                { records, fieldKey: 'name' },
+            )
+        }
+
+        delete_records( dstId: string, recordIds: string[] ) {
+            const qs = recordIds.map( id => `recordIds=${ id }` ).join( '&' )
+            return this.request_mut(
+                `/datasheets/${ dstId }/records?${ qs }`,
+                'DELETE',
+            )
         }
     }
 }

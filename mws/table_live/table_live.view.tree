@@ -1,0 +1,23 @@
+$bog_wiki_mws_table_live $mol_view
+	dst_id \
+	view_id \
+	sub /
+		<= Toolbar $mol_view
+			sub /
+				<= Toolbar_label $mol_paragraph
+					title <= toolbar_title \MWS Table
+				<= Refresh $mol_button_minor
+					title \↻
+					click?event <=> refresh?event null
+				<= Add_row $mol_button_minor
+					title \+ Row
+					click?event <=> add_row?event null
+				<= Delete_selected $mol_button_minor
+					title \🗑 Delete
+					click?event <=> delete_selected?event null
+		<= Table $bog_ui_table
+			columns <= columns /
+			data <= data /
+			selectable true
+			selected? <=> selected? /
+			cell_value*? <=> cell_value*? \
