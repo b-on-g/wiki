@@ -37465,20 +37465,34 @@ var $;
         const auto_event = new Event('auto');
         class $bog_wiki_editor extends $.$bog_wiki_editor {
             page_land_link(next) {
-                const val = this.$.$mol_state_arg.value('page') ?? '';
                 if (next !== undefined) {
                     this.$.$mol_state_arg.value('page', next || null);
                     return next;
                 }
-                return val;
+                const val = this.$.$mol_state_arg.value('page') ?? '';
+                if (val)
+                    return val;
+                const pages = this.page_links();
+                if (pages.length > 0) {
+                    this.$.$mol_state_arg.value('page', pages[0]);
+                    return pages[0];
+                }
+                return '';
             }
             registry_land_link(next) {
-                const val = this.$.$mol_state_arg.value('registry') ?? '';
                 if (next !== undefined) {
                     this.$.$mol_state_arg.value('registry', next || null);
                     return next;
                 }
-                return val;
+                const val = this.$.$mol_state_arg.value('registry') ?? '';
+                if (val)
+                    return val;
+                const links = this.user_registry_links();
+                if (links.length > 0) {
+                    this.$.$mol_state_arg.value('registry', links[0]);
+                    return links[0];
+                }
+                return '';
             }
             user_data() {
                 const home = this.$.$giper_baza_glob.home();
