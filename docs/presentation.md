@@ -176,6 +176,7 @@ Open-source (MIT) | $mol framework | Giper Baza
 | Система плагинов (расширяемая)        | Graceful degradation при потере сети     |
 | Embed виджеты (YouTube и др.)         | Proof of Work (антифлуд)                 |
 | UI прав доступа (owner/editor/viewer) | E2E шифрование по умолчанию              |
+| Экспорт страниц (HTML, Markdown, PDF) |                                          |
 
 ---
 
