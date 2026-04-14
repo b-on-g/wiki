@@ -105,10 +105,11 @@ namespace $.$$ {
 				if( current ) return
 				const pages = this.wiki_page_links()
 				if( pages.length > 0 ) {
-					this.page_link_arg( pages[0] )
+					this.$.$mol_state_arg.value( 'page', pages[0] )
 					return
 				}
-				this.home_page_create()
+				const page_link = this.home_page_create()
+				if( page_link ) this.$.$mol_state_arg.value( 'page', page_link )
 				return
 			}
 
@@ -122,7 +123,8 @@ namespace $.$$ {
 			// Nothing saved — create fresh registry + "Home" page
 			const reg = this.wiki_registry_ensure()
 			reg.Title( 'auto' )?.val( 'Wiki' )
-			this.home_page_create()
+			const page_link = this.home_page_create()
+			if( page_link ) this.$.$mol_state_arg.value( 'page', page_link )
 		}
 
 		/** Create the initial "Home" page with a title */
@@ -145,8 +147,7 @@ namespace $.$$ {
 				pages.items_vary([ ...current, land.link() ])
 			}
 
-			// Navigate to new page
-			this.$.$mol_state_arg.value( 'page', land.link().str )
+			return land.link().str
 		}
 
 		@$mol_mem
