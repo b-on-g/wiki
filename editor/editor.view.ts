@@ -142,7 +142,10 @@ namespace $.$$ {
 			return event
 		}
 
-		/** Auto-init: ensure registry + "Home" page on first visit */
+		/** Auto-init: ensure registry + "Home" page on first visit.
+		 *  IMPORTANT: @$mol_mem must NEVER write to atoms — only read + return.
+		 *  All writes are delegated to @$mol_action helpers.
+		 */
 		@ $mol_mem
 		override auto() {
 			const reg_link = this.$.$mol_state_arg.value( 'registry' ) ?? ''
@@ -151,20 +154,52 @@ namespace $.$$ {
 			// Both set — nothing to do
 			if( reg_link && page_link ) return
 
-			// Registry exists but no page — let parent auto-select first page.
-			// Do NOT call ensure_wiki_init() here: registry_create() may be
-			// in the middle of setting up the page, and re-entering init
-			// causes an infinite loop.
+			// Registry exists but no page — select first page via action
 			if( reg_link ) {
 				const pages = this.wiki_page_links()
 				if( pages.length > 0 ) {
-					this.$.$mol_state_arg.value( 'page', pages[0] )
+					this.auto_select_page( pages[0] )
 				}
 				return
 			}
 
 			// No registry at all — first visit, full init
 			this.ensure_wiki_init()
+		}
+
+		/** Delegate URL write to @$mol_action so it doesn't happen inside @$mol_mem */
+		@ $mol_action
+		auto_select_page( link: string ) {
+			this.$.$mol_state_arg.value( 'page', link )
+		}
+
+		/** Override layout_content to remove side-effect (page_create) from @$mol_mem.
+		 *  Parent's layout_content calls page_create() inside @$mol_mem when graph
+		 *  panel is open and page_links is empty — that's a write inside memo = cycle.
+		 */
+		@ $mol_mem
+		override layout_content() {
+			const parts: any[] = []
+
+			if( this.registry_panel_showed() ) {
+				parts.push( this.Registry_panel() )
+			}
+
+			parts.push( this.Sidebar() )
+
+			if( this.profile_showed() ) {
+				parts.push( this.Profile_panel() )
+			} else if( this.permissions_showed() ) {
+				parts.push( this.Permissions_panel() )
+			} else if( this.graph_showed() ) {
+				// Do NOT call page_create here — it's a side-effect inside @$mol_mem.
+				// If no pages exist, auto() will handle initialization.
+				parts.push( this.Graph_panel() )
+			} else {
+				parts.push( this.Main() )
+			}
+
+			return parts
 		}
 
 		/** All init in one action so URL writes are atomic */
