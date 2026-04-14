@@ -2548,6 +2548,7 @@ $bog_wiki_editor $bog_wysiwyg_app
 		<= Registry_toggle
 		<= History_toggle
 		<= Graph_toggle
+		<= Permissions_toggle
 		<= Profile_toggle
 		<= Sources $mol_link_source
 			uri \https://github.com/bog/wiki

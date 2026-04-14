@@ -43877,6 +43877,7 @@ var $;
 				(this.Registry_toggle()), 
 				(this.History_toggle()), 
 				(this.Graph_toggle()), 
+				(this.Permissions_toggle()), 
 				(this.Profile_toggle()), 
 				(this.Sources()), 
 				(this.Theme_toggle())
