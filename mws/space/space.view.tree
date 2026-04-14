@@ -1,0 +1,14 @@
+$bog_wiki_mws_space $mol_view
+	- space $bog_wiki_model_gen_components['schemas']['Space']
+	sub /
+		<= Space_name $mol_view
+			sub /
+				<= space_name \
+		<= Space_description $mol_view
+			sub /
+				<= space_description \
+		<= Space_created_at $mol_view
+			sub /
+				<= space_created_at \
+		<= Space_updated_at $mol_view
+		

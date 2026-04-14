@@ -1,18 +1,23 @@
 {
-	"$schema": "https://raw.githubusercontent.com/nicegui/nicegui/main/nicegui/static/tauri.schema.json",
 	"build": {
-		"frontendDist": "../-",
+		"frontendDist": "../app/-",
 		"devUrl": "http://localhost:9080/bog/wiki/app/-/test.html"
 	},
 	"app": {
-		"title": "wiki",
 		"windows": [
 			{
-				"title": "wiki",
+				"title": "Вики",
 				"width": 1200,
 				"height": 800
 			}
-		]
+		],
+		"security": {
+			"csp": null
+		}
+	},
+	"bundle": {
+		"active": true,
+		"targets": "all"
 	},
 	"identifier": "com.bog.wiki"
 }
