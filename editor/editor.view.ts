@@ -3,6 +3,160 @@ namespace $.$$ {
 	const wiki_table_ids = ['dstBumsSV6ng3k0nHd', 'viwklpg2YdqyQ'] as const
 
 	export class $bog_wiki_editor extends $.$bog_wiki_editor {
+
+		/** Wiki users can always edit their own pages — permissions are visual-only for now */
+		override editor_readonly() {
+			return false
+		}
+
+		/** Read registry link from URL arg */
+		registry_link_arg( next?: string ) {
+			if( next !== undefined ) {
+				this.$.$mol_state_arg.value( 'registry', next || null )
+				return next
+			}
+			return this.$.$mol_state_arg.value( 'registry' ) ?? ''
+		}
+
+		/** Read page link from URL arg */
+		page_link_arg( next?: string ) {
+			if( next !== undefined ) {
+				this.$.$mol_state_arg.value( 'page', next || null )
+				return next
+			}
+			return this.$.$mol_state_arg.value( 'page' ) ?? ''
+		}
+
+		/** User data from home land. Do NOT put @$mol_mem. */
+		wiki_user_data() {
+			const home = this.$.$giper_baza_glob.home()
+			if( !home ) return null
+			return home.land().Data( $bog_wysiwyg_model_user_data )
+		}
+
+		/** List of registry link strings from home land */
+		@ $mol_mem
+		wiki_user_registry_links(): readonly string[] {
+			const data = this.wiki_user_data()
+			if( !data ) return []
+			const list = data.Registries()
+			if( !list ) return []
+			const items = list.items_vary() ?? []
+			return items
+				.map( v => $giper_baza_vary_cast_link( v ) )
+				.filter( $mol_guard_defined )
+				.map( link => link.str )
+		}
+
+		/** Registry data by link string. Do NOT put @$mol_mem. */
+		wiki_registry_data( link?: string ) {
+			const l = link ?? this.registry_link_arg()
+			if( !l ) return null
+			const land = this.$.$giper_baza_glob.Land( new $giper_baza_link( l ) )
+			return land.Data( $bog_wysiwyg_model_registry )
+		}
+
+		/** All page land link strings from current registry */
+		@ $mol_mem
+		wiki_page_links(): readonly string[] {
+			const data = this.wiki_registry_data()
+			if( !data ) return []
+			const list = data.Pages()
+			if( !list ) return []
+			const items = list.items_vary() ?? []
+			return items
+				.map( v => $giper_baza_vary_cast_link( v ) )
+				.filter( $mol_guard_defined )
+				.map( link => link.str )
+		}
+
+		/** Add a registry link to user's home land */
+		@ $mol_action
+		wiki_user_registries_add( link_str: string ) {
+			const data = this.wiki_user_data()
+			if( !data ) return
+			const list = data.Registries( 'auto' )
+			if( !list ) return
+			const current = list.items_vary() ?? []
+			list.items_vary([ ...current, new $giper_baza_link( link_str ) ])
+		}
+
+		/** Create registry land if none exists, return registry data */
+		@ $mol_action
+		wiki_registry_ensure() {
+			let data = this.wiki_registry_data()
+			if( data ) return data
+			const land = this.$.$giper_baza_glob.land_grab(
+				[[ null, $giper_baza_rank_post( 'just' ) ]]
+			)
+			const link_str = land.link().str
+			this.registry_link_arg( link_str )
+			this.wiki_user_registries_add( link_str )
+			return land.Data( $bog_wysiwyg_model_registry )
+		}
+
+		/** Auto-init: ensure registry + "Home" page on first visit */
+		@ $mol_mem
+		override auto() {
+			const reg_link = this.$.$mol_state_arg.value( 'registry' ) ?? ''
+			const page_link = this.$.$mol_state_arg.value( 'page' ) ?? ''
+
+			if( reg_link && page_link ) return
+
+			this.ensure_wiki_init()
+		}
+
+		/** All init in one action so URL writes are atomic */
+		@ $mol_action
+		ensure_wiki_init() {
+			let reg_link = this.$.$mol_state_arg.value( 'registry' ) ?? ''
+
+			// Find or create registry
+			if( !reg_link ) {
+				const saved = this.wiki_user_registry_links()
+				if( saved.length > 0 ) {
+					reg_link = saved[0]
+				} else {
+					const land = this.$.$giper_baza_glob.land_grab(
+						[[ null, $giper_baza_rank_post( 'just' ) ]]
+					)
+					reg_link = land.link().str
+					land.Data( $bog_wysiwyg_model_registry ).Title( 'auto' )?.val( 'Wiki' )
+					this.wiki_user_registries_add( reg_link )
+				}
+			}
+
+			// Find or create page
+			let page_link = this.$.$mol_state_arg.value( 'page' ) ?? ''
+			if( !page_link ) {
+				const reg_data = this.wiki_registry_data( reg_link )
+				const pages_list = reg_data?.Pages()
+				const items = pages_list?.items_vary() ?? []
+				const links = items
+					.map( v => $giper_baza_vary_cast_link( v ) )
+					.filter( $mol_guard_defined )
+
+				if( links.length > 0 ) {
+					page_link = links[0].str
+				} else {
+					const land = this.$.$giper_baza_glob.land_grab(
+						[[ null, $giper_baza_rank_post( 'just' ) ]]
+					)
+					land.Data( $bog_wysiwyg_model_page ).Title( 'auto' )?.val( 'Home' )
+					const pages = reg_data?.Pages( 'auto' )
+					if( pages ) {
+						const current = pages.items_vary() ?? []
+						pages.items_vary([ ...current, land.link() ])
+					}
+					page_link = land.link().str
+				}
+			}
+
+			// Write URL args at the end — atomic in @$mol_action
+			this.$.$mol_state_arg.value( 'registry', reg_link )
+			this.$.$mol_state_arg.value( 'page', page_link )
+		}
+
 		@$mol_mem
 		model() {
 			return new this.$.$bog_wiki_model()
