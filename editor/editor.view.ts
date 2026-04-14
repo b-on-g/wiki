@@ -95,6 +95,53 @@ namespace $.$$ {
 			return land.Data( $bog_wysiwyg_model_registry )
 		}
 
+		/** Create new registry land, add to home, switch to it, create first page */
+		@ $mol_action
+		override registry_create( event?: Event ) {
+			if( !event ) return null
+
+			const land = this.$.$giper_baza_glob.land_grab(
+				[[ null, $giper_baza_rank_post( 'just' ) ]]
+			)
+
+			const data = land.Data( $bog_wysiwyg_model_registry )
+			data.Title( 'auto' )?.val( '' )
+
+			const link_str = land.link().str
+
+			this.wiki_user_registries_add( link_str )
+			this.registry_link_arg( link_str )
+
+			this.page_create( new Event( 'auto' ) )
+
+			return event
+		}
+
+		/** Create new page land and add to current registry */
+		@ $mol_action
+		override page_create( event?: Event ) {
+			if( !event ) return null
+
+			const reg_link = this.registry_link_arg()
+			const reg_data = this.wiki_registry_data( reg_link )
+
+			const land = this.$.$giper_baza_glob.land_grab(
+				[[ null, $giper_baza_rank_post( 'just' ) ]]
+			)
+
+			land.Data( $bog_wysiwyg_model_page ).Title( 'auto' )?.val( 'New page' )
+
+			const pages = reg_data?.Pages( 'auto' )
+			if( pages ) {
+				const current = pages.items_vary() ?? []
+				pages.items_vary([ ...current, land.link() ])
+			}
+
+			this.page_link_arg( land.link().str )
+
+			return event
+		}
+
 		/** Auto-init: ensure registry + "Home" page on first visit */
 		@ $mol_mem
 		override auto() {
