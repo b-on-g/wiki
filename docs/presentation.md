@@ -161,8 +161,7 @@ Open-source (MIT) | $mol framework | Giper Baza
 | Тулбар: реестры, история, граф, права, профиль, тема | Inline-редактирование таблиц без попапов |
 | Тёмная / светлая тема (один клик)                    | Drag handles для блоков                  |
 | Адаптив: десктоп, планшет, телефон                   | MWS Table: Grid & Gallery                |
-| Локализация: RU + EN  ( расширяемо )                 | Регистрация за 0 кликов                  |
-
+| Локализация: RU + EN ( расширяемо )                  | Регистрация за 0 кликов                  |
 
 ---
 
@@ -198,16 +197,15 @@ Open-source (MIT) | $mol framework | Giper Baza
 
 # Технологический стек
 
-| Технология         | Назначение                                                                                                                                    |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| **$mol**           | Реактивный UI-фреймворк, pull-reactivity, нет Virtual DOM, 3x меньше кода(в [сравнении](https://github.com/b-on-g/todomvc-compare) с другими) |
-| **MAM**            | Zero-config сборка, авто-зависимости, default tree shaking                                                                                    |
-| **Giper Baza**     | CRDT-база, E2E шифрование, offline-first, real-time sync                                                                                      |
-| **TypeScript**     | Полная типизация: компоненты, стили (CSS-in-TS), bindings                                                                                     |
-| **view.tree**      | Декларативный UI DSL, двусторонние привязки                                                                                                   |
-| **MWS Fusion API** | REST API v1 для CRUD таблиц, views, fields, spaces                                                                                            |
-| **WYSIWYG editor MIT License**    | Open-source: github.com/b-on-g/wysiwyg                                                                                                        |
-
+| Технология                     | Назначение                                                                                                                                    |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **$mol**                       | Реактивный UI-фреймворк, pull-reactivity, нет Virtual DOM, 3x меньше кода(в [сравнении](https://github.com/b-on-g/todomvc-compare) с другими) |
+| **MAM**                        | Zero-config сборка, авто-зависимости, default tree shaking                                                                                    |
+| **Giper Baza**                 | CRDT-база, E2E шифрование, offline-first, real-time sync                                                                                      |
+| **TypeScript**                 | Полная типизация: компоненты, стили (CSS-in-TS), bindings                                                                                     |
+| **view.tree**                  | Декларативный UI DSL, двусторонние привязки                                                                                                   |
+| **MWS Fusion API**             | REST API v1 для CRUD таблиц, views, fields, spaces                                                                                            |
+| **WYSIWYG editor MIT License** | Open-source: github.com/b-on-g/wysiwyg                                                                                                        |
 
 ---
 
@@ -221,5 +219,6 @@ Open-source (MIT) | $mol framework | Giper Baza
 - ✓ Open-source редактор, MIT лицензия
 - ✓ **0 строк бэкенда | E2E шифрование | Offline First**
 - ✓ **14 дополнительных фич сверх требований**
+- ✓ Выгрузка в md html pdf
 
 **github.com/b-on-g/wiki | github.com/b-on-g/wysiwyg**
