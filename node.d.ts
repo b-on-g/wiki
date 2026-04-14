@@ -20093,6 +20093,17 @@ declare namespace $ {
 //# sourceMappingURL=editor.view.tree.d.ts.map
 declare namespace $.$$ {
     class $bog_wiki_editor extends $.$bog_wiki_editor {
+        editor_readonly(): boolean;
+        registry_link_arg(next?: string): string;
+        page_link_arg(next?: string): string;
+        wiki_user_data(): $bog_wysiwyg_model_user_data | null;
+        wiki_user_registry_links(): readonly string[];
+        wiki_registry_data(link?: string): $bog_wysiwyg_model_registry | null;
+        wiki_page_links(): readonly string[];
+        wiki_user_registries_add(link_str: string): void;
+        wiki_registry_ensure(): $bog_wysiwyg_model_registry;
+        auto(): void;
+        home_page_create(): void;
         model(): $bog_wiki_model;
         fetch_table(): void;
         data_spaces(next?: $bog_wiki_model_gen_components['schemas']['ResponseGetSpaces']): {
