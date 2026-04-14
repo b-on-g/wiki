@@ -20102,6 +20102,8 @@ declare namespace $.$$ {
         wiki_page_links(): readonly string[];
         wiki_user_registries_add(link_str: string): void;
         wiki_registry_ensure(): $bog_wysiwyg_model_registry;
+        registry_create(event?: Event): Event | null;
+        page_create(event?: Event): Event | null;
         auto(): void;
         ensure_wiki_init(): void;
         model(): $bog_wiki_model;
