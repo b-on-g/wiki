@@ -5,9 +5,11 @@ RUN apk add --no-cache git
 WORKDIR /code
 RUN git clone https://github.com/hyoo-ru/mam.git && cd mam && npm install
 
-RUN mkdir -p mam/bog/wiki
-COPY . mam/bog/wiki
+# 1) Pull all deps and build from git
+RUN cd mam && npm start bog/wiki/app
 
+# 2) Overwrite wiki with local files, rebuild without pulling
+COPY . mam/bog/wiki
 ENV MAM_PULL_DISABLED=1
 RUN cd mam && npm start bog/wiki/app
 
