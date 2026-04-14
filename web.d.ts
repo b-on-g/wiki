@@ -25893,7 +25893,7 @@ declare namespace $.$$ {
         wiki_user_registries_add(link_str: string): void;
         wiki_registry_ensure(): $bog_wysiwyg_model_registry;
         auto(): void;
-        home_page_create(): void;
+        home_page_create(): string;
         model(): $bog_wiki_model;
         fetch_table(): void;
         data_spaces(next?: $bog_wiki_model_gen_components['schemas']['ResponseGetSpaces']): {

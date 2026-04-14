@@ -37547,10 +37547,12 @@ var $;
                         return;
                     const pages = this.wiki_page_links();
                     if (pages.length > 0) {
-                        this.page_link_arg(pages[0]);
+                        this.$.$mol_state_arg.value('page', pages[0]);
                         return;
                     }
-                    this.home_page_create();
+                    const page_link = this.home_page_create();
+                    if (page_link)
+                        this.$.$mol_state_arg.value('page', page_link);
                     return;
                 }
                 const saved = this.wiki_user_registry_links();
@@ -37560,7 +37562,9 @@ var $;
                 }
                 const reg = this.wiki_registry_ensure();
                 reg.Title('auto')?.val('Wiki');
-                this.home_page_create();
+                const page_link = this.home_page_create();
+                if (page_link)
+                    this.$.$mol_state_arg.value('page', page_link);
             }
             home_page_create() {
                 const reg = this.wiki_registry_ensure();
@@ -37572,7 +37576,7 @@ var $;
                     const current = pages.items_vary() ?? [];
                     pages.items_vary([...current, land.link()]);
                 }
-                this.$.$mol_state_arg.value('page', land.link().str);
+                return land.link().str;
             }
             model() {
                 return new this.$.$bog_wiki_model();
