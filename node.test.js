@@ -37796,26 +37796,7 @@ var $;
                     this.page_land_link(id);
                 return id ?? null;
             }
-            auto() {
-                const reg_link = this.registry_land_link();
-                if (reg_link) {
-                    const current = this.page_land_link();
-                    if (current)
-                        return;
-                    const pages = this.page_links();
-                    if (pages.length > 0) {
-                        this.page_land_link(pages[0]);
-                    }
-                    return;
-                }
-                const saved = this.user_registry_links();
-                if (saved.length > 0) {
-                    this.registry_land_link(saved[0]);
-                    return;
-                }
-                this.registry_ensure();
-                this.page_create(new Event('auto'));
-            }
+            auto() { }
             layout_content() {
                 const parts = [];
                 if (this.registry_panel_showed()) {
@@ -37829,9 +37810,6 @@ var $;
                     parts.push(this.Permissions_panel());
                 }
                 else if (this.graph_showed()) {
-                    if (this.page_links().length === 0) {
-                        this.page_create(new Event('auto'));
-                    }
                     parts.push(this.Graph_panel());
                 }
                 else {
@@ -38032,9 +38010,6 @@ var $;
         __decorate([
             $mol_action
         ], $bog_wiki_editor.prototype, "page_create", null);
-        __decorate([
-            $mol_mem
-        ], $bog_wiki_editor.prototype, "auto", null);
         __decorate([
             $mol_mem
         ], $bog_wiki_editor.prototype, "layout_content", null);
