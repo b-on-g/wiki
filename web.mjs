@@ -44602,7 +44602,9 @@ var $;
                     const pages = this.wiki_page_links();
                     if (pages.length > 0) {
                         this.page_link_arg(pages[0]);
+                        return;
                     }
+                    this.home_page_create();
                     return;
                 }
                 const saved = this.wiki_user_registry_links();
