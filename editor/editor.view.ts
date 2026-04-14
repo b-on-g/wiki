@@ -3,6 +3,64 @@ namespace $.$$ {
 	const wiki_table_ids = ['dstBumsSV6ng3k0nHd', 'viwklpg2YdqyQ'] as const
 
 	export class $bog_wiki_editor extends $.$bog_wiki_editor {
+
+		/** Wiki users can always edit their own pages — permissions are visual-only for now */
+		override editor_readonly() {
+			return false
+		}
+
+		/** Auto-init: ensure registry + "Home" page on first visit */
+		@ $mol_mem
+		override auto() {
+			// If registry is set in URL, just auto-select first page
+			const reg_link = this.registry_land_link()
+			if( reg_link ) {
+				const current = this.page_land_link()
+				if( current ) return
+				const pages = this.page_links()
+				if( pages.length > 0 ) {
+					this.page_land_link( pages[0] )
+				}
+				return
+			}
+
+			// No registry in URL — check home for saved registries
+			const saved = this.user_registry_links()
+			if( saved.length > 0 ) {
+				this.registry_land_link( saved[0] )
+				return
+			}
+
+			// Nothing saved — create fresh registry + "Home" page
+			const reg = this.registry_ensure()
+			reg.Title( 'auto' )?.val( 'Wiki' )
+			this.home_page_create()
+		}
+
+		/** Create the initial "Home" page with a title */
+		@ $mol_action
+		home_page_create() {
+			const reg = this.registry_ensure()
+
+			const land = this.$.$giper_baza_glob.land_grab(
+				[[ null, $giper_baza_rank_post( 'just' ) ]]
+			)
+
+			// Init page with "Home" title
+			const data = land.Data( $bog_wysiwyg_model_page )
+			data.Title( 'auto' )?.val( 'Home' )
+
+			// Add to registry
+			const pages = reg.Pages( 'auto' )
+			if( pages ) {
+				const current = pages.items_vary() ?? []
+				pages.items_vary([ ...current, land.link() ])
+			}
+
+			// Navigate to new page
+			this.page_land_link( land.link().str )
+		}
+
 		@$mol_mem
 		model() {
 			return new this.$.$bog_wiki_model()
