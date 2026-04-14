@@ -25895,6 +25895,8 @@ declare namespace $.$$ {
         registry_create(event?: Event): Event | null;
         page_create(event?: Event): Event | null;
         auto(): void;
+        auto_select_page(link: string): void;
+        layout_content(): any[];
         ensure_wiki_init(): void;
         model(): $bog_wiki_model;
         fetch_table(): void;

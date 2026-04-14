@@ -44628,11 +44628,34 @@ var $;
                 if (reg_link) {
                     const pages = this.wiki_page_links();
                     if (pages.length > 0) {
-                        this.$.$mol_state_arg.value('page', pages[0]);
+                        this.auto_select_page(pages[0]);
                     }
                     return;
                 }
                 this.ensure_wiki_init();
+            }
+            auto_select_page(link) {
+                this.$.$mol_state_arg.value('page', link);
+            }
+            layout_content() {
+                const parts = [];
+                if (this.registry_panel_showed()) {
+                    parts.push(this.Registry_panel());
+                }
+                parts.push(this.Sidebar());
+                if (this.profile_showed()) {
+                    parts.push(this.Profile_panel());
+                }
+                else if (this.permissions_showed()) {
+                    parts.push(this.Permissions_panel());
+                }
+                else if (this.graph_showed()) {
+                    parts.push(this.Graph_panel());
+                }
+                else {
+                    parts.push(this.Main());
+                }
+                return parts;
             }
             ensure_wiki_init() {
                 let reg_link = this.$.$mol_state_arg.value('registry') ?? '';
@@ -44815,6 +44838,12 @@ var $;
         __decorate([
             $mol_mem
         ], $bog_wiki_editor.prototype, "auto", null);
+        __decorate([
+            $mol_action
+        ], $bog_wiki_editor.prototype, "auto_select_page", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "layout_content", null);
         __decorate([
             $mol_action
         ], $bog_wiki_editor.prototype, "ensure_wiki_init", null);
