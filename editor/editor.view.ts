@@ -11,26 +11,38 @@ namespace $.$$ {
 		// and $$.$bog_wysiwyg_app is NOT in the chain.
 		// =============================================================
 
-		/** Current page land link from URL */
+		/** Current page land link from URL, auto-selects first page if empty */
 		@ $mol_mem
 		override page_land_link( next?: string ) {
-			const val = this.$.$mol_state_arg.value( 'page' ) ?? ''
 			if( next !== undefined ) {
 				this.$.$mol_state_arg.value( 'page', next || null )
 				return next
 			}
-			return val
+			const val = this.$.$mol_state_arg.value( 'page' ) ?? ''
+			if( val ) return val
+			const pages = this.page_links()
+			if( pages.length > 0 ) {
+				this.$.$mol_state_arg.value( 'page', pages[0] )
+				return pages[0]
+			}
+			return ''
 		}
 
-		/** Registry land link from URL */
+		/** Registry land link from URL, auto-selects first registry if empty */
 		@ $mol_mem
 		registry_land_link( next?: string ) {
-			const val = this.$.$mol_state_arg.value( 'registry' ) ?? ''
 			if( next !== undefined ) {
 				this.$.$mol_state_arg.value( 'registry', next || null )
 				return next
 			}
-			return val
+			const val = this.$.$mol_state_arg.value( 'registry' ) ?? ''
+			if( val ) return val
+			const links = this.user_registry_links()
+			if( links.length > 0 ) {
+				this.$.$mol_state_arg.value( 'registry', links[0] )
+				return links[0]
+			}
+			return ''
 		}
 
 		/** User data from home land. Do NOT put @$mol_mem. */
