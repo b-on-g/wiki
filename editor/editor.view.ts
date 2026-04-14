@@ -101,8 +101,22 @@ namespace $.$$ {
 			const reg_link = this.$.$mol_state_arg.value( 'registry' ) ?? ''
 			const page_link = this.$.$mol_state_arg.value( 'page' ) ?? ''
 
+			// Both set — nothing to do
 			if( reg_link && page_link ) return
 
+			// Registry exists but no page — let parent auto-select first page.
+			// Do NOT call ensure_wiki_init() here: registry_create() may be
+			// in the middle of setting up the page, and re-entering init
+			// causes an infinite loop.
+			if( reg_link ) {
+				const pages = this.wiki_page_links()
+				if( pages.length > 0 ) {
+					this.$.$mol_state_arg.value( 'page', pages[0] )
+				}
+				return
+			}
+
+			// No registry at all — first visit, full init
 			this.ensure_wiki_init()
 		}
 
