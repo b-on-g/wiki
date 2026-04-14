@@ -18,7 +18,7 @@ namespace $ {
 			}
 
 			const viewId = editor.$.$mol_dom_context.prompt(
-				'View ID (viwXXX, пусто = все):',
+				'View ID (viwXXX, empty = all views in toolbar):',
 				'viwklpg2YdqyQ',
 			) ?? ''
 
@@ -38,7 +38,7 @@ namespace $ {
 
 				table = new block.$.$bog_wiki_mws_table_live()
 				table.dst_id = () => dstId
-				table.view_id = () => viewId
+				table.view_id( viewId )
 
 				render_cache.set( block, table )
 				return table

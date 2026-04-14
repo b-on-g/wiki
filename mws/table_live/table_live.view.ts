@@ -9,6 +9,31 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		views_list(): { id: string, name: string, type: string }[] {
+			const resp = this.model().get_views( this.dst_id() )
+			const views = resp?.data?.views ?? []
+			return views.map( ( v: any ) => ({
+				id: v.id ?? '',
+				name: v.name ?? v.id ?? '',
+				type: ( v.type ?? 'Grid' ).toLowerCase(),
+			}) )
+		}
+
+		@ $mol_mem
+		override view_options(): Record< string, string > {
+			const dict: Record< string, string > = {}
+			for( const v of this.views_list() ) {
+				dict[ v.id ] = v.name
+			}
+			return dict
+		}
+
+		current_view_info() {
+			const id = this.view_id()
+			return this.views_list().find( v => v.id === id ) ?? null
+		}
+
+		@ $mol_mem
 		table_data(): $bog_wiki_model_gen_components['schemas']['GetRecordsData'] {
 			return this.model().get_table([ this.dst_id(), this.view_id() ])
 		}
@@ -25,6 +50,8 @@ namespace $.$$ {
 
 		@ $mol_mem
 		override toolbar_title() {
+			const info = this.current_view_info()
+			if( info ) return `MWS: ${ info.name }`
 			const dstId = this.dst_id()
 			return dstId ? `MWS: ${ dstId }` : 'MWS Table'
 		}
@@ -48,6 +75,51 @@ namespace $.$$ {
 		override data() {
 			return this.records_raw().map( ( r: any ) => r.fields ?? {} )
 		}
+
+		@ $mol_mem
+		override content_body() {
+			const mode = this.view_mode()
+			if( mode === 'gallery' ) return [ this.Gallery() ]
+			return [ this.Table() ]
+		}
+
+		// ── Gallery ──
+
+		@ $mol_mem
+		override gallery_rows() {
+			return this.records_raw().map( ( _: any, i: number ) => this.Card( String( i ) ) )
+		}
+
+		@ $mol_mem_key
+		override card_fields( id: string ) {
+			const idx = Number( id )
+			const record = this.records_raw()[ idx ]
+			if( !record?.fields ) return []
+			const cols = this.columns()
+			return cols.map( ( col: any, fi: number ) => {
+				const key = id + ':' + fi
+				return this.Card_field( key )
+			} )
+		}
+
+		@ $mol_mem_key
+		override card_field_label( id: string ) {
+			const [ cardIdx, fieldIdx ] = id.split( ':' )
+			const col = this.columns()[ Number( fieldIdx ) ]
+			return col?.title ? col.title + ':' : ''
+		}
+
+		@ $mol_mem_key
+		override card_field_value( id: string ) {
+			const [ cardIdx, fieldIdx ] = id.split( ':' )
+			const record = this.records_raw()[ Number( cardIdx ) ]
+			const col = this.columns()[ Number( fieldIdx ) ]
+			if( !record?.fields || !col ) return ''
+			const val = record.fields[ col.id ]
+			return val == null ? '' : String( val )
+		}
+
+		// ── Cell editing ──
 
 		private save_timers = new Map< string, $mol_after_timeout >()
 
