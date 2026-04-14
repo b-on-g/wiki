@@ -18,6 +18,13 @@ $bog_wiki_editor $bog_wysiwyg_app
 			uri \https://github.com/bog/wiki
 		<= Theme_toggle $bog_theme_toggle
 			theme_auto <= Wiki_theme
+		<= Export $mol_select
+			hint \Export
+			dictionary <= export_options *
+				html \HTML
+				markdown \Markdown
+				pdf \PDF
+			value? <=> export_format? \
 	main_content /
 		<= Editor
 		<= Space $bog_wiki_mws_space
