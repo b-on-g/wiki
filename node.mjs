@@ -37553,6 +37553,13 @@ var $;
                 const page_link = this.$.$mol_state_arg.value('page') ?? '';
                 if (reg_link && page_link)
                     return;
+                if (reg_link) {
+                    const pages = this.wiki_page_links();
+                    if (pages.length > 0) {
+                        this.$.$mol_state_arg.value('page', pages[0]);
+                    }
+                    return;
+                }
                 this.ensure_wiki_init();
             }
             ensure_wiki_init() {
