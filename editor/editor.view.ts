@@ -455,7 +455,9 @@ namespace $.$$ {
 				if( current ) return
 				const pages = this.page_links()
 				if( pages.length > 0 ) {
-					this.page_land_link( pages[0] )
+					this.auto_select_page( pages[0] )
+				} else {
+					this.auto_create_page()
 				}
 				return
 			}
@@ -463,11 +465,31 @@ namespace $.$$ {
 			// No registry in URL — check home for saved registries
 			const saved = this.user_registry_links()
 			if( saved.length > 0 ) {
-				this.registry_land_link( saved[0] )
+				this.auto_select_registry( saved[0] )
 				return
 			}
 
 			// Nothing saved — create fresh registry + page
+			this.auto_full_init()
+		}
+
+		@ $mol_action
+		auto_select_page( link: string ) {
+			this.page_land_link( link )
+		}
+
+		@ $mol_action
+		auto_select_registry( link: string ) {
+			this.registry_land_link( link )
+		}
+
+		@ $mol_action
+		auto_create_page() {
+			this.page_create( new Event( 'auto' ) )
+		}
+
+		@ $mol_action
+		auto_full_init() {
 			this.registry_ensure()
 			this.page_create( new Event( 'auto' ) )
 		}
