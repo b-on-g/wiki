@@ -9,6 +9,6 @@ services:
     restart: unless-stopped
     tty: true
     stdin_open: true
-    command: sh -c "(sleep 3; echo '+ giper/baza/app/run port=9090'; cat) | npm start"
+    command: sh -c "(sleep 10; echo '+ giper/baza/app/run port=9090'; cat) | npm start"
 
     # http://localhost:9081/bog/wiki/app/-/test.html
