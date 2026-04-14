@@ -58,7 +58,7 @@ namespace $.$$ {
 			}
 
 			// Navigate to new page
-			this.page_land_link( land.link().str )
+			this.$.$mol_state_arg.value( 'page', land.link().str )
 		}
 
 		@$mol_mem
