@@ -58,7 +58,7 @@ Open-source (MIT) | $mol framework | Giper Baza
 
 **UML Component Diagram**
 
-![w:600 center](component_diagram.png)
+![w:200 center](component_diagram.png)
 
 ---
 
@@ -67,13 +67,6 @@ Open-source (MIT) | $mol framework | Giper Baza
 **Full CRUD через Fusion API v1**
 
 - **$bog_wiki_model** — API-клиент, 8 эндпоинтов
-- GET: spaces, nodes, views, records, fields
-- POST / PATCH / DELETE: records (create, update, delete)
-- Bearer token auth через CORS-прокси
-- **Реактивный кеш** через @$mol_mem_key + data revisions
-- Inline cell editing: ввод → debounce 1с → PATCH к API
-- Add Row (POST), Delete selected (DELETE), Refresh
-- **Переключение видов**: views из API, переключатель в тулбаре
 - Режимы отображения: Grid (таблица) / Gallery (карточки)
 
 ---
@@ -84,13 +77,11 @@ Open-source (MIT) | $mol framework | Giper Baza
 
 - Slash-menu: `/` → MWS Table → ввод dstId
 - **Таблица рендерится inline** как $mol-компонент в теле страницы
-- Plugin Registry с render() callback + WeakMap кеш
 - Редактирование ячейки → real-time PATCH к MWS Fusion API
 - **Двусторонняя синхронизация**: WikiLive ↔ MWS Tables
-- Тулбар: переключатель видов, режим, refresh, add/delete
-- Сохраняется после перезагрузки (конфиг в Giper Baza)
+- Сохраняется после перезагрузки
 
-<!-- SCREENSHOT: таблица внутри страницы редактора -->
+![w:300 right](таблица.jpg)
 
 ---
 
@@ -107,7 +98,7 @@ Open-source (MIT) | $mol framework | Giper Baza
 | Tab / Shift+Tab = уровень                                      | Автоматические backlinks              |
 | Drag & drop блоков                                             | Комментарии к блокам                  |
 
-<!-- SCREENSHOT: редактор с контентом -->
+![w:340](editor.jpg)
 
 ---
 
@@ -126,8 +117,6 @@ Open-source (MIT) | $mol framework | Giper Baza
 - `- + Space` = List item | `Enter` = New block
 - `Backspace` (пустой) = Remove block | `Tab` = Indent
 
-<!-- SCREENSHOT: slash-menu открыто -->
-
 ---
 
 # Backlinks и граф страниц
@@ -143,7 +132,7 @@ Open-source (MIT) | $mol framework | Giper Baza
 - **Сайдбар** со списком страниц + rename + create
 - Множественные реестры (тетради)
 
-<!-- SCREENSHOT: граф страниц -->
+![w:300](grap.jpg)
 
 ---
 
@@ -172,9 +161,8 @@ Open-source (MIT) | $mol framework | Giper Baza
 | Тулбар: реестры, история, граф, права, профиль, тема | Inline-редактирование таблиц без попапов |
 | Тёмная / светлая тема (один клик)                    | Drag handles для блоков                  |
 | Адаптив: десктоп, планшет, телефон                   | MWS Table: Grid & Gallery                |
-| Локализация: RU + EN                                 | Регистрация за 0 кликов                  |
+| Локализация: RU + EN  ( расширяемо )                 | Регистрация за 0 кликов                  |
 
-<!-- SCREENSHOT: интерфейс с тулбаром -->
 
 ---
 
@@ -196,16 +184,15 @@ Open-source (MIT) | $mol framework | Giper Baza
 
 **0 строк серверного кода написано**
 
-- **0 строк бэкенда** — нет сервера, нет API, нет базы данных
+- **0 строк бэкенда** — нет сервера, нет API (только api mws tables)
 - Giper Baza: хранение, синхронизация, авторизация, шифрование
 - Хостинг = статический файл-сервер (любой CDN)
-
-- **E2E шифрование** по умолчанию — утечка базы невозможна ( злоумышленник получит только зашифрованный блоб, даже если будет админом на сервере где расположена нода синхронизаци(такой же инстанс гипер базы как и локальный) )
+- **E2E шифрование** по умолчанию — утечка базы невозможна ( злоумышленник получит только зашифрованный блоб, даже если будет админом на сервере где расположена нода синхронизаци (такой же инстанс гипер базы как и локальный) )
 - **Proof of Work** — не нужен WAF, rate limiting, captcha
 - **Авторегистрация**: криптоключ при первом визите, 0 кликов
 
 - Клиент: Giper Baza = CRDT + relay sync + e2e
-- MWS Tables API: единственная внешняя интеграция (CORS-прокси)
+- MWS Tables API: единственная внешняя интеграция
 
 ---
 
@@ -219,7 +206,7 @@ Open-source (MIT) | $mol framework | Giper Baza
 | **TypeScript**     | Полная типизация: компоненты, стили (CSS-in-TS), bindings                                                                                     |
 | **view.tree**      | Декларативный UI DSL, двусторонние привязки                                                                                                   |
 | **MWS Fusion API** | REST API v1 для CRUD таблиц, views, fields, spaces                                                                                            |
-| **MIT License**    | Open-source: github.com/b-on-g/wysiwyg                                                                                                        |
+| **WYSIWYG editor MIT License**    | Open-source: github.com/b-on-g/wysiwyg                                                                                                        |
 
 
 ---
