@@ -2254,6 +2254,219 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    $mol_test({
+        'local get set delete'() {
+            var key = '$mol_state_local_test:' + Math.random();
+            $mol_assert_equal($mol_state_local.value(key), null);
+            $mol_state_local.value(key, 123);
+            $mol_assert_equal($mol_state_local.value(key), 123);
+            $mol_state_local.value(key, null);
+            $mol_assert_equal($mol_state_local.value(key), null);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test_mocks.push(context => {
+        class $mol_state_local_mock extends $mol_state_local {
+            static state = {};
+            static value(key, next = this.state[key]) {
+                return this.state[key] = (next || null);
+            }
+        }
+        __decorate([
+            $mol_mem_key
+        ], $mol_state_local_mock, "value", null);
+        context.$mol_state_local = $mol_state_local_mock;
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    class TestClass extends Uint8Array {
+    }
+    $mol_test({
+        'Uint8Array vs itself'() {
+            $mol_assert_ok($mol_compare_array(new Uint8Array, new Uint8Array));
+            $mol_assert_ok($mol_compare_array(new Uint8Array([0]), new Uint8Array([0])));
+            $mol_assert_not($mol_compare_array(new Uint8Array([0]), new Uint8Array([1])));
+        },
+        'Uint8Array vs subclassed array'() {
+            $mol_assert_not($mol_compare_array(new Uint8Array, new TestClass));
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'decode utf8 string'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
+            $mol_assert_equal($mol_charset_decode(encoded), str);
+            $mol_assert_equal($mol_charset_decode(encoded, 'utf8'), str);
+        },
+        'decode empty string'() {
+            const encoded = new Uint8Array([]);
+            $mol_assert_equal($mol_charset_decode(encoded), '');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'encode empty'() {
+            $mol_assert_equal($mol_charset_encode(''), new Uint8Array([]));
+        },
+        'encode 1 octet'() {
+            $mol_assert_equal($mol_charset_encode('F'), new Uint8Array([0x46]));
+        },
+        'encode 2 octet'() {
+            $mol_assert_equal($mol_charset_encode('Б'), new Uint8Array([0xd0, 0x91]));
+        },
+        'encode 3 octet'() {
+            $mol_assert_equal($mol_charset_encode('ह'), new Uint8Array([0xe0, 0xa4, 0xb9]));
+        },
+        'encode 4 octet'() {
+            $mol_assert_equal($mol_charset_encode('𐍈'), new Uint8Array([0xf0, 0x90, 0x8d, 0x88]));
+        },
+        'encode surrogate pair'() {
+            $mol_assert_equal($mol_charset_encode('😀'), new Uint8Array([0xf0, 0x9f, 0x98, 0x80]));
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'auto name'() {
+            class Invalid extends $mol_error_mix {
+            }
+            const mix = new Invalid('foo');
+            $mol_assert_equal(mix.name, 'Invalid_Error');
+        },
+        'simpe mix'() {
+            const mix = new $mol_error_mix('foo', {}, new Error('bar'), new Error('lol'));
+            $mol_assert_equal(mix.message, 'foo');
+            $mol_assert_equal(mix.errors.map(e => e.message), ['bar', 'lol']);
+        },
+        'provide additional info'() {
+            class Invalid extends $mol_error_mix {
+            }
+            const mix = new $mol_error_mix('Wrong password', {}, new Invalid('Too short', { value: 'p@ssw0rd', hint: '> 8 letters' }), new Invalid('Too simple', { value: 'p@ssw0rd', hint: 'need capital letter' }));
+            const hints = [];
+            if (mix instanceof $mol_error_mix) {
+                for (const er of mix.errors) {
+                    if (er instanceof Invalid) {
+                        hints.push(er.cause?.hint ?? '');
+                    }
+                }
+            }
+            $mol_assert_equal(hints, ['> 8 letters', 'need capital letter']);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            async "Get and parse"($) {
+                $mol_assert_equal(await $mol_wire_async($mol_fetch).text('data:text/plain,foo'), 'foo');
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        class $mol_locale_mock extends $mol_locale {
+            lang(next = 'en') { return next; }
+            static source(lang) {
+                return {};
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_locale_mock.prototype, "lang", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_locale_mock, "source", null);
+        $.$mol_locale = $mol_locale_mock;
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            'handle clicks by default'($) {
+                let clicked = false;
+                const clicker = $mol_button.make({
+                    $,
+                    click: (event) => { clicked = true; },
+                });
+                const element = clicker.dom_tree();
+                const event = $mol_dom_context.document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
+                $mol_assert_ok(clicked);
+            },
+            'no handle clicks if disabled'($) {
+                let clicked = false;
+                const clicker = $mol_button.make({
+                    $,
+                    click: (event) => { clicked = true; },
+                    enabled: () => false,
+                });
+                const element = clicker.dom_tree();
+                const event = $mol_dom_context.document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
+                $mol_assert_not(clicked);
+            },
+            async 'Store error'($) {
+                const clicker = $mol_button.make({
+                    $,
+                    click: (event) => $.$mol_fail(new Error('Test error')),
+                });
+                const event = $mol_dom_context.document.createEvent('mouseevent');
+                $mol_assert_fail(() => clicker.event_activate(event), 'Test error');
+                await Promise.resolve();
+                $mol_assert_equal(clicker.status()[0].message, 'Test error');
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_style_sheet_test1 extends $mol_view {
         Item() { return new $mol_view; }
     }
@@ -2533,270 +2746,469 @@ var $;
 
 ;
 "use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        const locale_en = {
+            '$bog_wysiwyg_menu_command_paragraph': 'Text',
+            '$bog_wysiwyg_menu_command_heading1': 'Heading 1',
+            '$bog_wysiwyg_menu_command_heading2': 'Heading 2',
+            '$bog_wysiwyg_menu_command_heading3': 'Heading 3',
+            '$bog_wysiwyg_menu_command_code': 'Code',
+            '$bog_wysiwyg_menu_command_quote': 'Quote',
+            '$bog_wysiwyg_menu_command_list': 'List',
+            '$bog_wysiwyg_menu_command_divider': 'Divider',
+            '$bog_wysiwyg_menu_command_image': 'Image',
+        };
+        function menu_make() {
+            $mol_locale.texts('en', locale_en);
+            return new $bog_wysiwyg_menu();
+        }
+        $mol_test({
+            'Menu commands returns builtin commands'() {
+                const menu = menu_make();
+                const cmds = menu.commands();
+                $mol_assert_ok(cmds.length >= 9);
+                $mol_assert_equal(cmds[0].id, 'paragraph');
+                $mol_assert_equal(cmds[1].id, 'heading1');
+                $mol_assert_equal(cmds[2].id, 'heading2');
+                $mol_assert_equal(cmds[3].id, 'heading3');
+                $mol_assert_equal(cmds[4].id, 'code');
+                $mol_assert_equal(cmds[5].id, 'quote');
+                $mol_assert_equal(cmds[6].id, 'list');
+                $mol_assert_equal(cmds[7].id, 'divider');
+                $mol_assert_equal(cmds[8].id, 'image');
+            },
+            'Menu option_rows returns views matching commands length'() {
+                const menu = menu_make();
+                const rows = menu.option_rows();
+                $mol_assert_equal(rows.length, menu.commands().length);
+            },
+            'Menu option_title returns title for known command id'() {
+                const menu = menu_make();
+                const title = menu.option_title('paragraph');
+                $mol_assert_ok(title.length > 0);
+            },
+            'Menu option_title returns empty string for unknown id'() {
+                const menu = menu_make();
+                const title = menu.option_title('nonexistent');
+                $mol_assert_equal(title, '');
+            },
+            'Menu option_active returns true when index matches'() {
+                const menu = menu_make();
+                menu.index(0);
+                const first_id = menu.commands()[0].id;
+                $mol_assert_equal(menu.option_active(first_id), true);
+            },
+            'Menu option_active returns false for non-matching id'() {
+                const menu = menu_make();
+                menu.index(0);
+                $mol_assert_equal(menu.option_active('nonexistent'), false);
+            },
+            'Menu option_active tracks index changes'() {
+                const menu = menu_make();
+                menu.index(2);
+                const cmd = menu.commands()[2];
+                $mol_assert_equal(menu.option_active(cmd.id), true);
+                $mol_assert_equal(menu.option_active(menu.commands()[0].id), false);
+            },
+            'Menu option_click calls picked and hides menu'() {
+                const menu = menu_make();
+                menu.showed(true);
+                let picked_val = '';
+                menu.picked = (next) => {
+                    if (next !== undefined)
+                        picked_val = next;
+                    return picked_val;
+                };
+                const event = { type: 'click' };
+                menu.option_click('heading1', event);
+                $mol_assert_equal(picked_val, 'heading1');
+                $mol_assert_equal(menu.showed(), false);
+            },
+            'Menu option_click without event returns null'() {
+                const menu = menu_make();
+                $mol_assert_equal(menu.option_click('paragraph'), null);
+            },
+            'Menu pos_y_str returns pixel string'() {
+                const menu = menu_make();
+                menu.pos_y(200);
+                $mol_assert_equal(menu.pos_y_str(), '200px');
+            },
+            'Menu pos_x_str returns pixel string'() {
+                const menu = menu_make();
+                menu.pos_x(350);
+                $mol_assert_equal(menu.pos_x_str(), '350px');
+            },
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
 
 ;
 "use strict";
 var $;
-(function ($_1) {
-    $mol_test_mocks.push(context => {
-        class $mol_state_arg_mock extends $mol_state_arg {
-            static $ = context;
-            static href(next) { return next || ''; }
-            static go(next) {
-                this.href(this.link(next));
+(function ($) {
+    var $$;
+    (function ($$) {
+        function apply_markdown(input) {
+            const doc = $mol_dom_context.document;
+            const div = doc.createElement('div');
+            div.contentEditable = 'true';
+            doc.body.appendChild(div);
+            try {
+                div.textContent = input;
+                const text_node = div.firstChild;
+                const sel = doc.defaultView.getSelection();
+                const range = doc.createRange();
+                range.setStart(text_node, input.length);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+                const block = new $bog_wysiwyg_block();
+                block.try_markdown(div);
+                return div.innerHTML;
+            }
+            finally {
+                doc.body.removeChild(div);
             }
         }
-        __decorate([
-            $mol_mem
-        ], $mol_state_arg_mock, "href", null);
-        __decorate([
-            $mol_action
-        ], $mol_state_arg_mock, "go", null);
-        context.$mol_state_arg = $mol_state_arg_mock;
-    });
-    $mol_test({
-        'args as dictionary'($) {
-            $.$mol_state_arg.href('#!foo=bar/xxx');
-            $mol_assert_equal($.$mol_state_arg.dict(), { foo: 'bar', xxx: '' });
-            $.$mol_state_arg.dict({ foo: null, yyy: '', lol: '123' });
-            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!yyy/lol=123');
-        },
-        'one value from args'($) {
-            $.$mol_state_arg.href('#!foo=bar/xxx');
-            $mol_assert_equal($.$mol_state_arg.value('foo'), 'bar');
-            $mol_assert_equal($.$mol_state_arg.value('xxx'), '');
-            $.$mol_state_arg.value('foo', 'lol');
-            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo=lol/xxx');
-            $.$mol_state_arg.value('foo', '');
-            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo/xxx');
-            $.$mol_state_arg.value('foo', null);
-            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!xxx');
-        },
-        'nested args'($) {
-            const base = new $.$mol_state_arg('nested.');
-            class Nested extends $mol_state_arg {
-                constructor(prefix) {
-                    super(base.prefix + prefix);
-                }
-                static value = (key, next) => base.value(key, next);
-            }
-            $.$mol_state_arg.href('#!foo=bar/nested.xxx=123');
-            $mol_assert_equal(Nested.value('foo'), null);
-            $mol_assert_equal(Nested.value('xxx'), '123');
-            Nested.value('foo', 'lol');
-            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo=bar/nested.xxx=123/nested.foo=lol');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'local get set delete'() {
-            var key = '$mol_state_local_test:' + Math.random();
-            $mol_assert_equal($mol_state_local.value(key), null);
-            $mol_state_local.value(key, 123);
-            $mol_assert_equal($mol_state_local.value(key), 123);
-            $mol_state_local.value(key, null);
-            $mol_assert_equal($mol_state_local.value(key), null);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test_mocks.push(context => {
-        class $mol_state_local_mock extends $mol_state_local {
-            static state = {};
-            static value(key, next = this.state[key]) {
-                return this.state[key] = (next || null);
-            }
-        }
-        __decorate([
-            $mol_mem_key
-        ], $mol_state_local_mock, "value", null);
-        context.$mol_state_local = $mol_state_local_mock;
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    class TestClass extends Uint8Array {
-    }
-    $mol_test({
-        'Uint8Array vs itself'() {
-            $mol_assert_ok($mol_compare_array(new Uint8Array, new Uint8Array));
-            $mol_assert_ok($mol_compare_array(new Uint8Array([0]), new Uint8Array([0])));
-            $mol_assert_not($mol_compare_array(new Uint8Array([0]), new Uint8Array([1])));
-        },
-        'Uint8Array vs subclassed array'() {
-            $mol_assert_not($mol_compare_array(new Uint8Array, new TestClass));
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'decode utf8 string'() {
-            const str = 'Hello, ΧΨΩЫ';
-            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
-            $mol_assert_equal($mol_charset_decode(encoded), str);
-            $mol_assert_equal($mol_charset_decode(encoded, 'utf8'), str);
-        },
-        'decode empty string'() {
-            const encoded = new Uint8Array([]);
-            $mol_assert_equal($mol_charset_decode(encoded), '');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'encode empty'() {
-            $mol_assert_equal($mol_charset_encode(''), new Uint8Array([]));
-        },
-        'encode 1 octet'() {
-            $mol_assert_equal($mol_charset_encode('F'), new Uint8Array([0x46]));
-        },
-        'encode 2 octet'() {
-            $mol_assert_equal($mol_charset_encode('Б'), new Uint8Array([0xd0, 0x91]));
-        },
-        'encode 3 octet'() {
-            $mol_assert_equal($mol_charset_encode('ह'), new Uint8Array([0xe0, 0xa4, 0xb9]));
-        },
-        'encode 4 octet'() {
-            $mol_assert_equal($mol_charset_encode('𐍈'), new Uint8Array([0xf0, 0x90, 0x8d, 0x88]));
-        },
-        'encode surrogate pair'() {
-            $mol_assert_equal($mol_charset_encode('😀'), new Uint8Array([0xf0, 0x9f, 0x98, 0x80]));
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'auto name'() {
-            class Invalid extends $mol_error_mix {
-            }
-            const mix = new Invalid('foo');
-            $mol_assert_equal(mix.name, 'Invalid_Error');
-        },
-        'simpe mix'() {
-            const mix = new $mol_error_mix('foo', {}, new Error('bar'), new Error('lol'));
-            $mol_assert_equal(mix.message, 'foo');
-            $mol_assert_equal(mix.errors.map(e => e.message), ['bar', 'lol']);
-        },
-        'provide additional info'() {
-            class Invalid extends $mol_error_mix {
-            }
-            const mix = new $mol_error_mix('Wrong password', {}, new Invalid('Too short', { value: 'p@ssw0rd', hint: '> 8 letters' }), new Invalid('Too simple', { value: 'p@ssw0rd', hint: 'need capital letter' }));
-            const hints = [];
-            if (mix instanceof $mol_error_mix) {
-                for (const er of mix.errors) {
-                    if (er instanceof Invalid) {
-                        hints.push(er.cause?.hint ?? '');
+        function make_block_with_selection(html, select_text) {
+            const doc = $mol_dom_context.document;
+            const div = doc.createElement('div');
+            div.contentEditable = 'true';
+            div.innerHTML = html;
+            doc.body.appendChild(div);
+            div.focus();
+            if (select_text) {
+                const walker = doc.createTreeWalker(div, 4);
+                let node;
+                while (node = walker.nextNode()) {
+                    const idx = (node.textContent ?? '').indexOf(select_text);
+                    if (idx >= 0) {
+                        const range = doc.createRange();
+                        range.setStart(node, idx);
+                        range.setEnd(node, idx + select_text.length);
+                        const sel = doc.defaultView.getSelection();
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                        break;
                     }
                 }
             }
-            $mol_assert_equal(hints, ['> 8 letters', 'need capital letter']);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    var $$;
-    (function ($$) {
-        $mol_test({
-            async "Get and parse"($) {
-                $mol_assert_equal(await $mol_wire_async($mol_fetch).text('data:text/plain,foo'), 'foo');
-            },
-        });
-    })($$ = $_1.$$ || ($_1.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test_mocks.push($ => {
-        class $mol_locale_mock extends $mol_locale {
-            lang(next = 'en') { return next; }
-            static source(lang) {
-                return {};
-            }
+            return div;
         }
-        __decorate([
-            $mol_mem
-        ], $mol_locale_mock.prototype, "lang", null);
-        __decorate([
-            $mol_mem_key
-        ], $mol_locale_mock, "source", null);
-        $.$mol_locale = $mol_locale_mock;
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    var $$;
-    (function ($$) {
         $mol_test({
-            'handle clicks by default'($) {
-                let clicked = false;
-                const clicker = $mol_button.make({
-                    $,
-                    click: (event) => { clicked = true; },
-                });
-                const element = clicker.dom_tree();
-                const event = $mol_dom_context.document.createEvent('mouseevent');
-                event.initEvent('click', true, true);
-                element.dispatchEvent(event);
-                $mol_assert_ok(clicked);
+            'bold markdown converts to HTML'() {
+                $mol_assert_equal(apply_markdown('hello **world** end'), 'hello <b>world</b> end');
             },
-            'no handle clicks if disabled'($) {
-                let clicked = false;
-                const clicker = $mol_button.make({
-                    $,
-                    click: (event) => { clicked = true; },
-                    enabled: () => false,
-                });
-                const element = clicker.dom_tree();
-                const event = $mol_dom_context.document.createEvent('mouseevent');
-                event.initEvent('click', true, true);
-                element.dispatchEvent(event);
-                $mol_assert_not(clicked);
+            'italic markdown converts to HTML'() {
+                $mol_assert_equal(apply_markdown('hello *world* end'), 'hello <i>world</i> end');
             },
-            async 'Store error'($) {
-                const clicker = $mol_button.make({
-                    $,
-                    click: (event) => $.$mol_fail(new Error('Test error')),
-                });
-                const event = $mol_dom_context.document.createEvent('mouseevent');
-                $mol_assert_fail(() => clicker.event_activate(event), 'Test error');
-                await Promise.resolve();
-                $mol_assert_equal(clicker.status()[0].message, 'Test error');
+            'inline code markdown converts to HTML'() {
+                $mol_assert_equal(apply_markdown('hello `code` end'), 'hello <code>code</code> end');
+            },
+            'strikethrough markdown converts to HTML'() {
+                $mol_assert_equal(apply_markdown('hello ~~strike~~ end'), 'hello <s>strike</s> end');
+            },
+            'link markdown converts to HTML'() {
+                const result = apply_markdown('click [here](https://example.com) now');
+                $mol_assert_equal(result, 'click <a href="https://example.com">here</a> now');
+            },
+            'wiki link [[page_id]] converts to anchor'() {
+                const result = apply_markdown('see [[my_page]] for info');
+                $mol_assert_ok(result.includes('<a '));
+                $mol_assert_ok(result.includes('data-wiki-link="my_page"'));
+                $mol_assert_ok(result.includes('href="#my_page"'));
+                $mol_assert_ok(result.includes('>my_page</a>'));
+            },
+            'wiki link with empty content does not convert'() {
+                $mol_assert_equal(apply_markdown('hello [[]] end'), 'hello [[]] end');
+            },
+            'partially typed wiki link does not convert'() {
+                $mol_assert_equal(apply_markdown('[[not closed'), '[[not closed');
+            },
+            'empty bold content does not convert'() {
+                $mol_assert_equal(apply_markdown('hello **** end'), 'hello **** end');
+            },
+            'single star inside double stars does not break bold'() {
+                const result = apply_markdown('**bold text** end');
+                $mol_assert_equal(result, '<b>bold text</b> end');
+            },
+            'multiple patterns in one block: only first converts per pass'() {
+                const first = apply_markdown('**bold** and *italic*');
+                $mol_assert_equal(first, '<b>bold</b> and *italic*');
+            },
+            'partially typed bold does not convert'() {
+                $mol_assert_equal(apply_markdown('**not closed'), '**not closed');
+            },
+            'partially typed italic does not convert'() {
+                $mol_assert_equal(apply_markdown('*not closed'), '*not closed');
+            },
+            'partially typed strikethrough does not convert'() {
+                $mol_assert_equal(apply_markdown('~~not closed'), '~~not closed');
+            },
+            'partially typed link does not convert'() {
+                $mol_assert_equal(apply_markdown('[text](no-close'), '[text](no-close');
+            },
+            'link with empty url does not convert'() {
+                $mol_assert_equal(apply_markdown('[text]() end'), '[text]() end');
+            },
+            'link with empty text does not convert'() {
+                $mol_assert_equal(apply_markdown('[](https://example.com) end'), '[](https://example.com) end');
+            },
+            'bold at start of text'() {
+                $mol_assert_equal(apply_markdown('**start** rest'), '<b>start</b> rest');
+            },
+            'bold at end of text'() {
+                $mol_assert_equal(apply_markdown('rest **end**'), 'rest <b>end</b>');
+            },
+            'code with special characters inside'() {
+                $mol_assert_equal(apply_markdown('run `npm install` now'), 'run <code>npm install</code> now');
+            },
+            'strike_exec without event returns null'() {
+                const block = new $bog_wysiwyg_block();
+                $mol_assert_equal(block.strike_exec(), null);
+            },
+            'strike_exec wraps selection in strikethrough'() {
+                if (typeof document === 'undefined')
+                    return;
+                const div = make_block_with_selection('hello world end', 'world');
+                try {
+                    const block = new $bog_wysiwyg_block();
+                    block.dom_node = () => div;
+                    block.html = (val) => val ?? div.innerHTML;
+                    const event = new KeyboardEvent('keydown', { key: 's', ctrlKey: true, shiftKey: true });
+                    const result = block.strike_exec(event);
+                    $mol_assert_ok(result);
+                    $mol_assert_ok(div.innerHTML.includes('<strike>') || div.innerHTML.includes('<s>'));
+                    $mol_assert_ok(div.innerHTML.includes('world'));
+                }
+                finally {
+                    div.remove();
+                }
+            },
+            'link_exec without event returns null'() {
+                const block = new $bog_wysiwyg_block();
+                $mol_assert_equal(block.link_exec(), null);
+            },
+            'link_exec with cancelled prompt does nothing'() {
+                if (typeof document === 'undefined')
+                    return;
+                const div = make_block_with_selection('hello world end', 'world');
+                try {
+                    const original_prompt = globalThis.prompt;
+                    globalThis.prompt = () => null;
+                    const block = new $bog_wysiwyg_block();
+                    block.dom_node = () => div;
+                    block.html = (val) => val ?? div.innerHTML;
+                    const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true });
+                    const result = block.link_exec(event);
+                    $mol_assert_ok(result);
+                    $mol_assert_equal(div.innerHTML, 'hello world end');
+                    globalThis.prompt = original_prompt;
+                }
+                finally {
+                    div.remove();
+                }
+            },
+            'link_exec creates link from selected text'() {
+                if (typeof document === 'undefined')
+                    return;
+                const div = make_block_with_selection('click here now', 'here');
+                try {
+                    const original_prompt = globalThis.prompt;
+                    globalThis.prompt = () => 'https://example.com';
+                    const block = new $bog_wysiwyg_block();
+                    block.dom_node = () => div;
+                    block.html = (val) => val ?? div.innerHTML;
+                    const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true });
+                    block.link_exec(event);
+                    $mol_assert_ok(div.innerHTML.includes('<a '));
+                    $mol_assert_ok(div.innerHTML.includes('https://example.com'));
+                    $mol_assert_ok(div.innerHTML.includes('here'));
+                    globalThis.prompt = original_prompt;
+                }
+                finally {
+                    div.remove();
+                }
+            },
+            'link_exec inserts url as text when no selection'() {
+                if (typeof document === 'undefined')
+                    return;
+                const div = make_block_with_selection('hello world');
+                try {
+                    div.focus();
+                    const sel = $mol_dom_context.document.defaultView.getSelection();
+                    const range = $mol_dom_context.document.createRange();
+                    range.selectNodeContents(div);
+                    range.collapse(false);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                    const original_prompt = globalThis.prompt;
+                    globalThis.prompt = () => 'https://example.com';
+                    const block = new $bog_wysiwyg_block();
+                    block.dom_node = () => div;
+                    block.html = (val) => val ?? div.innerHTML;
+                    const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true });
+                    block.link_exec(event);
+                    $mol_assert_ok(div.innerHTML.includes('<a '));
+                    $mol_assert_ok(div.innerHTML.includes('https://example.com'));
+                    globalThis.prompt = original_prompt;
+                }
+                finally {
+                    div.remove();
+                }
+            },
+            'paste_event without event returns null'() {
+                const block = new $bog_wysiwyg_block();
+                $mol_assert_equal(block.paste_event(), null);
+            },
+            'paste_event with image prevents default'() {
+                if (typeof document === 'undefined')
+                    return;
+                let prevented = false;
+                const block = new $bog_wysiwyg_block();
+                let image_src = '';
+                block.on_image = (src) => {
+                    if (src)
+                        image_src = src;
+                    return image_src || null;
+                };
+                const blob = new Blob([''], { type: 'image/png' });
+                const file = new File([blob], 'test.png', { type: 'image/png' });
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                const event = new ClipboardEvent('paste', { clipboardData: dt });
+                Object.defineProperty(event, 'preventDefault', { value: () => { prevented = true; } });
+                const result = block.paste_event(event);
+                $mol_assert_ok(result);
+                $mol_assert_ok(prevented);
+            },
+            'paste_event without image does not prevent default'() {
+                if (typeof document === 'undefined')
+                    return;
+                const block = new $bog_wysiwyg_block();
+                const dt = new DataTransfer();
+                dt.items.add('hello', 'text/plain');
+                const event = new ClipboardEvent('paste', { clipboardData: dt });
+                let prevented = false;
+                Object.defineProperty(event, 'preventDefault', { value: () => { prevented = true; } });
+                const result = block.paste_event(event);
+                $mol_assert_ok(result);
+                $mol_assert_equal(prevented, false);
+            },
+            'drop_event without event returns null'() {
+                const block = new $bog_wysiwyg_block();
+                $mol_assert_equal(block.drop_event(), null);
+            },
+            'is_image returns true for image type'() {
+                const block = new $bog_wysiwyg_block();
+                block.type = () => 'image';
+                $mol_assert_equal(block.is_image(), true);
+            },
+            'is_image returns false for paragraph type'() {
+                const block = new $bog_wysiwyg_block();
+                block.type = () => 'paragraph';
+                $mol_assert_equal(block.is_image(), false);
+            },
+            'parse_markdown: single paragraph'() {
+                const blocks = $bog_wysiwyg_parse_markdown('hello world');
+                $mol_assert_equal(blocks.length, 1);
+                $mol_assert_equal(blocks[0].type, 'paragraph');
+                $mol_assert_equal(blocks[0].content, 'hello world');
+            },
+            'parse_markdown: two paragraphs separated by empty line'() {
+                const blocks = $bog_wysiwyg_parse_markdown('first\n\nsecond');
+                $mol_assert_equal(blocks.length, 2);
+                $mol_assert_equal(blocks[0].content, 'first');
+                $mol_assert_equal(blocks[1].content, 'second');
+            },
+            'parse_markdown: heading levels 1-3'() {
+                const blocks = $bog_wysiwyg_parse_markdown('# H1\n\n## H2\n\n### H3');
+                $mol_assert_equal(blocks.length, 3);
+                $mol_assert_equal(blocks[0].type, 'heading');
+                $mol_assert_equal(blocks[0].level, 1);
+                $mol_assert_equal(blocks[0].content, 'H1');
+                $mol_assert_equal(blocks[1].level, 2);
+                $mol_assert_equal(blocks[2].level, 3);
+            },
+            'parse_markdown: code block'() {
+                const blocks = $bog_wysiwyg_parse_markdown('```\nconst x = 1\nconst y = 2\n```');
+                $mol_assert_equal(blocks.length, 1);
+                $mol_assert_equal(blocks[0].type, 'code');
+                $mol_assert_equal(blocks[0].content, 'const x = 1\nconst y = 2');
+            },
+            'parse_markdown: code block escapes HTML'() {
+                const blocks = $bog_wysiwyg_parse_markdown('```\n<div>&</div>\n```');
+                $mol_assert_equal(blocks[0].content, '&lt;div&gt;&amp;&lt;/div&gt;');
+            },
+            'parse_markdown: blockquote'() {
+                const blocks = $bog_wysiwyg_parse_markdown('> line one\n> line two');
+                $mol_assert_equal(blocks.length, 1);
+                $mol_assert_equal(blocks[0].type, 'quote');
+                $mol_assert_equal(blocks[0].content, 'line one<br>line two');
+            },
+            'parse_markdown: divider ---'() {
+                const blocks = $bog_wysiwyg_parse_markdown('above\n\n---\n\nbelow');
+                $mol_assert_equal(blocks.length, 3);
+                $mol_assert_equal(blocks[1].type, 'divider');
+                $mol_assert_equal(blocks[1].content, '');
+            },
+            'parse_markdown: divider ***'() {
+                const blocks = $bog_wysiwyg_parse_markdown('***');
+                $mol_assert_equal(blocks[0].type, 'divider');
+            },
+            'parse_markdown: inline bold'() {
+                const blocks = $bog_wysiwyg_parse_markdown('hello **world**');
+                $mol_assert_equal(blocks[0].content, 'hello <b>world</b>');
+            },
+            'parse_markdown: inline italic'() {
+                const blocks = $bog_wysiwyg_parse_markdown('hello *world*');
+                $mol_assert_equal(blocks[0].content, 'hello <i>world</i>');
+            },
+            'parse_markdown: inline code'() {
+                const blocks = $bog_wysiwyg_parse_markdown('run `npm install`');
+                $mol_assert_equal(blocks[0].content, 'run <code>npm install</code>');
+            },
+            'parse_markdown: inline strike'() {
+                const blocks = $bog_wysiwyg_parse_markdown('hello ~~world~~');
+                $mol_assert_equal(blocks[0].content, 'hello <s>world</s>');
+            },
+            'parse_markdown: inline link'() {
+                const blocks = $bog_wysiwyg_parse_markdown('click [here](https://example.com)');
+                $mol_assert_equal(blocks[0].content, 'click <a href="https://example.com">here</a>');
+            },
+            'parse_markdown: multi-line paragraph joins with br'() {
+                const blocks = $bog_wysiwyg_parse_markdown('line one\nline two\nline three');
+                $mol_assert_equal(blocks.length, 1);
+                $mol_assert_equal(blocks[0].content, 'line one<br>line two<br>line three');
+            },
+            'parse_markdown: mixed content article'() {
+                const md = '# Title\n\nSome text **bold**.\n\n```\ncode here\n```\n\n> quote\n\n---\n\nEnd.';
+                const blocks = $bog_wysiwyg_parse_markdown(md);
+                $mol_assert_equal(blocks.length, 6);
+                $mol_assert_equal(blocks[0].type, 'heading');
+                $mol_assert_equal(blocks[1].type, 'paragraph');
+                $mol_assert_equal(blocks[2].type, 'code');
+                $mol_assert_equal(blocks[3].type, 'quote');
+                $mol_assert_equal(blocks[4].type, 'divider');
+                $mol_assert_equal(blocks[5].type, 'paragraph');
+            },
+            'parse_markdown: empty input returns empty array'() {
+                $mol_assert_equal($bog_wysiwyg_parse_markdown('').length, 0);
+            },
+            'parse_markdown: only empty lines returns empty array'() {
+                $mol_assert_equal($bog_wysiwyg_parse_markdown('\n\n\n').length, 0);
+            },
+            'parse_markdown: unclosed code block collects to end'() {
+                const blocks = $bog_wysiwyg_parse_markdown('```\ncode without closing');
+                $mol_assert_equal(blocks.length, 1);
+                $mol_assert_equal(blocks[0].type, 'code');
+                $mol_assert_equal(blocks[0].content, 'code without closing');
             },
         });
-    })($$ = $_1.$$ || ($_1.$$ = {}));
+    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -3140,108 +3552,34 @@ var $;
 ;
 "use strict";
 var $;
-(function ($_1) {
+(function ($) {
     $mol_test({
-        'Watch one value'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static set = new $mol_wire_set();
-                static lucky() {
-                    return this.set.has(777);
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "lucky", null);
-            $mol_assert_equal(App.lucky(), false);
-            App.set.add(666);
-            $mol_assert_equal(App.lucky(), false);
-            App.set.add(777);
-            $mol_assert_equal(App.lucky(), true);
-            App.set.delete(777);
-            $mol_assert_equal(App.lucky(), false);
-        },
-        'Watch item channel'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static set = new $mol_wire_set();
-                static lucky() {
-                    return this.set.item(777);
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "lucky", null);
-            $mol_assert_equal(App.lucky(), false);
-            App.set.item(666, true);
-            $mol_assert_equal(App.lucky(), false);
-            App.set.item(777, true);
-            $mol_assert_equal(App.lucky(), true);
-            App.set.item(777, false);
-            $mol_assert_equal(App.lucky(), false);
-        },
-        'Watch size'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static set = new $mol_wire_set();
-                static size() {
-                    return this.set.size;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "size", null);
-            $mol_assert_equal(App.size(), 0);
-            App.set.add(666);
-            $mol_assert_equal(App.size(), 1);
-            App.set.add(777);
-            $mol_assert_equal(App.size(), 2);
-            App.set.delete(777);
-            $mol_assert_equal(App.size(), 1);
-        },
-        'Watch for-of'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static set = new $mol_wire_set();
-                static sum() {
-                    let res = 0;
-                    for (const val of this.set) {
-                        res += val;
-                    }
-                    return res;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "sum", null);
-            $mol_assert_equal(App.sum(), 0);
-            App.set.add(111);
-            $mol_assert_equal(App.sum(), 111);
-            App.set.add(222);
-            $mol_assert_equal(App.sum(), 333);
-            App.set.delete(111);
-            $mol_assert_equal(App.sum(), 222);
-        },
-        'Watch forEach'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static set = new $mol_wire_set();
-                static sum() {
-                    let res = 0;
-                    this.set.forEach(val => res += val);
-                    return res;
-                }
-            }
-            __decorate([
-                $mol_wire_solo
-            ], App, "sum", null);
-            $mol_assert_equal(App.sum(), 0);
-            App.set.add(111);
-            $mol_assert_equal(App.sum(), 111);
-            App.set.add(222);
-            $mol_assert_equal(App.sum(), 333);
-            App.set.delete(111);
-            $mol_assert_equal(App.sum(), 222);
+        '$mol_syntax2_md_flow'() {
+            const check = (input, right) => {
+                const tokens = [];
+                $mol_syntax2_md_flow.tokenize(input, (...token) => tokens.push(token));
+                $mol_assert_equal(tokens, right);
+            };
+            check('Hello,\nWorld..\r\n\r\n\nof Love!', [
+                ['block', 'Hello,\n', ['Hello,', '\n'], 0],
+                ['block', 'World..\r\n\r\n\n', ['World..', '\r\n\r\n\n'], 7],
+                ['block', 'of Love!', ['of Love!', ''], 19],
+            ]);
+            check('# Header1\n\nHello!\n\n## Header2', [
+                ['header', '# Header1\n\n', ['#', ' ', 'Header1', '\n\n'], 0],
+                ['block', 'Hello!\n\n', ['Hello!', '\n\n'], 11],
+                ['header', '## Header2', ['##', ' ', 'Header2', ''], 19],
+            ]);
+            check('```\nstart()\n```\n\n```jam.js\nrestart()\n```\n\nHello!\n\n```\nstop()\n```', [
+                ['code', '```\nstart()\n```\n\n', ['```', '', 'start()\n', '```', '\n\n'], 0],
+                ['code', '```jam.js\nrestart()\n```\n\n', ['```', 'jam.js', 'restart()\n', '```', '\n\n'], 17],
+                ['block', 'Hello!\n\n', ['Hello!', '\n\n'], 42],
+                ['code', '```\nstop()\n```', ['```', '', 'stop()\n', '```', ''], 50],
+            ]);
+            check('| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n| Cell11 | Cell12\n| Cell21 | Cell22\n', [
+                ['table', '| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n', ['| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n', '\n'], 0],
+                ['table', '| Cell11 | Cell12\n| Cell21 | Cell22\n', ['| Cell11 | Cell12\n| Cell21 | Cell22\n', ''], 68],
+            ]);
         },
     });
 })($ || ($ = {}));
@@ -5027,6 +5365,61 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
+    $mol_test_mocks.push(context => {
+        class $mol_state_arg_mock extends $mol_state_arg {
+            static $ = context;
+            static href(next) { return next || ''; }
+            static go(next) {
+                this.href(this.link(next));
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_state_arg_mock, "href", null);
+        __decorate([
+            $mol_action
+        ], $mol_state_arg_mock, "go", null);
+        context.$mol_state_arg = $mol_state_arg_mock;
+    });
+    $mol_test({
+        'args as dictionary'($) {
+            $.$mol_state_arg.href('#!foo=bar/xxx');
+            $mol_assert_equal($.$mol_state_arg.dict(), { foo: 'bar', xxx: '' });
+            $.$mol_state_arg.dict({ foo: null, yyy: '', lol: '123' });
+            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!yyy/lol=123');
+        },
+        'one value from args'($) {
+            $.$mol_state_arg.href('#!foo=bar/xxx');
+            $mol_assert_equal($.$mol_state_arg.value('foo'), 'bar');
+            $mol_assert_equal($.$mol_state_arg.value('xxx'), '');
+            $.$mol_state_arg.value('foo', 'lol');
+            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo=lol/xxx');
+            $.$mol_state_arg.value('foo', '');
+            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo/xxx');
+            $.$mol_state_arg.value('foo', null);
+            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!xxx');
+        },
+        'nested args'($) {
+            const base = new $.$mol_state_arg('nested.');
+            class Nested extends $mol_state_arg {
+                constructor(prefix) {
+                    super(base.prefix + prefix);
+                }
+                static value = (key, next) => base.value(key, next);
+            }
+            $.$mol_state_arg.href('#!foo=bar/nested.xxx=123');
+            $mol_assert_equal(Nested.value('foo'), null);
+            $mol_assert_equal(Nested.value('xxx'), '123');
+            Nested.value('foo', 'lol');
+            $mol_assert_equal($.$mol_state_arg.href().replace(/.*#/, '#'), '#!foo=bar/nested.xxx=123/nested.foo=lol');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
     $mol_test_mocks.push($ => {
         class $giper_baza_land_mock extends $.$giper_baza_land {
             sync() {
@@ -5092,11 +5485,13 @@ var $;
             $mol_assert_equal(await land.encrypted(), false);
             await land.encrypted(true);
             $mol_assert_equal(await land.encrypted(), true);
-            const sand = await land.post($giper_baza_link.hole, $giper_baza_link.hole, null, new Uint8Array([1, 2, 3]));
-            $mol_assert_equal((await land.sand_encode(sand)).data().length, 16);
-            $mol_assert_equal(await land.sand_decode(sand), new Uint8Array([1, 2, 3]));
+            const material = await land.post($giper_baza_link.hole, $giper_baza_link.hole, null, new Uint8Array([1, 2, 3]));
+            $mol_assert_equal((await land.sand_encode(material)).data().length, 16);
+            $mol_assert_equal(await land.sand_decode(material), new Uint8Array([1, 2, 3]));
             $mol_assert_equal((await land.sand_ordered({ head: $giper_baza_link.hole, peer: $giper_baza_link.hole })).length, 1);
-            await land.post($giper_baza_link.hole, $giper_baza_link.hole, sand.self(), null);
+            const tombstone = await land.post($giper_baza_link.hole, $giper_baza_link.hole, material.self(), null);
+            $mol_assert_equal((await land.sand_encode(tombstone)).data().length, 1);
+            $mol_assert_equal(await land.sand_decode(tombstone), null);
             $mol_assert_equal((await land.sand_ordered({ head: $giper_baza_link.hole, peer: $giper_baza_link.hole })).length, 1);
         },
         'Land fork & merge': $mol_wire_async(($) => {
@@ -6061,6 +6456,115 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
+    $mol_test({
+        'Watch one value'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static set = new $mol_wire_set();
+                static lucky() {
+                    return this.set.has(777);
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "lucky", null);
+            $mol_assert_equal(App.lucky(), false);
+            App.set.add(666);
+            $mol_assert_equal(App.lucky(), false);
+            App.set.add(777);
+            $mol_assert_equal(App.lucky(), true);
+            App.set.delete(777);
+            $mol_assert_equal(App.lucky(), false);
+        },
+        'Watch item channel'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static set = new $mol_wire_set();
+                static lucky() {
+                    return this.set.item(777);
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "lucky", null);
+            $mol_assert_equal(App.lucky(), false);
+            App.set.item(666, true);
+            $mol_assert_equal(App.lucky(), false);
+            App.set.item(777, true);
+            $mol_assert_equal(App.lucky(), true);
+            App.set.item(777, false);
+            $mol_assert_equal(App.lucky(), false);
+        },
+        'Watch size'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static set = new $mol_wire_set();
+                static size() {
+                    return this.set.size;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "size", null);
+            $mol_assert_equal(App.size(), 0);
+            App.set.add(666);
+            $mol_assert_equal(App.size(), 1);
+            App.set.add(777);
+            $mol_assert_equal(App.size(), 2);
+            App.set.delete(777);
+            $mol_assert_equal(App.size(), 1);
+        },
+        'Watch for-of'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static set = new $mol_wire_set();
+                static sum() {
+                    let res = 0;
+                    for (const val of this.set) {
+                        res += val;
+                    }
+                    return res;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "sum", null);
+            $mol_assert_equal(App.sum(), 0);
+            App.set.add(111);
+            $mol_assert_equal(App.sum(), 111);
+            App.set.add(222);
+            $mol_assert_equal(App.sum(), 333);
+            App.set.delete(111);
+            $mol_assert_equal(App.sum(), 222);
+        },
+        'Watch forEach'($) {
+            class App extends $mol_object2 {
+                static $ = $;
+                static set = new $mol_wire_set();
+                static sum() {
+                    let res = 0;
+                    this.set.forEach(val => res += val);
+                    return res;
+                }
+            }
+            __decorate([
+                $mol_wire_solo
+            ], App, "sum", null);
+            $mol_assert_equal(App.sum(), 0);
+            App.set.add(111);
+            $mol_assert_equal(App.sum(), 111);
+            App.set.add(222);
+            $mol_assert_equal(App.sum(), 333);
+            App.set.delete(111);
+            $mol_assert_equal(App.sum(), 222);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
     $mol_test_mocks.push($ => {
         class $giper_baza_glob_mock extends $.$giper_baza_glob {
             static $ = $;
@@ -6093,32 +6597,300 @@ var $;
 var $;
 (function ($) {
     $mol_test({
-        '$mol_syntax2_md_flow'() {
-            const check = (input, right) => {
-                const tokens = [];
-                $mol_syntax2_md_flow.tokenize(input, (...token) => tokens.push(token));
-                $mol_assert_equal(tokens, right);
-            };
-            check('Hello,\nWorld..\r\n\r\n\nof Love!', [
-                ['block', 'Hello,\n', ['Hello,', '\n'], 0],
-                ['block', 'World..\r\n\r\n\n', ['World..', '\r\n\r\n\n'], 7],
-                ['block', 'of Love!', ['of Love!', ''], 19],
-            ]);
-            check('# Header1\n\nHello!\n\n## Header2', [
-                ['header', '# Header1\n\n', ['#', ' ', 'Header1', '\n\n'], 0],
-                ['block', 'Hello!\n\n', ['Hello!', '\n\n'], 11],
-                ['header', '## Header2', ['##', ' ', 'Header2', ''], 19],
-            ]);
-            check('```\nstart()\n```\n\n```jam.js\nrestart()\n```\n\nHello!\n\n```\nstop()\n```', [
-                ['code', '```\nstart()\n```\n\n', ['```', '', 'start()\n', '```', '\n\n'], 0],
-                ['code', '```jam.js\nrestart()\n```\n\n', ['```', 'jam.js', 'restart()\n', '```', '\n\n'], 17],
-                ['block', 'Hello!\n\n', ['Hello!', '\n\n'], 42],
-                ['code', '```\nstop()\n```', ['```', '', 'stop()\n', '```', ''], 50],
-            ]);
-            check('| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n| Cell11 | Cell12\n| Cell21 | Cell22\n', [
-                ['table', '| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n\n', ['| header1 | header2\n|----|----\n| Cell11 | Cell12\n| Cell21 | Cell22\n', '\n'], 0],
-                ['table', '| Cell11 | Cell12\n| Cell21 | Cell22\n', ['| Cell11 | Cell12\n| Cell21 | Cell22\n', ''], 68],
-            ]);
+        'empty string'() {
+            $mol_assert_equal(''.match($giper_baza_text_tokens), null);
+        },
+        'new lines'() {
+            $mol_assert_equal('\n\r\n'.match($giper_baza_text_tokens), ['\n', '\r\n']);
+        },
+        'numbers'() {
+            $mol_assert_equal('123'.match($giper_baza_text_tokens), ['123']);
+        },
+        'emoji'() {
+            $mol_assert_equal('😀😁'.match($giper_baza_text_tokens), ['😀', '😁']);
+        },
+        'emoji with modifier'() {
+            $mol_assert_equal('👩🏿👩🏿'.match($giper_baza_text_tokens), ['👩🏿', '👩🏿']);
+        },
+        'combo emoji with modifier'() {
+            $mol_assert_equal('👩🏿‍🤝‍🧑🏿👩🏿‍🤝‍🧑🏿'.match($giper_baza_text_tokens), ['👩🏿‍🤝‍🧑🏿', '👩🏿‍🤝‍🧑🏿']);
+        },
+        'word with spaces'() {
+            $mol_assert_equal('foo1  bar2'.match($giper_baza_text_tokens), ['foo1', ' ', ' bar2']);
+        },
+        'word with diactric'() {
+            $mol_assert_equal('Е́е́'.match($giper_baza_text_tokens), ['Е́е́']);
+        },
+        'word with punctuation'() {
+            $mol_assert_equal('foo--bar'.match($giper_baza_text_tokens), ['foo', '--', 'bar']);
+        },
+        'CamelCase'() {
+            $mol_assert_equal('Foo1BAR2'.match($giper_baza_text_tokens), ['Foo1', 'BAR2']);
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($_1) {
+    $mol_test({
+        'Change sequences'($) {
+            const land = $giper_baza_land.make({ $ });
+            const text = land.Data($giper_baza_text);
+            const list = land.Data($giper_baza_list_vary);
+            $mol_assert_equal(text.str(), '');
+            $mol_assert_equal(list.items_vary(), []);
+            text.str('foo');
+            $mol_assert_equal(text.str(), 'foo');
+            $mol_assert_equal(list.items_vary(), ['foo']);
+            text.str('foo bar');
+            $mol_assert_equal(text.str(), 'foo bar');
+            $mol_assert_equal(list.items_vary(), ['foo', ' bar']);
+            text.str('foo lol bar');
+            $mol_assert_equal(text.str(), 'foo lol bar');
+            $mol_assert_equal(list.items_vary(), ['foo', ' lol', ' bar']);
+            text.str('lol bar');
+            $mol_assert_equal(text.str(), 'lol bar');
+            $mol_assert_equal(list.items_vary(), ['lol', ' bar']);
+            text.str('foo bar');
+            $mol_assert_equal(text.str(), 'foo bar');
+            $mol_assert_equal(list.items_vary(), ['foo', ' bar']);
+            text.str('foo  bar');
+            $mol_assert_equal(text.str(), 'foo  bar');
+            $mol_assert_equal(list.items_vary(), ['foo', ' ', ' bar']);
+            text.str('foo  BarBar');
+            $mol_assert_equal(text.str(), 'foo  BarBar');
+            $mol_assert_equal(list.items_vary(), ['foo', ' ', ' Bar', 'Bar']);
+        },
+        async 'str: Offset <=> Point'($) {
+            const land = $giper_baza_land.make({ $ });
+            const text = land.Data($giper_baza_text);
+            text.str('fooBar');
+            const [first, second] = text.units();
+            $mol_assert_equal(text.point_by_offset(0), [first.self().str, 0, 0]);
+            $mol_assert_equal(text.offset_by_point([first.self().str, 0, 0]), [first.self().str, 0]);
+            $mol_assert_equal(text.point_by_offset(3), [first.self().str, 3, 0]);
+            $mol_assert_equal(text.offset_by_point([first.self().str, 3, 0]), [first.self().str, 3]);
+            $mol_assert_equal(text.offset_by_point([first.self().str, 5, 0]), [first.self().str, 5]);
+            $mol_assert_equal(text.point_by_offset(5), [second.self().str, 2, 0]);
+            $mol_assert_equal(text.offset_by_point([second.self().str, 2, 0]), [second.self().str, 5]);
+            $mol_assert_equal(text.point_by_offset(6), [second.self().str, 3, 0]);
+            $mol_assert_equal(text.offset_by_point([second.self().str, 3, 0]), [second.self().str, 6]);
+            $mol_assert_equal(text.point_by_offset(7), ['', 1, 0]);
+            $mol_assert_equal(text.offset_by_point(['', 1, 0]), ['', 7]);
+        },
+        async 'text: Offset <=> Point'($) {
+            const land = $giper_baza_land.make({ $ });
+            const text = land.Data($giper_baza_text);
+            text.text('foo bar\n666 777');
+            const [first, second] = text.pawns($giper_baza_text);
+            $mol_assert_equal(text.point_by_offset(0), [first.units()[0].self().str, 0, 0]);
+            $mol_assert_equal(text.offset_by_point([first.units()[0].self().str, 0, 0]), [first.units()[0].self().str, 0]);
+            $mol_assert_equal(text.point_by_offset(8), [first.units()[2].self().str, 1, 0]);
+            $mol_assert_equal(text.offset_by_point([first.units()[2].self().str, 1, 0]), [first.units()[2].self().str, 8]);
+        },
+        async 'Merge different sequences'($) {
+            const land1 = $giper_baza_land.make({ $ });
+            const land2 = $giper_baza_land.make({ $ });
+            const text1 = land1.Pawn($giper_baza_text).Data();
+            const text2 = land2.Pawn($giper_baza_text).Data();
+            text1.str('foo bar.');
+            land2.faces.stat.time = land1.faces.stat.time;
+            text2.str('xxx yyy.');
+            const delta1 = await $mol_wire_async(land1).diff_units();
+            const delta2 = await $mol_wire_async(land2).diff_units();
+            await $mol_wire_async(land1).diff_apply(delta2);
+            await $mol_wire_async(land2).diff_apply(delta1);
+            $mol_assert_equal(text1.str(), text2.str(), 'xxx yyy.foo bar.');
+        },
+        async 'Merge same insertions with different changes to same place'($) {
+            const base = $giper_baza_land.make({ $ });
+            base.Data($giper_baza_text).str('( )');
+            const left = $giper_baza_land.make({ $ });
+            await $mol_wire_async(left).units_steal(base);
+            left.Data($giper_baza_text).str('( [ f ] )');
+            left.Data($giper_baza_text).str('( [ foo ] )');
+            const right = $giper_baza_land.make({ $ });
+            await $mol_wire_async(right).units_steal(base);
+            right.faces.sync(left.faces);
+            right.Data($giper_baza_text).str('( [ f ] )');
+            right.Data($giper_baza_text).str('( [ fu ] )');
+            const left_delta = await $mol_wire_async(left).diff_units(base.faces);
+            const right_delta = await $mol_wire_async(right).diff_units(base.faces);
+            await $mol_wire_async(left).diff_apply(right_delta);
+            await $mol_wire_async(right).diff_apply(left_delta);
+            $mol_assert_equal(left.Data($giper_baza_text).str(), right.Data($giper_baza_text).str(), '( [ fu ] [ foo ] )');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Special'() {
+            $mol_assert_equal($mol_si_short(0), '0');
+            $mol_assert_equal($mol_si_short(1 / 0), '∞');
+            $mol_assert_equal($mol_si_short(-1 / 0), '-∞');
+            $mol_assert_equal($mol_si_short(0 / 0), '∅');
+        },
+        'M'() {
+            $mol_assert_equal($mol_si_short(0), '0');
+            $mol_assert_equal($mol_si_short(0.999500), '1.00');
+            $mol_assert_equal($mol_si_short(-0.999600), '-1.00');
+            $mol_assert_equal($mol_si_short(999.4), '999');
+            $mol_assert_equal($mol_si_short(-999.4), '-999');
+        },
+        'L'() {
+            $mol_assert_equal($mol_si_short(999.5), '1.00k');
+            $mol_assert_equal($mol_si_short(-999.5), '-1.00k');
+            $mol_assert_equal($mol_si_short(999_400), '999k');
+            $mol_assert_equal($mol_si_short(-999_400), '-999k');
+        },
+        'XL'() {
+            $mol_assert_equal($mol_si_short(999_500), '1.00M');
+            $mol_assert_equal($mol_si_short(-999_600), '-1.00M');
+            $mol_assert_equal($mol_si_short(999_400_000), '999M');
+            $mol_assert_equal($mol_si_short(-999_400_000), '-999M');
+        },
+        'S'() {
+            $mol_assert_equal($mol_si_short(0.999400), '999m');
+            $mol_assert_equal($mol_si_short(-0.999400), '-999m');
+            $mol_assert_equal($mol_si_short(0.000_999_500), '1.00m');
+            $mol_assert_equal($mol_si_short(-0.000_999_500), '-1.00m');
+        },
+        'XS'() {
+            $mol_assert_equal($mol_si_short(0.000_999_400), '999µ');
+            $mol_assert_equal($mol_si_short(-0.000_999_400), '-999µ');
+            $mol_assert_equal($mol_si_short(0.000_000_999_600), '1.00µ');
+            $mol_assert_equal($mol_si_short(-0.000_000_999_600), '-1.00µ');
+        },
+        'With unit'() {
+            $mol_assert_equal($mol_si_short(0, 's'), '0 s');
+            $mol_assert_equal($mol_si_short(1 / 0, 's'), '∞ s');
+            $mol_assert_equal($mol_si_short(0 / 0, 's'), '∅ s');
+            $mol_assert_equal($mol_si_short(123, 'Hz'), '123 Hz');
+            $mol_assert_equal($mol_si_short(1234, 'g'), '1.23 kg');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'simple sort'() {
+            const list = ['abc', 'ac', 'ab'];
+            list.sort($mol_compare_text());
+            $mol_assert_equal(`${list}`, 'ab,abc,ac');
+        },
+        'sort ignoring spaces around'() {
+            const list = [' a', '\tb', ' b'];
+            list.sort($mol_compare_text());
+            $mol_assert_equal(`${list}`, ' a,\tb, b');
+        },
+        'sort ignoring letter case'() {
+            const list = ['A', 'B', 'a'];
+            list.sort($mol_compare_text());
+            $mol_assert_equal(`${list}`, 'A,a,B');
+        },
+        'sort with custom serializer'() {
+            const list = ['abc', 'ab', 'ac'];
+            list.sort($mol_compare_text(str => str.split('').reverse().join('')));
+            $mol_assert_equal(`${list}`, 'ab,ac,abc');
+        },
+    });
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'Vector limiting'() {
+            let point = new $mol_vector_3d(7, 10, 13);
+            const res = point.limited([[1, 5], [15, 20], [5, 10]]);
+            $mol_assert_equal(res.x, 5);
+            $mol_assert_equal(res.y, 15);
+            $mol_assert_equal(res.z, 10);
+        },
+        'Vector adding scalar'() {
+            let point = new $mol_vector_3d(1, 2, 3);
+            let res = point.added0(5);
+            $mol_assert_equal(res.x, 6);
+            $mol_assert_equal(res.y, 7);
+            $mol_assert_equal(res.z, 8);
+        },
+        'Vector adding vector'() {
+            let point = new $mol_vector_3d(1, 2, 3);
+            let res = point.added1([5, 10, 15]);
+            $mol_assert_equal(res.x, 6);
+            $mol_assert_equal(res.y, 12);
+            $mol_assert_equal(res.z, 18);
+        },
+        'Vector multiplying scalar'() {
+            let point = new $mol_vector_3d(2, 3, 4);
+            let res = point.multed0(-1);
+            $mol_assert_equal(res.x, -2);
+            $mol_assert_equal(res.y, -3);
+            $mol_assert_equal(res.z, -4);
+        },
+        'Vector multiplying vector'() {
+            let point = new $mol_vector_3d(2, 3, 4);
+            let res = point.multed1([5, 2, -2]);
+            $mol_assert_equal(res.x, 10);
+            $mol_assert_equal(res.y, 6);
+            $mol_assert_equal(res.z, -8);
+        },
+        'Matrix adding matrix'() {
+            let matrix = new $mol_vector_matrix(...[[1, 2], [3, 4], [5, 6]]);
+            let res = matrix.added2([[10, 20], [30, 40], [50, 60]]);
+            $mol_assert_equal(res[0][0], 11);
+            $mol_assert_equal(res[0][1], 22);
+            $mol_assert_equal(res[1][0], 33);
+            $mol_assert_equal(res[1][1], 44);
+            $mol_assert_equal(res[2][0], 55);
+            $mol_assert_equal(res[2][1], 66);
+        },
+        'Matrix multiplying matrix'() {
+            let matrix = new $mol_vector_matrix(...[[2, 3], [4, 5], [6, 7]]);
+            let res = matrix.multed2([[2, 3], [4, 5], [6, 7]]);
+            $mol_assert_equal(res[0][0], 4);
+            $mol_assert_equal(res[0][1], 9);
+            $mol_assert_equal(res[1][0], 16);
+            $mol_assert_equal(res[1][1], 25);
+            $mol_assert_equal(res[2][0], 36);
+            $mol_assert_equal(res[2][1], 49);
+        },
+        'Range expanding'() {
+            let range = $mol_vector_range_full.inversed;
+            const expanded = range.expanded0(10).expanded0(5);
+            $mol_assert_like([...expanded], [5, 10]);
+        },
+        'Vector of range expanding by vector'() {
+            let dimensions = new $mol_vector_2d($mol_vector_range_full.inversed, $mol_vector_range_full.inversed);
+            const expanded = dimensions.expanded1([1, 7]).expanded1([3, 5]);
+            $mol_assert_like([...expanded.x], [1, 3]);
+            $mol_assert_like([...expanded.y], [5, 7]);
+        },
+        'Vector of range expanding by vector of range'() {
+            let dimensions = new $mol_vector_2d($mol_vector_range_full.inversed, $mol_vector_range_full.inversed);
+            const expanded = dimensions
+                .expanded2([[1, 3], [7, 9]])
+                .expanded2([[2, 4], [6, 8]]);
+            $mol_assert_like([...expanded.x], [1, 4]);
+            $mol_assert_like([...expanded.y], [6, 9]);
+        },
+        'Vector of infinity range expanding by vector of range'() {
+            let dimensions = new $mol_vector_2d($mol_vector_range_full.inversed, $mol_vector_range_full.inversed);
+            const next = new $mol_vector_2d($mol_vector_range_full.inversed, $mol_vector_range_full.inversed);
+            const expanded = next
+                .expanded2(dimensions);
+            $mol_assert_like([...expanded.x], [Infinity, -Infinity]);
+            $mol_assert_like([...expanded.y], [Infinity, -Infinity]);
         },
     });
 })($ || ($ = {}));
@@ -6140,473 +6912,6 @@ var $;
             $mol_assert_equal($mol_state_session.value(key), null);
         },
     });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        const locale_en = {
-            '$bog_wysiwyg_menu_command_paragraph': 'Text',
-            '$bog_wysiwyg_menu_command_heading1': 'Heading 1',
-            '$bog_wysiwyg_menu_command_heading2': 'Heading 2',
-            '$bog_wysiwyg_menu_command_heading3': 'Heading 3',
-            '$bog_wysiwyg_menu_command_code': 'Code',
-            '$bog_wysiwyg_menu_command_quote': 'Quote',
-            '$bog_wysiwyg_menu_command_list': 'List',
-            '$bog_wysiwyg_menu_command_divider': 'Divider',
-            '$bog_wysiwyg_menu_command_image': 'Image',
-        };
-        function menu_make() {
-            $mol_locale.texts('en', locale_en);
-            return new $bog_wysiwyg_menu();
-        }
-        $mol_test({
-            'Menu commands returns builtin commands'() {
-                const menu = menu_make();
-                const cmds = menu.commands();
-                $mol_assert_ok(cmds.length >= 9);
-                $mol_assert_equal(cmds[0].id, 'paragraph');
-                $mol_assert_equal(cmds[1].id, 'heading1');
-                $mol_assert_equal(cmds[2].id, 'heading2');
-                $mol_assert_equal(cmds[3].id, 'heading3');
-                $mol_assert_equal(cmds[4].id, 'code');
-                $mol_assert_equal(cmds[5].id, 'quote');
-                $mol_assert_equal(cmds[6].id, 'list');
-                $mol_assert_equal(cmds[7].id, 'divider');
-                $mol_assert_equal(cmds[8].id, 'image');
-            },
-            'Menu option_rows returns views matching commands length'() {
-                const menu = menu_make();
-                const rows = menu.option_rows();
-                $mol_assert_equal(rows.length, menu.commands().length);
-            },
-            'Menu option_title returns title for known command id'() {
-                const menu = menu_make();
-                const title = menu.option_title('paragraph');
-                $mol_assert_ok(title.length > 0);
-            },
-            'Menu option_title returns empty string for unknown id'() {
-                const menu = menu_make();
-                const title = menu.option_title('nonexistent');
-                $mol_assert_equal(title, '');
-            },
-            'Menu option_active returns true when index matches'() {
-                const menu = menu_make();
-                menu.index(0);
-                const first_id = menu.commands()[0].id;
-                $mol_assert_equal(menu.option_active(first_id), true);
-            },
-            'Menu option_active returns false for non-matching id'() {
-                const menu = menu_make();
-                menu.index(0);
-                $mol_assert_equal(menu.option_active('nonexistent'), false);
-            },
-            'Menu option_active tracks index changes'() {
-                const menu = menu_make();
-                menu.index(2);
-                const cmd = menu.commands()[2];
-                $mol_assert_equal(menu.option_active(cmd.id), true);
-                $mol_assert_equal(menu.option_active(menu.commands()[0].id), false);
-            },
-            'Menu option_click calls picked and hides menu'() {
-                const menu = menu_make();
-                menu.showed(true);
-                let picked_val = '';
-                menu.picked = (next) => {
-                    if (next !== undefined)
-                        picked_val = next;
-                    return picked_val;
-                };
-                const event = { type: 'click' };
-                menu.option_click('heading1', event);
-                $mol_assert_equal(picked_val, 'heading1');
-                $mol_assert_equal(menu.showed(), false);
-            },
-            'Menu option_click without event returns null'() {
-                const menu = menu_make();
-                $mol_assert_equal(menu.option_click('paragraph'), null);
-            },
-            'Menu pos_y_str returns pixel string'() {
-                const menu = menu_make();
-                menu.pos_y(200);
-                $mol_assert_equal(menu.pos_y_str(), '200px');
-            },
-            'Menu pos_x_str returns pixel string'() {
-                const menu = menu_make();
-                menu.pos_x(350);
-                $mol_assert_equal(menu.pos_x_str(), '350px');
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        function apply_markdown(input) {
-            const doc = $mol_dom_context.document;
-            const div = doc.createElement('div');
-            div.contentEditable = 'true';
-            doc.body.appendChild(div);
-            try {
-                div.textContent = input;
-                const text_node = div.firstChild;
-                const sel = doc.defaultView.getSelection();
-                const range = doc.createRange();
-                range.setStart(text_node, input.length);
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
-                const block = new $bog_wysiwyg_block();
-                block.try_markdown(div);
-                return div.innerHTML;
-            }
-            finally {
-                doc.body.removeChild(div);
-            }
-        }
-        function make_block_with_selection(html, select_text) {
-            const doc = $mol_dom_context.document;
-            const div = doc.createElement('div');
-            div.contentEditable = 'true';
-            div.innerHTML = html;
-            doc.body.appendChild(div);
-            div.focus();
-            if (select_text) {
-                const walker = doc.createTreeWalker(div, 4);
-                let node;
-                while (node = walker.nextNode()) {
-                    const idx = (node.textContent ?? '').indexOf(select_text);
-                    if (idx >= 0) {
-                        const range = doc.createRange();
-                        range.setStart(node, idx);
-                        range.setEnd(node, idx + select_text.length);
-                        const sel = doc.defaultView.getSelection();
-                        sel.removeAllRanges();
-                        sel.addRange(range);
-                        break;
-                    }
-                }
-            }
-            return div;
-        }
-        $mol_test({
-            'bold markdown converts to HTML'() {
-                $mol_assert_equal(apply_markdown('hello **world** end'), 'hello <b>world</b> end');
-            },
-            'italic markdown converts to HTML'() {
-                $mol_assert_equal(apply_markdown('hello *world* end'), 'hello <i>world</i> end');
-            },
-            'inline code markdown converts to HTML'() {
-                $mol_assert_equal(apply_markdown('hello `code` end'), 'hello <code>code</code> end');
-            },
-            'strikethrough markdown converts to HTML'() {
-                $mol_assert_equal(apply_markdown('hello ~~strike~~ end'), 'hello <s>strike</s> end');
-            },
-            'link markdown converts to HTML'() {
-                const result = apply_markdown('click [here](https://example.com) now');
-                $mol_assert_equal(result, 'click <a href="https://example.com">here</a> now');
-            },
-            'wiki link [[page_id]] converts to anchor'() {
-                const result = apply_markdown('see [[my_page]] for info');
-                $mol_assert_ok(result.includes('<a '));
-                $mol_assert_ok(result.includes('data-wiki-link="my_page"'));
-                $mol_assert_ok(result.includes('href="#my_page"'));
-                $mol_assert_ok(result.includes('>my_page</a>'));
-            },
-            'wiki link with empty content does not convert'() {
-                $mol_assert_equal(apply_markdown('hello [[]] end'), 'hello [[]] end');
-            },
-            'partially typed wiki link does not convert'() {
-                $mol_assert_equal(apply_markdown('[[not closed'), '[[not closed');
-            },
-            'empty bold content does not convert'() {
-                $mol_assert_equal(apply_markdown('hello **** end'), 'hello **** end');
-            },
-            'single star inside double stars does not break bold'() {
-                const result = apply_markdown('**bold text** end');
-                $mol_assert_equal(result, '<b>bold text</b> end');
-            },
-            'multiple patterns in one block: only first converts per pass'() {
-                const first = apply_markdown('**bold** and *italic*');
-                $mol_assert_equal(first, '<b>bold</b> and *italic*');
-            },
-            'partially typed bold does not convert'() {
-                $mol_assert_equal(apply_markdown('**not closed'), '**not closed');
-            },
-            'partially typed italic does not convert'() {
-                $mol_assert_equal(apply_markdown('*not closed'), '*not closed');
-            },
-            'partially typed strikethrough does not convert'() {
-                $mol_assert_equal(apply_markdown('~~not closed'), '~~not closed');
-            },
-            'partially typed link does not convert'() {
-                $mol_assert_equal(apply_markdown('[text](no-close'), '[text](no-close');
-            },
-            'link with empty url does not convert'() {
-                $mol_assert_equal(apply_markdown('[text]() end'), '[text]() end');
-            },
-            'link with empty text does not convert'() {
-                $mol_assert_equal(apply_markdown('[](https://example.com) end'), '[](https://example.com) end');
-            },
-            'bold at start of text'() {
-                $mol_assert_equal(apply_markdown('**start** rest'), '<b>start</b> rest');
-            },
-            'bold at end of text'() {
-                $mol_assert_equal(apply_markdown('rest **end**'), 'rest <b>end</b>');
-            },
-            'code with special characters inside'() {
-                $mol_assert_equal(apply_markdown('run `npm install` now'), 'run <code>npm install</code> now');
-            },
-            'strike_exec without event returns null'() {
-                const block = new $bog_wysiwyg_block();
-                $mol_assert_equal(block.strike_exec(), null);
-            },
-            'strike_exec wraps selection in strikethrough'() {
-                if (typeof document === 'undefined')
-                    return;
-                const div = make_block_with_selection('hello world end', 'world');
-                try {
-                    const block = new $bog_wysiwyg_block();
-                    block.dom_node = () => div;
-                    block.html = (val) => val ?? div.innerHTML;
-                    const event = new KeyboardEvent('keydown', { key: 's', ctrlKey: true, shiftKey: true });
-                    const result = block.strike_exec(event);
-                    $mol_assert_ok(result);
-                    $mol_assert_ok(div.innerHTML.includes('<strike>') || div.innerHTML.includes('<s>'));
-                    $mol_assert_ok(div.innerHTML.includes('world'));
-                }
-                finally {
-                    div.remove();
-                }
-            },
-            'link_exec without event returns null'() {
-                const block = new $bog_wysiwyg_block();
-                $mol_assert_equal(block.link_exec(), null);
-            },
-            'link_exec with cancelled prompt does nothing'() {
-                if (typeof document === 'undefined')
-                    return;
-                const div = make_block_with_selection('hello world end', 'world');
-                try {
-                    const original_prompt = globalThis.prompt;
-                    globalThis.prompt = () => null;
-                    const block = new $bog_wysiwyg_block();
-                    block.dom_node = () => div;
-                    block.html = (val) => val ?? div.innerHTML;
-                    const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true });
-                    const result = block.link_exec(event);
-                    $mol_assert_ok(result);
-                    $mol_assert_equal(div.innerHTML, 'hello world end');
-                    globalThis.prompt = original_prompt;
-                }
-                finally {
-                    div.remove();
-                }
-            },
-            'link_exec creates link from selected text'() {
-                if (typeof document === 'undefined')
-                    return;
-                const div = make_block_with_selection('click here now', 'here');
-                try {
-                    const original_prompt = globalThis.prompt;
-                    globalThis.prompt = () => 'https://example.com';
-                    const block = new $bog_wysiwyg_block();
-                    block.dom_node = () => div;
-                    block.html = (val) => val ?? div.innerHTML;
-                    const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true });
-                    block.link_exec(event);
-                    $mol_assert_ok(div.innerHTML.includes('<a '));
-                    $mol_assert_ok(div.innerHTML.includes('https://example.com'));
-                    $mol_assert_ok(div.innerHTML.includes('here'));
-                    globalThis.prompt = original_prompt;
-                }
-                finally {
-                    div.remove();
-                }
-            },
-            'link_exec inserts url as text when no selection'() {
-                if (typeof document === 'undefined')
-                    return;
-                const div = make_block_with_selection('hello world');
-                try {
-                    div.focus();
-                    const sel = $mol_dom_context.document.defaultView.getSelection();
-                    const range = $mol_dom_context.document.createRange();
-                    range.selectNodeContents(div);
-                    range.collapse(false);
-                    sel.removeAllRanges();
-                    sel.addRange(range);
-                    const original_prompt = globalThis.prompt;
-                    globalThis.prompt = () => 'https://example.com';
-                    const block = new $bog_wysiwyg_block();
-                    block.dom_node = () => div;
-                    block.html = (val) => val ?? div.innerHTML;
-                    const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true });
-                    block.link_exec(event);
-                    $mol_assert_ok(div.innerHTML.includes('<a '));
-                    $mol_assert_ok(div.innerHTML.includes('https://example.com'));
-                    globalThis.prompt = original_prompt;
-                }
-                finally {
-                    div.remove();
-                }
-            },
-            'paste_event without event returns null'() {
-                const block = new $bog_wysiwyg_block();
-                $mol_assert_equal(block.paste_event(), null);
-            },
-            'paste_event with image prevents default'() {
-                if (typeof document === 'undefined')
-                    return;
-                let prevented = false;
-                const block = new $bog_wysiwyg_block();
-                let image_src = '';
-                block.on_image = (src) => {
-                    if (src)
-                        image_src = src;
-                    return image_src || null;
-                };
-                const blob = new Blob([''], { type: 'image/png' });
-                const file = new File([blob], 'test.png', { type: 'image/png' });
-                const dt = new DataTransfer();
-                dt.items.add(file);
-                const event = new ClipboardEvent('paste', { clipboardData: dt });
-                Object.defineProperty(event, 'preventDefault', { value: () => { prevented = true; } });
-                const result = block.paste_event(event);
-                $mol_assert_ok(result);
-                $mol_assert_ok(prevented);
-            },
-            'paste_event without image does not prevent default'() {
-                if (typeof document === 'undefined')
-                    return;
-                const block = new $bog_wysiwyg_block();
-                const dt = new DataTransfer();
-                dt.items.add('hello', 'text/plain');
-                const event = new ClipboardEvent('paste', { clipboardData: dt });
-                let prevented = false;
-                Object.defineProperty(event, 'preventDefault', { value: () => { prevented = true; } });
-                const result = block.paste_event(event);
-                $mol_assert_ok(result);
-                $mol_assert_equal(prevented, false);
-            },
-            'drop_event without event returns null'() {
-                const block = new $bog_wysiwyg_block();
-                $mol_assert_equal(block.drop_event(), null);
-            },
-            'is_image returns true for image type'() {
-                const block = new $bog_wysiwyg_block();
-                block.type = () => 'image';
-                $mol_assert_equal(block.is_image(), true);
-            },
-            'is_image returns false for paragraph type'() {
-                const block = new $bog_wysiwyg_block();
-                block.type = () => 'paragraph';
-                $mol_assert_equal(block.is_image(), false);
-            },
-            'parse_markdown: single paragraph'() {
-                const blocks = $bog_wysiwyg_parse_markdown('hello world');
-                $mol_assert_equal(blocks.length, 1);
-                $mol_assert_equal(blocks[0].type, 'paragraph');
-                $mol_assert_equal(blocks[0].content, 'hello world');
-            },
-            'parse_markdown: two paragraphs separated by empty line'() {
-                const blocks = $bog_wysiwyg_parse_markdown('first\n\nsecond');
-                $mol_assert_equal(blocks.length, 2);
-                $mol_assert_equal(blocks[0].content, 'first');
-                $mol_assert_equal(blocks[1].content, 'second');
-            },
-            'parse_markdown: heading levels 1-3'() {
-                const blocks = $bog_wysiwyg_parse_markdown('# H1\n\n## H2\n\n### H3');
-                $mol_assert_equal(blocks.length, 3);
-                $mol_assert_equal(blocks[0].type, 'heading');
-                $mol_assert_equal(blocks[0].level, 1);
-                $mol_assert_equal(blocks[0].content, 'H1');
-                $mol_assert_equal(blocks[1].level, 2);
-                $mol_assert_equal(blocks[2].level, 3);
-            },
-            'parse_markdown: code block'() {
-                const blocks = $bog_wysiwyg_parse_markdown('```\nconst x = 1\nconst y = 2\n```');
-                $mol_assert_equal(blocks.length, 1);
-                $mol_assert_equal(blocks[0].type, 'code');
-                $mol_assert_equal(blocks[0].content, 'const x = 1\nconst y = 2');
-            },
-            'parse_markdown: code block escapes HTML'() {
-                const blocks = $bog_wysiwyg_parse_markdown('```\n<div>&</div>\n```');
-                $mol_assert_equal(blocks[0].content, '&lt;div&gt;&amp;&lt;/div&gt;');
-            },
-            'parse_markdown: blockquote'() {
-                const blocks = $bog_wysiwyg_parse_markdown('> line one\n> line two');
-                $mol_assert_equal(blocks.length, 1);
-                $mol_assert_equal(blocks[0].type, 'quote');
-                $mol_assert_equal(blocks[0].content, 'line one<br>line two');
-            },
-            'parse_markdown: divider ---'() {
-                const blocks = $bog_wysiwyg_parse_markdown('above\n\n---\n\nbelow');
-                $mol_assert_equal(blocks.length, 3);
-                $mol_assert_equal(blocks[1].type, 'divider');
-                $mol_assert_equal(blocks[1].content, '');
-            },
-            'parse_markdown: divider ***'() {
-                const blocks = $bog_wysiwyg_parse_markdown('***');
-                $mol_assert_equal(blocks[0].type, 'divider');
-            },
-            'parse_markdown: inline bold'() {
-                const blocks = $bog_wysiwyg_parse_markdown('hello **world**');
-                $mol_assert_equal(blocks[0].content, 'hello <b>world</b>');
-            },
-            'parse_markdown: inline italic'() {
-                const blocks = $bog_wysiwyg_parse_markdown('hello *world*');
-                $mol_assert_equal(blocks[0].content, 'hello <i>world</i>');
-            },
-            'parse_markdown: inline code'() {
-                const blocks = $bog_wysiwyg_parse_markdown('run `npm install`');
-                $mol_assert_equal(blocks[0].content, 'run <code>npm install</code>');
-            },
-            'parse_markdown: inline strike'() {
-                const blocks = $bog_wysiwyg_parse_markdown('hello ~~world~~');
-                $mol_assert_equal(blocks[0].content, 'hello <s>world</s>');
-            },
-            'parse_markdown: inline link'() {
-                const blocks = $bog_wysiwyg_parse_markdown('click [here](https://example.com)');
-                $mol_assert_equal(blocks[0].content, 'click <a href="https://example.com">here</a>');
-            },
-            'parse_markdown: multi-line paragraph joins with br'() {
-                const blocks = $bog_wysiwyg_parse_markdown('line one\nline two\nline three');
-                $mol_assert_equal(blocks.length, 1);
-                $mol_assert_equal(blocks[0].content, 'line one<br>line two<br>line three');
-            },
-            'parse_markdown: mixed content article'() {
-                const md = '# Title\n\nSome text **bold**.\n\n```\ncode here\n```\n\n> quote\n\n---\n\nEnd.';
-                const blocks = $bog_wysiwyg_parse_markdown(md);
-                $mol_assert_equal(blocks.length, 6);
-                $mol_assert_equal(blocks[0].type, 'heading');
-                $mol_assert_equal(blocks[1].type, 'paragraph');
-                $mol_assert_equal(blocks[2].type, 'code');
-                $mol_assert_equal(blocks[3].type, 'quote');
-                $mol_assert_equal(blocks[4].type, 'divider');
-                $mol_assert_equal(blocks[5].type, 'paragraph');
-            },
-            'parse_markdown: empty input returns empty array'() {
-                $mol_assert_equal($bog_wysiwyg_parse_markdown('').length, 0);
-            },
-            'parse_markdown: only empty lines returns empty array'() {
-                $mol_assert_equal($bog_wysiwyg_parse_markdown('\n\n\n').length, 0);
-            },
-            'parse_markdown: unclosed code block collects to end'() {
-                const blocks = $bog_wysiwyg_parse_markdown('```\ncode without closing');
-                $mol_assert_equal(blocks.length, 1);
-                $mol_assert_equal(blocks[0].type, 'code');
-                $mol_assert_equal(blocks[0].content, 'code without closing');
-            },
-        });
-    })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 
 ;
@@ -8471,309 +8776,6 @@ var $;
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'empty string'() {
-            $mol_assert_equal(''.match($giper_baza_text_tokens), null);
-        },
-        'new lines'() {
-            $mol_assert_equal('\n\r\n'.match($giper_baza_text_tokens), ['\n', '\r\n']);
-        },
-        'numbers'() {
-            $mol_assert_equal('123'.match($giper_baza_text_tokens), ['123']);
-        },
-        'emoji'() {
-            $mol_assert_equal('😀😁'.match($giper_baza_text_tokens), ['😀', '😁']);
-        },
-        'emoji with modifier'() {
-            $mol_assert_equal('👩🏿👩🏿'.match($giper_baza_text_tokens), ['👩🏿', '👩🏿']);
-        },
-        'combo emoji with modifier'() {
-            $mol_assert_equal('👩🏿‍🤝‍🧑🏿👩🏿‍🤝‍🧑🏿'.match($giper_baza_text_tokens), ['👩🏿‍🤝‍🧑🏿', '👩🏿‍🤝‍🧑🏿']);
-        },
-        'word with spaces'() {
-            $mol_assert_equal('foo1  bar2'.match($giper_baza_text_tokens), ['foo1', ' ', ' bar2']);
-        },
-        'word with diactric'() {
-            $mol_assert_equal('Е́е́'.match($giper_baza_text_tokens), ['Е́е́']);
-        },
-        'word with punctuation'() {
-            $mol_assert_equal('foo--bar'.match($giper_baza_text_tokens), ['foo', '--', 'bar']);
-        },
-        'CamelCase'() {
-            $mol_assert_equal('Foo1BAR2'.match($giper_baza_text_tokens), ['Foo1', 'BAR2']);
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($_1) {
-    $mol_test({
-        'Change sequences'($) {
-            const land = $giper_baza_land.make({ $ });
-            const text = land.Data($giper_baza_text);
-            const list = land.Data($giper_baza_list_vary);
-            $mol_assert_equal(text.str(), '');
-            $mol_assert_equal(list.items_vary(), []);
-            text.str('foo');
-            $mol_assert_equal(text.str(), 'foo');
-            $mol_assert_equal(list.items_vary(), ['foo']);
-            text.str('foo bar');
-            $mol_assert_equal(text.str(), 'foo bar');
-            $mol_assert_equal(list.items_vary(), ['foo', ' bar']);
-            text.str('foo lol bar');
-            $mol_assert_equal(text.str(), 'foo lol bar');
-            $mol_assert_equal(list.items_vary(), ['foo', ' lol', ' bar']);
-            text.str('lol bar');
-            $mol_assert_equal(text.str(), 'lol bar');
-            $mol_assert_equal(list.items_vary(), ['lol', ' bar']);
-            text.str('foo bar');
-            $mol_assert_equal(text.str(), 'foo bar');
-            $mol_assert_equal(list.items_vary(), ['foo', ' bar']);
-            text.str('foo  bar');
-            $mol_assert_equal(text.str(), 'foo  bar');
-            $mol_assert_equal(list.items_vary(), ['foo', ' ', ' bar']);
-            text.str('foo  BarBar');
-            $mol_assert_equal(text.str(), 'foo  BarBar');
-            $mol_assert_equal(list.items_vary(), ['foo', ' ', ' Bar', 'Bar']);
-        },
-        async 'str: Offset <=> Point'($) {
-            const land = $giper_baza_land.make({ $ });
-            const text = land.Data($giper_baza_text);
-            text.str('fooBar');
-            const [first, second] = text.units();
-            $mol_assert_equal(text.point_by_offset(0), [first.self().str, 0, 0]);
-            $mol_assert_equal(text.offset_by_point([first.self().str, 0, 0]), [first.self().str, 0]);
-            $mol_assert_equal(text.point_by_offset(3), [first.self().str, 3, 0]);
-            $mol_assert_equal(text.offset_by_point([first.self().str, 3, 0]), [first.self().str, 3]);
-            $mol_assert_equal(text.offset_by_point([first.self().str, 5, 0]), [first.self().str, 5]);
-            $mol_assert_equal(text.point_by_offset(5), [second.self().str, 2, 0]);
-            $mol_assert_equal(text.offset_by_point([second.self().str, 2, 0]), [second.self().str, 5]);
-            $mol_assert_equal(text.point_by_offset(6), [second.self().str, 3, 0]);
-            $mol_assert_equal(text.offset_by_point([second.self().str, 3, 0]), [second.self().str, 6]);
-            $mol_assert_equal(text.point_by_offset(7), ['', 1, 0]);
-            $mol_assert_equal(text.offset_by_point(['', 1, 0]), ['', 7]);
-        },
-        async 'text: Offset <=> Point'($) {
-            const land = $giper_baza_land.make({ $ });
-            const text = land.Data($giper_baza_text);
-            text.text('foo bar\n666 777');
-            const [first, second] = text.pawns($giper_baza_text);
-            $mol_assert_equal(text.point_by_offset(0), [first.units()[0].self().str, 0, 0]);
-            $mol_assert_equal(text.offset_by_point([first.units()[0].self().str, 0, 0]), [first.units()[0].self().str, 0]);
-            $mol_assert_equal(text.point_by_offset(8), [first.units()[2].self().str, 1, 0]);
-            $mol_assert_equal(text.offset_by_point([first.units()[2].self().str, 1, 0]), [first.units()[2].self().str, 8]);
-        },
-        async 'Merge different sequences'($) {
-            const land1 = $giper_baza_land.make({ $ });
-            const land2 = $giper_baza_land.make({ $ });
-            const text1 = land1.Pawn($giper_baza_text).Data();
-            const text2 = land2.Pawn($giper_baza_text).Data();
-            text1.str('foo bar.');
-            land2.faces.stat.time = land1.faces.stat.time;
-            text2.str('xxx yyy.');
-            const delta1 = await $mol_wire_async(land1).diff_units();
-            const delta2 = await $mol_wire_async(land2).diff_units();
-            await $mol_wire_async(land1).diff_apply(delta2);
-            await $mol_wire_async(land2).diff_apply(delta1);
-            $mol_assert_equal(text1.str(), text2.str(), 'xxx yyy.foo bar.');
-        },
-        async 'Merge same insertions with different changes to same place'($) {
-            const base = $giper_baza_land.make({ $ });
-            base.Data($giper_baza_text).str('( )');
-            const left = $giper_baza_land.make({ $ });
-            await $mol_wire_async(left).units_steal(base);
-            left.Data($giper_baza_text).str('( [ f ] )');
-            left.Data($giper_baza_text).str('( [ foo ] )');
-            const right = $giper_baza_land.make({ $ });
-            await $mol_wire_async(right).units_steal(base);
-            right.faces.sync(left.faces);
-            right.Data($giper_baza_text).str('( [ f ] )');
-            right.Data($giper_baza_text).str('( [ fu ] )');
-            const left_delta = await $mol_wire_async(left).diff_units(base.faces);
-            const right_delta = await $mol_wire_async(right).diff_units(base.faces);
-            await $mol_wire_async(left).diff_apply(right_delta);
-            await $mol_wire_async(right).diff_apply(left_delta);
-            $mol_assert_equal(left.Data($giper_baza_text).str(), right.Data($giper_baza_text).str(), '( [ fu ] [ foo ] )');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Special'() {
-            $mol_assert_equal($mol_si_short(0), '0');
-            $mol_assert_equal($mol_si_short(1 / 0), '∞');
-            $mol_assert_equal($mol_si_short(-1 / 0), '-∞');
-            $mol_assert_equal($mol_si_short(0 / 0), '∅');
-        },
-        'M'() {
-            $mol_assert_equal($mol_si_short(0), '0');
-            $mol_assert_equal($mol_si_short(0.999500), '1.00');
-            $mol_assert_equal($mol_si_short(-0.999600), '-1.00');
-            $mol_assert_equal($mol_si_short(999.4), '999');
-            $mol_assert_equal($mol_si_short(-999.4), '-999');
-        },
-        'L'() {
-            $mol_assert_equal($mol_si_short(999.5), '1.00k');
-            $mol_assert_equal($mol_si_short(-999.5), '-1.00k');
-            $mol_assert_equal($mol_si_short(999_400), '999k');
-            $mol_assert_equal($mol_si_short(-999_400), '-999k');
-        },
-        'XL'() {
-            $mol_assert_equal($mol_si_short(999_500), '1.00M');
-            $mol_assert_equal($mol_si_short(-999_600), '-1.00M');
-            $mol_assert_equal($mol_si_short(999_400_000), '999M');
-            $mol_assert_equal($mol_si_short(-999_400_000), '-999M');
-        },
-        'S'() {
-            $mol_assert_equal($mol_si_short(0.999400), '999m');
-            $mol_assert_equal($mol_si_short(-0.999400), '-999m');
-            $mol_assert_equal($mol_si_short(0.000_999_500), '1.00m');
-            $mol_assert_equal($mol_si_short(-0.000_999_500), '-1.00m');
-        },
-        'XS'() {
-            $mol_assert_equal($mol_si_short(0.000_999_400), '999µ');
-            $mol_assert_equal($mol_si_short(-0.000_999_400), '-999µ');
-            $mol_assert_equal($mol_si_short(0.000_000_999_600), '1.00µ');
-            $mol_assert_equal($mol_si_short(-0.000_000_999_600), '-1.00µ');
-        },
-        'With unit'() {
-            $mol_assert_equal($mol_si_short(0, 's'), '0 s');
-            $mol_assert_equal($mol_si_short(1 / 0, 's'), '∞ s');
-            $mol_assert_equal($mol_si_short(0 / 0, 's'), '∅ s');
-            $mol_assert_equal($mol_si_short(123, 'Hz'), '123 Hz');
-            $mol_assert_equal($mol_si_short(1234, 'g'), '1.23 kg');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'simple sort'() {
-            const list = ['abc', 'ac', 'ab'];
-            list.sort($mol_compare_text());
-            $mol_assert_equal(`${list}`, 'ab,abc,ac');
-        },
-        'sort ignoring spaces around'() {
-            const list = [' a', '\tb', ' b'];
-            list.sort($mol_compare_text());
-            $mol_assert_equal(`${list}`, ' a,\tb, b');
-        },
-        'sort ignoring letter case'() {
-            const list = ['A', 'B', 'a'];
-            list.sort($mol_compare_text());
-            $mol_assert_equal(`${list}`, 'A,a,B');
-        },
-        'sort with custom serializer'() {
-            const list = ['abc', 'ab', 'ac'];
-            list.sort($mol_compare_text(str => str.split('').reverse().join('')));
-            $mol_assert_equal(`${list}`, 'ab,ac,abc');
-        },
-    });
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'Vector limiting'() {
-            let point = new $mol_vector_3d(7, 10, 13);
-            const res = point.limited([[1, 5], [15, 20], [5, 10]]);
-            $mol_assert_equal(res.x, 5);
-            $mol_assert_equal(res.y, 15);
-            $mol_assert_equal(res.z, 10);
-        },
-        'Vector adding scalar'() {
-            let point = new $mol_vector_3d(1, 2, 3);
-            let res = point.added0(5);
-            $mol_assert_equal(res.x, 6);
-            $mol_assert_equal(res.y, 7);
-            $mol_assert_equal(res.z, 8);
-        },
-        'Vector adding vector'() {
-            let point = new $mol_vector_3d(1, 2, 3);
-            let res = point.added1([5, 10, 15]);
-            $mol_assert_equal(res.x, 6);
-            $mol_assert_equal(res.y, 12);
-            $mol_assert_equal(res.z, 18);
-        },
-        'Vector multiplying scalar'() {
-            let point = new $mol_vector_3d(2, 3, 4);
-            let res = point.multed0(-1);
-            $mol_assert_equal(res.x, -2);
-            $mol_assert_equal(res.y, -3);
-            $mol_assert_equal(res.z, -4);
-        },
-        'Vector multiplying vector'() {
-            let point = new $mol_vector_3d(2, 3, 4);
-            let res = point.multed1([5, 2, -2]);
-            $mol_assert_equal(res.x, 10);
-            $mol_assert_equal(res.y, 6);
-            $mol_assert_equal(res.z, -8);
-        },
-        'Matrix adding matrix'() {
-            let matrix = new $mol_vector_matrix(...[[1, 2], [3, 4], [5, 6]]);
-            let res = matrix.added2([[10, 20], [30, 40], [50, 60]]);
-            $mol_assert_equal(res[0][0], 11);
-            $mol_assert_equal(res[0][1], 22);
-            $mol_assert_equal(res[1][0], 33);
-            $mol_assert_equal(res[1][1], 44);
-            $mol_assert_equal(res[2][0], 55);
-            $mol_assert_equal(res[2][1], 66);
-        },
-        'Matrix multiplying matrix'() {
-            let matrix = new $mol_vector_matrix(...[[2, 3], [4, 5], [6, 7]]);
-            let res = matrix.multed2([[2, 3], [4, 5], [6, 7]]);
-            $mol_assert_equal(res[0][0], 4);
-            $mol_assert_equal(res[0][1], 9);
-            $mol_assert_equal(res[1][0], 16);
-            $mol_assert_equal(res[1][1], 25);
-            $mol_assert_equal(res[2][0], 36);
-            $mol_assert_equal(res[2][1], 49);
-        },
-        'Range expanding'() {
-            let range = $mol_vector_range_full.inversed;
-            const expanded = range.expanded0(10).expanded0(5);
-            $mol_assert_like([...expanded], [5, 10]);
-        },
-        'Vector of range expanding by vector'() {
-            let dimensions = new $mol_vector_2d($mol_vector_range_full.inversed, $mol_vector_range_full.inversed);
-            const expanded = dimensions.expanded1([1, 7]).expanded1([3, 5]);
-            $mol_assert_like([...expanded.x], [1, 3]);
-            $mol_assert_like([...expanded.y], [5, 7]);
-        },
-        'Vector of range expanding by vector of range'() {
-            let dimensions = new $mol_vector_2d($mol_vector_range_full.inversed, $mol_vector_range_full.inversed);
-            const expanded = dimensions
-                .expanded2([[1, 3], [7, 9]])
-                .expanded2([[2, 4], [6, 8]]);
-            $mol_assert_like([...expanded.x], [1, 4]);
-            $mol_assert_like([...expanded.y], [6, 9]);
-        },
-        'Vector of infinity range expanding by vector of range'() {
-            let dimensions = new $mol_vector_2d($mol_vector_range_full.inversed, $mol_vector_range_full.inversed);
-            const next = new $mol_vector_2d($mol_vector_range_full.inversed, $mol_vector_range_full.inversed);
-            const expanded = next
-                .expanded2(dimensions);
-            $mol_assert_like([...expanded.x], [Infinity, -Infinity]);
-            $mol_assert_like([...expanded.y], [Infinity, -Infinity]);
-        },
-    });
 })($ || ($ = {}));
 
 ;
