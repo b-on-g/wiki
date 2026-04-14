@@ -37463,8 +37463,390 @@ var $;
     (function ($$) {
         const wiki_table_ids = ['dstBumsSV6ng3k0nHd', 'viwklpg2YdqyQ'];
         class $bog_wiki_editor extends $.$bog_wiki_editor {
+            page_land_link(next) {
+                if (next !== undefined) {
+                    this.$.$mol_state_arg.value('page', next || null);
+                    return next;
+                }
+                return this.$.$mol_state_arg.value('page') ?? '';
+            }
+            registry_land_link(next) {
+                if (next !== undefined) {
+                    this.$.$mol_state_arg.value('registry', next || null);
+                    return next;
+                }
+                return this.$.$mol_state_arg.value('registry') ?? '';
+            }
+            user_data() {
+                const home = this.$.$giper_baza_glob.home();
+                if (!home)
+                    return null;
+                return home.land().Data($bog_wysiwyg_model_user_data);
+            }
+            user_registry_links() {
+                const data = this.user_data();
+                if (!data)
+                    return [];
+                const list = data.Registries();
+                if (!list)
+                    return [];
+                const items = list.items_vary() ?? [];
+                return items
+                    .map(v => $giper_baza_vary_cast_link(v))
+                    .filter($mol_guard_defined)
+                    .map(link => link.str);
+            }
+            user_registries_add(link_str) {
+                const data = this.user_data();
+                if (!data)
+                    return;
+                const list = data.Registries('auto');
+                if (!list)
+                    return;
+                const current = list.items_vary() ?? [];
+                list.items_vary([...current, new $giper_baza_link(link_str)]);
+            }
+            registry_data() {
+                const link = this.registry_land_link();
+                if (!link)
+                    return null;
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                return land.Data($bog_wysiwyg_model_registry);
+            }
+            registry_ensure() {
+                let data = this.registry_data();
+                if (data)
+                    return data;
+                const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                const link_str = land.link().str;
+                this.registry_land_link(link_str);
+                this.user_registries_add(link_str);
+                return land.Data($bog_wysiwyg_model_registry);
+            }
+            page_links() {
+                const data = this.registry_data();
+                if (!data)
+                    return [];
+                const list = data.Pages();
+                if (!list)
+                    return [];
+                const items = list.items_vary() ?? [];
+                return items
+                    .map(v => $giper_baza_vary_cast_link(v))
+                    .filter($mol_guard_defined)
+                    .map(link => link.str);
+            }
+            page_title_by_link(link) {
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                const data = land.Data($bog_wysiwyg_model_page);
+                return data.Title()?.val() ?? '';
+            }
+            page_block_ids(link) {
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                const data = land.Data($bog_wysiwyg_model_page);
+                const blocks = data.Blocks();
+                if (!blocks)
+                    return [];
+                return blocks.remote_list().map((b) => b.link().str);
+            }
+            page_block_html(link, block_link) {
+                const block = this.$.$giper_baza_glob.Pawn(new $giper_baza_link(block_link), $bog_wysiwyg_model_block);
+                return block.Content()?.val() ?? '';
+            }
+            all_pages_info() {
+                return this.page_links().map(link => ({
+                    id: link,
+                    title: this.page_title_by_link(link),
+                    blocks_html: this.page_block_ids(link).map(bid => this.page_block_html(link, bid)),
+                }));
+            }
+            registry_title_by_link(link) {
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                const data = land.Data($bog_wysiwyg_model_registry);
+                return data.Title()?.val() ?? '';
+            }
+            my_lord() {
+                return this.$.$giper_baza_auth.current().pass().lord();
+            }
+            current_page_land() {
+                const link = this.page_land_link();
+                if (!link)
+                    return null;
+                return this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+            }
+            page_tier() {
+                const land = this.current_page_land();
+                if (!land)
+                    return $giper_baza_rank_tier.deny;
+                const auth = this.$.$giper_baza_auth.current();
+                return $giper_baza_rank_tier_of(land.pass_rank(auth.pass()));
+            }
+            can_edit() {
+                return this.page_tier() >= $giper_baza_rank_tier.post;
+            }
+            is_owner() {
+                return this.page_tier() >= $giper_baza_rank_tier.rule;
+            }
             editor_readonly() {
                 return false;
+            }
+            permissions_role_label() {
+                const tier = this.page_tier();
+                if (tier >= $giper_baza_rank_tier.rule)
+                    return 'You: Owner';
+                if (tier >= $giper_baza_rank_tier.post)
+                    return 'You: Editor';
+                if (tier >= $giper_baza_rank_tier.read)
+                    return 'You: Viewer';
+                return 'You: No access';
+            }
+            page_gift_lords() {
+                const land = this.current_page_land();
+                if (!land)
+                    return [];
+                const lords = [];
+                for (const [key] of land._gift) {
+                    if (key)
+                        lords.push(key);
+                }
+                return lords;
+            }
+            permissions_member_rows() {
+                if (!this.is_owner())
+                    return [];
+                return this.page_gift_lords().map((_, i) => this.Permissions_member(i));
+            }
+            permissions_member_lord_title(index) {
+                const lords = this.page_gift_lords();
+                const lord = lords[index];
+                if (!lord)
+                    return '';
+                const my = this.my_lord();
+                if (lord === my.str)
+                    return lord + ' (you)';
+                return lord;
+            }
+            permissions_member_role_value(index, next) {
+                const lords = this.page_gift_lords();
+                const lord_str = lords[index];
+                if (!lord_str)
+                    return 'viewer';
+                if (next !== undefined) {
+                    const land = this.current_page_land();
+                    if (!land)
+                        return next;
+                    const lord = new $giper_baza_link(lord_str);
+                    const pass = land.lord_pass(lord);
+                    if (!pass)
+                        return next;
+                    const rank = next === 'rule'
+                        ? $giper_baza_rank_make('rule', 'just')
+                        : next === 'editor'
+                            ? $giper_baza_rank_post('just')
+                            : $giper_baza_rank_make('read', 'late');
+                    land.pass_rank(pass, rank);
+                    return next;
+                }
+                const land = this.current_page_land();
+                if (!land)
+                    return 'viewer';
+                const lord = new $giper_baza_link(lord_str);
+                const tier = land.lord_tier(lord);
+                if (tier >= $giper_baza_rank_tier.rule)
+                    return 'rule';
+                if (tier >= $giper_baza_rank_tier.post)
+                    return 'editor';
+                return 'viewer';
+            }
+            permissions_add_click(event) {
+                if (!event)
+                    return null;
+                const land = this.current_page_land();
+                if (!land)
+                    return null;
+                const lord_str = this.permissions_add_link().trim();
+                if (!lord_str)
+                    return null;
+                const role = this.permissions_add_role_value();
+                const rank = role === 'editor'
+                    ? $giper_baza_rank_post('just')
+                    : $giper_baza_rank_make('read', 'late');
+                const lord = new $giper_baza_link(lord_str);
+                const pass = land.lord_pass(lord);
+                if (pass) {
+                    land.pass_rank(pass, rank);
+                }
+                this.permissions_add_link('');
+                return event;
+            }
+            permissions_add_content() {
+                if (!this.is_owner())
+                    return [];
+                return [
+                    this.Permissions_add_input(),
+                    this.Permissions_add_role(),
+                    this.Permissions_add_button(),
+                ];
+            }
+            sidebar_head_content() {
+                const parts = [this.Sidebar_title()];
+                if (this.can_edit()) {
+                    parts.push(this.New_page());
+                }
+                return parts;
+            }
+            page_item_can_edit(index) {
+                return this.can_edit();
+            }
+            registry_rows() {
+                return this.user_registry_links().map((_, i) => this.Registry_item(i));
+            }
+            registry_item_title(index) {
+                const link = this.user_registry_links()[index];
+                if (!link)
+                    return '';
+                const title = this.registry_title_by_link(link);
+                return title || `Registry ${index + 1}`;
+            }
+            registry_item_active(index) {
+                return this.user_registry_links()[index] === this.registry_land_link();
+            }
+            registry_item_click(index, event) {
+                if (!event)
+                    return null;
+                const link = this.user_registry_links()[index];
+                if (link) {
+                    this.registry_land_link(link);
+                    const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                    const data = land.Data($bog_wysiwyg_model_registry);
+                    const pages = data.Pages();
+                    if (pages) {
+                        const items = pages.items_vary() ?? [];
+                        const first = items[0];
+                        if (first) {
+                            const first_link = $giper_baza_vary_cast_link(first);
+                            if (first_link)
+                                this.page_land_link(first_link.str);
+                        }
+                    }
+                }
+                return event;
+            }
+            registry_create(event) {
+                if (!event)
+                    return null;
+                const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                const data = land.Data($bog_wysiwyg_model_registry);
+                data.Title('auto')?.val('');
+                const link_str = land.link().str;
+                this.user_registries_add(link_str);
+                this.registry_land_link(link_str);
+                this.page_create(new Event('auto'));
+                return event;
+            }
+            page_rows() {
+                return this.page_links().map((link, i) => this.Page_item(i));
+            }
+            page_item_title(index) {
+                const link = this.page_links()[index];
+                if (!link)
+                    return '';
+                const title = this.page_title_by_link(link);
+                return title || `Page ${index + 1}`;
+            }
+            page_item_active(index) {
+                return this.page_links()[index] === this.page_land_link();
+            }
+            page_item_click(index, event) {
+                if (!event)
+                    return null;
+                const link = this.page_links()[index];
+                if (link)
+                    this.page_land_link(link);
+                return event;
+            }
+            page_item_rename(index, val) {
+                if (val === undefined)
+                    return null;
+                const link = this.page_links()[index];
+                if (!link)
+                    return val;
+                const land = this.$.$giper_baza_glob.Land(new $giper_baza_link(link));
+                const data = land.Data($bog_wysiwyg_model_page);
+                data.Title('auto')?.val(val);
+                return val;
+            }
+            page_create(event) {
+                if (!event)
+                    return null;
+                const reg = this.registry_ensure();
+                const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                const data = land.Data($bog_wysiwyg_model_page);
+                data.Title('auto')?.val('');
+                const pages = reg.Pages('auto');
+                if (pages) {
+                    const current = pages.items_vary() ?? [];
+                    pages.items_vary([...current, land.link()]);
+                }
+                this.page_land_link(land.link().str);
+                return event;
+            }
+            page_navigate(id) {
+                if (id)
+                    this.page_land_link(id);
+                return id ?? null;
+            }
+            auto() {
+                const reg_link = this.registry_land_link();
+                if (reg_link) {
+                    const current = this.page_land_link();
+                    if (current)
+                        return;
+                    const pages = this.page_links();
+                    if (pages.length > 0) {
+                        this.page_land_link(pages[0]);
+                    }
+                    return;
+                }
+                const saved = this.user_registry_links();
+                if (saved.length > 0) {
+                    this.registry_land_link(saved[0]);
+                    return;
+                }
+                this.registry_ensure();
+                this.page_create(new Event('auto'));
+            }
+            layout_content() {
+                const parts = [];
+                if (this.registry_panel_showed()) {
+                    parts.push(this.Registry_panel());
+                }
+                parts.push(this.Sidebar());
+                if (this.profile_showed()) {
+                    parts.push(this.Profile_panel());
+                }
+                else if (this.permissions_showed()) {
+                    parts.push(this.Permissions_panel());
+                }
+                else if (this.graph_showed()) {
+                    if (this.page_links().length === 0) {
+                        this.page_create(new Event('auto'));
+                    }
+                    parts.push(this.Graph_panel());
+                }
+                else {
+                    parts.push(this.Main());
+                }
+                return parts;
+            }
+            graph_pages() {
+                const self = this;
+                return this.page_links().map(link => ({
+                    id() { return link; },
+                    title() { return self.page_title_by_link(link); },
+                    block_ids() { return self.page_block_ids(link); },
+                    block_html(bid) { return self.page_block_html(link, bid); },
+                }));
             }
             model() {
                 return new this.$.$bog_wiki_model();
@@ -37587,6 +37969,78 @@ var $;
                 this.$.$mol_dom_context.print();
             }
         }
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "page_land_link", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "registry_land_link", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "user_registry_links", null);
+        __decorate([
+            $mol_action
+        ], $bog_wiki_editor.prototype, "user_registries_add", null);
+        __decorate([
+            $mol_action
+        ], $bog_wiki_editor.prototype, "registry_ensure", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "page_links", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "all_pages_info", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "page_tier", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "can_edit", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "is_owner", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "permissions_role_label", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "page_gift_lords", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "permissions_member_rows", null);
+        __decorate([
+            $mol_mem_key
+        ], $bog_wiki_editor.prototype, "permissions_member_role_value", null);
+        __decorate([
+            $mol_action
+        ], $bog_wiki_editor.prototype, "permissions_add_click", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "permissions_add_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "sidebar_head_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "registry_rows", null);
+        __decorate([
+            $mol_action
+        ], $bog_wiki_editor.prototype, "registry_create", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "page_rows", null);
+        __decorate([
+            $mol_action
+        ], $bog_wiki_editor.prototype, "page_create", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "auto", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "layout_content", null);
+        __decorate([
+            $mol_mem
+        ], $bog_wiki_editor.prototype, "graph_pages", null);
         __decorate([
             $mol_mem
         ], $bog_wiki_editor.prototype, "model", null);

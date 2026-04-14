@@ -25883,7 +25883,58 @@ declare namespace $ {
 //# sourceMappingURL=editor.view.tree.d.ts.map
 declare namespace $.$$ {
     class $bog_wiki_editor extends $.$bog_wiki_editor {
+        page_land_link(next?: string): string;
+        registry_land_link(next?: string): string;
+        user_data(): $bog_wysiwyg_model_user_data | null;
+        user_registry_links(): readonly string[];
+        user_registries_add(link_str: string): void;
+        registry_data(): $bog_wysiwyg_model_registry | null;
+        registry_ensure(): $bog_wysiwyg_model_registry;
+        page_links(): readonly string[];
+        page_title_by_link(link: string): string;
+        page_block_ids(link: string): readonly string[];
+        page_block_html(link: string, block_link: string): string;
+        all_pages_info(): {
+            id: string;
+            title: string;
+            blocks_html: string[];
+        }[];
+        registry_title_by_link(link: string): string;
+        my_lord(): $giper_baza_link;
+        current_page_land(): $giper_baza_land | null;
+        page_tier(): $giper_baza_rank_tier;
+        can_edit(): boolean;
+        is_owner(): boolean;
         editor_readonly(): boolean;
+        permissions_role_label(): "You: Owner" | "You: Editor" | "You: Viewer" | "You: No access";
+        page_gift_lords(): string[];
+        permissions_member_rows(): $mol_view[];
+        permissions_member_lord_title(index: number): string;
+        permissions_member_role_value(index: number, next?: string): string;
+        permissions_add_click(event?: Event): Event | null;
+        permissions_add_content(): ($mol_button_minor | $.$mol_string | $.$mol_select)[];
+        sidebar_head_content(): any[];
+        page_item_can_edit(index: number): boolean;
+        registry_rows(): $bog_wysiwyg_app_registry[];
+        registry_item_title(index: number): string;
+        registry_item_active(index: number): boolean;
+        registry_item_click(index: number, event?: Event): Event | null;
+        registry_create(event?: Event): Event | null;
+        page_rows(): $.$bog_wysiwyg_app_page[];
+        page_item_title(index: number): string;
+        page_item_active(index: number): boolean;
+        page_item_click(index: number, event?: Event): Event | null;
+        page_item_rename(index: number, val?: string): string | null;
+        page_create(event?: Event): Event | null;
+        page_navigate(id?: string): string | null;
+        auto(): void;
+        layout_content(): any[];
+        graph_pages(): {
+            id(): string;
+            title(): string;
+            block_ids(): readonly string[];
+            block_html(bid: string): string;
+        }[];
         model(): $bog_wiki_model;
         fetch_table(): void;
         data_spaces(next?: $bog_wiki_model_gen_components['schemas']['ResponseGetSpaces']): {
