@@ -37540,43 +37540,50 @@ var $;
                 return land.Data($bog_wysiwyg_model_registry);
             }
             auto() {
-                const reg_link = this.registry_link_arg();
-                if (reg_link) {
-                    const current = this.page_link_arg();
-                    if (current)
-                        return;
-                    const pages = this.wiki_page_links();
-                    if (pages.length > 0) {
-                        this.$.$mol_state_arg.value('page', pages[0]);
-                        return;
-                    }
-                    const page_link = this.home_page_create();
-                    if (page_link)
-                        this.$.$mol_state_arg.value('page', page_link);
+                const reg_link = this.$.$mol_state_arg.value('registry') ?? '';
+                const page_link = this.$.$mol_state_arg.value('page') ?? '';
+                if (reg_link && page_link)
                     return;
-                }
-                const saved = this.wiki_user_registry_links();
-                if (saved.length > 0) {
-                    this.registry_link_arg(saved[0]);
-                    return;
-                }
-                const reg = this.wiki_registry_ensure();
-                reg.Title('auto')?.val('Wiki');
-                const page_link = this.home_page_create();
-                if (page_link)
-                    this.$.$mol_state_arg.value('page', page_link);
+                this.ensure_wiki_init();
             }
-            home_page_create() {
-                const reg = this.wiki_registry_ensure();
-                const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
-                const data = land.Data($bog_wysiwyg_model_page);
-                data.Title('auto')?.val('Home');
-                const pages = reg.Pages('auto');
-                if (pages) {
-                    const current = pages.items_vary() ?? [];
-                    pages.items_vary([...current, land.link()]);
+            ensure_wiki_init() {
+                let reg_link = this.$.$mol_state_arg.value('registry') ?? '';
+                if (!reg_link) {
+                    const saved = this.wiki_user_registry_links();
+                    if (saved.length > 0) {
+                        reg_link = saved[0];
+                    }
+                    else {
+                        const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                        reg_link = land.link().str;
+                        land.Data($bog_wysiwyg_model_registry).Title('auto')?.val('Wiki');
+                        this.wiki_user_registries_add(reg_link);
+                    }
                 }
-                return land.link().str;
+                let page_link = this.$.$mol_state_arg.value('page') ?? '';
+                if (!page_link) {
+                    const reg_data = this.wiki_registry_data(reg_link);
+                    const pages_list = reg_data?.Pages();
+                    const items = pages_list?.items_vary() ?? [];
+                    const links = items
+                        .map(v => $giper_baza_vary_cast_link(v))
+                        .filter($mol_guard_defined);
+                    if (links.length > 0) {
+                        page_link = links[0].str;
+                    }
+                    else {
+                        const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                        land.Data($bog_wysiwyg_model_page).Title('auto')?.val('Home');
+                        const pages = reg_data?.Pages('auto');
+                        if (pages) {
+                            const current = pages.items_vary() ?? [];
+                            pages.items_vary([...current, land.link()]);
+                        }
+                        page_link = land.link().str;
+                    }
+                }
+                this.$.$mol_state_arg.value('registry', reg_link);
+                this.$.$mol_state_arg.value('page', page_link);
             }
             model() {
                 return new this.$.$bog_wiki_model();
@@ -37716,7 +37723,7 @@ var $;
         ], $bog_wiki_editor.prototype, "auto", null);
         __decorate([
             $mol_action
-        ], $bog_wiki_editor.prototype, "home_page_create", null);
+        ], $bog_wiki_editor.prototype, "ensure_wiki_init", null);
         __decorate([
             $mol_mem
         ], $bog_wiki_editor.prototype, "model", null);
