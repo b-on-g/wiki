@@ -1,9 +1,17 @@
-## Docker
+## собрать
 
 ```bash
 docker compose build --no-cache && docker compose up
 # Open http://localhost:9081/bog/wiki/app/-/test.html
 ```
+
+## Tauri -- Полная мультиплатформа ( Win Lin Mac Ios Android )
+
+# https://github.com/b-on-g/wiki/releases
+
+## Деплой 
+
+# https://b-on-g.github.io/wiki
 
 Пересборка без кэша:
 
@@ -21,14 +29,12 @@ npx mam bog/wiki/app
 
 Бандл в папке `bog/wiki/app/-/`.
 
-## Tauri -- Полная мультиплатформа ( Win Lin Mac Ios Android )
-
 ```bash
 cd src-tauri && cargo tauri dev
 ```
 
-
 ## Запуск локальной гипербазы. После npm run start
+
 ```bash
 + giper/baza/app/run port=9090
 ```
