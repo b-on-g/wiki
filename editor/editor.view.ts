@@ -445,54 +445,8 @@ namespace $.$$ {
 			return id ?? null
 		}
 
-		/** Auto-init: ensure registry + page on first visit */
-		@ $mol_mem
-		auto() {
-			// If registry is set in URL, just auto-select first page
-			const reg_link = this.registry_land_link()
-			if( reg_link ) {
-				const current = this.page_land_link()
-				if( current ) return
-				const pages = this.page_links()
-				if( pages.length > 0 ) {
-					this.auto_select_page( pages[0] )
-				} else {
-					this.auto_create_page()
-				}
-				return
-			}
-
-			// No registry in URL — check home for saved registries
-			const saved = this.user_registry_links()
-			if( saved.length > 0 ) {
-				this.auto_select_registry( saved[0] )
-				return
-			}
-
-			// Nothing saved — create fresh registry + page
-			this.auto_full_init()
-		}
-
-		@ $mol_action
-		auto_select_page( link: string ) {
-			this.page_land_link( link )
-		}
-
-		@ $mol_action
-		auto_select_registry( link: string ) {
-			this.registry_land_link( link )
-		}
-
-		@ $mol_action
-		auto_create_page() {
-			this.page_create( new Event( 'auto' ) )
-		}
-
-		@ $mol_action
-		auto_full_init() {
-			this.registry_ensure()
-			this.page_create( new Event( 'auto' ) )
-		}
+		/** Disable parent auto() — init only through user actions, not auto-magic */
+		auto() {}
 
 		/** Layout content depends on panels */
 		@ $mol_mem
@@ -510,9 +464,6 @@ namespace $.$$ {
 			} else if( this.permissions_showed() ) {
 				parts.push( this.Permissions_panel() )
 			} else if( this.graph_showed() ) {
-				if( this.page_links().length === 0 ) {
-					this.page_create( new Event( 'auto' ) )
-				}
 				parts.push( this.Graph_panel() )
 			} else {
 				parts.push( this.Main() )
