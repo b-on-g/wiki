@@ -9,30 +9,116 @@ namespace $.$$ {
 			return false
 		}
 
+		/** Read registry link from URL arg */
+		registry_link_arg( next?: string ) {
+			if( next !== undefined ) {
+				this.$.$mol_state_arg.value( 'registry', next || null )
+				return next
+			}
+			return this.$.$mol_state_arg.value( 'registry' ) ?? ''
+		}
+
+		/** Read page link from URL arg */
+		page_link_arg( next?: string ) {
+			if( next !== undefined ) {
+				this.$.$mol_state_arg.value( 'page', next || null )
+				return next
+			}
+			return this.$.$mol_state_arg.value( 'page' ) ?? ''
+		}
+
+		/** User data from home land. Do NOT put @$mol_mem. */
+		wiki_user_data() {
+			const home = this.$.$giper_baza_glob.home()
+			if( !home ) return null
+			return home.land().Data( $bog_wysiwyg_model_user_data )
+		}
+
+		/** List of registry link strings from home land */
+		@ $mol_mem
+		wiki_user_registry_links(): readonly string[] {
+			const data = this.wiki_user_data()
+			if( !data ) return []
+			const list = data.Registries()
+			if( !list ) return []
+			const items = list.items_vary() ?? []
+			return items
+				.map( v => $giper_baza_vary_cast_link( v ) )
+				.filter( $mol_guard_defined )
+				.map( link => link.str )
+		}
+
+		/** Registry data by link string. Do NOT put @$mol_mem. */
+		wiki_registry_data( link?: string ) {
+			const l = link ?? this.registry_link_arg()
+			if( !l ) return null
+			const land = this.$.$giper_baza_glob.Land( new $giper_baza_link( l ) )
+			return land.Data( $bog_wysiwyg_model_registry )
+		}
+
+		/** All page land link strings from current registry */
+		@ $mol_mem
+		wiki_page_links(): readonly string[] {
+			const data = this.wiki_registry_data()
+			if( !data ) return []
+			const list = data.Pages()
+			if( !list ) return []
+			const items = list.items_vary() ?? []
+			return items
+				.map( v => $giper_baza_vary_cast_link( v ) )
+				.filter( $mol_guard_defined )
+				.map( link => link.str )
+		}
+
+		/** Add a registry link to user's home land */
+		@ $mol_action
+		wiki_user_registries_add( link_str: string ) {
+			const data = this.wiki_user_data()
+			if( !data ) return
+			const list = data.Registries( 'auto' )
+			if( !list ) return
+			const current = list.items_vary() ?? []
+			list.items_vary([ ...current, new $giper_baza_link( link_str ) ])
+		}
+
+		/** Create registry land if none exists, return registry data */
+		@ $mol_action
+		wiki_registry_ensure() {
+			let data = this.wiki_registry_data()
+			if( data ) return data
+			const land = this.$.$giper_baza_glob.land_grab(
+				[[ null, $giper_baza_rank_post( 'just' ) ]]
+			)
+			const link_str = land.link().str
+			this.registry_link_arg( link_str )
+			this.wiki_user_registries_add( link_str )
+			return land.Data( $bog_wysiwyg_model_registry )
+		}
+
 		/** Auto-init: ensure registry + "Home" page on first visit */
 		@ $mol_mem
 		override auto() {
 			// If registry is set in URL, just auto-select first page
-			const reg_link = this.registry_land_link()
+			const reg_link = this.registry_link_arg()
 			if( reg_link ) {
-				const current = this.page_land_link()
+				const current = this.page_link_arg()
 				if( current ) return
-				const pages = this.page_links()
+				const pages = this.wiki_page_links()
 				if( pages.length > 0 ) {
-					this.page_land_link( pages[0] )
+					this.page_link_arg( pages[0] )
 				}
 				return
 			}
 
 			// No registry in URL — check home for saved registries
-			const saved = this.user_registry_links()
+			const saved = this.wiki_user_registry_links()
 			if( saved.length > 0 ) {
-				this.registry_land_link( saved[0] )
+				this.registry_link_arg( saved[0] )
 				return
 			}
 
 			// Nothing saved — create fresh registry + "Home" page
-			const reg = this.registry_ensure()
+			const reg = this.wiki_registry_ensure()
 			reg.Title( 'auto' )?.val( 'Wiki' )
 			this.home_page_create()
 		}
@@ -40,7 +126,7 @@ namespace $.$$ {
 		/** Create the initial "Home" page with a title */
 		@ $mol_action
 		home_page_create() {
-			const reg = this.registry_ensure()
+			const reg = this.wiki_registry_ensure()
 
 			const land = this.$.$giper_baza_glob.land_grab(
 				[[ null, $giper_baza_rank_post( 'just' ) ]]
