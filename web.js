@@ -44516,10 +44516,10 @@ var $;
     var $$;
     (function ($$) {
         const wiki_table_ids = ['dstBumsSV6ng3k0nHd', 'viwklpg2YdqyQ'];
+        const auto_event = new Event('auto');
         class $bog_wiki_editor extends $.$bog_wiki_editor {
             page_land_link(next) {
                 const val = this.$.$mol_state_arg.value('page') ?? '';
-                console.log('[wiki] page_land_link', next !== undefined ? 'WRITE:' + next : 'READ:' + val);
                 if (next !== undefined) {
                     this.$.$mol_state_arg.value('page', next || null);
                     return next;
@@ -44528,7 +44528,6 @@ var $;
             }
             registry_land_link(next) {
                 const val = this.$.$mol_state_arg.value('registry') ?? '';
-                console.log('[wiki] registry_land_link', next !== undefined ? 'WRITE:' + next : 'READ:' + val);
                 if (next !== undefined) {
                     this.$.$mol_state_arg.value('registry', next || null);
                     return next;
@@ -44791,24 +44790,16 @@ var $;
                 return event;
             }
             registry_create(event) {
-                console.log('[wiki] registry_create called', event);
                 if (!event)
                     return null;
-                try {
-                    const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
-                    const data = land.Data($bog_wysiwyg_model_registry);
-                    data.Title('auto')?.val('');
-                    const link_str = land.link().str;
-                    this.user_registries_add(link_str);
-                    this.registry_land_link(link_str);
-                    this.page_create(new Event('auto'));
-                    console.log('[wiki] registry_create done, link:', link_str);
-                    return event;
-                }
-                catch (e) {
-                    console.error('[wiki] registry_create FAILED', e);
-                    throw e;
-                }
+                const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                const data = land.Data($bog_wysiwyg_model_registry);
+                data.Title('auto')?.val('');
+                const link_str = land.link().str;
+                this.user_registries_add(link_str);
+                this.registry_land_link(link_str);
+                this.page_create(auto_event);
+                return event;
             }
             page_rows() {
                 return this.page_links().map((link, i) => this.Page_item(i));
@@ -44843,27 +44834,19 @@ var $;
                 return val;
             }
             page_create(event) {
-                console.log('[wiki] page_create called', event);
                 if (!event)
                     return null;
-                try {
-                    const reg = this.registry_ensure();
-                    const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
-                    const data = land.Data($bog_wysiwyg_model_page);
-                    data.Title('auto')?.val('');
-                    const pages = reg.Pages('auto');
-                    if (pages) {
-                        const current = pages.items_vary() ?? [];
-                        pages.items_vary([...current, land.link()]);
-                    }
-                    this.page_land_link(land.link().str);
-                    console.log('[wiki] page_create done');
-                    return event;
+                const reg = this.registry_ensure();
+                const land = this.$.$giper_baza_glob.land_grab([[null, $giper_baza_rank_post('just')]]);
+                const data = land.Data($bog_wysiwyg_model_page);
+                data.Title('auto')?.val('');
+                const pages = reg.Pages('auto');
+                if (pages) {
+                    const current = pages.items_vary() ?? [];
+                    pages.items_vary([...current, land.link()]);
                 }
-                catch (e) {
-                    console.error('[wiki] page_create FAILED', e);
-                    throw e;
-                }
+                this.page_land_link(land.link().str);
+                return event;
             }
             page_navigate(id) {
                 if (id)
